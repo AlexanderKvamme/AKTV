@@ -82,7 +82,7 @@ final class APIDAO: NSObject {
     // TODO: Return a model
     
     // FIXME: Make this function actually search and return a lsit of shows after unwrapping result
-    func searchShows(string: String) -> [Show] {
+    func searchShows(string: String, andThen: @escaping (([Show]) -> ())) {
         guard let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
             fatalError()
         }
@@ -90,7 +90,7 @@ final class APIDAO: NSObject {
         let urlString = "https://api.themoviedb.org/3/search/tv?api_key=\(key)&query=\(encodedString)"
         guard let url = URL(string: urlString) else {
             print("bam Error: Could not make url")
-            return []
+            return
         }
         
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
@@ -112,7 +112,7 @@ final class APIDAO: NSObject {
             do {
                 print("bam tryna decode from content: ", content)
                 let decoded = try decoder.decode(TVShowSearchResult.self, from: content)
-                print("bam decoded TVShowSearchResult: ", decoded)
+//                print("bam decoded TVShowSearchResult: ", decoded)
                 
                 // Print json
                 if let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] {
@@ -121,8 +121,9 @@ final class APIDAO: NSObject {
                 }
                 
                 let results = decoded.results.map({ $0.name })
-                print("the mapped results: ", results)
+                print("bam the mapped results: ", results)
                 result = decoded
+                andThen(decoded.results)
                 
             } catch {
                 print("Error could not decode a tv show 1. Printing json")
@@ -137,8 +138,6 @@ final class APIDAO: NSObject {
                 print("bam json: ", json)
             }
             
-            
-            
             // OLD
             
             // Got JSON
@@ -150,7 +149,6 @@ final class APIDAO: NSObject {
             
             //            completion(json)
         }.resume()
-        return [Show]()
     }
     
     //    func trytestMappingBBT()  {

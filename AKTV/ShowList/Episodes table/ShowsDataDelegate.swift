@@ -23,7 +23,9 @@ final class ShowsDataDelegate: NSObject, UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: ShowCell.identifier) ?? ShowCell(for: episodes[indexPath.row])
+        let cell =  tableView.dequeueReusableCell(withIdentifier: ShowCell.identifier) ?? ShowCell(for: episodes[indexPath.row])
+        (cell as? ShowCell)?.update(with: episodes[indexPath.row])
+        return cell
     }
 }
 
@@ -58,6 +60,13 @@ final class ShowCell: UITableViewCell {
     }
     
     private func addSubviewsAndConstraints() {
+        contentView.addSubview(header)
+        
+        contentView.snp.makeConstraints { (make) in
+            make.height.equalTo(200)
+            make.width.equalTo(UIScreen.main.bounds.width)
+        }
+        
         header.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
@@ -66,4 +75,8 @@ final class ShowCell: UITableViewCell {
     // MARK: Helper methods
     
     // MARK: Internal methods
+    
+    func update(with show: Show) {
+        header.text = show.name
+    }
 }

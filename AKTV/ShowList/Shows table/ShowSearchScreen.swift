@@ -81,10 +81,13 @@ extension ShowSearchScreen: UITextFieldDelegate {
             return false
         }
         
-        
-        let shows = apiDao.searchShows(string: searchterm)
-        print("bam successfully returned these shows: ", shows)
-        episodesSearchResultDataDelegate.episodes = shows
+        let shows = apiDao.searchShows(string: searchterm) { (shows) in
+            print("bam finnaly returned som shows that i can use!")
+            DispatchQueue.main.async {
+                self.episodesSearchResultDataDelegate.episodes = shows
+                self.episodesSearchResultViewController.tableView.reloadData()
+            }
+        }
         
         return true
     }

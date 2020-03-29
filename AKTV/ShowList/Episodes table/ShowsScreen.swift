@@ -72,8 +72,9 @@ extension ShowsScreen: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("bam returned on: ", textField.text ?? "empty")
         
+        fatalError()
         if let searchterm = textField.text {
-            let tvSeries = apiDao.searchShows(string: searchterm)
+//            let tvSeries = apiDao.searchShows(string: searchterm)
             // TODO: Actually return a show or somethin
         }
         
