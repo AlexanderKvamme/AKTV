@@ -16,8 +16,8 @@ final class ShowSearchScreen: UIViewController {
     // MARK: Properties
     
     private let searchField = UITextField()
-    private let episodesSearchResultViewController = UIViewController()
-    private let episodesSearchResultDataDelegate = EpisodesSearchResultDataDelegate()
+    private let episodesSearchResultViewController = UITableViewController()
+    private let episodesSearchResultDataDelegate = ShowsDataDelegate()
     private let apiDao: APIDAO
     
     // MARK: Initializers
@@ -48,6 +48,9 @@ final class ShowSearchScreen: UIViewController {
         searchField.delegate = self
         searchField.isUserInteractionEnabled = true
         searchField.becomeFirstResponder()
+        
+        episodesSearchResultViewController.tableView.dataSource = episodesSearchResultDataDelegate
+        episodesSearchResultViewController.tableView.delegate = episodesSearchResultDataDelegate
     }
     
     private func addSubviewsAndConstraints() {
@@ -56,6 +59,15 @@ final class ShowSearchScreen: UIViewController {
         searchField.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(100)
+        }
+        
+        let tv = episodesSearchResultViewController
+        view.addSubview(tv.view)
+        addChild(episodesSearchResultViewController)
+        
+        episodesSearchResultViewController.view.snp.makeConstraints { (make) in
+            make.top.equalTo(searchField.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
         }
     }
 }
@@ -72,6 +84,7 @@ extension ShowSearchScreen: UITextFieldDelegate {
         
         let shows = apiDao.searchShows(string: searchterm)
         print("bam successfully returned these shows: ", shows)
+        episodesSearchResultDataDelegate.episodes = shows
         
         return true
     }

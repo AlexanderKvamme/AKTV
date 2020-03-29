@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 import SnapKit
 
-final class SeriesListScreen: UIViewController {
+final class ShowsScreen: UIViewController {
     
     // MARK: Properties
     
     private let searchField = UITextField()
     private let episodesSearchResultViewController = UIViewController()
-    private let episodesSearchResultDataDelegate = EpisodesSearchResultDataDelegate()
+    private let episodesSearchResultDataDelegate = ShowsDataDelegate()
     private let apiDao: APIDAO
     
     // MARK: Initializers
@@ -67,7 +67,7 @@ final class SeriesListScreen: UIViewController {
 
 // MARK: - Make self textview delegate
 
-extension SeriesListScreen: UITextFieldDelegate {
+extension ShowsScreen: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("bam returned on: ", textField.text ?? "empty")
@@ -91,7 +91,7 @@ protocol SeriesReceiver {
     func receive(series: [Series])
 }
 
-extension SeriesListScreen: SeriesReceiver {
+extension ShowsScreen: SeriesReceiver {
     func receive(series: [Series]) {
         print("bam returned series: ", series)
     }

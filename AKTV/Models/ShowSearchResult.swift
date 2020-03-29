@@ -14,7 +14,12 @@ struct TVShowSearchResult: Decodable {
     
     var page: Int
 //    var totalPages: Int
-    var results: [Show] // dårlg
+    var results: [Show] // dårlg {
+    {
+        didSet{
+            print("bam didset")
+        }
+    }
     
     // FIXME: Det er results greien som ikke funker
     

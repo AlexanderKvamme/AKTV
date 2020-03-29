@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class SeriesListTableViewControler: UITableView {
+final class ShowsTable: UITableView {
     
     // MARK: Properties
     
