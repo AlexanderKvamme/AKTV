@@ -24,7 +24,7 @@ final class ShowsScreen: UIViewController {
     init(dao: APIDAO) {
         apiDao = dao
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .purple
+        view.backgroundColor = .orange
         setup()
         addSubviewsAndConstraints()
     }

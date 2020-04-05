@@ -36,7 +36,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         print("bam tryna present")
         let dao = APIDAO()
-        let showSearchController = ShowSearchScreen(dao: dao)
+        let showSearchController = ShowsSearchScreen(dao: dao)
         present(showSearchController, animated: true, completion: nil)
         
 //        let slc = SeriesListScreen(dao: dao)
