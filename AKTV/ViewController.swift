@@ -22,13 +22,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let dao = APIDAO()
-//        let westworldId = "63247"
-//        let season = "3"
-//        dao.episodes(showId: westworldId, seasonNumber: season)
-
-//        let res = dao.searchTVSeries(string: "Big bang theory")
     
         view.backgroundColor = .red
     }
@@ -38,9 +31,6 @@ class ViewController: UIViewController {
         let dao = APIDAO()
         let showSearchController = ShowsSearchScreen(dao: dao)
         present(showSearchController, animated: true, completion: nil)
-        
-//        let slc = SeriesListScreen(dao: dao)
-//        present(slc, animated: true, completion: nil)
     }
 }
 

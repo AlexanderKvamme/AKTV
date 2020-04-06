@@ -154,7 +154,7 @@
 				DDA1A9002427B24B00F7907A /* ViewController.swift */,
 				DDE38905242BF6E00049D881 /* APIDAO.swift */,
 				DDE388FC242AB6350049D881 /* Models */,
-				DDE388F52427D0990049D881 /* ShowList */,
+				DDE388F52427D0990049D881 /* Shows */,
 				DDA1A92F2427B26400F7907A /* Networking */,
 				DDA1A9022427B24B00F7907A /* Main.storyboard */,
 				DDA1A9082427B24D00F7907A /* Assets.xcassets */,
@@ -191,14 +191,14 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		DDE388F52427D0990049D881 /* ShowList */ = {
+		DDE388F52427D0990049D881 /* Shows */ = {
 			isa = PBXGroup;
 			children = (
 				DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */,
 				DDE38902242BF5D90049D881 /* Shows table */,
 				DDE38901242BF3C60049D881 /* Episodes table */,
 			);
-			path = ShowList;
+			path = Shows;
 			sourceTree = "<group>";
 		};
 		DDE388FC242AB6350049D881 /* Models */ = {
@@ -646,7 +646,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RMURDMDZGD;
+				DEVELOPMENT_TEAM = P6NKB5ZDZY;
 				INFOPLIST_FILE = AKTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -665,7 +665,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RMURDMDZGD;
+				DEVELOPMENT_TEAM = P6NKB5ZDZY;
 				INFOPLIST_FILE = AKTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -10,20 +10,20 @@ import Foundation
 import UIKit
 import SnapKit
 
-final class ShowsScreen: UIViewController {
+final class DetailedShowScreen: UIViewController {
     
     // MARK: Properties
     
     private let searchField = UITextField()
     private let episodesSearchResultViewController = UIViewController()
     private let episodesSearchResultDataDelegate = ShowsDataDelegate()
-    private let apiDao: APIDAO
     
     // MARK: Initializers
     
-    init(dao: APIDAO) {
-        apiDao = dao
+    init() {
         super.init(nibName: nil, bundle: nil)
+        
+        print("bam would display this show: ", show)
         view.backgroundColor = .orange
         setup()
         addSubviewsAndConstraints()
@@ -33,21 +33,12 @@ final class ShowsScreen: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-//        apiDao.trytestMappingBBT()
-    }
-    
     // MARK: Private methods
     
     private func setup() {
         searchField.backgroundColor = .green
         searchField.placeholder = "Søk her"
-        searchField.delegate = self
-        searchField.isUserInteractionEnabled = true
         searchField.becomeFirstResponder()
-        
     }
     
     private func addSubviewsAndConstraints() {
@@ -67,7 +58,7 @@ final class ShowsScreen: UIViewController {
 
 // MARK: - Make self textview delegate
 
-extension ShowsScreen: UITextFieldDelegate {
+extension DetailedShowScreen: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("bam returned on: ", textField.text ?? "empty")
@@ -92,7 +83,7 @@ protocol SeriesReceiver {
     func receive(series: [Series])
 }
 
-extension ShowsScreen: SeriesReceiver {
+extension DetailedShowScreen: SeriesReceiver {
     func receive(series: [Series]) {
         print("bam returned series: ", series)
     }

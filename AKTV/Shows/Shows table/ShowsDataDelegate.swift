@@ -14,6 +14,7 @@ final class ShowsDataDelegate: NSObject, UITableViewDataSource, UITableViewDeleg
     // MARK: Properties
     
     var shows = [Show]()
+    var detailedShowPresenter: DetailedShowPresenter?
     
     // MARK: Delegate methods
     
@@ -36,6 +37,7 @@ final class ShowsDataDelegate: NSObject, UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("bam tapped \(shows[indexPath.row].name)")
         
+        detailedShowPresenter?.displayShow(shows[indexPath.row].id)
     }
 }
 

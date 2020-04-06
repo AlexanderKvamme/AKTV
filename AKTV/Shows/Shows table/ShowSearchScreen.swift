@@ -11,6 +11,10 @@ import UIKit
 
 // This is where the app starts
 
+protocol DetailedShowPresenter {
+    func displayShow(_ id: Int?)
+}
+
 final class ShowsSearchScreen: UIViewController {
     
     // MARK: Properties
@@ -51,8 +55,9 @@ final class ShowsSearchScreen: UIViewController {
         
         episodesSearchResultViewController.tableView.dataSource = episodesSearchResultDataDelegate
         episodesSearchResultViewController.tableView.delegate = episodesSearchResultDataDelegate
-        
         episodesSearchResultViewController.tableView.estimatedRowHeight = 200
+        
+        episodesSearchResultDataDelegate.detailedShowPresenter = self
     }
     
     private func addSubviewsAndConstraints() {
@@ -71,6 +76,25 @@ final class ShowsSearchScreen: UIViewController {
             make.top.equalTo(searchField.snp.bottom)
             make.left.right.bottom.equalToSuperview()
         }
+    }
+}
+// MARK: - DetailedShowPresenter conformance
+
+extension ShowsSearchScreen: DetailedShowPresenter {
+    
+    func displayShow(_ id: Int?) {
+        guard let id = id else { fatalError("Show had no id to present from") }
+        
+        print("bam success would show show ", id)
+        
+        
+        let show = apiDao.show(id: id)
+        let next = DetailedShowScreen()
+        present(next, animated: false, completion: nil)
+        
+        // Update
+
+        
     }
 }
 
