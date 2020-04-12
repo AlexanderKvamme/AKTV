@@ -150,6 +150,90 @@ final class APIDAO: NSObject {
             //            completion(json)
         }.resume()
     }
+
+    
+    // FIXME: Get full tv series out with all seasons and shit
+    
+    func testGettingAllSeasonsOverview(showId: Int)  {
+        print("bam testGettingAllSeasonsAndEpisodes")
+            let showId = String(showId)
+            let seasonNumber = "1"
+//            let url = URL(string: root + "tv/" + showId + "/season/" + seasonNumber + "?" + keyParam)
+
+            // NY test
+//            let urlString = "https://api.themoviedb.org/3/search/tv?api_key=\(key)&query=\(encodedString)"
+            let url = URL(string: root + "tv/" + showId + "?" + keyParam)
+        
+            let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+                guard error == nil else {
+                    print("returning error")
+                    return
+                }
+    
+                guard let content = data else {
+                    print("not returning data")
+                    return
+                }
+    
+                // Got JSON
+                guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] else {
+                    print("Not containing JSON")
+                    return
+                }
+                print("bam json: ", json)
+    
+                // Mapping
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let tvShowSeason = try! decoder.decode(ShowOverview.self, from: content)
+                
+                print("bam made tvShowSeason: ", tvShowSeason)
+                fatalError("\nbam would take this tvshow and display as a list of seasons")
+            }
+    
+            task.resume()
+        }
+    
+        func episodes(showId: String, seasonNumber: String) {
+            let url = URL(string: root + "tv/" + showId + "/season/" + seasonNumber + "?" + keyParam)
+    
+            let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+                guard error == nil else {
+                    print("returning error")
+                    return
+                }
+    
+                guard let content = data else {
+                    print("not returning data")
+                    return
+                }
+    
+                // Got JSON
+                guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] else {
+                    print("Not containing JSON")
+                    return
+                }
+    
+                print("bam full json: ", json)
+    
+                if let airdate = json["poster_path"] as? String {
+                    print("bam had poster")
+                } else {
+                    print("no poster")
+                }
+    
+                if let episodes =  json["episodes"] as? [[String: Any]] {
+                    print("bam had episodes")
+                    for e in episodes {
+                        print("bam got episode: ", e["air_date"] as? String)
+                    }
+                } else {
+                    print("bam no episodes")
+                }
+            }
+    
+            task.resume()
+        }
     
     //    func trytestMappingBBT()  {
     //        let showId = "1418"

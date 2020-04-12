@@ -87,8 +87,7 @@ extension ShowsSearchScreen: DetailedShowPresenter {
         
         print("bam success would show show ", id)
         
-        
-        let show = apiDao.show(id: id)
+        let show = apiDao.testGettingAllSeasonsOverview(showId: 1418)
         let next = DetailedShowScreen()
         present(next, animated: false, completion: nil)
         

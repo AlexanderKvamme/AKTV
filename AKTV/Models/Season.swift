@@ -8,6 +8,50 @@
 
 import Foundation
 
+// NOTE: Navn kan være fiel
+// TODO: Implement
+
+struct ShowOverview: Codable {
+//    var productionCompanies: ProductionCompany
+    var status: String
+//    var genres: [Genre]
+    var numberOfSeasons: Int
+//    var networks: [Network]
+//    var popularity: Double
+//    var voteAverage: Int
+//    var homepage: String
+//    var originalName: String
+//    var voteCount: Int
+//    var backdropPath: String
+//    var originalLanguage: String
+//    var name: String
+//    var numberOfEpisodes: Int
+//    var firstAirDate: Date
+//    var nextEpisodeToAir: Date?
+//    var type: String
+    var seasons: [SeasonOverview]
+//    var createdBy: [Creator? Person?]
+    var id: Int
+//    var lastAirDate: Date?
+//    var episodeRunTime: Int
+//    var posterPath: String
+//    var overView: String
+//    var originalCountry: [Country]?
+}
+
+
+// FIXME: Actually display this in a
+
+struct SeasonOverview: Codable {
+    var airDate: String?
+    var episodeCount: Int
+    var id: Int
+    var name: String
+    var overview: String?
+    var posterPath: String
+    var seasonNumber: Int
+}
+
 struct Season: Codable {
     var name: String
     var id: Int
