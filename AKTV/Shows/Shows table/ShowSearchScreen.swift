@@ -22,7 +22,7 @@ protocol ModelPresenter {
     func displayEpisode(_ episode: Episode)
 }
 
-
+// TODO: Remove if not used
 final class ShowOverviewScreenHeader: UIView {
     
     // MARK: Properties
@@ -51,6 +51,9 @@ final class ShowOverviewScreenHeader: UIView {
         heartIcon.backgroundColor = .purple
         heartIcon.layer.borderColor = UIColor.green.cgColor
         heartIcon.layer.borderWidth = 10
+        
+        let userPreferenceManager = UserProfileManager()
+        let favShows = userPreferenceManager.favouriteShows()
         
         heartIcon.addTarget(self, action: #selector(toggleHeart), for: .touchUpInside)
     }

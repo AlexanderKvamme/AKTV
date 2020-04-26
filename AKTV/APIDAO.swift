@@ -135,7 +135,6 @@ final class APIDAO: NSObject {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let tvShowSeason = try! decoder.decode(ShowOverview.self, from: content)
             print()
-            print("bam made tvShowSeason: ", tvShowSeason)
             andThen(tvShowSeason)
         }
         
@@ -168,8 +167,6 @@ final class APIDAO: NSObject {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let tvShowSeason = try! decoder.decode(Season.self, from: content)
-            print()
-            print("bam made tvShowSeason: ", tvShowSeason)
             andThen(tvShowSeason)
         }
         

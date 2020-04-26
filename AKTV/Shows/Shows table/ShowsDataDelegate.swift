@@ -28,14 +28,12 @@ final class ShowsDataDelegate: NSObject, UITableViewDataSource, UITableViewDeleg
         if let cell = cell as? ShowCell {
             cell.update(with: show)
         } else {
-            fatalError("bam could not cast")
+            fatalError("could not cast to ShowCell")
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("bam tapped show \(shows[indexPath.row].name)")
-        
         detailedShowPresenter?.displayShow(shows[indexPath.row].id)
     }
 }

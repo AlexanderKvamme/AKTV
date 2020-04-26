@@ -123,7 +123,7 @@ final class ShowHeaderView: UIView {
     
     var titleLabel = UILabel()
     var heartButton = UIButton()
-    var isFavoritted = false
+    var showOverview: ShowOverview?
     
     // MARK: Initializers
     
@@ -146,10 +146,15 @@ final class ShowHeaderView: UIView {
         titleLabel.textColor = .yellow
         titleLabel.sizeToFit()
         
-        let heartImage = UIImage(named: "icons8-heart-50-outlined")!.withRenderingMode(.alwaysTemplate)
-        heartButton.setImage(heartImage, for: .normal)
         heartButton.tintColor = .white
-        heartButton.addTarget(self, action: #selector(toggleHeart), for: .touchUpInside)
+        heartButton.addTarget(self, action: #selector(didTapHeart), for: .touchUpInside)
+    }
+
+    private func isFavorite() -> Bool {
+        guard let id = showOverview?.id else { return false}
+        
+        let favShows = UserProfileManager().favouriteShows()
+        return favShows.contains(id)
     }
     
     private func addSubviewsAndConstraints() {
@@ -166,16 +171,29 @@ final class ShowHeaderView: UIView {
         }
     }
     
-    @objc func toggleHeart() {
-        if isFavoritted  {
-            isFavoritted = !isFavoritted
+    @objc func didTapHeart() {
+        guard let showId = showOverview?.id else {
+            fatalError("Error: Could not find id to favorite")
+        }
+        
+        let um = UserProfileManager()
+        
+        if isFavorite() {
             let heartImage = UIImage(named: "icons8-heart-50-outlined")!.withRenderingMode(.alwaysTemplate)
             heartButton.setImage(heartImage, for: .normal)
+            um.setFavouriteShow(id: showId, favourite: false)
         } else {
-            isFavoritted = !isFavoritted
             let heartImage = UIImage(named: "icons8-heart-50-filled")!.withRenderingMode(.alwaysTemplate)
             heartButton.setImage(heartImage, for: .normal)
+            um.setFavouriteShow(id: showId, favourite: true)
         }
+    }
+    
+    func update(withShow showOverview: ShowOverview) {
+        titleLabel.text = "title needs a full show"
+        self.showOverview = showOverview
+        
+        heartButton.setImage(isFavorite() ? UIImage(named: "icons8-heart-50-filled")!.withRenderingMode(.alwaysTemplate) : UIImage(named: "icons8-heart-50-outlined")!.withRenderingMode(.alwaysTemplate), for: .normal)
     }
 }
 

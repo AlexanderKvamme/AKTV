@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class     ShowOverviewDataDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
+final class ShowOverviewDataDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Properties
     

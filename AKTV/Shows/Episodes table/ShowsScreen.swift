@@ -78,8 +78,8 @@ final class ShowOverviewScreen: UIViewController {
     // MARK: Internal methods
     
     func update(with showOverview: ShowOverview) {
-        // TODO: Update self also
         showOverviewDataDelegate.showOverview = showOverview
+        header.update(withShow: showOverview)
     }
 }
 
