@@ -33,7 +33,7 @@ final class ShowOverviewScreen: UIViewController {
     
     // MARK: Properties
     
-    private let header = SeasonHeaderView(frame: CGRect(x: 0, y: 0, width: 300, height: 150))
+    private let header = ShowHeaderView(frame: CGRect(x: 0, y: 0, width: 300, height: 150))
     private let showOverviewViewController = UIViewController()
     private let showOverviewDataDelegate = ShowOverviewDataDelegate()
     private let tableView = UITableView()

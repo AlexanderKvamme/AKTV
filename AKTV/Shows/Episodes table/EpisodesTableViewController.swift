@@ -117,6 +117,68 @@ final class SeasonDataDelegate: NSObject, UITableViewDataSource, UITableViewDele
     }
 }
 
+final class ShowHeaderView: UIView {
+    
+    // MARK: Properties
+    
+    var titleLabel = UILabel()
+    var heartButton = UIButton()
+    var isFavoritted = false
+    
+    // MARK: Initializers
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        backgroundColor = .black
+        setup()
+        addSubviewsAndConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Private methods
+    
+    private func setup() {
+        titleLabel.text = "ShowHeaderView"
+        titleLabel.textColor = .yellow
+        titleLabel.sizeToFit()
+        
+        let heartImage = UIImage(named: "icons8-heart-50-outlined")!.withRenderingMode(.alwaysTemplate)
+        heartButton.setImage(heartImage, for: .normal)
+        heartButton.tintColor = .white
+        heartButton.addTarget(self, action: #selector(toggleHeart), for: .touchUpInside)
+    }
+    
+    private func addSubviewsAndConstraints() {
+        addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+        }
+        
+        addSubview(heartButton)
+        heartButton.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+            make.size.equalTo(50)
+        }
+    }
+    
+    @objc func toggleHeart() {
+        if isFavoritted  {
+            isFavoritted = !isFavoritted
+            let heartImage = UIImage(named: "icons8-heart-50-outlined")!.withRenderingMode(.alwaysTemplate)
+            heartButton.setImage(heartImage, for: .normal)
+        } else {
+            isFavoritted = !isFavoritted
+            let heartImage = UIImage(named: "icons8-heart-50-filled")!.withRenderingMode(.alwaysTemplate)
+            heartButton.setImage(heartImage, for: .normal)
+        }
+    }
+}
+
 final class SeasonHeaderView: UIView {
     
     // MARK: Properties
@@ -140,7 +202,7 @@ final class SeasonHeaderView: UIView {
     // MARK: Private methods
     
     private func setup() {
-        titleLabel.text = "Something"
+        titleLabel.text = "SeasonHeaderView"
         titleLabel.textColor = .yellow
         titleLabel.sizeToFit()
     }
@@ -208,7 +270,7 @@ final class SeasonTableViewController: UIViewController {
     
     func update(with season: Season) {
         episodesDataDelegate.season = season
-        headerView.titleLabel.text = "Show title"
+        headerView.titleLabel.text = season.name
     }
 }
 
