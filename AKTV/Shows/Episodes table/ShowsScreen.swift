@@ -10,21 +10,44 @@ import Foundation
 import UIKit
 import SnapKit
 
-final class DetailedShowScreen: UIViewController {
+extension ShowOverviewScreen: SeasonPresenter {
+    func displaySeason(showId: Int?, seasonNumber: Int?) {
+        guard
+            let seasonNumber = seasonNumber,
+            let showId = showId else {
+                fatalError("Show had no id to present from")
+        }
+        
+        // FIXME: NOW - Bruk episodene og vis de i en ny viewcontroller
+        apiDao.episodes(showId: showId, seasonNumber: seasonNumber) { (season) in
+            DispatchQueue.main.sync {
+                let seasonScreen = SeasonTableViewController()
+                seasonScreen.update(with: season)
+                self.present(seasonScreen, animated: true, completion: nil)
+            }
+        }
+    }
+}
+
+final class ShowOverviewScreen: UIViewController {
     
     // MARK: Properties
     
-    private let searchField = UITextField()
-    private let episodesSearchResultViewController = UIViewController()
-    private let episodesSearchResultDataDelegate = ShowsDataDelegate()
+    private let header = SeasonHeaderView(frame: CGRect(x: 0, y: 0, width: 300, height: 150))
+    private let showOverviewViewController = UIViewController()
+    private let showOverviewDataDelegate = ShowOverviewDataDelegate()
+    private let tableView = UITableView()
+    private let apiDao: APIDAO
     
     // MARK: Initializers
     
-    init() {
+    init(dao: APIDAO) {
+        self.apiDao = dao
+        
         super.init(nibName: nil, bundle: nil)
         
-        print("bam would display this show: ", show)
         view.backgroundColor = .orange
+        tableView.backgroundColor = .green
         setup()
         addSubviewsAndConstraints()
     }
@@ -36,17 +59,17 @@ final class DetailedShowScreen: UIViewController {
     // MARK: Private methods
     
     private func setup() {
-        searchField.backgroundColor = .green
-        searchField.placeholder = "Søk her"
-        searchField.becomeFirstResponder()
+        tableView.delegate = showOverviewDataDelegate
+        tableView.dataSource = showOverviewDataDelegate
+        showOverviewDataDelegate.seasonPresenter = self
     }
     
     private func addSubviewsAndConstraints() {
-        view.addSubview(searchField)
+        tableView.tableHeaderView = header
+        view.addSubview(tableView)
         
-        searchField.snp.makeConstraints { (make) in
-            make.top.left.right.equalToSuperview()
-            make.height.equalTo(100)
+        tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
     }
     
@@ -54,15 +77,17 @@ final class DetailedShowScreen: UIViewController {
     
     // MARK: Internal methods
     
+    func update(with showOverview: ShowOverview) {
+        // TODO: Update self also
+        showOverviewDataDelegate.showOverview = showOverview
+    }
 }
 
 // MARK: - Make self textview delegate
 
-extension DetailedShowScreen: UITextFieldDelegate {
+extension ShowOverviewScreen: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("bam returned on: ", textField.text ?? "empty")
-        
         fatalError()
         if let searchterm = textField.text {
 //            let tvSeries = apiDao.searchShows(string: searchterm)
@@ -83,7 +108,7 @@ protocol SeriesReceiver {
     func receive(series: [Series])
 }
 
-extension DetailedShowScreen: SeriesReceiver {
+extension ShowOverviewScreen: SeriesReceiver {
     func receive(series: [Series]) {
         print("bam returned series: ", series)
     }

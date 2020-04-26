@@ -1,32 +1,32 @@
 //
-//  EpisodesSearchResultDataDelegate.swift
+//  ShowsOverviewDataDelegate.swift
 //  AKTV
 //
-//  Created by Alexander Kvamme on 25/03/2020.
+//  Created by Alexander Kvamme on 12/04/2020.
 //  Copyright © 2020 Alexander Kvamme. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-final class ShowsDataDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
+final class     ShowOverviewDataDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Properties
     
-    var shows = [Show]()
-    var detailedShowPresenter: ModelPresenter?
+    var showOverview: ShowOverview?
+    var seasonPresenter: SeasonPresenter?
     
     // MARK: Delegate methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return shows.count
+        return showOverview?.seasons.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let show = shows[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: ShowCell.identifier) ?? ShowCell(for: shows[indexPath.row])
-        if let cell = cell as? ShowCell {
-            cell.update(with: show)
+        let seasonOverview = showOverview!.seasons[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: ShowCell.identifier) ?? SeasonOverviewCell(for: showOverview!.seasons[indexPath.row])
+        if let cell = cell as? SeasonOverviewCell {
+            cell.update(with: seasonOverview)
         } else {
             fatalError("bam could not cast")
         }
@@ -34,13 +34,12 @@ final class ShowsDataDelegate: NSObject, UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("bam tapped show \(shows[indexPath.row].name)")
-        
-        detailedShowPresenter?.displayShow(shows[indexPath.row].id)
+        seasonPresenter!.displaySeason(showId: showOverview!.id,
+                                       seasonNumber: showOverview!.seasons[indexPath.row].seasonNumber)
     }
 }
 
-final class ShowCell: UITableViewCell {
+final class SeasonOverviewCell: UITableViewCell {
     
     // MARK: Properties
     
@@ -48,9 +47,9 @@ final class ShowCell: UITableViewCell {
     
     // MARK: Initializers
     
-    static let identifier = "EpisodeCell"
+    static let identifier = "SeasonOverviewCell"
     
-    init(for episode: Show) {
+    init(for episode: SeasonOverview) {
         super.init(style: .default, reuseIdentifier: ShowCell.identifier)
         
         // setup
@@ -86,15 +85,13 @@ final class ShowCell: UITableViewCell {
         
         header.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
-            make.height.equalTo(200)
+            make.height.equalTo(100)
         }
     }
     
-    // MARK: Helper methods
-    
     // MARK: Internal methods
     
-    func update(with show: Show) {
-        header.text = show.name
+    func update(with seasonOverview: SeasonOverview) {
+        header.text = seasonOverview.name
     }
 }

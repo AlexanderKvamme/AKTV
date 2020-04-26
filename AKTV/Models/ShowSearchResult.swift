@@ -14,14 +14,7 @@ struct TVShowSearchResult: Decodable {
     
     var page: Int
 //    var totalPages: Int
-    var results: [Show] // dårlg {
-    {
-        didSet{
-            print("bam didset")
-        }
-    }
-    
-    // FIXME: Det er results greien som ikke funker
+    var results: [Show]
     
     enum CodingKeys: String, CodingKey {
         case page = "page"

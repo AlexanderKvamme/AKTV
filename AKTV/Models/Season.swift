@@ -40,30 +40,23 @@ struct ShowOverview: Codable {
 }
 
 
-// FIXME: Actually display this in a
-
 struct SeasonOverview: Codable {
     var airDate: String?
     var episodeCount: Int
     var id: Int
     var name: String
     var overview: String?
-    var posterPath: String
+    var posterPath: String?
     var seasonNumber: Int
 }
 
 struct Season: Codable {
-    var name: String
     var id: Int
+    var name: String
     var seasonNumber: Int
     var episodes: [Episode]
-    
-    enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case seasonNumber = "season_number"
-        case id = "id"
-        case episodes = "episodes"
-    }
+    var overview: String
+    var posterPath: String?
  }
 
 struct Episode: Codable {
@@ -75,23 +68,9 @@ struct Episode: Codable {
     var productionCode: String
     var seasonNumber: Int
     var showId: Int
-    var stillPath: String
+    var stillPath: String?
     var voteAverage: Double
     var voteCount: Int
 //    var crew: [Crew]
 //    var guestStar: [Star]
-    
-    enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case episodeNumber = "episode_number"
-        case airDate = "air_date"
-        case id = "id"
-        case seasonNumber = "season_number"
-        case productionCode = "production_code"
-        case stillPath = "still_path"
-        case voteCount = "vote_count"
-        case voteAverage = "vote_average"
-        case showId = "show_id"
-        case overview = "overview"
-       }
 }

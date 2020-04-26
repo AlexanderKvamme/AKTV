@@ -9,11 +9,67 @@
 import Foundation
 import UIKit
 
+//
+
+protocol SeasonPresenter {
+    func displaySeason(showId: Int?, seasonNumber: Int?)
+}
+
 // This is where the app starts
 
-protocol DetailedShowPresenter {
+protocol ModelPresenter {
     func displayShow(_ id: Int?)
+    func displayEpisode(_ episode: Episode)
 }
+
+
+final class ShowOverviewScreenHeader: UIView {
+    
+    // MARK: Properties
+    
+    private let heartIcon = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    
+    // MARK: Initializers
+    
+    init() {
+        super.init(frame: .zero)
+        
+        // FIXME: Add heart button
+        backgroundColor = .darkGray
+
+        setup()
+        addSubviewsAndConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Private methods
+    
+    private func setup() {
+        heartIcon.backgroundColor = .purple
+        heartIcon.layer.borderColor = UIColor.green.cgColor
+        heartIcon.layer.borderWidth = 10
+        
+        heartIcon.addTarget(self, action: #selector(toggleHeart), for: .touchUpInside)
+    }
+    
+    private func addSubviewsAndConstraints() {
+        addSubview(heartIcon)
+
+        heartIcon.snp.makeConstraints { (make) in
+            make.top.right.equalToSuperview()
+        }
+    }
+    
+    // MARK: Helper methods
+    
+    @objc func toggleHeart() {
+        heartIcon.backgroundColor = heartIcon.backgroundColor == .red ? .green : .purple
+    }
+}
+
 
 final class ShowsSearchScreen: UIViewController {
     
@@ -38,12 +94,6 @@ final class ShowsSearchScreen: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-//        apiDao.trytestMappingBBT()
-    }
-    
     // MARK: Private methods
     
     private func setup() {
@@ -64,7 +114,7 @@ final class ShowsSearchScreen: UIViewController {
         view.addSubview(searchField)
         
         searchField.snp.makeConstraints { (make) in
-            make.top.left.right.equalToSuperview()
+            make.left.top.right.equalToSuperview()
             make.height.equalTo(100)
         }
         
@@ -80,20 +130,22 @@ final class ShowsSearchScreen: UIViewController {
 }
 // MARK: - DetailedShowPresenter conformance
 
-extension ShowsSearchScreen: DetailedShowPresenter {
+extension ShowsSearchScreen: ModelPresenter {
+    func displayEpisode(_ episode: Episode) {
+        fatalError("SUCCESS! Now actually make VC and present to screen")
+    }
     
     func displayShow(_ id: Int?) {
         guard let id = id else { fatalError("Show had no id to present from") }
         
-        print("bam success would show show ", id)
-        
-        let show = apiDao.testGettingAllSeasonsOverview(showId: 1418)
-        let next = DetailedShowScreen()
-        present(next, animated: false, completion: nil)
-        
-        // Update
-
-        
+        apiDao.testGettingAllSeasonsOverview(showId: id) { (showOverview) in
+            
+            DispatchQueue.main.async {
+                let next = ShowOverviewScreen(dao: self.apiDao)
+                next.update(with: showOverview)
+                self.present(next, animated: false, completion: nil)
+            }
+        }
     }
 }
 
@@ -106,8 +158,7 @@ extension ShowsSearchScreen: UITextFieldDelegate {
             return false
         }
         
-        let shows = apiDao.searchShows(string: searchterm) { (shows) in
-            print("bam finnaly returned som shows that i can use!")
+        _ = apiDao.searchShows(string: searchterm) { (shows) in
             DispatchQueue.main.async {
                 self.episodesSearchResultDataDelegate.shows = shows
                 self.episodesSearchResultViewController.tableView.reloadData()
