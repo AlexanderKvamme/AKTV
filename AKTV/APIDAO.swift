@@ -54,7 +54,7 @@ final class APIDAO: NSObject {
     //            completion(json)
     //        }
     //        task.resume()
-    //    }
+    //
     
     // TODO: Make this function actually search and return a lsit of shows after unwrapping result
     func searchShows(string: String, andThen: @escaping (([Show]) -> ())) {
@@ -77,7 +77,6 @@ final class APIDAO: NSObject {
                 return
             }
             
-            // NEW TEST OF CODABLE
             let decoder = JSONDecoder()
             var result: TVShowSearchResult?
             
@@ -102,14 +101,8 @@ final class APIDAO: NSObject {
     
     // FIXME: Get full tv series out with all seasons and shit
     
-    func testGettingAllSeasonsOverview(showId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
-        print("bam testGettingAllSeasonsAndEpisodes")
-        let showId = String(showId)
-        let seasonNumber = "1"
-        //            let url = URL(string: root + "tv/" + showId + "/season/" + seasonNumber + "?" + keyParam)
-        
-        // NY test
-        //            let urlString = "https://api.themoviedb.org/3/search/tv?api_key=\(key)&query=\(encodedString)"
+    func show(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
+        let showId = String(withId)
         let url = URL(string: root + "tv/" + showId + "?" + keyParam)
         
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in

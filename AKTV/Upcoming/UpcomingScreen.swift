@@ -51,7 +51,11 @@ final class UpcomingScreen: UIViewController {
     
     // MARK: Internal methods
     
-    func update(withShows shows: [Show]) {
+    func update(withShows shows: [ShowOverview]) {
         dataDelegate.update(withShows: shows)
+    }
+    
+    func update(withShow show: ShowOverview) {
+        dataDelegate.update(withShow: show)
     }
 }

@@ -141,8 +141,7 @@ extension ShowsSearchScreen: ModelPresenter {
     func displayShow(_ id: Int?) {
         guard let id = id else { fatalError("Show had no id to present from") }
         
-        apiDao.testGettingAllSeasonsOverview(showId: id) { (showOverview) in
-            
+        apiDao.show(withId: id) { (showOverview) in
             DispatchQueue.main.async {
                 let next = ShowOverviewScreen(dao: self.apiDao)
                 next.update(with: showOverview)

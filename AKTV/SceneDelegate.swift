@@ -20,13 +20,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         // Make initial view controller
-        let rootVC = UpcomingScreen()
-        let rootNC = UINavigationController(rootViewController: rootVC)
+        let upcomingScreen = UpcomingScreen()
+        let rootNC = UINavigationController(rootViewController: upcomingScreen)
         
         // Fetch favourite shows
         
+        let dao = APIDAO()
         let favouriteShows = UserProfileManager().favouriteShows()
-        let favShows = APIDAO().shows(favouriteShows)
+        favouriteShows.forEach{ id in
+            dao.show(withId: id) { (showOverview) in
+                upcomingScreen.update(withShow: showOverview)
+            }
+        }
         
         // FIXME: Put these shows into upcoming
     

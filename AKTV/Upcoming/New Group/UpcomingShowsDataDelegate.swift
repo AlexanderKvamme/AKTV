@@ -34,7 +34,11 @@ final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableVi
     
     // MARK: Internal methods
     
-    func update(withShows shows: [Show]) {
-        print("bam would put shows into upcoming: ", shows.flatMap({$0.name ?? "NA"}))
+    func update(withShows shows: [ShowOverview]) {
+        print("bam would put shows into upcoming: ", shows.compactMap({$0.id}))
+    }
+    
+    func update(withShow show: ShowOverview) {
+        print("bam would put shows into upcoming: ", show.id)
     }
 }
