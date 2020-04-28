@@ -18,6 +18,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        // Make initial view controller
+        let rootVC = UpcomingScreen()
+        let rootNC = UINavigationController(rootViewController: rootVC)
+        
+        // Fetch favourite shows
+        
+        let favouriteShows = UserProfileManager().favouriteShows()
+        let favShows = APIDAO().shows(favouriteShows)
+        
+        // FIXME: Put these shows into upcoming
+    
+        self.window?.rootViewController = rootNC
+        self.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

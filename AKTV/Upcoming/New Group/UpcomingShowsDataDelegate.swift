@@ -9,7 +9,6 @@
 import UIKit
 
 final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableViewDataSource {
-
     
     // MARK: Properties
     
@@ -35,5 +34,7 @@ final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableVi
     
     // MARK: Internal methods
     
-    
+    func update(withShows shows: [Show]) {
+        print("bam would put shows into upcoming: ", shows.flatMap({$0.name ?? "NA"}))
+    }
 }
