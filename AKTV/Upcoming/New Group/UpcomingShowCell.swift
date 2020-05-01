@@ -16,6 +16,7 @@ final class UpcomingShowCell: UITableViewCell {
     
     private let backgroundImage = UIView()
     private let headerLabel = UILabel()
+    private let dateLabel = UILabel()
     
     // MARK: Initializers
     
@@ -33,31 +34,49 @@ final class UpcomingShowCell: UITableViewCell {
     // MARK: Private methods
     
     private func setup() {
+        headerLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         headerLabel.text = "Header"
-        headerLabel.sizeToFit()
         headerLabel.backgroundColor = .purple
         backgroundImage.backgroundColor = .green
+        dateLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        dateLabel.text = "01.01.01"
     }
     
     private func addSubviewsAndConstraints() {
-        [backgroundImage, headerLabel].forEach{ contentView.addSubview($0) }
+        [backgroundImage, headerLabel, dateLabel].forEach{ contentView.addSubview($0) }
         
-        backgroundImage.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+        contentView.snp.makeConstraints { (make) in
             make.height.equalTo(100)
         }
         
+        backgroundImage.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        
         headerLabel.snp.makeConstraints { (make) in
-            make.top.left.equalToSuperview()
+            make.top.left.equalToSuperview().offset(16)
+        }
+        
+        dateLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(headerLabel)
+            make.top.equalTo(headerLabel.snp.bottom).offset(8)
         }
     }
     
-    // MARK: Helper methods
-    
     // MARK: Internal methods
     
-    func update(withShow show: Show) {
-        fatalError("bam would update cell with this: \(show)")
+    func update(withShowOverview showOverview: ShowOverview) {
+        headerLabel.text = "\(showOverview.id)"
         
+        // Date
+        guard let date = showOverview.nextEpisodeToAir else {
+            dateLabel.text = "No date"
+            return
+        }
+        
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .short
+        let stringDate = formatter1.string(from: date)
+        dateLabel.text = stringDate
     }
 }

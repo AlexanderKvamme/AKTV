@@ -12,7 +12,7 @@ final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableVi
     
     // MARK: Properties
     
-    private var shows = [Show]()
+    private var shows = [ShowOverview]()
     
     // MARK: Initializers
     
@@ -21,12 +21,13 @@ final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableVi
     // MARK: DataSource methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("bam count: ", shows.count)
         return shows.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingShowCell.identifier) as? UpcomingShowCell ?? UpcomingShowCell()
-        cell.update(withShow: shows[indexPath.row])
+        cell.update(withShowOverview: shows[indexPath.row])
         return cell
     }
     
@@ -40,5 +41,13 @@ final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableVi
     
     func update(withShow show: ShowOverview) {
         print("bam would put shows into upcoming: ", show.id)
+        shows.sort { (a, b) -> Bool in
+            // FIXME: Proper sorting needed
+            a.nextEpisodeToAir?.timeIntervalSince1970 ?? 0 > b.nextEpisodeToAir?.timeIntervalSince1970 ?? 0
+        }
+        
+        // FIXME: Put it proper place
+        shows.append(show)
+
     }
 }
