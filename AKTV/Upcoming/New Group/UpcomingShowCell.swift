@@ -69,14 +69,14 @@ final class UpcomingShowCell: UITableViewCell {
         headerLabel.text = "\(showOverview.id)"
         
         // Date
-        guard let date = showOverview.nextEpisodeToAir else {
+        guard let date = showOverview.nextEpisodeToAir?.airDate else {
             dateLabel.text = "No date"
             return
         }
         
         let formatter1 = DateFormatter()
         formatter1.dateStyle = .short
-        let stringDate = formatter1.string(from: date)
-        dateLabel.text = stringDate
+        // FIXME: bam Actually show date
+        dateLabel.text = date
     }
 }

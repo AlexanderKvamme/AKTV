@@ -12,6 +12,8 @@
 		D4F3A6534F07C7D84856B022 /* Pods_AKTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF54A033BB84B1768547D2E /* Pods_AKTV.framework */; };
 		DD000AA02454358800CB095D /* EpisodeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000A9F2454358800CB095D /* EpisodeScreen.swift */; };
 		DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000AA22455BECE00CB095D /* UserProfileManager.swift */; };
+		DD1A7BD5245C12D1005879F8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1A7BD4245C12D1005879F8 /* TabBarController.swift */; };
+		DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD315B66245D7D570046AB38 /* AKDateFormatter.swift */; };
 		DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */; };
 		DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */; };
 		DD5A7E9624576AFB00507BFE /* UpcomingShowsDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9524576AFB00507BFE /* UpcomingShowsDataDelegate.swift */; };
@@ -67,6 +69,8 @@
 		DB8B71D71EA14CE402D4DAEF /* Pods-AKTVTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTVTests.debug.xcconfig"; path = "Target Support Files/Pods-AKTVTests/Pods-AKTVTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD000A9F2454358800CB095D /* EpisodeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeScreen.swift; sourceTree = "<group>"; };
 		DD000AA22455BECE00CB095D /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
+		DD1A7BD4245C12D1005879F8 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		DD315B66245D7D570046AB38 /* AKDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AKDateFormatter.swift; sourceTree = "<group>"; };
 		DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowSearchScreen.swift; path = "Shows table/ShowSearchScreen.swift"; sourceTree = "<group>"; };
 		DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingScreen.swift; sourceTree = "<group>"; };
 		DD5A7E9524576AFB00507BFE /* UpcomingShowsDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowsDataDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +160,14 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
+		DD1A7BD3245C12B1005879F8 /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				DD1A7BD4245C12D1005879F8 /* TabBarController.swift */,
+			);
+			path = TabBarController;
+			sourceTree = "<group>";
+		};
 		DD5A7E9124576A2F00507BFE /* Upcoming */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,11 +214,13 @@
 			children = (
 				DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */,
 				DDA1A8FE2427B24B00F7907A /* SceneDelegate.swift */,
+				DD315B66245D7D570046AB38 /* AKDateFormatter.swift */,
 				DD000AA12455BEAE00CB095D /* Storage */,
 				DDA1A9002427B24B00F7907A /* ViewController.swift */,
 				DDE38905242BF6E00049D881 /* APIDAO.swift */,
 				DDE388FC242AB6350049D881 /* Models */,
 				DD000A9E2454357300CB095D /* Episodes */,
+				DD1A7BD3245C12B1005879F8 /* TabBarController */,
 				DDE388F52427D0990049D881 /* Shows */,
 				DD5A7E9124576A2F00507BFE /* Upcoming */,
 				DDA1A92F2427B26400F7907A /* Networking */,
@@ -528,6 +542,7 @@
 				DDA1A9012427B24B00F7907A /* ViewController.swift in Sources */,
 				DDE388FB2427DE9E0049D881 /* ShowsScreen.swift in Sources */,
 				DD5A7E9824576BB100507BFE /* UpcomingShowCell.swift in Sources */,
+				DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */,
 				DDE38906242BF6E00049D881 /* APIDAO.swift in Sources */,
 				DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */,
 				DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */,
@@ -536,6 +551,7 @@
 				DD5A7E9624576AFB00507BFE /* UpcomingShowsDataDelegate.swift in Sources */,
 				DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */,
 				DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */,
+				DD1A7BD5245C12D1005879F8 /* TabBarController.swift in Sources */,
 				DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */,
 				DDE38900242BF0730049D881 /* ShowsDataDelegate.swift in Sources */,
 				DDA1A9072427B24B00F7907A /* AKTV.xcdatamodeld in Sources */,

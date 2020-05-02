@@ -57,5 +57,7 @@ final class UpcomingScreen: UIViewController {
     
     func update(withShow show: ShowOverview) {
         dataDelegate.update(withShow: show)
+        // FIXME: emove this later
+        tableViewController.reloadData()
     }
 }

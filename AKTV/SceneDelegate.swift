@@ -20,20 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         // Make initial view controller
-        let upcomingScreen = UpcomingScreen()
+        let upcomingScreen = TabBarController()
         let rootNC = UINavigationController(rootViewController: upcomingScreen)
-        
-        // Fetch favourite shows
-        
-        let dao = APIDAO()
-        let favouriteShows = UserProfileManager().favouriteShows()
-        favouriteShows.forEach{ id in
-            dao.show(withId: id) { (showOverview) in
-                upcomingScreen.update(withShow: showOverview)
-            }
-        }
-        
-        // FIXME: Put these shows into upcoming
     
         self.window?.rootViewController = rootNC
         self.window?.makeKeyAndVisible()

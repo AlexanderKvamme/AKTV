@@ -12,13 +12,17 @@ final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableVi
     
     // MARK: Properties
     
-    private var shows = [ShowOverview]()
-    
-    // MARK: Initializers
-    
-    // MARK: Private methods
+    private var shows = [ShowOverview]() // remove?
+    var sectionData = [Date: [ShowOverview]]()
+    var dates = [Date]()
     
     // MARK: DataSource methods
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        let sectionCount = dates.count
+        print("bam sections: ", sectionCount)
+        return sectionCount
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("bam count: ", shows.count)
@@ -40,14 +44,44 @@ final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableVi
     }
     
     func update(withShow show: ShowOverview) {
-        print("bam would put shows into upcoming: ", show.id)
-        shows.sort { (a, b) -> Bool in
-            // FIXME: Proper sorting needed
-            a.nextEpisodeToAir?.timeIntervalSince1970 ?? 0 > b.nextEpisodeToAir?.timeIntervalSince1970 ?? 0
+        
+        // FIXME: Test organizing by dates
+        
+        var totalDates = [Date]()
+        
+        shows.forEach { (show) in
+            if let nextDateString = show.nextEpisodeToAir?.airDate {
+                print("bam added show under \(nextDateString)")
+                if let date = AKDateFormatter.date(from: nextDateString) {
+                    print("bam successfully made date.")
+                    print("bam datestring was: ", nextDateString)
+                    print("bam date becamse: ", date)
+                    
+                    if sectionData[date] == nil {
+                        if let existing = sectionData[date] {
+                            if existing.contains(where: { (existingShow) -> Bool in
+                                show.id == existingShow.id
+                            }) {
+                                print("bam already existed in dict")
+                            } else {
+                                sectionData[date]?.append(show)
+                            }
+                        }
+                        sectionData[date] = [show]
+                    } else {
+                        
+                    }
+                }
+                
+//                totalDates.append(nextDateString)
+                
+            }
+            print("show had no next date and will not be included")
         }
         
-        // FIXME: Put it proper place
+        print("bam sections would be organized like this: ", sectionData)
+        print("bam total dates: ", totalDates)
+        print("bam would put shows into upcoming: ", show.id)
         shows.append(show)
-
     }
 }

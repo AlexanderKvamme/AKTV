@@ -27,7 +27,7 @@ struct ShowOverview: Codable {
 //    var name: String
 //    var numberOfEpisodes: Int
 //    var firstAirDate: Date
-    var nextEpisodeToAir: Date?
+    var nextEpisodeToAir: Episode?
 //    var type: String
     var seasons: [SeasonOverview]
 //    var createdBy: [Creator? Person?]
