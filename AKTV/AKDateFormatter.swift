@@ -8,16 +8,6 @@
 
 import Foundation
 
-struct DayModel: Hashable, Comparable {
-    static func < (lhs: DayModel, rhs: DayModel) -> Bool {
-        return Int("\(lhs.year)\(lhs.month)\(lhs.day)")! < Int("\(rhs.year)\(rhs.month)\(rhs.day)")!
-    }
-
-    var day: Int
-    var month: Int
-    var year: Int
-
-}
 
 final class AKDateFormatter: NSObject {
 
