@@ -27,6 +27,10 @@ final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableVi
         let showsOnRelevantDate = data[relevantDate]
         return showsOnRelevantDate?.count ?? 0
     }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UpcomingSectionHeader()
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingShowCell.identifier) as? UpcomingShowCell ?? UpcomingShowCell()
