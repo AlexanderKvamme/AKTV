@@ -20,21 +20,17 @@ struct DayModel: Hashable, Comparable {
 }
 
 final class AKDateFormatter: NSObject {
+
+    // MARK: Static function
     
-    // MARK: Properties
-    
-    // MARK: Initializers
-    
-    // MARK: Private methods
-    
-    // MARK: Helper methods
-    
-    // MARK: Internal methods
-    
-    // MARK: Static methods
-    
-    static func date(from str: String) -> Date? {
-        print("bam would try to make date from: ", str)
-        return Date()
+    static func day(from str: String) -> DayModel? {
+        let splits = str.split(separator: "-")
+        guard let y = Int(splits[0]),
+              let m = Int(splits[1]),
+              let d = Int(splits[2]) else {
+            return nil
+        }
+
+        return DayModel(day: d, month: m, year: y)
     }
 }
