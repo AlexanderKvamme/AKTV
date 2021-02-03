@@ -66,17 +66,11 @@ final class UpcomingShowCell: UITableViewCell {
     // MARK: Internal methods
     
     func update(withShowOverview showOverview: ShowOverview) {
-        headerLabel.text = "\(showOverview.id)"
+        headerLabel.text = "\(showOverview.name)"
         
         // Date
-        guard let date = showOverview.nextEpisodeToAir?.airDate else {
-            dateLabel.text = "No date"
-            return
+        if let airDate = showOverview.nextEpisodeToAir?.airDate {
+            dateLabel.text = airDate
         }
-        
-        let formatter1 = DateFormatter()
-        formatter1.dateStyle = .short
-        // FIXME: bam Actually show date
-        dateLabel.text = date
     }
 }

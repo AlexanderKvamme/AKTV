@@ -11,77 +11,66 @@ import UIKit
 final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableViewDataSource {
     
     // MARK: Properties
-    
-    private var shows = [ShowOverview]() // remove?
-    var sectionData = [Date: [ShowOverview]]()
-    var dates = [Date]()
+
+    private var data = [DayModel: [ShowOverview]]()
     
     // MARK: DataSource methods
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
-        let sectionCount = dates.count
-        print("bam sections: ", sectionCount)
+        let sectionCount = data.keys.count
         return sectionCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("bam count: ", shows.count)
-        return shows.count
+        let sortedDays = Array(data.keys.sorted())
+        let relevantDate = sortedDays[section]
+        let showsOnRelevantDate = data[relevantDate]
+        return showsOnRelevantDate?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingShowCell.identifier) as? UpcomingShowCell ?? UpcomingShowCell()
-        cell.update(withShowOverview: shows[indexPath.row])
+        let sortedDays: Array<DayModel> = Array(data.keys.sorted())
+        let day = sortedDays[indexPath.section]
+        if let shows = data[day] {
+            cell.update(withShowOverview: shows[indexPath.row])
+        } else {
+            fatalError("Show data did not exist")
+        }
+
         return cell
     }
-    
-    // MARK: Helper methods
-    
+
     // MARK: Internal methods
-    
+
+    // TODO: Use this and gather all shows in one fetch
     func update(withShows shows: [ShowOverview]) {
-        print("bam would put shows into upcoming: ", shows.compactMap({$0.id}))
+        fatalError("Implement me")
     }
     
     func update(withShow show: ShowOverview) {
-        
-        // FIXME: Test organizing by dates
-        
-        var totalDates = [Date]()
-        
-        shows.forEach { (show) in
-            if let nextDateString = show.nextEpisodeToAir?.airDate {
-                print("bam added show under \(nextDateString)")
-                if let date = AKDateFormatter.date(from: nextDateString) {
-                    print("bam successfully made date.")
-                    print("bam datestring was: ", nextDateString)
-                    print("bam date becamse: ", date)
-                    
-                    if sectionData[date] == nil {
-                        if let existing = sectionData[date] {
-                            if existing.contains(where: { (existingShow) -> Bool in
-                                show.id == existingShow.id
-                            }) {
-                                print("bam already existed in dict")
-                            } else {
-                                sectionData[date]?.append(show)
-                            }
-                        }
-                        sectionData[date] = [show]
-                    } else {
-                        
-                    }
-                }
-                
-//                totalDates.append(nextDateString)
-                
-            }
-            print("show had no next date and will not be included")
+        guard let nextDateString = show.nextEpisodeToAir?.airDate else {
+            print("Error: could not access next date of: ", show.name)
+            return
         }
-        
-        print("bam sections would be organized like this: ", sectionData)
-        print("bam total dates: ", totalDates)
-        print("bam would put shows into upcoming: ", show.id)
-        shows.append(show)
+
+        guard let premierDate = AKDateFormatter.day(from: nextDateString) else {
+            print("Error: could not format string into date")
+            return
+        }
+
+        // Add section if it doesnt exist
+        if data[premierDate] == nil {
+            if let existing = data[premierDate] {
+                if existing.contains(where: { (existingShow) -> Bool in
+                    show.id == existingShow.id
+                }) {
+                    print("TODO: Fix better solution for entries already existing in dict")
+                } else {
+                    data[premierDate]?.append(show)
+                }
+            }
+            data[premierDate] = [show]
+        }
     }
 }
