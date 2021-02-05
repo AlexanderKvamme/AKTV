@@ -60,5 +60,24 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Gilroy-Thin.ttf</string>
+		<string>Gilroy-Regular.ttf</string>
+		<string>Gilroy-Medium.ttf</string>
+		<string>Gilroy-Semibold.ttf</string>
+		<string>Gilroy-Bold.ttf</string>
+		<string>Gilroy-Heavy.ttf</string>
+		<string>Gilroy-Extrabold.ttf</string>
+		<string>DINRoundPro-Light.ttf</string>
+		<string>DINRoundPro-Medi.ttf</string>
+		<string>DINRoundPro-Bold.ttf</string>
+		<string>DINRoundPro-Black.ttf</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
