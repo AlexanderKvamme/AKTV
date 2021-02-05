@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,12 +12,43 @@
 		D4F3A6534F07C7D84856B022 /* Pods_AKTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF54A033BB84B1768547D2E /* Pods_AKTV.framework */; };
 		DD000AA02454358800CB095D /* EpisodeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000A9F2454358800CB095D /* EpisodeScreen.swift */; };
 		DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000AA22455BECE00CB095D /* UserProfileManager.swift */; };
+		DD041DB125CB05FB003933AE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DD041DB025CB05FB003933AE /* Kingfisher */; };
 		DD1A7BD5245C12D1005879F8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1A7BD4245C12D1005879F8 /* TabBarController.swift */; };
 		DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD315B66245D7D570046AB38 /* AKDateFormatter.swift */; };
 		DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */; };
 		DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */; };
 		DD5A7E9624576AFB00507BFE /* UpcomingShowsDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9524576AFB00507BFE /* UpcomingShowsDataDelegate.swift */; };
 		DD5A7E9824576BB100507BFE /* UpcomingShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9724576BB100507BFE /* UpcomingShowCell.swift */; };
+		DD6DDEC225CC7A2900A19F3A /* UpcomingShowCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6DDEC125CC7A2900A19F3A /* UpcomingShowCellView.swift */; };
+		DD6DDF1225CD4A6700A19F3A /* DINRoundPro-Medi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF0D25CD4A6700A19F3A /* DINRoundPro-Medi.ttf */; };
+		DD6DDF1325CD4A6700A19F3A /* DINRoundPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF0E25CD4A6700A19F3A /* DINRoundPro-Bold.ttf */; };
+		DD6DDF1425CD4A6700A19F3A /* DINRoundPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF0F25CD4A6700A19F3A /* DINRoundPro-Light.ttf */; };
+		DD6DDF1525CD4A6700A19F3A /* DINRoundPro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF1025CD4A6700A19F3A /* DINRoundPro.ttf */; };
+		DD6DDF1625CD4A6700A19F3A /* DINRoundPro-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF1125CD4A6700A19F3A /* DINRoundPro-Black.ttf */; };
+		DD6DDF3625CD50CF00A19F3A /* Gilroy-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2125CD50CE00A19F3A /* Gilroy-Semibold.ttf */; };
+		DD6DDF3725CD50CF00A19F3A /* Gilroy-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2225CD50CE00A19F3A /* Gilroy-SemiboldItalic.ttf */; };
+		DD6DDF3825CD50CF00A19F3A /* Gilroy-ExtraboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2325CD50CE00A19F3A /* Gilroy-ExtraboldItalic.ttf */; };
+		DD6DDF3925CD50CF00A19F3A /* Gilroy-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2425CD50CE00A19F3A /* Gilroy-BlackItalic.ttf */; };
+		DD6DDF3A25CD50CF00A19F3A /* Gilroy-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2525CD50CE00A19F3A /* Gilroy-Heavy.ttf */; };
+		DD6DDF3B25CD50CF00A19F3A /* Gilroy-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2625CD50CE00A19F3A /* Gilroy-BoldItalic.ttf */; };
+		DD6DDF3C25CD50CF00A19F3A /* Gilroy-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2725CD50CE00A19F3A /* Gilroy-ThinItalic.ttf */; };
+		DD6DDF3D25CD50CF00A19F3A /* Gilroy-UltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2825CD50CE00A19F3A /* Gilroy-UltraLight.ttf */; };
+		DD6DDF3E25CD50CF00A19F3A /* Gilroy-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2925CD50CE00A19F3A /* Gilroy-Light.ttf */; };
+		DD6DDF3F25CD50CF00A19F3A /* Gilroy-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2A25CD50CE00A19F3A /* Gilroy-HeavyItalic.ttf */; };
+		DD6DDF4025CD50CF00A19F3A /* Gilroy-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2B25CD50CE00A19F3A /* Gilroy-ExtraBold.otf */; };
+		DD6DDF4125CD50CF00A19F3A /* Gilroy-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2C25CD50CE00A19F3A /* Gilroy-MediumItalic.ttf */; };
+		DD6DDF4225CD50CF00A19F3A /* Gilroy-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2D25CD50CE00A19F3A /* Gilroy-Bold.ttf */; };
+		DD6DDF4325CD50CF00A19F3A /* Gilroy-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2E25CD50CE00A19F3A /* Gilroy-Black.ttf */; };
+		DD6DDF4425CD50CF00A19F3A /* Gilroy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2F25CD50CE00A19F3A /* Gilroy-Regular.ttf */; };
+		DD6DDF4525CD50CF00A19F3A /* Gilroy-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF3025CD50CE00A19F3A /* Gilroy-RegularItalic.ttf */; };
+		DD6DDF4625CD50CF00A19F3A /* Gilroy-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF3125CD50CE00A19F3A /* Gilroy-Thin.ttf */; };
+		DD6DDF4725CD50CF00A19F3A /* Gilroy-UltraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF3225CD50CE00A19F3A /* Gilroy-UltraLightItalic.ttf */; };
+		DD6DDF4825CD50CF00A19F3A /* Gilroy-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF3325CD50CE00A19F3A /* Gilroy-LightItalic.ttf */; };
+		DD6DDF4925CD50CF00A19F3A /* Gilroy-Extrabold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF3425CD50CE00A19F3A /* Gilroy-Extrabold.ttf */; };
+		DD6DDF4A25CD50CF00A19F3A /* Gilroy-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF3525CD50CE00A19F3A /* Gilroy-Medium.ttf */; };
+		DD6DDF4F25CD517800A19F3A /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6DDF4E25CD517800A19F3A /* Themes.swift */; };
+		DD6DDF5425CD8E8000A19F3A /* UpcomingSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6DDF5325CD8E8000A19F3A /* UpcomingSectionHeaderView.swift */; };
+		DD6DDF5C25CDA0F500A19F3A /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6DDF5B25CDA0F500A19F3A /* FontExtensions.swift */; };
 		DD78E2FC25CAF1230084F101 /* DayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78E2FB25CAF1230084F101 /* DayModel.swift */; };
 		DD78E30125CAF2300084F101 /* UpcomingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78E30025CAF2300084F101 /* UpcomingSectionHeader.swift */; };
 		DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */; };
@@ -40,6 +71,7 @@
 		DDE38906242BF6E00049D881 /* APIDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE38905242BF6E00049D881 /* APIDAO.swift */; };
 		DDE3890B242BF75A0049D881 /* ShowSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE3890A242BF75A0049D881 /* ShowSearchResult.swift */; };
 		DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF8774A244366D400461A0E /* ShowOverviewDataDelegate.swift */; };
+		DDF92A1C25CDAE7100326E20 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF92A1B25CDAE7100326E20 /* ColorExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +109,36 @@
 		DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingScreen.swift; sourceTree = "<group>"; };
 		DD5A7E9524576AFB00507BFE /* UpcomingShowsDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowsDataDelegate.swift; sourceTree = "<group>"; };
 		DD5A7E9724576BB100507BFE /* UpcomingShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowCell.swift; sourceTree = "<group>"; };
+		DD6DDEC125CC7A2900A19F3A /* UpcomingShowCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowCellView.swift; sourceTree = "<group>"; };
+		DD6DDF0D25CD4A6700A19F3A /* DINRoundPro-Medi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DINRoundPro-Medi.ttf"; path = "../../../../../../../../Library/Mobile Documents/com~apple~CloudDocs/Designressurser/Font/Gratis/DINRoundPro-Medi.ttf"; sourceTree = "<group>"; };
+		DD6DDF0E25CD4A6700A19F3A /* DINRoundPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DINRoundPro-Bold.ttf"; path = "../../../../../../../../Library/Mobile Documents/com~apple~CloudDocs/Designressurser/Font/Gratis/DINRoundPro-Bold.ttf"; sourceTree = "<group>"; };
+		DD6DDF0F25CD4A6700A19F3A /* DINRoundPro-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DINRoundPro-Light.ttf"; path = "../../../../../../../../Library/Mobile Documents/com~apple~CloudDocs/Designressurser/Font/Gratis/DINRoundPro-Light.ttf"; sourceTree = "<group>"; };
+		DD6DDF1025CD4A6700A19F3A /* DINRoundPro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DINRoundPro.ttf; path = "../../../../../../../../Library/Mobile Documents/com~apple~CloudDocs/Designressurser/Font/Gratis/DINRoundPro.ttf"; sourceTree = "<group>"; };
+		DD6DDF1125CD4A6700A19F3A /* DINRoundPro-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DINRoundPro-Black.ttf"; path = "../../../../../../../../Library/Mobile Documents/com~apple~CloudDocs/Designressurser/Font/Gratis/DINRoundPro-Black.ttf"; sourceTree = "<group>"; };
+		DD6DDF2125CD50CE00A19F3A /* Gilroy-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Semibold.ttf"; sourceTree = "<group>"; };
+		DD6DDF2225CD50CE00A19F3A /* Gilroy-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF2325CD50CE00A19F3A /* Gilroy-ExtraboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ExtraboldItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF2425CD50CE00A19F3A /* Gilroy-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-BlackItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF2525CD50CE00A19F3A /* Gilroy-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Heavy.ttf"; sourceTree = "<group>"; };
+		DD6DDF2625CD50CE00A19F3A /* Gilroy-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-BoldItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF2725CD50CE00A19F3A /* Gilroy-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ThinItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF2825CD50CE00A19F3A /* Gilroy-UltraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-UltraLight.ttf"; sourceTree = "<group>"; };
+		DD6DDF2925CD50CE00A19F3A /* Gilroy-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Light.ttf"; sourceTree = "<group>"; };
+		DD6DDF2A25CD50CE00A19F3A /* Gilroy-HeavyItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-HeavyItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF2B25CD50CE00A19F3A /* Gilroy-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ExtraBold.otf"; sourceTree = "<group>"; };
+		DD6DDF2C25CD50CE00A19F3A /* Gilroy-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-MediumItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF2D25CD50CE00A19F3A /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
+		DD6DDF2E25CD50CE00A19F3A /* Gilroy-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Black.ttf"; sourceTree = "<group>"; };
+		DD6DDF2F25CD50CE00A19F3A /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Regular.ttf"; sourceTree = "<group>"; };
+		DD6DDF3025CD50CE00A19F3A /* Gilroy-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-RegularItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF3125CD50CE00A19F3A /* Gilroy-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Thin.ttf"; sourceTree = "<group>"; };
+		DD6DDF3225CD50CE00A19F3A /* Gilroy-UltraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-UltraLightItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF3325CD50CE00A19F3A /* Gilroy-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-LightItalic.ttf"; sourceTree = "<group>"; };
+		DD6DDF3425CD50CE00A19F3A /* Gilroy-Extrabold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Extrabold.ttf"; sourceTree = "<group>"; };
+		DD6DDF3525CD50CE00A19F3A /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Medium.ttf"; sourceTree = "<group>"; };
+		DD6DDF4E25CD517800A19F3A /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
+		DD6DDF5325CD8E8000A19F3A /* UpcomingSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingSectionHeaderView.swift; sourceTree = "<group>"; };
+		DD6DDF5B25CDA0F500A19F3A /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
 		DD78E2FB25CAF1230084F101 /* DayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayModel.swift; sourceTree = "<group>"; };
 		DD78E30025CAF2300084F101 /* UpcomingSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingSectionHeader.swift; sourceTree = "<group>"; };
 		DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingTableHeader.swift; sourceTree = "<group>"; };
@@ -105,6 +167,7 @@
 		DDE38905242BF6E00049D881 /* APIDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDAO.swift; sourceTree = "<group>"; };
 		DDE3890A242BF75A0049D881 /* ShowSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSearchResult.swift; sourceTree = "<group>"; };
 		DDF8774A244366D400461A0E /* ShowOverviewDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOverviewDataDelegate.swift; sourceTree = "<group>"; };
+		DDF92A1B25CDAE7100326E20 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD041DB125CB05FB003933AE /* Kingfisher in Frameworks */,
 				D4F3A6534F07C7D84856B022 /* Pods_AKTV.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,6 +256,65 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		DD6DDEC025CC7A0A00A19F3A /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				DD6DDEC125CC7A2900A19F3A /* UpcomingShowCellView.swift */,
+				DD6DDF5325CD8E8000A19F3A /* UpcomingSectionHeaderView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		DD6DDEC625CD453E00A19F3A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DD6DDEC725CD456C00A19F3A /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DD6DDEC725CD456C00A19F3A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DD6DDF2E25CD50CE00A19F3A /* Gilroy-Black.ttf */,
+				DD6DDF2425CD50CE00A19F3A /* Gilroy-BlackItalic.ttf */,
+				DD6DDF2D25CD50CE00A19F3A /* Gilroy-Bold.ttf */,
+				DD6DDF2625CD50CE00A19F3A /* Gilroy-BoldItalic.ttf */,
+				DD6DDF2B25CD50CE00A19F3A /* Gilroy-ExtraBold.otf */,
+				DD6DDF3425CD50CE00A19F3A /* Gilroy-Extrabold.ttf */,
+				DD6DDF2325CD50CE00A19F3A /* Gilroy-ExtraboldItalic.ttf */,
+				DD6DDF2525CD50CE00A19F3A /* Gilroy-Heavy.ttf */,
+				DD6DDF2A25CD50CE00A19F3A /* Gilroy-HeavyItalic.ttf */,
+				DD6DDF2925CD50CE00A19F3A /* Gilroy-Light.ttf */,
+				DD6DDF3325CD50CE00A19F3A /* Gilroy-LightItalic.ttf */,
+				DD6DDF3525CD50CE00A19F3A /* Gilroy-Medium.ttf */,
+				DD6DDF2C25CD50CE00A19F3A /* Gilroy-MediumItalic.ttf */,
+				DD6DDF2F25CD50CE00A19F3A /* Gilroy-Regular.ttf */,
+				DD6DDF3025CD50CE00A19F3A /* Gilroy-RegularItalic.ttf */,
+				DD6DDF2125CD50CE00A19F3A /* Gilroy-Semibold.ttf */,
+				DD6DDF2225CD50CE00A19F3A /* Gilroy-SemiboldItalic.ttf */,
+				DD6DDF3125CD50CE00A19F3A /* Gilroy-Thin.ttf */,
+				DD6DDF2725CD50CE00A19F3A /* Gilroy-ThinItalic.ttf */,
+				DD6DDF2825CD50CE00A19F3A /* Gilroy-UltraLight.ttf */,
+				DD6DDF3225CD50CE00A19F3A /* Gilroy-UltraLightItalic.ttf */,
+				DD6DDF1125CD4A6700A19F3A /* DINRoundPro-Black.ttf */,
+				DD6DDF0E25CD4A6700A19F3A /* DINRoundPro-Bold.ttf */,
+				DD6DDF0F25CD4A6700A19F3A /* DINRoundPro-Light.ttf */,
+				DD6DDF0D25CD4A6700A19F3A /* DINRoundPro-Medi.ttf */,
+				DD6DDF1025CD4A6700A19F3A /* DINRoundPro.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		DD6DDF6325CDA0FE00A19F3A /* Native-Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DD6DDF5B25CDA0F500A19F3A /* FontExtensions.swift */,
+				DDF92A1B25CDAE7100326E20 /* ColorExtensions.swift */,
+			);
+			path = "Native-Extensions";
+			sourceTree = "<group>";
+		};
 		DDA1A8F02427B24B00F7907A = {
 			isa = PBXGroup;
 			children = (
@@ -217,12 +340,16 @@
 		DDA1A8FB2427B24B00F7907A /* AKTV */ = {
 			isa = PBXGroup;
 			children = (
+				DD6DDF6325CDA0FE00A19F3A /* Native-Extensions */,
+				DD6DDEC625CD453E00A19F3A /* Resources */,
+				DD6DDEC025CC7A0A00A19F3A /* SwiftUI */,
 				DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */,
 				DDA1A8FE2427B24B00F7907A /* SceneDelegate.swift */,
 				DD315B66245D7D570046AB38 /* AKDateFormatter.swift */,
 				DD000AA12455BEAE00CB095D /* Storage */,
 				DDA1A9002427B24B00F7907A /* ViewController.swift */,
 				DDE38905242BF6E00049D881 /* APIDAO.swift */,
+				DD6DDF4E25CD517800A19F3A /* Themes.swift */,
 				DDE388FC242AB6350049D881 /* Models */,
 				DD000A9E2454357300CB095D /* Episodes */,
 				DD1A7BD3245C12B1005879F8 /* TabBarController */,
@@ -340,6 +467,9 @@
 			dependencies = (
 			);
 			name = AKTV;
+			packageProductDependencies = (
+				DD041DB025CB05FB003933AE /* Kingfisher */,
+			);
 			productName = AKTV;
 			productReference = DDA1A8F92427B24B00F7907A /* AKTV.app */;
 			productType = "com.apple.product-type.application";
@@ -414,6 +544,9 @@
 				Base,
 			);
 			mainGroup = DDA1A8F02427B24B00F7907A;
+			packageReferences = (
+				DD041DAF25CB05FB003933AE /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = DDA1A8FA2427B24B00F7907A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -430,9 +563,35 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD6DDF4725CD50CF00A19F3A /* Gilroy-UltraLightItalic.ttf in Resources */,
+				DD6DDF1325CD4A6700A19F3A /* DINRoundPro-Bold.ttf in Resources */,
+				DD6DDF4425CD50CF00A19F3A /* Gilroy-Regular.ttf in Resources */,
+				DD6DDF3E25CD50CF00A19F3A /* Gilroy-Light.ttf in Resources */,
+				DD6DDF4325CD50CF00A19F3A /* Gilroy-Black.ttf in Resources */,
+				DD6DDF4025CD50CF00A19F3A /* Gilroy-ExtraBold.otf in Resources */,
+				DD6DDF4225CD50CF00A19F3A /* Gilroy-Bold.ttf in Resources */,
 				DDA1A90C2427B24D00F7907A /* LaunchScreen.storyboard in Resources */,
+				DD6DDF4825CD50CF00A19F3A /* Gilroy-LightItalic.ttf in Resources */,
+				DD6DDF3825CD50CF00A19F3A /* Gilroy-ExtraboldItalic.ttf in Resources */,
+				DD6DDF4125CD50CF00A19F3A /* Gilroy-MediumItalic.ttf in Resources */,
+				DD6DDF1625CD4A6700A19F3A /* DINRoundPro-Black.ttf in Resources */,
+				DD6DDF3D25CD50CF00A19F3A /* Gilroy-UltraLight.ttf in Resources */,
+				DD6DDF3925CD50CF00A19F3A /* Gilroy-BlackItalic.ttf in Resources */,
+				DD6DDF3C25CD50CF00A19F3A /* Gilroy-ThinItalic.ttf in Resources */,
+				DD6DDF3725CD50CF00A19F3A /* Gilroy-SemiboldItalic.ttf in Resources */,
+				DD6DDF4A25CD50CF00A19F3A /* Gilroy-Medium.ttf in Resources */,
+				DD6DDF1225CD4A6700A19F3A /* DINRoundPro-Medi.ttf in Resources */,
+				DD6DDF4525CD50CF00A19F3A /* Gilroy-RegularItalic.ttf in Resources */,
 				DDA1A9092427B24D00F7907A /* Assets.xcassets in Resources */,
+				DD6DDF3A25CD50CF00A19F3A /* Gilroy-Heavy.ttf in Resources */,
+				DD6DDF3F25CD50CF00A19F3A /* Gilroy-HeavyItalic.ttf in Resources */,
+				DD6DDF1425CD4A6700A19F3A /* DINRoundPro-Light.ttf in Resources */,
+				DD6DDF3625CD50CF00A19F3A /* Gilroy-Semibold.ttf in Resources */,
+				DD6DDF3B25CD50CF00A19F3A /* Gilroy-BoldItalic.ttf in Resources */,
+				DD6DDF4925CD50CF00A19F3A /* Gilroy-Extrabold.ttf in Resources */,
 				DDA1A9042427B24B00F7907A /* Main.storyboard in Resources */,
+				DD6DDF4625CD50CF00A19F3A /* Gilroy-Thin.ttf in Resources */,
+				DD6DDF1525CD4A6700A19F3A /* DINRoundPro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +711,9 @@
 				DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */,
 				DDE38906242BF6E00049D881 /* APIDAO.swift in Sources */,
 				DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */,
+				DD6DDF5425CD8E8000A19F3A /* UpcomingSectionHeaderView.swift in Sources */,
+				DD6DDEC225CC7A2900A19F3A /* UpcomingShowCellView.swift in Sources */,
+				DDF92A1C25CDAE7100326E20 /* ColorExtensions.swift in Sources */,
 				DD78E30125CAF2300084F101 /* UpcomingSectionHeader.swift in Sources */,
 				DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */,
 				DDA1A8FD2427B24B00F7907A /* AppDelegate.swift in Sources */,
@@ -561,9 +723,11 @@
 				DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */,
 				DD1A7BD5245C12D1005879F8 /* TabBarController.swift in Sources */,
 				DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */,
+				DD6DDF5C25CDA0F500A19F3A /* FontExtensions.swift in Sources */,
 				DDE38900242BF0730049D881 /* ShowsDataDelegate.swift in Sources */,
 				DDA1A9072427B24B00F7907A /* AKTV.xcdatamodeld in Sources */,
 				DD000AA02454358800CB095D /* EpisodeScreen.swift in Sources */,
+				DD6DDF4F25CD517800A19F3A /* Themes.swift in Sources */,
 				DDE38904242BF5F60049D881 /* Show.swift in Sources */,
 				DDA8EA282444BDD4004D1F14 /* EpisodesTableViewController.swift in Sources */,
 				DDE3890B242BF75A0049D881 /* ShowSearchResult.swift in Sources */,
@@ -672,7 +836,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -726,7 +890,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -902,6 +1066,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DD041DAF25CB05FB003933AE /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DD041DB025CB05FB003933AE /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD041DAF25CB05FB003933AE /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		DDA1A9052427B24B00F7907A /* AKTV.xcdatamodeld */ = {
