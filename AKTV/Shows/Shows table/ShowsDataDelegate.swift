@@ -52,7 +52,7 @@ final class ShowCell: UITableViewCell {
         super.init(style: .default, reuseIdentifier: ShowCell.identifier)
         
         // setup
-        backgroundColor = .orange
+        
         setup()
         addSubviewsAndConstraints()
     }

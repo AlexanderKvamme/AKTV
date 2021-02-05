@@ -20,24 +20,18 @@ final class UpcomingTableHeader: UIView {
     init() {
         super.init(frame: .zero)
         
-        backgroundColor = .orange
+        backgroundColor = UIColor(light)
         headerLabel.text = "Upcoming shows"
-        headerLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        headerLabel.font = UIFont.round(DINWeights.black, 40)
+        headerLabel.textAlignment = .center
         
         addSubview(headerLabel)
         headerLabel.snp.makeConstraints { (make) in
-            make.top.left.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: Private methods
-    
-    // MARK: Helper methods
-    
-    // MARK: Internal methods
-    
 }

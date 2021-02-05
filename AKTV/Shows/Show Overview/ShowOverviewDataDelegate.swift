@@ -52,8 +52,6 @@ final class SeasonOverviewCell: UITableViewCell {
     init(for episode: SeasonOverview) {
         super.init(style: .default, reuseIdentifier: ShowCell.identifier)
         
-        // setup
-        backgroundColor = .orange
         setup()
         addSubviewsAndConstraints()
     }

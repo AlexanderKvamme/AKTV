@@ -7,23 +7,22 @@
 //
 
 import UIKit
+import Kingfisher
+import SwiftUI
 
 final class UpcomingShowCell: UITableViewCell {
     
     // MARK: Properties
     
     static let identifier = "UpcomingShowCell"
-    
-    private let backgroundImage = UIView()
-    private let headerLabel = UILabel()
-    private let dateLabel = UILabel()
+
+    let hostView = UIHostingController(rootView: UpcomingShowCellView())
     
     // MARK: Initializers
     
     init() {
         super.init(style: .default, reuseIdentifier: UpcomingShowCell.identifier)
-        
-        setup()
+
         addSubviewsAndConstraints()
     }
     
@@ -33,44 +32,20 @@ final class UpcomingShowCell: UITableViewCell {
     
     // MARK: Private methods
     
-    private func setup() {
-        headerLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        headerLabel.text = "Header"
-        headerLabel.backgroundColor = .purple
-        backgroundImage.backgroundColor = .green
-        dateLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        dateLabel.text = "01.01.01"
-    }
-    
     private func addSubviewsAndConstraints() {
-        [backgroundImage, headerLabel, dateLabel].forEach{ contentView.addSubview($0) }
-        
-        contentView.snp.makeConstraints { (make) in
-            make.height.equalTo(100)
-        }
-        
-        backgroundImage.snp.makeConstraints { (make) in
+        [hostView.view].forEach{ contentView.addSubview($0) }
+
+        hostView.view.snp.makeConstraints{ (make) in
             make.edges.equalToSuperview()
-        }
-        
-        headerLabel.snp.makeConstraints { (make) in
-            make.top.left.equalToSuperview().offset(16)
-        }
-        
-        dateLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(headerLabel)
-            make.top.equalTo(headerLabel.snp.bottom).offset(8)
         }
     }
     
     // MARK: Internal methods
     
     func update(withShowOverview showOverview: ShowOverview) {
-        headerLabel.text = "\(showOverview.name)"
-        
-        // Date
-        if let airDate = showOverview.nextEpisodeToAir?.airDate {
-            dateLabel.text = airDate
-        }
+        // TODO: Fetch from tv
+        // TODO: Update header and data
+        let url = URL(string: "https://smp.vgc.no/v2/images/e2b9a0f6-526b-4615-850e-bd38fc8e4d20?fit=crop&h=1267&w=1900&s=7ec50dd6a79a0dda0596386dd5768008510fccfa")
+//        showImageView.kf.setImage(with: url)
     }
 }

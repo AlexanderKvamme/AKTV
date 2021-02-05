@@ -12,7 +12,7 @@ final class UpcomingScreen: UIViewController {
     
     // MARK: Properties
     
-    let tableViewController = UITableView()
+    let tableViewController = UITableView(frame: .zero, style: .grouped)
     let dataDelegate = UpcomingShowsDataDelegate()
     let header = UpcomingTableHeader()
     
@@ -20,8 +20,7 @@ final class UpcomingScreen: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        
-        view.backgroundColor = .green
+
         setup()
         addSubviewsAndConstraints()
     }
@@ -29,13 +28,21 @@ final class UpcomingScreen: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: Life Cycle
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController!.setNavigationBarHidden(true, animated: false)
+    }
     
     // MARK: Private methods
     
     private func setup() {
-        tableViewController.backgroundColor = .purple
+        tableViewController.backgroundColor = UIColor(light)
         tableViewController.dataSource = dataDelegate
         tableViewController.delegate = dataDelegate
+        tableViewController.separatorStyle = .none
         header.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
         tableViewController.tableHeaderView = header
     }
@@ -46,9 +53,7 @@ final class UpcomingScreen: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-    
-    // MARK: Helper methods
-    
+
     // MARK: Internal methods
     
     func update(withShows shows: [ShowOverview]) {

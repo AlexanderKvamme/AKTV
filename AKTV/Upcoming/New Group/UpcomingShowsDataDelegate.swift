@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SwiftUI
 
-final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableViewDataSource {
+final class UpcomingShowsDataDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: Properties
 
@@ -29,7 +30,8 @@ final class UpcomingShowsDataDelegate: NSObject,  UITableViewDelegate, UITableVi
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UpcomingSectionHeader()
+        let vc = UIHostingController(rootView: UpcomingSectionHeaderView(date: "11.11.11"))
+        return vc.view
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
