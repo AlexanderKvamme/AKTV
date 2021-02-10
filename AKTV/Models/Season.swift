@@ -67,7 +67,7 @@ struct Episode: Codable {
     var overview: String
     var productionCode: String
     var seasonNumber: Int
-    var showId: Int
+//    var showId: Int
     var stillPath: String?
     var voteAverage: Double
     var voteCount: Int

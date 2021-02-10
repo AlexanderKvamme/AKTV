@@ -56,7 +56,7 @@ final class UpcomingShowsDataDelegate: NSObject, UITableViewDelegate, UITableVie
     
     func update(withShow show: ShowOverview) {
         guard let nextDateString = show.nextEpisodeToAir?.airDate else {
-            print("Error: could not access next date of: ", show.name)
+            print("Error: could not access next date of: ", show)
             return
         }
 
