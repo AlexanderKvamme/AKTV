@@ -12,10 +12,10 @@ class TabBarView: UIView {
     // MARK: - Properties
 
     lazy var plusButton = RoundTabBarButton(frame: CGRect(x: screenWidth/2 - TabBarSettings.circleRadius, y: -TabBarSettings.barOffsetFromButton, width: TabBarSettings.circleRadius*2, height: TabBarSettings.circleRadius*2))
-    lazy var button1 = makeButton(iconName: "paperclip")
-    lazy var button2 = makeButton(iconName: "calendar")
-    lazy var button3 = makeButton(iconName: "moon.fill")
-    lazy var button4 = makeButton(iconName: "bookmark.fill")
+    lazy var button1 = makeButton(iconName: "calendar")
+    lazy var button2 = makeButton(iconName: "newspaper")
+    lazy var button3 = makeButton(iconName: "video")
+    lazy var button4 = makeButton(iconName: "gearshape")
 
     // MARK: - Initializers
 
@@ -45,6 +45,12 @@ class TabBarView: UIView {
         super.layoutSubviews()
 
         backgroundColor = .clear
+
+        // Fade un-impemented tabs
+        button2.alpha = 0.2
+        button2.alpha = 0.2
+        button3.alpha = 0.2
+        button4.alpha = 0.3
     }
 
     // MARK: - Helper methods
