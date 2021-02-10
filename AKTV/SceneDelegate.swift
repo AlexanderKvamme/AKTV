@@ -16,9 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Make initial view controller
-        let container = WellRoundedTabBarController()
-        container.setViewControllers([UpcomingScreen()], animated: true)
-        self.window?.rootViewController = container
+        let tabBarController = WellRoundedTabBarController()
+        tabBarController.setViewControllers([UpcomingScreen()], animated: true)
+
+        self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
     }
 

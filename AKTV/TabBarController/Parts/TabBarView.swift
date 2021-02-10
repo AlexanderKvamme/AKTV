@@ -9,11 +9,13 @@ import UIKit
 
 class TabBarView: UIView {
 
-    private lazy var plusButton = RoundTabBarButton(frame: CGRect(x: screenWidth/2 - TabBarSettings.circleRadius, y: -TabBarSettings.barOffsetFromButton, width: TabBarSettings.circleRadius*2, height: TabBarSettings.circleRadius*2))
-    private lazy var button1 = makeButton(iconName: "paperclip")
-    private lazy var button2 = makeButton(iconName: "calendar")
-    private lazy var button3 = makeButton(iconName: "moon.fill")
-    private lazy var button4 = makeButton(iconName: "bookmark.fill")
+    // MARK: - Properties
+
+    lazy var plusButton = RoundTabBarButton(frame: CGRect(x: screenWidth/2 - TabBarSettings.circleRadius, y: -TabBarSettings.barOffsetFromButton, width: TabBarSettings.circleRadius*2, height: TabBarSettings.circleRadius*2))
+    lazy var button1 = makeButton(iconName: "paperclip")
+    lazy var button2 = makeButton(iconName: "calendar")
+    lazy var button3 = makeButton(iconName: "moon.fill")
+    lazy var button4 = makeButton(iconName: "bookmark.fill")
 
     // MARK: - Initializers
 
@@ -22,7 +24,6 @@ class TabBarView: UIView {
 
         addBackgroundBar()
         addFourButtons()
-        addGestureRecognizers()
     }
 
     required init?(coder: NSCoder) {
@@ -101,8 +102,6 @@ extension TabBarView {
 
         addSubview(leftStack)
         addSubview(rightStack)
-
-        plusButton.addTarget(self, action: #selector(didTapButton4), for: .touchDown)
         addSubview(plusButton)
     }
 
@@ -113,28 +112,6 @@ extension TabBarView {
         stack.backgroundColor = debug ? .green : .clear
         stack.spacing = 8
         return stack
-    }
-
-    private func addGestureRecognizers() {
-        button1.addTarget(self, action: #selector(didTapButton1), for: .touchDown)
-        button2.addTarget(self, action: #selector(didTapButton2), for: .touchDown)
-        button3.addTarget(self, action: #selector(didTapButton3), for: .touchDown)
-        button4.addTarget(self, action: #selector(didTapButton4), for: .touchDown)
-    }
-
-    @objc private func didTapButton1() {
-        print("did tap button 1")
-    }
-
-    @objc private func didTapButton2() {
-        print("did tap button 2")
-    }
-
-    @objc private func didTapButton3() {
-        print("did tap button 3")
-    }
-    @objc private func didTapButton4() {
-        print("did tap button 4")
     }
 
     private func makeButton(iconName: String) -> UIButton {
