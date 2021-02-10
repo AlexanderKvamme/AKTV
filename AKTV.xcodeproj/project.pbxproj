@@ -63,6 +63,13 @@
 		DDA1A9222427B24D00F7907A /* AKTVUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A9212427B24D00F7907A /* AKTVUITests.swift */; };
 		DDA1A9312427B27C00F7907A /* Networker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A9302427B27C00F7907A /* Networker.swift */; };
 		DDA8EA282444BDD4004D1F14 /* EpisodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA8EA272444BDD4004D1F14 /* EpisodesTableViewController.swift */; };
+		DDB48F7325D3F694007C0131 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6C25D3F694007C0131 /* TabBarView.swift */; };
+		DDB48F7525D3F694007C0131 /* NativeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6E25D3F694007C0131 /* NativeExtensions.swift */; };
+		DDB48F7625D3F694007C0131 /* RoundTabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6F25D3F694007C0131 /* RoundTabBarButton.swift */; };
+		DDB48F7725D3F694007C0131 /* TabBarSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F7025D3F694007C0131 /* TabBarSettings.swift */; };
+		DDB48F7825D3F694007C0131 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F7125D3F694007C0131 /* UIColorExtensions.swift */; };
+		DDB48F7925D3F694007C0131 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F7225D3F694007C0131 /* GlobalProperties.swift */; };
+		DDB48F9625D455D9007C0131 /* WellRoundedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */; };
 		DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388F82427DD7D0049D881 /* SeriesListTableViewController.swift */; };
 		DDE388FB2427DE9E0049D881 /* ShowsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388FA2427DE9E0049D881 /* ShowsScreen.swift */; };
 		DDE388FE242AB6510049D881 /* Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388FD242AB6510049D881 /* Season.swift */; };
@@ -159,6 +166,13 @@
 		DDA1A9232427B24D00F7907A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDA1A9302427B27C00F7907A /* Networker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networker.swift; sourceTree = "<group>"; };
 		DDA8EA272444BDD4004D1F14 /* EpisodesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesTableViewController.swift; sourceTree = "<group>"; };
+		DDB48F6C25D3F694007C0131 /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		DDB48F6E25D3F694007C0131 /* NativeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeExtensions.swift; sourceTree = "<group>"; };
+		DDB48F6F25D3F694007C0131 /* RoundTabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundTabBarButton.swift; sourceTree = "<group>"; };
+		DDB48F7025D3F694007C0131 /* TabBarSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarSettings.swift; sourceTree = "<group>"; };
+		DDB48F7125D3F694007C0131 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		DDB48F7225D3F694007C0131 /* GlobalProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
+		DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellRoundedTabBarController.swift; sourceTree = "<group>"; };
 		DDE388F82427DD7D0049D881 /* SeriesListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListTableViewController.swift; sourceTree = "<group>"; };
 		DDE388FA2427DE9E0049D881 /* ShowsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsScreen.swift; sourceTree = "<group>"; };
 		DDE388FD242AB6510049D881 /* Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Season.swift; sourceTree = "<group>"; };
@@ -231,6 +245,7 @@
 		DD1A7BD3245C12B1005879F8 /* TabBarController */ = {
 			isa = PBXGroup;
 			children = (
+				DDB48F6B25D3F694007C0131 /* Parts */,
 				DD1A7BD4245C12D1005879F8 /* TabBarController.swift */,
 			);
 			path = TabBarController;
@@ -389,6 +404,20 @@
 				DDA1A9302427B27C00F7907A /* Networker.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		DDB48F6B25D3F694007C0131 /* Parts */ = {
+			isa = PBXGroup;
+			children = (
+				DDB48F6C25D3F694007C0131 /* TabBarView.swift */,
+				DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */,
+				DDB48F6E25D3F694007C0131 /* NativeExtensions.swift */,
+				DDB48F6F25D3F694007C0131 /* RoundTabBarButton.swift */,
+				DDB48F7025D3F694007C0131 /* TabBarSettings.swift */,
+				DDB48F7125D3F694007C0131 /* UIColorExtensions.swift */,
+				DDB48F7225D3F694007C0131 /* GlobalProperties.swift */,
+			);
+			path = Parts;
 			sourceTree = "<group>";
 		};
 		DDE388F52427D0990049D881 /* Shows */ = {
@@ -709,8 +738,10 @@
 				DDE388FB2427DE9E0049D881 /* ShowsScreen.swift in Sources */,
 				DD5A7E9824576BB100507BFE /* UpcomingShowCell.swift in Sources */,
 				DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */,
+				DDB48F7725D3F694007C0131 /* TabBarSettings.swift in Sources */,
 				DDE38906242BF6E00049D881 /* APIDAO.swift in Sources */,
 				DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */,
+				DDB48F7325D3F694007C0131 /* TabBarView.swift in Sources */,
 				DD6DDF5425CD8E8000A19F3A /* UpcomingSectionHeaderView.swift in Sources */,
 				DD6DDEC225CC7A2900A19F3A /* UpcomingShowCellView.swift in Sources */,
 				DDF92A1C25CDAE7100326E20 /* ColorExtensions.swift in Sources */,
@@ -719,18 +750,23 @@
 				DDA1A8FD2427B24B00F7907A /* AppDelegate.swift in Sources */,
 				DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */,
 				DD5A7E9624576AFB00507BFE /* UpcomingShowsDataDelegate.swift in Sources */,
+				DDB48F7625D3F694007C0131 /* RoundTabBarButton.swift in Sources */,
 				DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */,
+				DDB48F7525D3F694007C0131 /* NativeExtensions.swift in Sources */,
 				DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */,
 				DD1A7BD5245C12D1005879F8 /* TabBarController.swift in Sources */,
 				DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */,
 				DD6DDF5C25CDA0F500A19F3A /* FontExtensions.swift in Sources */,
 				DDE38900242BF0730049D881 /* ShowsDataDelegate.swift in Sources */,
+				DDB48F7825D3F694007C0131 /* UIColorExtensions.swift in Sources */,
 				DDA1A9072427B24B00F7907A /* AKTV.xcdatamodeld in Sources */,
 				DD000AA02454358800CB095D /* EpisodeScreen.swift in Sources */,
 				DD6DDF4F25CD517800A19F3A /* Themes.swift in Sources */,
+				DDB48F9625D455D9007C0131 /* WellRoundedTabBarController.swift in Sources */,
 				DDE38904242BF5F60049D881 /* Show.swift in Sources */,
 				DDA8EA282444BDD4004D1F14 /* EpisodesTableViewController.swift in Sources */,
 				DDE3890B242BF75A0049D881 /* ShowSearchResult.swift in Sources */,
+				DDB48F7925D3F694007C0131 /* GlobalProperties.swift in Sources */,
 				DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

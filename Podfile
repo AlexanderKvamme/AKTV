@@ -7,6 +7,9 @@ target 'AKTV' do
 
   # Pods for AKTV
   pod 'SnapKit'
+  pod 'ScreenCorners'
+
+  # Targets
   target 'AKTVTests' do
     inherit! :search_paths
     # Pods for testing
