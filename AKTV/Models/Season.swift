@@ -22,9 +22,9 @@ struct ShowOverview: Codable {
 //    var homepage: String
 //    var originalName: String
 //    var voteCount: Int
-//    var backdropPath: String
+    var backdropPath: String
 //    var originalLanguage: String
-//    var name: String
+    var name: String
 //    var numberOfEpisodes: Int
 //    var firstAirDate: Date
     var nextEpisodeToAir: Episode?

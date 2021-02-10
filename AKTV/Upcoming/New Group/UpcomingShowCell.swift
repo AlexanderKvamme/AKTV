@@ -16,7 +16,7 @@ final class UpcomingShowCell: UITableViewCell {
     
     static let identifier = "UpcomingShowCell"
 
-    let hostView = UIHostingController(rootView: UpcomingShowCellView())
+    let hostView = UIHostingController(rootView: UpcomingShowCellView(title: "TITLE", imageURL: "https://example.com/image.png", day: "SOME DAY"))
     
     // MARK: Initializers
     
@@ -43,9 +43,7 @@ final class UpcomingShowCell: UITableViewCell {
     // MARK: Internal methods
     
     func update(withShowOverview showOverview: ShowOverview) {
-        // TODO: Fetch from tv
-        // TODO: Update header and data
-        let url = URL(string: "https://smp.vgc.no/v2/images/e2b9a0f6-526b-4615-850e-bd38fc8e4d20?fit=crop&h=1267&w=1900&s=7ec50dd6a79a0dda0596386dd5768008510fccfa")
-//        showImageView.kf.setImage(with: url)
+        var newCellView = UpcomingShowCellView(title: showOverview.name, imageURL: showOverview.backdropPath, day: "Some day")
+        hostView.rootView = newCellView
     }
 }

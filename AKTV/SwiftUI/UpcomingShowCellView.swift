@@ -11,32 +11,38 @@ import Kingfisher
 
 
 struct UpcomingShowCellView: View {
+
+    var title: String
+    var imageURL: String
+    var day: String
+
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
             ZStack(alignment: .center, content: {
-                Image("post-stamp-2")
+                Image("post-stamp")
                     .renderingMode(.template)
                     .resizable()
                     .padding(20)
                     .aspectRatio(contentMode: .fit)
                     .foregroundColor(.white)
+                    .clipped()
                     .shadow(color: Color.black.opacity(0.2), radius: 10, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 5)
-                Image("test")
+                KFImage(URL(string: "https://image.tmdb.org/t/p/original/"+imageURL)!)
                     .resizable()
-                    .background(Color.green)
-                    .foregroundColor(.green)
                     .padding(40)
+                    .clipped()
+                    .aspectRatio(1, contentMode: .fill)
             })
             .frame(width: 200, height: 200, alignment: .center)
             VStack(alignment: .leading, spacing: 4) {
                 Spacer()
-                Text("American Gods")
+                Text(title)
                     .font(Font.gilroy(GilroyWeights.heavy, 30))
                     .textCase(.uppercase)
                     .lineLimit(nil)
                     .foregroundColor(Color.init(hex: "#3A3A3C"))
                     .lineLimit(nil)
-                Text("Wednesday")
+                Text(day)
                     .font(Font.round(DINWeights.medium, 20))
                     .tracking(1)
                     .foregroundColor(Color.init(hex: "#3A3A3C"))
@@ -54,8 +60,8 @@ struct UpcomingShowCellView: View {
 struct UpcomingShowCellView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            UpcomingShowCellView()
-                .previewLayout(.fixed(width: 414, height: 200))
+            UpcomingShowCellView(title: "Test", imageURL: "test", day: "Day name")
+                             .previewLayout(.fixed(width: 414, height: 200))
         }
     }
 }
