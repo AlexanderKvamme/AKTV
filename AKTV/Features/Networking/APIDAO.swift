@@ -77,6 +77,9 @@ final class APIDAO: NSObject {
             guard let content = data else {
                 return
             }
+            print("bam searchShows content")
+            print(content)
+            print("...")
             
             let decoder = JSONDecoder()
             var result: TVShowSearchResult?
@@ -116,14 +119,29 @@ final class APIDAO: NSObject {
                 print("not returning data")
                 return
             }
-            
+
+            print("bam data: ", data)
+            print("bam response: ", response)
+
+            print("shazam bam showOverview json: ", String(data: content, encoding: String.Encoding.utf8))
+
+debugPrint(content)
+
             // Got JSON
             guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] else {
                 print("Not containing JSON")
                 return
             }
-            print("bam json: ", json)
-            
+            print()
+            print()
+            print()
+            print()
+            print("bam show json: ", json)
+            print()
+            print()
+            print()
+            print()
+
             // Mapping
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -155,7 +173,7 @@ final class APIDAO: NSObject {
                 print("Not containing JSON")
                 return
             }
-            print("bam json: ", json)
+            print("bam episodes json: ", json)
             
             // Mapping
             let decoder = JSONDecoder()

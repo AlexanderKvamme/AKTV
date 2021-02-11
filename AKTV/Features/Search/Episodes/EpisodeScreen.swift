@@ -43,9 +43,7 @@ final class EpisodeScreen: UIViewController {
             make.bottom.equalToSuperview()
         }
     }
-    
-    // MARK: Helper methods
-    
+
     // MARK: Internal methods
     
     func update(with episode: Episode) {

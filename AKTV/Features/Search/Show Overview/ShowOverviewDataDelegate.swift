@@ -43,7 +43,7 @@ final class SeasonOverviewCell: UITableViewCell {
     
     // MARK: Properties
     
-    var header = UILabel()
+    var seasonLabel = UILabel()
     
     // MARK: Initializers
     
@@ -63,33 +63,29 @@ final class SeasonOverviewCell: UITableViewCell {
     // MARK: Private methods
     
     private func setup() {
-        header.text = "Shazam"
-        header.backgroundColor = .purple
+        backgroundColor = .clear
+        selectionStyle = .none
+
+        seasonLabel.text = "Season goes here"
+        seasonLabel.textAlignment = .center
+        seasonLabel.font = UIFont.gilroy(.semibold, 20)
+        seasonLabel.textColor = UIColor(light)
     }
     
     private func addSubviewsAndConstraints() {
-        contentView.addSubview(header)
+        contentView.addSubview(seasonLabel)
         
-//        contentView.snp.makeConstraints { (make) in
-//            make.height.equalTo(200)
-//            make.width.equalTo(UIScreen.main.bounds.width)
-//        }
-        
-//        contentView.snp.makeConstraints { (make) in
-//            make.height.equalTo(200)
-////            make.width.equalTo(200)
-//            make.width.equalTo(UIScreen.main.bounds.width)
-//        }
-        
-        header.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-            make.height.equalTo(100)
+        seasonLabel.snp.makeConstraints { (make) in
+            make.top.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+            make.height.equalTo(80)
         }
     }
     
     // MARK: Internal methods
     
     func update(with seasonOverview: SeasonOverview) {
-        header.text = seasonOverview.name
+        seasonLabel.text = seasonOverview.name
     }
 }

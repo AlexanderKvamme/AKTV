@@ -17,11 +17,14 @@ extension ShowOverviewScreen: SeasonPresenter {
             let showId = showId else {
                 fatalError("Show had no id to present from")
         }
+
+        print("bam season:", seasonNumber)
+        print("bam showid: ", showId)
         
         // FIXME: NOW - Bruk episodene og vis de i en ny viewcontroller
         apiDao.episodes(showId: showId, seasonNumber: seasonNumber) { (season) in
             DispatchQueue.main.sync {
-                let seasonScreen = SeasonTableViewController()
+                let seasonScreen = SeasonScreen()
                 seasonScreen.update(with: season)
                 self.present(seasonScreen, animated: true, completion: nil)
             }
@@ -45,9 +48,7 @@ final class ShowOverviewScreen: UIViewController {
         self.apiDao = dao
         
         super.init(nibName: nil, bundle: nil)
-        
-        view.backgroundColor = .orange
-        tableView.backgroundColor = .green
+
         setup()
         addSubviewsAndConstraints()
     }
