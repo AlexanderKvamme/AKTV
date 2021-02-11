@@ -39,7 +39,7 @@ final class EpisodeCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .clear
 
-        episodeNumberLabel.font = UIFont.round(.bold, 40)
+        episodeNumberLabel.font = UIFont.gilroy(.bold, 40)
         episodeNumberLabel.alpha = 0.3
         episodeNumberLabel.textColor = UIColor(light)
         episodeNumberLabel.textAlignment = .center

@@ -169,7 +169,7 @@ extension ShowsSearchScreen: ModelPresenter {
             DispatchQueue.main.async {
                 let next = ShowOverviewScreen(dao: self.apiDao)
                 next.update(with: showOverview)
-                self.present(next, animated: false, completion: nil)
+                self.present(next, animated: true, completion: nil)
             }
         }
     }

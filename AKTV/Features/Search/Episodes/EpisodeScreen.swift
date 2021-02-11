@@ -11,17 +11,17 @@ import UIKit
 final class EpisodeScreen: UIViewController {
     
     // MARK: Properties
-    
+
+    let episodeHeader = UILabel()
     let episodeTextView = UITextView()
     
     // MARK: Initializers
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        
+
         setup()
         addSubviewsAndConstraints()
-        view.backgroundColor = .purple
     }
     
     required init?(coder: NSCoder) {
@@ -31,15 +31,33 @@ final class EpisodeScreen: UIViewController {
     // MARK: Private methods
     
     private func setup() {
-        episodeTextView.backgroundColor = .cyan
-        episodeTextView.font = UIFont.systemFont(ofSize: 24)
+        view.backgroundColor = UIColor(dark)
+
+        episodeHeader.font = UIFont.gilroy(.bold, 40)
+        episodeHeader.textColor = UIColor(light)
+        episodeHeader.textAlignment = .center
+
+        episodeTextView.font = UIFont.gilroy(.regular, 20)
+        episodeTextView.textColor = UIColor(light)
+        episodeTextView.isUserInteractionEnabled = false
+        episodeTextView.backgroundColor = .clear
     }
     
     private func addSubviewsAndConstraints() {
+        view.addSubview(episodeHeader)
         view.addSubview(episodeTextView)
+
+        episodeHeader.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(24)
+            make.top.equalToSuperview().offset(24)
+            make.right.equalToSuperview().offset(-24)
+            make.height.equalTo(200)
+        }
+
         episodeTextView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.left.right.equalToSuperview()
+            make.top.equalTo(episodeHeader.snp.bottom).offset(24)
+            make.left.equalToSuperview().offset(24)
+            make.right.equalToSuperview().offset(-24)
             make.bottom.equalToSuperview()
         }
     }
@@ -48,5 +66,6 @@ final class EpisodeScreen: UIViewController {
     
     func update(with episode: Episode) {
         episodeTextView.text = episode.overview
+        episodeHeader.text = episode.name
     }
 }
