@@ -51,6 +51,7 @@
 		DD6DDF5C25CDA0F500A19F3A /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6DDF5B25CDA0F500A19F3A /* FontExtensions.swift */; };
 		DD78E2FC25CAF1230084F101 /* DayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78E2FB25CAF1230084F101 /* DayModel.swift */; };
 		DD78E30125CAF2300084F101 /* UpcomingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78E30025CAF2300084F101 /* UpcomingSectionHeader.swift */; };
+		DD7E660C25D538F7006553D1 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7E660B25D538F7006553D1 /* URLExtensions.swift */; };
 		DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */; };
 		DDA1A8FD2427B24B00F7907A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */; };
 		DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A8FE2427B24B00F7907A /* SceneDelegate.swift */; };
@@ -148,6 +149,7 @@
 		DD6DDF5B25CDA0F500A19F3A /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
 		DD78E2FB25CAF1230084F101 /* DayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayModel.swift; sourceTree = "<group>"; };
 		DD78E30025CAF2300084F101 /* UpcomingSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingSectionHeader.swift; sourceTree = "<group>"; };
+		DD7E660B25D538F7006553D1 /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingTableHeader.swift; sourceTree = "<group>"; };
 		DDA1A8F92427B24B00F7907A /* AKTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AKTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 			children = (
 				DD6DDF5B25CDA0F500A19F3A /* FontExtensions.swift */,
 				DDF92A1B25CDAE7100326E20 /* ColorExtensions.swift */,
+				DD7E660B25D538F7006553D1 /* URLExtensions.swift */,
 			);
 			path = "Native-Extensions";
 			sourceTree = "<group>";
@@ -766,6 +769,7 @@
 				DDE38904242BF5F60049D881 /* Show.swift in Sources */,
 				DDA8EA282444BDD4004D1F14 /* EpisodesTableViewController.swift in Sources */,
 				DDE3890B242BF75A0049D881 /* ShowSearchResult.swift in Sources */,
+				DD7E660C25D538F7006553D1 /* URLExtensions.swift in Sources */,
 				DDB48F7925D3F694007C0131 /* GlobalProperties.swift in Sources */,
 				DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */,
 			);

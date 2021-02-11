@@ -11,7 +11,7 @@ import ScreenCorners
 public struct TabBarSettings {
     static let circleRadius: CGFloat            = 36
     static let spacingUnderMainButton: CGFloat  = 8
-    static let sectionButtonColor: UIColor      = UIColor(hex: "#211426")!
+    static let sectionButtonColor: UIColor      = UIColor(.black)
     static let plusButtonColor: UIColor         = .white
     static let barColor: UIColor                = .white
     static let extraHeight: CGFloat             = 24 // FIXME: Corners are masked wrong when modifying this. 40 looks ok but less does not (24)

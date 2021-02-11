@@ -53,7 +53,6 @@ final class ShowOverviewScreenHeader: UIView {
         heartIcon.layer.borderWidth = 10
         
         let userPreferenceManager = UserProfileManager()
-        let favShows = userPreferenceManager.favouriteShows()
         
         heartIcon.addTarget(self, action: #selector(toggleHeart), for: .touchUpInside)
     }
@@ -77,7 +76,8 @@ final class ShowOverviewScreenHeader: UIView {
 final class ShowsSearchScreen: UIViewController {
     
     // MARK: Properties
-    
+
+    private let headerField = UILabel()
     private let searchField = UITextField()
     private let episodesSearchResultViewController = UITableViewController()
     private let episodesSearchResultDataDelegate = ShowsDataDelegate()
@@ -88,7 +88,6 @@ final class ShowsSearchScreen: UIViewController {
     init(dao: APIDAO) {
         apiDao = dao
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .green
         setup()
         addSubviewsAndConstraints()
     }
@@ -100,25 +99,43 @@ final class ShowsSearchScreen: UIViewController {
     // MARK: Private methods
     
     private func setup() {
-        searchField.backgroundColor = .green
-        searchField.placeholder = "Søk her"
+        view.backgroundColor = UIColor(dark)
+
+        headerField.font = UIFont.gilroy(.semibold, 20)
+        headerField.textAlignment = .center
+        headerField.textColor = UIColor(light)
+        headerField.text = "What are you looking for?"
+
+        searchField.backgroundColor = UIColor(dark)
+        searchField.textColor = UIColor(light)
+        searchField.textAlignment = .center
+        searchField.placeholder = "Search her"
+        searchField.font = UIFont.gilroy(.heavy, 60)
         searchField.delegate = self
         searchField.isUserInteractionEnabled = true
         searchField.becomeFirstResponder()
-        
+
         episodesSearchResultViewController.tableView.dataSource = episodesSearchResultDataDelegate
         episodesSearchResultViewController.tableView.delegate = episodesSearchResultDataDelegate
-        episodesSearchResultViewController.tableView.estimatedRowHeight = 200
+        episodesSearchResultViewController.tableView.estimatedRowHeight = ShowCell.estimatedHeight
+        episodesSearchResultViewController.tableView.backgroundColor = .clear
+
         
         episodesSearchResultDataDelegate.detailedShowPresenter = self
     }
     
     private func addSubviewsAndConstraints() {
         view.addSubview(searchField)
-        
         searchField.snp.makeConstraints { (make) in
-            make.left.top.right.equalToSuperview()
-            make.height.equalTo(100)
+            make.top.equalToSuperview().offset(80)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(200)
+        }
+
+        view.addSubview(headerField)
+        headerField.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(100)
+            make.left.right.equalToSuperview()
         }
         
         let tv = episodesSearchResultViewController
@@ -154,6 +171,10 @@ extension ShowsSearchScreen: ModelPresenter {
 // MARK: - Make self textview delegate
 
 extension ShowsSearchScreen: UITextFieldDelegate {
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        textField.text = textField.text?.uppercased()
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let searchterm = textField.text else {
@@ -166,7 +187,8 @@ extension ShowsSearchScreen: UITextFieldDelegate {
                 self.episodesSearchResultViewController.tableView.reloadData()
             }
         }
-        
+
+        textField.resignFirstResponder()
         return true
     }
 }

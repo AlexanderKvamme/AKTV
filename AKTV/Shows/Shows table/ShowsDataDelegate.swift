@@ -25,6 +25,7 @@ final class ShowsDataDelegate: NSObject, UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let show = shows[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ShowCell.identifier) ?? ShowCell(for: shows[indexPath.row])
+        cell.backgroundColor = .clear
         if let cell = cell as? ShowCell {
             cell.update(with: show)
         } else {
@@ -41,7 +42,8 @@ final class ShowsDataDelegate: NSObject, UITableViewDataSource, UITableViewDeleg
 final class ShowCell: UITableViewCell {
     
     // MARK: Properties
-    
+
+    static let estimatedHeight: CGFloat = 64
     var header = UILabel()
     
     // MARK: Initializers
@@ -50,9 +52,7 @@ final class ShowCell: UITableViewCell {
     
     init(for episode: Show) {
         super.init(style: .default, reuseIdentifier: ShowCell.identifier)
-        
-        // setup
-        
+
         setup()
         addSubviewsAndConstraints()
     }
@@ -64,27 +64,23 @@ final class ShowCell: UITableViewCell {
     // MARK: Private methods
     
     private func setup() {
+        selectionStyle = .none
+
         header.text = "Shazam"
-        header.backgroundColor = .purple
+        header.textColor = UIColor(light)
+        header.font = UIFont.gilroy(.bold, 20)
+        header.layoutMargins = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 0)
+        header.backgroundColor = .clear
     }
     
     private func addSubviewsAndConstraints() {
         contentView.addSubview(header)
         
-//        contentView.snp.makeConstraints { (make) in
-//            make.height.equalTo(200)
-//            make.width.equalTo(UIScreen.main.bounds.width)
-//        }
-        
-//        contentView.snp.makeConstraints { (make) in
-//            make.height.equalTo(200)
-////            make.width.equalTo(200)
-//            make.width.equalTo(UIScreen.main.bounds.width)
-//        }
-        
         header.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-            make.height.equalTo(200)
+            make.top.right.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(24)
+
+            make.height.equalTo(Self.estimatedHeight)
         }
     }
     

@@ -9,12 +9,18 @@
 import SwiftUI
 import Kingfisher
 
-
 struct UpcomingShowCellView: View {
 
     var title: String
-    var imageURL: String
+    var imageURL: String?
     var day: String
+    var computedURL: URL {
+        if let imageURL = imageURL, let url = URL(string: "https://image.tmdb.org/t/p/original/"+imageURL) {
+            return url
+        }
+
+        return URL.createLocalUrl(forImageNamed: "default-placeholder-image")!
+    }
 
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
@@ -27,7 +33,7 @@ struct UpcomingShowCellView: View {
                     .foregroundColor(.white)
                     .clipped()
                     .shadow(color: Color.black.opacity(0.2), radius: 10, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 5)
-                KFImage(URL(string: "https://image.tmdb.org/t/p/original/"+imageURL)!)
+                KFImage(computedURL)
                     .resizable()
                     .padding(40)
                     .clipped()
