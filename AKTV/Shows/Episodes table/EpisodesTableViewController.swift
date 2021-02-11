@@ -124,13 +124,13 @@ final class ShowHeaderView: UIView {
     var titleLabel = UILabel()
     var heartButton = UIButton()
     var showOverview: ShowOverview?
+    let backgroundImage = UIImageView()
     
     // MARK: Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = .black
+
         setup()
         addSubviewsAndConstraints()
     }
@@ -142,11 +142,16 @@ final class ShowHeaderView: UIView {
     // MARK: Private methods
     
     private func setup() {
+        backgroundColor = UIColor(dark)
+
+        backgroundImage.image = UIImage(named: "default-placeholder-image")
+
         titleLabel.text = "ShowHeaderView"
-        titleLabel.textColor = .yellow
+        titleLabel.textColor = UIColor(light)
+        titleLabel.font = UIFont.gilroy(.heavy, 40)
         titleLabel.sizeToFit()
         
-        heartButton.tintColor = .white
+        heartButton.tintColor = UIColor(light)
         heartButton.addTarget(self, action: #selector(didTapHeart), for: .touchUpInside)
     }
 
@@ -158,6 +163,11 @@ final class ShowHeaderView: UIView {
     }
     
     private func addSubviewsAndConstraints() {
+        addSubview(backgroundImage)
+        backgroundImage.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
@@ -165,9 +175,9 @@ final class ShowHeaderView: UIView {
         
         addSubview(heartButton)
         heartButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
-            make.size.equalTo(50)
+            make.top.equalToSuperview().offset(24)
+            make.right.equalToSuperview().offset(-24)
+            make.size.equalTo(40)
         }
     }
     
@@ -190,9 +200,14 @@ final class ShowHeaderView: UIView {
     }
     
     func update(withShow showOverview: ShowOverview) {
-        titleLabel.text = "title needs a full show"
         self.showOverview = showOverview
-        
+        titleLabel.text = showOverview.name.uppercased()
+
+        if let imagePath = showOverview.backdropPath,
+           let url = URL(string: APIDAO.imageRoot+imagePath) {
+            backgroundImage.kf.setImage(with: url)
+        }
+
         heartButton.setImage(isFavorite() ? UIImage(named: "icons8-heart-50-filled")!.withRenderingMode(.alwaysTemplate) : UIImage(named: "icons8-heart-50-outlined")!.withRenderingMode(.alwaysTemplate), for: .normal)
     }
 }

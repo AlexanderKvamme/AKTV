@@ -16,6 +16,7 @@ final class APIDAO: NSObject {
     
     private let root = "https://api.themoviedb.org/3/"
     private let keyParam = "api_key=a1549fe4c5cb82a960b858411d70112c"
+    static let imageRoot = "https://image.tmdb.org/t/p/original/"
     
     typealias JSONCompletion = (([String: Any]?) -> Void)
     

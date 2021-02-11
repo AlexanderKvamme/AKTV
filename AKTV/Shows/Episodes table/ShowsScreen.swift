@@ -33,7 +33,7 @@ final class ShowOverviewScreen: UIViewController {
     
     // MARK: Properties
     
-    private let header = ShowHeaderView(frame: CGRect(x: 0, y: 0, width: 300, height: 150))
+    private let header = ShowHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 300))
     private let showOverviewViewController = UIViewController()
     private let showOverviewDataDelegate = ShowOverviewDataDelegate()
     private let tableView = UITableView()
@@ -59,6 +59,9 @@ final class ShowOverviewScreen: UIViewController {
     // MARK: Private methods
     
     private func setup() {
+        view.backgroundColor = UIColor(dark)
+
+        tableView.backgroundColor = .clear
         tableView.delegate = showOverviewDataDelegate
         tableView.dataSource = showOverviewDataDelegate
         showOverviewDataDelegate.seasonPresenter = self
@@ -66,15 +69,14 @@ final class ShowOverviewScreen: UIViewController {
     
     private func addSubviewsAndConstraints() {
         tableView.tableHeaderView = header
+
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
     }
-    
-    // MARK: Helper methods
-    
+
     // MARK: Internal methods
     
     func update(with showOverview: ShowOverview) {

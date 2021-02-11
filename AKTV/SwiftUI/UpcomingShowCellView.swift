@@ -15,7 +15,7 @@ struct UpcomingShowCellView: View {
     var imageURL: String?
     var day: String
     var computedURL: URL {
-        if let imageURL = imageURL, let url = URL(string: "https://image.tmdb.org/t/p/original/"+imageURL) {
+        if let imageURL = imageURL, let url = URL(string: APIDAO.imageRoot+imageURL) {
             return url
         }
 

@@ -77,7 +77,7 @@ final class ShowCell: UITableViewCell {
         contentView.addSubview(header)
         
         header.snp.makeConstraints { (make) in
-            make.top.right.bottom.equalToSuperview()
+            make.top.right.equalToSuperview()
             make.left.equalToSuperview().offset(24)
 
             make.height.equalTo(Self.estimatedHeight)
