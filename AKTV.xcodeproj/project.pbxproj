@@ -13,7 +13,7 @@
 		DD000AA02454358800CB095D /* EpisodeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000A9F2454358800CB095D /* EpisodeScreen.swift */; };
 		DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000AA22455BECE00CB095D /* UserProfileManager.swift */; };
 		DD041DB125CB05FB003933AE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DD041DB025CB05FB003933AE /* Kingfisher */; };
-		DD1A7BD5245C12D1005879F8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1A7BD4245C12D1005879F8 /* TabBarController.swift */; };
+		DD1A7BD5245C12D1005879F8 /* ColoredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1A7BD4245C12D1005879F8 /* ColoredViewController.swift */; };
 		DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD315B66245D7D570046AB38 /* AKDateFormatter.swift */; };
 		DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */; };
 		DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */; };
@@ -110,7 +110,7 @@
 		DB8B71D71EA14CE402D4DAEF /* Pods-AKTVTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTVTests.debug.xcconfig"; path = "Target Support Files/Pods-AKTVTests/Pods-AKTVTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD000A9F2454358800CB095D /* EpisodeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeScreen.swift; sourceTree = "<group>"; };
 		DD000AA22455BECE00CB095D /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
-		DD1A7BD4245C12D1005879F8 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		DD1A7BD4245C12D1005879F8 /* ColoredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredViewController.swift; sourceTree = "<group>"; };
 		DD315B66245D7D570046AB38 /* AKDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AKDateFormatter.swift; sourceTree = "<group>"; };
 		DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowSearchScreen.swift; path = "Shows table/ShowSearchScreen.swift"; sourceTree = "<group>"; };
 		DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingScreen.swift; sourceTree = "<group>"; };
@@ -246,7 +246,6 @@
 			isa = PBXGroup;
 			children = (
 				DDB48F6B25D3F694007C0131 /* Parts */,
-				DD1A7BD4245C12D1005879F8 /* TabBarController.swift */,
 			);
 			path = TabBarController;
 			sourceTree = "<group>";
@@ -356,6 +355,7 @@
 		DDA1A8FB2427B24B00F7907A /* AKTV */ = {
 			isa = PBXGroup;
 			children = (
+				DD1A7BD4245C12D1005879F8 /* ColoredViewController.swift */,
 				DD6DDF6325CDA0FE00A19F3A /* Native-Extensions */,
 				DD6DDEC625CD453E00A19F3A /* Resources */,
 				DD6DDEC025CC7A0A00A19F3A /* SwiftUI */,
@@ -753,7 +753,7 @@
 				DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */,
 				DDB48F7525D3F694007C0131 /* NativeExtensions.swift in Sources */,
 				DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */,
-				DD1A7BD5245C12D1005879F8 /* TabBarController.swift in Sources */,
+				DD1A7BD5245C12D1005879F8 /* ColoredViewController.swift in Sources */,
 				DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */,
 				DD6DDF5C25CDA0F500A19F3A /* FontExtensions.swift in Sources */,
 				DDE38900242BF0730049D881 /* ShowsDataDelegate.swift in Sources */,
