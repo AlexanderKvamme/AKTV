@@ -49,9 +49,9 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        let searchController = ViewController()
-        setViewControllers([upcomingScreen, ColoredViewController(color: .blue), searchController, ColoredViewController(color: .purple), ColoredViewController(color: .red)], animated: true)
+        setViewControllers([upcomingScreen, ColoredViewController(color: .blue), showSearchController, ColoredViewController(color: .purple), ColoredViewController(color: .red)], animated: true)
 
+        selectedIndex = 2
         configureTabBarButtons()
     }
 
