@@ -70,6 +70,7 @@
 		DDB48F7825D3F694007C0131 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F7125D3F694007C0131 /* UIColorExtensions.swift */; };
 		DDB48F7925D3F694007C0131 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F7225D3F694007C0131 /* GlobalProperties.swift */; };
 		DDB48F9625D455D9007C0131 /* WellRoundedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */; };
+		DDC8047D25D56C8200B0418B /* ShowOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC8047C25D56C8200B0418B /* ShowOverview.swift */; };
 		DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388F82427DD7D0049D881 /* SeriesListTableViewController.swift */; };
 		DDE388FB2427DE9E0049D881 /* ShowsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388FA2427DE9E0049D881 /* ShowsScreen.swift */; };
 		DDE388FE242AB6510049D881 /* Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388FD242AB6510049D881 /* Season.swift */; };
@@ -173,6 +174,7 @@
 		DDB48F7125D3F694007C0131 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		DDB48F7225D3F694007C0131 /* GlobalProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
 		DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellRoundedTabBarController.swift; sourceTree = "<group>"; };
+		DDC8047C25D56C8200B0418B /* ShowOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOverview.swift; sourceTree = "<group>"; };
 		DDE388F82427DD7D0049D881 /* SeriesListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListTableViewController.swift; sourceTree = "<group>"; };
 		DDE388FA2427DE9E0049D881 /* ShowsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsScreen.swift; sourceTree = "<group>"; };
 		DDE388FD242AB6510049D881 /* Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Season.swift; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				DDE388FD242AB6510049D881 /* Season.swift */,
+				DDC8047C25D56C8200B0418B /* ShowOverview.swift */,
 				DDE38903242BF5F60049D881 /* Show.swift */,
 				DDE3890A242BF75A0049D881 /* ShowSearchResult.swift */,
 				DD78E2FB25CAF1230084F101 /* DayModel.swift */,
@@ -766,6 +769,7 @@
 				DDA8EA282444BDD4004D1F14 /* EpisodesTableViewController.swift in Sources */,
 				DDE3890B242BF75A0049D881 /* ShowSearchResult.swift in Sources */,
 				DD7E660C25D538F7006553D1 /* URLExtensions.swift in Sources */,
+				DDC8047D25D56C8200B0418B /* ShowOverview.swift in Sources */,
 				DDB48F7925D3F694007C0131 /* GlobalProperties.swift in Sources */,
 				DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */,
 			);
