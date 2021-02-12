@@ -9,10 +9,6 @@
 import UIKit
 import ComplimentaryGradientView
 
-extension CGRect {
-    static let defaultButtonRect = CGRect(x: 0, y: 0, width: 48, height: 48)
-}
-
 
 final class ShowHeaderView: UIView {
 
