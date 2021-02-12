@@ -13,7 +13,8 @@ final class IconRowView: UIView {
     // MARK: - Properties
 
     let stackView = UIStackView()
-    var starButton = StarLabeledIcon()
+    let starButton = StarLabeledIcon()
+    var ratingIcon = RatingIcon(text: "RATING", targetNumber: 0)
 
     // MARK: - Initializers
 
@@ -37,10 +38,11 @@ final class IconRowView: UIView {
         stackView.alignment = .center
         stackView.spacing = 8
 
-        let trailersButton = LabeledIcon(text: "Trailers", icon: "film")
+        let trailersButton = LabeledIconButton(text: "Trailers", icon: "film")
         stackView.addArrangedSubview(UIView())
         stackView.addArrangedSubview(trailersButton)
         stackView.addArrangedSubview(starButton)
+        stackView.addArrangedSubview(ratingIcon)
         stackView.addArrangedSubview(UIView())
     }
 
@@ -51,6 +53,7 @@ final class IconRowView: UIView {
     // MARK: - Public methods
 
     func update(with overview: ShowOverview) {
+        ratingIcon.update(with: overview)
         starButton.update(with: overview)
     }
 }

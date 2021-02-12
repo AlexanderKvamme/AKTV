@@ -9,7 +9,7 @@
 import UIKit
 
 
-class LabeledIcon: UIButton {
+class LabeledIconButton: UIButton {
 
     // MARK: - Properties
 
@@ -39,12 +39,12 @@ class LabeledIcon: UIButton {
         icon.tintColor = UIColor(light)
         label.text = text.uppercased()
         label.textColor = UIColor(light)
-        label.font = UIFont.gilroy(.bold, 14)
+        label.font = UIFont.gilroy(.semibold, 12)
         label.alpha = 0.3
         label.sizeToFit()
     }
 
-    private func addSubviewsAndConstraints() {
+    fileprivate func addSubviewsAndConstraints() {
         [icon, label].forEach({ addSubview($0) })
 
         icon.snp.makeConstraints { (make) in
@@ -60,7 +60,62 @@ class LabeledIcon: UIButton {
     }
 }
 
-final class StarLabeledIcon: LabeledIcon {
+
+final class RatingIcon: LabeledIconButton {
+
+    // MARK: - Properties
+
+    private var endValue: Double
+    private var ratingLabel = UpCountingLabel()
+    private lazy var displayLink = CADisplayLink(target: self, selector: #selector(handleUpdate))
+    
+    // MARK: - Initializers
+    
+    init(text: String, targetNumber: Double) {
+        self.endValue = targetNumber
+        super.init(text: text, icon: "USE NUMBER LABEL INSTEAD")
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Methods
+
+    override func addSubviewsAndConstraints() {
+        super.addSubviewsAndConstraints()
+
+        addSubview(ratingLabel)
+        ratingLabel.snp.makeConstraints { (make) in
+            make.left.right.top.equalToSuperview()
+            make.bottom.equalTo(label.snp.top)
+        }
+    }
+
+    func update(with overview: ShowOverview) {
+        endValue = overview.voteAverage
+        displayLink.add(to: .main, forMode: .default)
+    }
+
+    @objc private func handleUpdate() {
+        guard let labelText = ratingLabel.text, let currentValue = Double(labelText) else {
+            return
+        }
+
+        let animationDurationInSeconds = 1.0
+        let step = endValue/animationDurationInSeconds/60
+        let newValue = currentValue+step
+        ratingLabel.text = String(format:"%.1f", newValue)
+
+        if currentValue >= endValue {
+            ratingLabel.text = String(endValue)
+            displayLink.remove(from: .main, forMode: .default)
+        }
+    }
+}
+
+
+final class StarLabeledIcon: LabeledIconButton {
 
     // MARK: - Properties
 

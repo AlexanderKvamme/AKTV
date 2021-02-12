@@ -16,7 +16,7 @@ struct ShowOverview: Codable {
     var numberOfSeasons: Int
 //    var networks: [Network]
 //    var popularity: Double
-//    var voteAverage: Int
+    var voteAverage: Double
 //    var homepage: String
 //    var originalName: String
 //    var voteCount: Int
