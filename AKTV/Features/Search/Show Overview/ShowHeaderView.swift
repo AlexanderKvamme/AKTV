@@ -14,7 +14,7 @@ final class ShowHeaderView: UIView {
 
     // MARK: Properties
 
-    var titleLabel = UILabel()
+    var titleLabel = BottomAlignedLabel()
     var showOverview: ShowOverview?
     let imageView = UIImageView()
     let gradientBackground = DiagonalComplimentaryView()
@@ -42,7 +42,8 @@ final class ShowHeaderView: UIView {
 
         titleLabel.textColor = UIColor(light)
         titleLabel.font = UIFont.gilroy(.heavy, 40)
-        titleLabel.sizeToFit()
+        titleLabel.lineBreakMode = .byWordWrapping
+        titleLabel.numberOfLines = 0
 
         imageView.layer.cornerRadius = 24
         imageView.clipsToBounds = true
@@ -75,7 +76,8 @@ final class ShowHeaderView: UIView {
         }
 
         titleLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
+            make.left.equalTo(imageView).offset(24)
+            make.top.right.equalToSuperview().offset(-32)
             make.bottom.equalTo(imageView).offset(-24)
         }
 
