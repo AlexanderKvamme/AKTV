@@ -8,6 +8,7 @@ target 'AKTV' do
   # Pods for AKTV
   pod 'SnapKit'
   pod 'ScreenCorners'
+  pod 'ComplimentaryGradientView'
 
   # Targets
   target 'AKTVTests' do

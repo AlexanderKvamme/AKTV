@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import ComplimentaryGradientView
 
 extension ShowOverviewScreen: SeasonPresenter {
     func displaySeason(showId: Int?, seasonNumber: Int?) {
@@ -36,11 +37,12 @@ final class ShowOverviewScreen: UIViewController {
     
     // MARK: Properties
     
-    private let header = ShowHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 300))
+    private let header = ShowHeaderView()
     private let showOverviewViewController = UIViewController()
     private let showOverviewDataDelegate = ShowOverviewDataDelegate()
     private let tableView = UITableView()
     private let apiDao: APIDAO
+    private let backgroundView = ComplimentaryGradientView()
     
     // MARK: Initializers
     
@@ -71,8 +73,12 @@ final class ShowOverviewScreen: UIViewController {
     private func addSubviewsAndConstraints() {
         tableView.tableHeaderView = header
 
+        view.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+
         view.addSubview(tableView)
-        
         tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }

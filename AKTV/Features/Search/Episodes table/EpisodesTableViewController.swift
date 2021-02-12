@@ -8,7 +8,7 @@
 
 import UIKit
 import SnapKit
-
+import ComplimentaryGradientView
 
 final class SeasonScreen: UIViewController {
     
@@ -18,10 +18,11 @@ final class SeasonScreen: UIViewController {
     var tableView = UITableView()
     var episodesDataDelegate = SeasonDataDelegate()
     var episodeDisplayer: EpisodeDisplayer?
+    let gradientBackground = ComplimentaryGradientView()
     
     // MARK: Initializers
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    init() {
         super.init(nibName: nil, bundle: nil)
         
         view.backgroundColor = UIColor(dark)
@@ -51,7 +52,6 @@ final class SeasonScreen: UIViewController {
     
     private func addSubviewsAndConstraints() {
         view.addSubview(tableView)
-        
         tableView.snp.makeConstraints { (make) in
             make.top.left.bottom.right.equalToSuperview()
         }

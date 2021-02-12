@@ -1,20 +1,24 @@
 PODS:
+  - ComplimentaryGradientView (0.3.0)
   - ScreenCorners (1.0.1)
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
+  - ComplimentaryGradientView
   - ScreenCorners
   - SnapKit
 
 SPEC REPOS:
   trunk:
+    - ComplimentaryGradientView
     - ScreenCorners
     - SnapKit
 
 SPEC CHECKSUMS:
+  ComplimentaryGradientView: d874186ea4c37bd08ebd1f2d229698416cacaa39
   ScreenCorners: 9bfdf033122fb645d57cc8f9df7b8ea770720771
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: f31111c29c335fd34fb9aecb91e223e5ddb01d2d
+PODFILE CHECKSUM: 81f22329fa9df7033e98aea482346fa7cde0635f
 
 COCOAPODS: 1.10.1

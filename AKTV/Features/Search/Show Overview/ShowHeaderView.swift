@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import ComplimentaryGradientView
+
+extension CGRect {
+    static let defaultButtonRect = CGRect(x: 0, y: 0, width: 48, height: 48)
+}
 
 
 final class ShowHeaderView: UIView {
@@ -14,14 +19,15 @@ final class ShowHeaderView: UIView {
     // MARK: Properties
 
     var titleLabel = UILabel()
-    var heartButton = UIButton()
     var showOverview: ShowOverview?
-    let backgroundImage = UIImageView()
+    let imageView = UIImageView()
+    let gradientBackground = DiagonalComplimentaryView()
+    let iconRow = IconRowView()
 
     // MARK: Initializers
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 400))
 
         setup()
         addSubviewsAndConstraints()
@@ -36,15 +42,16 @@ final class ShowHeaderView: UIView {
     private func setup() {
         backgroundColor = UIColor(dark)
 
-        backgroundImage.image = UIImage(named: "default-placeholder-image")
+        imageView.contentMode = .scaleAspectFill
 
-        titleLabel.text = "ShowHeaderView"
         titleLabel.textColor = UIColor(light)
         titleLabel.font = UIFont.gilroy(.heavy, 40)
         titleLabel.sizeToFit()
 
-        heartButton.tintColor = UIColor(light)
-        heartButton.addTarget(self, action: #selector(didTapHeart), for: .touchUpInside)
+        imageView.layer.cornerRadius = 24
+        imageView.clipsToBounds = true
+
+        gradientBackground.gradientType = .colors(start: .primary, end: .secondary)
     }
 
     private func isFavorite() -> Bool {
@@ -55,39 +62,31 @@ final class ShowHeaderView: UIView {
     }
 
     private func addSubviewsAndConstraints() {
-        addSubview(backgroundImage)
-        backgroundImage.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-
+        addSubview(gradientBackground)
+        addSubview(iconRow)
+        addSubview(imageView)
         addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
+
+        gradientBackground.snp.makeConstraints { (make) in
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalTo(imageView.snp.bottom)
         }
 
-        addSubview(heartButton)
-        heartButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(24)
+        imageView.snp.makeConstraints { (make) in
+            make.top.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
-            make.size.equalTo(40)
-        }
-    }
-
-    @objc func didTapHeart() {
-        guard let showId = showOverview?.id else {
-            fatalError("Error: Could not find id to favorite")
+            make.height.equalTo(300)
         }
 
-        let um = UserProfileManager()
+        titleLabel.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(imageView).offset(-24)
+        }
 
-        if isFavorite() {
-            let heartImage = UIImage(named: "icons8-heart-50-outlined")!.withRenderingMode(.alwaysTemplate)
-            heartButton.setImage(heartImage, for: .normal)
-            um.setFavouriteShow(id: showId, favourite: false)
-        } else {
-            let heartImage = UIImage(named: "icons8-heart-50-filled")!.withRenderingMode(.alwaysTemplate)
-            heartButton.setImage(heartImage, for: .normal)
-            um.setFavouriteShow(id: showId, favourite: true)
+        iconRow.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom)
+            make.height.equalTo(100)
         }
     }
 
@@ -97,9 +96,17 @@ final class ShowHeaderView: UIView {
 
         if let imagePath = showOverview.backdropPath,
            let url = URL(string: APIDAO.imageRoot+imagePath) {
-            backgroundImage.kf.setImage(with: url)
-        }
 
-        heartButton.setImage(isFavorite() ? UIImage(named: "icons8-heart-50-filled")!.withRenderingMode(.alwaysTemplate) : UIImage(named: "icons8-heart-50-outlined")!.withRenderingMode(.alwaysTemplate), for: .normal)
+            imageView.kf.setImage(with: url) { result in
+                switch result {
+                case .success(let value):
+                    print("bam Image: \(value.image). Got from: \(value.cacheType)")
+                    self.gradientBackground.image = value.image
+                case .failure(let error):
+                    print("bam Error: \(error)")
+                }
+            }
+        }
+        iconRow.update(with: showOverview)
     }
 }
