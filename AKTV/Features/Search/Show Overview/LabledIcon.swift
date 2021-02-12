@@ -21,6 +21,7 @@ class LabeledIcon: UIButton {
     init(text: String, icon: String) {
         super.init(frame: .zero)
 
+//        backgroundColor = .red
         setup(iconName: icon, text: text)
         addSubviewsAndConstraints()
     }
@@ -97,16 +98,14 @@ final class StarLabeledIcon: LabeledIcon {
             fatalError("Error: Could not find id to favorite")
         }
 
-        let um = UserProfileManager()
+        let profileManager = UserProfileManager()
 
         if isFavorite() {
-            print("bam removing fav: \(showOverview!.name)")
             setFilled(false)
-            um.setFavouriteShow(id: showId, favourite: false)
+            profileManager.setFavouriteShow(id: showId, favourite: false)
         } else {
             setFilled(true)
-            print("bam adding favourite: \(showOverview!.name)")
-            um.setFavouriteShow(id: showId, favourite: true)
+            profileManager.setFavouriteShow(id: showId, favourite: true)
         }
     }
 

@@ -42,8 +42,6 @@ final class IconRowView: UIView {
         stackView.addArrangedSubview(trailersButton)
         stackView.addArrangedSubview(starButton)
         stackView.addArrangedSubview(UIView())
-
-        // 3. Make counting up label
     }
 
     private func addSubviewsAndConstraints() {

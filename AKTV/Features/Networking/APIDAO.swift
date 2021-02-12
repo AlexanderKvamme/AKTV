@@ -120,10 +120,10 @@ final class APIDAO: NSObject {
                 return
             }
 
-            print("bam data: ", data)
-            print("bam response: ", response)
+//            print("bam data: ", data)
+//            print("bam response: ", response)
 
-            print("shazam bam showOverview json: ", String(data: content, encoding: String.Encoding.utf8))
+//            print("shazam bam showOverview json: ", String(data: content, encoding: String.Encoding.utf8))
 
 debugPrint(content)
 
@@ -132,21 +132,11 @@ debugPrint(content)
                 print("Not containing JSON")
                 return
             }
-            print()
-            print()
-            print()
-            print()
-            print("bam show json: ", json)
-            print()
-            print()
-            print()
-            print()
 
             // Mapping
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let tvShowSeason = try! decoder.decode(ShowOverview.self, from: content)
-            print()
             andThen(tvShowSeason)
         }
         

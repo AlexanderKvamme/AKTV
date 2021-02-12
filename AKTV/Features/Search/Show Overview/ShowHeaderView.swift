@@ -98,10 +98,9 @@ final class ShowHeaderView: UIView {
             imageView.kf.setImage(with: url) { result in
                 switch result {
                 case .success(let value):
-                    print("bam Image: \(value.image). Got from: \(value.cacheType)")
                     self.gradientBackground.image = value.image
                 case .failure(let error):
-                    print("bam Error: \(error)")
+                    print("Error: \(error)")
                 }
             }
         }
