@@ -1,6 +1,0 @@
-framework module ScreenCorners {
-  umbrella header "ScreenCorners-umbrella.h"
-
-  export *
-  module * { export * }
-}
