@@ -14,13 +14,14 @@ final class ShowHeaderView: UIView {
 
     // MARK: Properties
 
-    static var height = 400
+    static var height = 480
 
     var titleLabel = BottomAlignedLabel()
     var showOverview: ShowOverview?
     let imageView = UIImageView()
     let gradientBackground = DiagonalComplimentaryView()
     let iconRow = IconRowView()
+    let showStatusView = ShowStatusView()
 
     // MARK: Initializers
 
@@ -77,6 +78,7 @@ final class ShowHeaderView: UIView {
         addSubview(iconRow)
         addSubview(imageView)
         addSubview(titleLabel)
+        addSubview(showStatusView)
 
         gradientBackground.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
@@ -99,6 +101,12 @@ final class ShowHeaderView: UIView {
             make.top.equalTo(imageView.snp.bottom)
             make.height.equalTo(100)
         }
+
+        showStatusView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(iconRow.snp.bottom)
+            make.height.equalTo(46)
+        }
     }
 
     func update(withShow showOverview: ShowOverview) {
@@ -118,5 +126,6 @@ final class ShowHeaderView: UIView {
             }
         }
         iconRow.update(with: showOverview)
+        showStatusView.update(with: showOverview)
     }
 }

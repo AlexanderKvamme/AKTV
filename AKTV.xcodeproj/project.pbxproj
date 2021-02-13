@@ -26,6 +26,8 @@
 		DD39528325D6E3D800C918F3 /* BottomAlignedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39528225D6E3D800C918F3 /* BottomAlignedLabel.swift */; };
 		DD3952AD25D6E82400C918F3 /* AnimatableNumberLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3952AC25D6E82400C918F3 /* AnimatableNumberLabel.swift */; };
 		DD3952B525D834DF00C918F3 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3952B425D834DF00C918F3 /* UIViewExtensions.swift */; };
+		DD3952BA25D869AF00C918F3 /* ShowStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3952B925D869AE00C918F3 /* ShowStatusView.swift */; };
+		DD3952BF25D86F3800C918F3 /* Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3952BE25D86F3700C918F3 /* Alpha.swift */; };
 		DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */; };
 		DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */; };
 		DD5A7E9624576AFB00507BFE /* UpcomingShowsDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9524576AFB00507BFE /* UpcomingShowsDataDelegate.swift */; };
@@ -135,6 +137,8 @@
 		DD39528225D6E3D800C918F3 /* BottomAlignedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAlignedLabel.swift; sourceTree = "<group>"; };
 		DD3952AC25D6E82400C918F3 /* AnimatableNumberLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableNumberLabel.swift; sourceTree = "<group>"; };
 		DD3952B425D834DF00C918F3 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		DD3952B925D869AE00C918F3 /* ShowStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStatusView.swift; sourceTree = "<group>"; };
+		DD3952BE25D86F3700C918F3 /* Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alpha.swift; sourceTree = "<group>"; };
 		DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowSearchScreen.swift; path = "Shows table/ShowSearchScreen.swift"; sourceTree = "<group>"; };
 		DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingScreen.swift; sourceTree = "<group>"; };
 		DD5A7E9524576AFB00507BFE /* UpcomingShowsDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowsDataDelegate.swift; sourceTree = "<group>"; };
@@ -361,6 +365,7 @@
 				DD6DDF5B25CDA0F500A19F3A /* FontExtensions.swift */,
 				DD3952B425D834DF00C918F3 /* UIViewExtensions.swift */,
 				DDF92A1B25CDAE7100326E20 /* ColorExtensions.swift */,
+				DD3952BE25D86F3700C918F3 /* Alpha.swift */,
 				DD7E660B25D538F7006553D1 /* URLExtensions.swift */,
 				DD39527D25D6D0FE00C918F3 /* GeneralExtensions.swift */,
 			);
@@ -532,6 +537,7 @@
 				DD39526F25D6C07900C918F3 /* LabledIcon.swift */,
 				DDF8774A244366D400461A0E /* ShowOverviewDataDelegate.swift */,
 				DD2B110125D579B2000CFF84 /* ShowHeaderView.swift */,
+				DD3952B925D869AE00C918F3 /* ShowStatusView.swift */,
 			);
 			path = "Show Overview";
 			sourceTree = "<group>";
@@ -814,6 +820,7 @@
 				DD6DDF5425CD8E8000A19F3A /* UpcomingSectionHeaderView.swift in Sources */,
 				DD6DDEC225CC7A2900A19F3A /* UpcomingShowCellView.swift in Sources */,
 				DDF92A1C25CDAE7100326E20 /* ColorExtensions.swift in Sources */,
+				DD3952BA25D869AF00C918F3 /* ShowStatusView.swift in Sources */,
 				DD78E30125CAF2300084F101 /* UpcomingSectionHeader.swift in Sources */,
 				DD39526325D5DAFF00C918F3 /* DiagonalComplimentaryView.swift in Sources */,
 				DD2B110825D58E12000CFF84 /* SeasonHeaderView.swift in Sources */,
@@ -827,6 +834,7 @@
 				DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */,
 				DD1A7BD5245C12D1005879F8 /* ColoredViewController.swift in Sources */,
 				DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */,
+				DD3952BF25D86F3800C918F3 /* Alpha.swift in Sources */,
 				DD6DDF5C25CDA0F500A19F3A /* FontExtensions.swift in Sources */,
 				DD3952B525D834DF00C918F3 /* UIViewExtensions.swift in Sources */,
 				DD3952AD25D6E82400C918F3 /* AnimatableNumberLabel.swift in Sources */,

@@ -39,7 +39,7 @@ class LabeledIconButton: UIButton {
         label.text = text.uppercased()
         label.textColor = UIColor(light)
         label.font = UIFont.gilroy(.semibold, 12)
-        label.alpha = 0.3
+        label.alpha = Alpha.faded
         label.sizeToFit()
     }
 
@@ -123,7 +123,7 @@ final class StarLabeledIcon: LabeledIconButton {
     // MARK: - Initializers
 
     init() {
-        super.init(text: "RATINGS", icon: "restart")
+        super.init(text: "FAVOURITE", icon: "restart")
 
         addTarget(self, action: #selector(didTapHeart), for: .touchUpInside)
     }
