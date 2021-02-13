@@ -71,7 +71,7 @@ protocol EpisodeDisplayer {
 
 extension SeasonScreen: EpisodeDisplayer {
     func display(episode: Episode) {
-        let episodeScreen = EpisodeScreen()
+        let episodeScreen = BasicTextDisplayerViewController()
         episodeScreen.update(with: episode)
         self.present(episodeScreen, animated: true, completion: nil)
     }

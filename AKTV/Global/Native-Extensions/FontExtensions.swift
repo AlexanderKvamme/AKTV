@@ -9,6 +9,10 @@
 import Foundation
 import SwiftUI
 
+extension UIFont {
+    static var defaultBodyAlpha: CGFloat = 0.8
+}
+
 enum DINWeights: String {
     case light  = "DINRoundPro-Light"
     case medium = "DINRoundPro-Medium"

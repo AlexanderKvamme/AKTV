@@ -10,7 +10,7 @@
 		4FCFE182C872F81F9FF4DC95 /* Pods_AKTVUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DC18A898BDA5D0B51A02F7 /* Pods_AKTVUITests.framework */; };
 		C23F30AE0064C0AB4AB9A8F0 /* Pods_AKTVTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C505A0FA9F1B5BDA8636F4A /* Pods_AKTVTests.framework */; };
 		D4F3A6534F07C7D84856B022 /* Pods_AKTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF54A033BB84B1768547D2E /* Pods_AKTV.framework */; };
-		DD000AA02454358800CB095D /* EpisodeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000A9F2454358800CB095D /* EpisodeScreen.swift */; };
+		DD000AA02454358800CB095D /* BasicTextDisplayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000A9F2454358800CB095D /* BasicTextDisplayerViewController.swift */; };
 		DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000AA22455BECE00CB095D /* UserProfileManager.swift */; };
 		DD041DB125CB05FB003933AE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DD041DB025CB05FB003933AE /* Kingfisher */; };
 		DD1A7BD5245C12D1005879F8 /* ColoredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1A7BD4245C12D1005879F8 /* ColoredViewController.swift */; };
@@ -25,6 +25,7 @@
 		DD39527E25D6D0FE00C918F3 /* GeneralExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39527D25D6D0FE00C918F3 /* GeneralExtensions.swift */; };
 		DD39528325D6E3D800C918F3 /* BottomAlignedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39528225D6E3D800C918F3 /* BottomAlignedLabel.swift */; };
 		DD3952AD25D6E82400C918F3 /* AnimatableNumberLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3952AC25D6E82400C918F3 /* AnimatableNumberLabel.swift */; };
+		DD3952B525D834DF00C918F3 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3952B425D834DF00C918F3 /* UIViewExtensions.swift */; };
 		DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */; };
 		DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */; };
 		DD5A7E9624576AFB00507BFE /* UpcomingShowsDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9524576AFB00507BFE /* UpcomingShowsDataDelegate.swift */; };
@@ -119,7 +120,7 @@
 		95DC18A898BDA5D0B51A02F7 /* Pods_AKTVUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AKTVUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF54A033BB84B1768547D2E /* Pods_AKTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AKTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB8B71D71EA14CE402D4DAEF /* Pods-AKTVTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTVTests.debug.xcconfig"; path = "Target Support Files/Pods-AKTVTests/Pods-AKTVTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DD000A9F2454358800CB095D /* EpisodeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeScreen.swift; sourceTree = "<group>"; };
+		DD000A9F2454358800CB095D /* BasicTextDisplayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextDisplayerViewController.swift; sourceTree = "<group>"; };
 		DD000AA22455BECE00CB095D /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		DD1A7BD4245C12D1005879F8 /* ColoredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredViewController.swift; sourceTree = "<group>"; };
 		DD2B10FC25D5793F000CFF84 /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
@@ -133,6 +134,7 @@
 		DD39527D25D6D0FE00C918F3 /* GeneralExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralExtensions.swift; sourceTree = "<group>"; };
 		DD39528225D6E3D800C918F3 /* BottomAlignedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAlignedLabel.swift; sourceTree = "<group>"; };
 		DD3952AC25D6E82400C918F3 /* AnimatableNumberLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableNumberLabel.swift; sourceTree = "<group>"; };
+		DD3952B425D834DF00C918F3 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowSearchScreen.swift; path = "Shows table/ShowSearchScreen.swift"; sourceTree = "<group>"; };
 		DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingScreen.swift; sourceTree = "<group>"; };
 		DD5A7E9524576AFB00507BFE /* UpcomingShowsDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowsDataDelegate.swift; sourceTree = "<group>"; };
@@ -251,7 +253,7 @@
 		DD000A9E2454357300CB095D /* Episodes */ = {
 			isa = PBXGroup;
 			children = (
-				DD000A9F2454358800CB095D /* EpisodeScreen.swift */,
+				DD000A9F2454358800CB095D /* BasicTextDisplayerViewController.swift */,
 				DD2B10FC25D5793F000CFF84 /* EpisodeCell.swift */,
 			);
 			path = Episodes;
@@ -357,6 +359,7 @@
 			children = (
 				DD315B66245D7D570046AB38 /* AKDateFormatter.swift */,
 				DD6DDF5B25CDA0F500A19F3A /* FontExtensions.swift */,
+				DD3952B425D834DF00C918F3 /* UIViewExtensions.swift */,
 				DDF92A1B25CDAE7100326E20 /* ColorExtensions.swift */,
 				DD7E660B25D538F7006553D1 /* URLExtensions.swift */,
 				DD39527D25D6D0FE00C918F3 /* GeneralExtensions.swift */,
@@ -825,12 +828,13 @@
 				DD1A7BD5245C12D1005879F8 /* ColoredViewController.swift in Sources */,
 				DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */,
 				DD6DDF5C25CDA0F500A19F3A /* FontExtensions.swift in Sources */,
+				DD3952B525D834DF00C918F3 /* UIViewExtensions.swift in Sources */,
 				DD3952AD25D6E82400C918F3 /* AnimatableNumberLabel.swift in Sources */,
 				DDE38900242BF0730049D881 /* ShowsDataDelegate.swift in Sources */,
 				DDB48F7825D3F694007C0131 /* UIColorExtensions.swift in Sources */,
 				DDA1A9072427B24B00F7907A /* AKTV.xcdatamodeld in Sources */,
 				DD2B110225D579B2000CFF84 /* ShowHeaderView.swift in Sources */,
-				DD000AA02454358800CB095D /* EpisodeScreen.swift in Sources */,
+				DD000AA02454358800CB095D /* BasicTextDisplayerViewController.swift in Sources */,
 				DD6DDF4F25CD517800A19F3A /* Themes.swift in Sources */,
 				DDB48F9625D455D9007C0131 /* WellRoundedTabBarController.swift in Sources */,
 				DDE38904242BF5F60049D881 /* Show.swift in Sources */,

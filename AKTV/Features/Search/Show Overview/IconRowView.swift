@@ -13,6 +13,8 @@ final class IconRowView: UIView {
     // MARK: - Properties
 
     let stackView = UIStackView()
+    let descriptionButton = LabeledIconButton(text: "DESCRIPTION", icon: "text.justifyleft")
+    let trailersButton = LabeledIconButton(text: "Trailers", icon: "film")
     let starButton = StarLabeledIcon()
     var ratingIcon = RatingIcon(text: "RATING", targetNumber: 0)
 
@@ -38,8 +40,8 @@ final class IconRowView: UIView {
         stackView.alignment = .center
         stackView.spacing = 8
 
-        let trailersButton = LabeledIconButton(text: "Trailers", icon: "film")
         stackView.addArrangedSubview(UIView())
+        stackView.addArrangedSubview(descriptionButton)
         stackView.addArrangedSubview(trailersButton)
         stackView.addArrangedSubview(starButton)
         stackView.addArrangedSubview(ratingIcon)

@@ -19,9 +19,8 @@ class LabeledIconButton: UIButton {
     // MARK: - Initializers
 
     init(text: String, icon: String) {
-        super.init(frame: .zero)
+        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 
-//        backgroundColor = .red
         setup(iconName: icon, text: text)
         addSubviewsAndConstraints()
     }

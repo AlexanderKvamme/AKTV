@@ -27,6 +27,7 @@ final class ShowHeaderView: UIView {
 
         setup()
         addSubviewsAndConstraints()
+        addGestureRecognizers()
     }
 
     required init?(coder: NSCoder) {
@@ -49,6 +50,17 @@ final class ShowHeaderView: UIView {
         imageView.clipsToBounds = true
 
         gradientBackground.gradientType = .colors(start: .primary, end: .secondary)
+    }
+
+    private func addGestureRecognizers() {
+        iconRow.descriptionButton.addTarget(self, action: #selector(displayShowDescription), for: .touchUpInside)
+    }
+
+    @objc private func displayShowDescription() {
+        let vc = BasicTextDisplayerViewController()
+        vc.episodeHeader.text = "ABOUT"
+        vc.episodeTextView.text = showOverview?.overview
+        findViewController()?.present(vc, animated: true, completion: nil)
     }
 
     private func isFavorite() -> Bool {

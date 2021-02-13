@@ -33,7 +33,7 @@ struct ShowOverview: Codable {
 //    var lastAirDate: Date?
 //    var episodeRunTime: Int
 //    var posterPath: String
-//    var overView: String
+    var overview: String // overview?
 //    var originalCountry: [Country]?
 }
 

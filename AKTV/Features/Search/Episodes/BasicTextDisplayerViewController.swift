@@ -1,14 +1,8 @@
-//
-//  EpisodeScreen.swift
-//  AKTV
-//
-//  Created by Alexander Kvamme on 25/04/2020.
-//  Copyright © 2020 Alexander Kvamme. All rights reserved.
-//
+
 
 import UIKit
 
-final class EpisodeScreen: UIViewController {
+final class BasicTextDisplayerViewController: UIViewController {
     
     // MARK: Properties
 
@@ -33,7 +27,8 @@ final class EpisodeScreen: UIViewController {
     private func setup() {
         view.backgroundColor = UIColor(dark)
 
-        episodeHeader.font = UIFont.gilroy(.bold, 40)
+        episodeHeader.font = UIFont.gilroy(.heavy, 48)
+        episodeHeader.adjustsFontSizeToFitWidth = true
         episodeHeader.textColor = UIColor(light)
         episodeHeader.textAlignment = .center
 
@@ -41,6 +36,7 @@ final class EpisodeScreen: UIViewController {
         episodeTextView.textColor = UIColor(light)
         episodeTextView.isUserInteractionEnabled = false
         episodeTextView.backgroundColor = .clear
+        episodeTextView.alpha = UIFont.defaultBodyAlpha
     }
     
     private func addSubviewsAndConstraints() {
@@ -48,14 +44,13 @@ final class EpisodeScreen: UIViewController {
         view.addSubview(episodeTextView)
 
         episodeHeader.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(64)
             make.left.equalToSuperview().offset(24)
-            make.top.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
-            make.height.equalTo(200)
         }
 
         episodeTextView.snp.makeConstraints { (make) in
-            make.top.equalTo(episodeHeader.snp.bottom).offset(24)
+            make.top.equalTo(episodeHeader.snp.bottom).offset(16)
             make.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
             make.bottom.equalToSuperview()
