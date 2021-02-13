@@ -37,6 +37,10 @@ final class ShowOverviewDataDelegate: NSObject, UITableViewDataSource, UITableVi
         seasonPresenter!.displaySeason(showId: showOverview!.id,
                                        seasonNumber: showOverview!.seasons[indexPath.row].seasonNumber)
     }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
 }
 
 final class SeasonOverviewCell: UITableViewCell {
@@ -76,10 +80,7 @@ final class SeasonOverviewCell: UITableViewCell {
         contentView.addSubview(seasonLabel)
         
         seasonLabel.snp.makeConstraints { (make) in
-            make.top.bottom.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
-            make.height.equalTo(80)
+            make.edges.equalToSuperview().inset(16)
         }
     }
     

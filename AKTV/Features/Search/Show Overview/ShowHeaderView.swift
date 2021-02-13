@@ -14,6 +14,8 @@ final class ShowHeaderView: UIView {
 
     // MARK: Properties
 
+    static var height = 400
+
     var titleLabel = BottomAlignedLabel()
     var showOverview: ShowOverview?
     let imageView = UIImageView()
@@ -23,7 +25,7 @@ final class ShowHeaderView: UIView {
     // MARK: Initializers
 
     init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 400))
+        super.init(frame: CGRect(x: 0, y: 0, width: Int(screenWidth), height: Self.height))
 
         setup()
         addSubviewsAndConstraints()
@@ -82,15 +84,14 @@ final class ShowHeaderView: UIView {
         }
 
         imageView.snp.makeConstraints { (make) in
-            make.top.left.equalToSuperview().offset(24)
-            make.right.equalToSuperview().offset(-24)
+            make.left.equalToSuperview().offset(24)
+            make.top.equalToSuperview().offset(24)
+            make.width.equalTo(screenWidth-48)
             make.height.equalTo(300)
         }
 
         titleLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(imageView).offset(24)
-            make.top.right.equalToSuperview().offset(-32)
-            make.bottom.equalTo(imageView).offset(-24)
+            make.edges.equalTo(imageView).inset(32)
         }
 
         iconRow.snp.makeConstraints { (make) in

@@ -43,4 +43,8 @@ final class SeasonDataDelegate: NSObject, UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         episodeDisplayer!.display(episode: season.episodes[indexPath.row])
     }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
 }

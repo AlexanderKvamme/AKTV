@@ -39,14 +39,14 @@ final class EpisodeCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .clear
 
-        episodeNumberLabel.font = UIFont.gilroy(.bold, 40)
-        episodeNumberLabel.alpha = 0.3
+        episodeNumberLabel.font = UIFont.gilroy(.bold, 32)
+        episodeNumberLabel.alpha = 0.1
         episodeNumberLabel.textColor = UIColor(light)
         episodeNumberLabel.textAlignment = .center
 
         dateLabel.textColor = UIColor(light)
-        dateLabel.font = UIFont.gilroy(.semibold, 16)
-        dateLabel.alpha = 0.5
+        dateLabel.font = UIFont.gilroy(.semibold, 14)
+        dateLabel.alpha = 0.4
 
         dateLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
 
@@ -64,10 +64,6 @@ final class EpisodeCell: UITableViewCell {
     private func addSubviewsAndConstraints() {
         contentView.addSubview(episodeNumberLabel)
         contentView.addSubview(labelStack)
-
-        contentView.snp.makeConstraints { (make) in
-            make.height.equalTo(80)
-        }
 
         episodeNumberLabel.snp.makeConstraints { (make) in
             make.left.top.bottom.equalToSuperview()
