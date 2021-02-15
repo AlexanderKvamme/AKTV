@@ -49,6 +49,23 @@ final class UpcomingShowsDataDelegate: NSObject, UITableViewDelegate, UITableVie
         return cell
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sortedDays = data.keys.sorted()
+        let tappedDay = sortedDays[indexPath.section] as DayModel
+
+        guard let overviews = data[tappedDay] else {
+            print("Tapped cell does not exist")
+            return
+        }
+
+        guard let episode = overviews[indexPath.row].nextEpisodeToAir else {
+            print("No next episode to display info about")
+            return
+        }
+
+        display(episode: episode, tableView: tableView)
+    }
+
     // MARK: Internal methods
 
     // TODO: Use this and gather all shows in one fetch
@@ -81,4 +98,13 @@ final class UpcomingShowsDataDelegate: NSObject, UITableViewDelegate, UITableVie
             data[premierDate] = [show]
         }
     }
+
+    // MARK: - Helper methods
+
+    func display(episode: Episode, tableView: UITableView) {
+        let episodeScreen = BasicTextDisplayerViewController()
+        episodeScreen.update(with: episode)
+        tableView.findViewController()?.present(episodeScreen, animated: true, completion: nil)
+    }
 }
+
