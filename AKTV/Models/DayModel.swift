@@ -17,4 +17,9 @@ struct DayModel: Hashable, Comparable {
     var day: Int
     var month: Int
     var year: Int
+
+    func toString() -> String {
+        // FIXME: Use proper date for this
+        return "\(day).\(month)"
+    }
 }

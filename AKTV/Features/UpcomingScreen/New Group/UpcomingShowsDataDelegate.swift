@@ -30,7 +30,9 @@ final class UpcomingShowsDataDelegate: NSObject, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let vc = UIHostingController(rootView: UpcomingSectionHeaderView(date: "11.11.11"))
+        let day = data.keys.sorted()[section]
+        let dayString = day.toString()
+        let vc = UIHostingController(rootView: UpcomingSectionHeaderView(date: dayString))
         return vc.view
     }
     
