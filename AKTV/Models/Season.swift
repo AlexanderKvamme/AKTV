@@ -41,5 +41,30 @@ struct Episode: Codable {
     var voteAverage: Double
 //    var voteCount: Int
 //    var crew: [Crew]
-//    var guestStar: [Star] 
+//    var guestStar: [Star]
+
+
+    static var mock: Episode {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let data = json.data(using: .utf8)
+        let episode = try! decoder.decode(Episode.self, from: data!)
+        return episode
+    }
+
+    static let json = #"""
+    {
+      "air_date": "2004-05-13",
+      "episode_number": 24,
+      "id": 249918,
+      "name": "The mock episode",
+      "overview": "Daphne gives birth to a healthy son, David.  Frasier marries Martin and Ronee in the vet's office before Daphne and the baby leave for the hospital.  Frasier grows very lonely with Martin out of the apartment and Daphne and Niles busy with their son.  He decides to take the San Francisco job.  Roz is named Kenny's replacement as station manager, and gives Noel a kiss during her celebration!  Frasier tells his family and Roz about his upcoming move, following a misunderstanding that leads them to believe he is dying.  He promises to visit frequently.  Frasier makes a speech to the group, and again on his final show at KACL, about the importance of taking chances.  His seatmate on the plane thanks him for the stimulating conversation as their plane finally lands...in Chicago.",
+      "production_code": "",
+      "season_number": 11,
+      "still_path": "/9txvhNGhKcbRWWLItf4cUY8Sl0G.jpg",
+      "vote_average": 0,
+      "vote_count": 0
+    }
+    """#
 }
+

@@ -38,6 +38,7 @@ class LabeledIconButton: UIButton {
         icon.tintColor = UIColor(light)
         label.text = text.uppercased()
         label.textColor = UIColor(light)
+        label.textAlignment = .center
         label.font = UIFont.gilroy(.semibold, 12)
         label.alpha = Alpha.faded
         label.sizeToFit()
@@ -56,6 +57,14 @@ class LabeledIconButton: UIButton {
             make.top.equalTo(icon.snp.bottom).offset(4)
             make.left.bottom.right.equalToSuperview()
         }
+    }
+
+    override func setImage(_ image: UIImage?, for state: UIControl.State) {
+        fatalError("Use custom initializer instead.")
+    }
+
+    func setIconAlpha(_ val: CGFloat) {
+        icon.alpha = val
     }
 }
 

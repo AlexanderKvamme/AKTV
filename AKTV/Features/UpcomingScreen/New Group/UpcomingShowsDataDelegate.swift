@@ -63,7 +63,7 @@ final class UpcomingShowsDataDelegate: NSObject, UITableViewDelegate, UITableVie
             return
         }
 
-        display(episode: episode, tableView: tableView)
+        display(episode: episode, from: tableView)
     }
 
     // MARK: Internal methods
@@ -101,10 +101,9 @@ final class UpcomingShowsDataDelegate: NSObject, UITableViewDelegate, UITableVie
 
     // MARK: - Helper methods
 
-    func display(episode: Episode, tableView: UITableView) {
-        let episodeScreen = BasicTextDisplayerViewController()
-        episodeScreen.update(with: episode)
-        tableView.findViewController()?.present(episodeScreen, animated: true, completion: nil)
+    func display(episode: Episode, from view: UIView) {
+        let episodeScreen = EpisodeScreen(episode)
+        view.findViewController()?.present(episodeScreen, animated: true, completion: nil)
     }
 }
 

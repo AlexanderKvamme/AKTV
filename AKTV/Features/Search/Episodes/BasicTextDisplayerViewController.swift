@@ -2,7 +2,7 @@
 
 import UIKit
 
-final class BasicTextDisplayerViewController: UIViewController {
+class BasicTextDisplayerViewController: UIViewController {
     
     // MARK: Properties
 
@@ -60,7 +60,11 @@ final class BasicTextDisplayerViewController: UIViewController {
     // MARK: Internal methods
     
     func update(with episode: Episode) {
-        episodeTextView.text = episode.overview
         episodeHeader.text = episode.name
+        episodeTextView.text = episode.overview
+
+        if episode.overview == "" {
+            episodeTextView.text = "No details have been released about this episode."
+        }
     }
 }
