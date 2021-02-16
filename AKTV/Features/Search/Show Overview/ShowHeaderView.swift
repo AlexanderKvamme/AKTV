@@ -79,15 +79,13 @@ final class ShowHeaderView: UIView {
         }
 
         // TODO: Handle multiple videos for example multiple trailers/teasers
-        let youtubeUrl = "https://www.youtube.com/watch?v="
-        let videoString = youtubeUrl + key
-
-        guard let trailerUrl = URL(string: videoString) else {
+        guard let trailerUrl = URL(string: "https://www.youtube.com/watch?v=" + key) else {
             print("bad video url")
             return
         }
 
-        // FIXME: Dislay the video at url
+        let videoPlayer = VideoPlayer(trailerUrl)
+        findViewController()?.present(videoPlayer, animated: true, completion: nil)
     }
 
     private func isFavorite() -> Bool {
