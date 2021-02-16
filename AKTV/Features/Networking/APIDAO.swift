@@ -104,7 +104,7 @@ final class APIDAO: NSObject {
     
     func show(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
         let showId = String(withId)
-        let url = URL(string: root + "tv/" + showId + "?" + keyParam)
+        let url = URL(string: root + "tv/" + showId + "?" + keyParam + "&append_to_response=videos")
         
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
             guard error == nil else {

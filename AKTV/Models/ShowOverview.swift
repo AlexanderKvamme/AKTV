@@ -35,6 +35,7 @@ struct ShowOverview: Codable {
 //    var posterPath: String
     var overview: String // overview?
 //    var originalCountry: [Country]?
+    var videos: Videos?
 }
 
 // MARK: - Mocks
@@ -51,150 +52,169 @@ extension ShowOverview {
 
     private static let json = #"""
     {
-      "backdrop_path": "/vLPu0bjWSAAJ90imi7Hv2ItgwYu.jpg",
-      "created_by": [
+      "episode_run_time" : [
+        60
+      ],
+      "status" : "Returning Series",
+      "backdrop_path" : "\/7dnjFPoa22Yl3RKctp8kgUxiUg9.jpg",
+      "overview" : "An ex-con becomes the traveling partner of a conman who turns out to be one of the older gods trying to recruit troops to battle the upstart deities. Based on Neil Gaiman's fantasy novel.",
+      "in_production" : true,
+      "vote_count" : 928,
+      "tagline" : "",
+      "last_air_date" : "2021-02-14",
+      "original_name" : "American Gods",
+      "networks" : [
         {
-          "id": 1242945,
-          "credit_id": "5db08cf2bfeb8b00111df92f",
-          "name": "Pendleton Ward",
-          "gender": 2,
-          "profile_path": "/soODVh1CrVo6YnfnLwpSyBxSm5z.jpg"
-        },
-        {
-          "id": 2223981,
-          "credit_id": "5f0b471b55bc350033293e32",
-          "name": "Miki Brewster",
-          "gender": 0,
-          "profile_path": null
+          "logo_path" : "\/8GJjw3HHsAJYwIWKIPBPfqMxlEa.png",
+          "id" : 318,
+          "origin_country" : "US",
+          "name" : "Starz"
         }
       ],
-      "episode_run_time": [
-        45
-      ],
-      "first_air_date": "2020-06-25",
-      "genres": [
-        {
-          "id": 10751,
-          "name": "Family"
-        },
-        {
-          "id": 16,
-          "name": "Animation"
-        },
-        {
-          "id": 35,
-          "name": "Comedy"
-        },
-        {
-          "id": 10765,
-          "name": "Sci-Fi & Fantasy"
-        }
-      ],
-      "homepage": "https://play.hbomax.com/series/urn:hbo:series:GXuu7ygQ61cI9DgEAAAAY",
-      "id": 94810,
-      "in_production": true,
-      "languages": [
-        "en",
-        "ru",
-        "es"
-      ],
-      "last_air_date": "2020-11-19",
-      "last_episode_to_air": {
-        "air_date": "2020-11-19",
-        "episode_number": 2,
-        "id": 1961673,
-        "name": "Obsidian",
-        "overview": "Marceline and Princess Bubblegum journey to the imposing, beautiful Glass Kingdom — and deep into their tumultuous past — to prevent an earthshaking catastrophe.",
-        "production_code": "",
-        "season_number": 1,
-        "still_path": "/yHDZ48QJGFVh7zZKh46VEhu9qlJ.jpg",
-        "vote_average": 0,
-        "vote_count": 0
-      },
-      "name": "Adventure Time: Distant Lands",
-      "next_episode_to_air": {
-        "air_date": "2021-12-31",
-        "episode_number": 4,
-        "id": 1961677,
-        "name": "Together Again",
-        "overview": "Finn and Jake are reunited to rediscover their brotherly bond and embark on the most important adventure of their lives.",
-        "production_code": "",
-        "season_number": 1,
-        "still_path": null,
-        "vote_average": 0,
-        "vote_count": 0
-      },
-      "networks": [
-        {
-          "name": "HBO Max",
-          "id": 3186,
-          "logo_path": "/nmU0UMDJB3dRRQSTUqawzF2Od1a.png",
-          "origin_country": "US"
-        }
-      ],
-      "number_of_episodes": 4,
-      "number_of_seasons": 1,
-      "origin_country": [
+      "first_air_date" : "2017-04-30",
+      "number_of_episodes" : 26,
+      "original_language" : "en",
+      "origin_country" : [
         "US"
       ],
-      "original_language": "en",
-      "original_name": "Adventure Time: Distant Lands",
-      "overview": "Finn and Jake are headed back to the Land of Ooo.",
-      "popularity": 34.373,
-      "poster_path": "/9Q2ndDYqfNPleI1p5LDmqeD4WCs.jpg",
-      "production_companies": [
+      "name" : "American Gods",
+      "homepage" : "https:\/\/www.starz.com\/us\/en\/series\/31151",
+      "poster_path" : "\/3KCAZaKHmoMIN9dHutqaMtubQqD.jpg",
+      "production_countries" : [
         {
-          "id": 7899,
-          "logo_path": "/qnhd98hnBxCMMMod58FJqbCZ5O7.png",
-          "name": "Cartoon Network Studios",
-          "origin_country": "US"
+          "name" : "United States of America",
+          "iso_3166_1" : "US"
+        }
+      ],
+      "seasons" : [
+        {
+          "poster_path" : "\/fhqKjSw4JabcjGzjfE528nsIXDq.jpg",
+          "id" : 126675,
+          "season_number" : 0,
+          "episode_count" : 1,
+          "overview" : "Recap the biggest moment from season one. Pick your side before the war begins.",
+          "air_date" : "2019-03-10",
+          "name" : "Specials"
         },
         {
-          "id": 34764,
-          "logo_path": "/bvon5U0QrVapPuHLopQLfK8O8rc.png",
-          "name": "Frederator Studios",
-          "origin_country": "US"
-        }
-      ],
-      "production_countries": [
-        {
-          "iso_3166_1": "US",
-          "name": "United States of America"
-        }
-      ],
-      "seasons": [
-        {
-          "air_date": "2020-06-25",
-          "episode_count": 4,
-          "id": 134607,
-          "name": "Season 1",
-          "overview": "BMO is traveling through space on a mission to terraform Mars when he meets a small eyeball like robot, whom BMO dubs Olive. The mysterious robot suddenly transports BMO's ship into a distant part of space, which contains an ailing space station called The Drift. BMO encounters a young rabbit girl named Y5 (voiced by Glory Curda), who is a scavenger. Y5 plans to take BMO and have him sold for parts so as to impress her disapproving parents (voiced by Tom Kenny and Michelle Wong). Hugo (voiced by Randall Park), the leader of The Drift, cannot find anything useful from BMO, but needs a crystal from one of the jungle pods on The Drift so as to power a ship that will allow the Drift's residents to escape the station. BMO is hurt when he learns what Y5's plan was and ventures into the jungle pod by himself. However, BMO is betrayed by Hugo's assistant Mr. M (voiced by Stephen Root) and is left to die in the pod.",
-          "poster_path": "/9Q2ndDYqfNPleI1p5LDmqeD4WCs.jpg",
-          "season_number": 1
-        }
-      ],
-      "spoken_languages": [
-        {
-          "english_name": "English",
-          "iso_639_1": "en",
-          "name": "English"
+          "poster_path" : "\/rASj7OUjWDhfhAeO2MaFOA3lJpQ.jpg",
+          "id" : 68626,
+          "season_number" : 1,
+          "episode_count" : 8,
+          "overview" : "",
+          "air_date" : "2017-04-30",
+          "name" : "Season 1"
         },
         {
-          "english_name": "Russian",
-          "iso_639_1": "ru",
-          "name": "Pусский"
+          "poster_path" : "\/4l8Vnbb7e5QA6bAItMqQIHXLRgc.jpg",
+          "id" : 113970,
+          "season_number" : 2,
+          "episode_count" : 8,
+          "overview" : "In Season 2, the battle moves towards crisis point. While Mr. World plots revenge, Shadow throws in his lot with Wednesday's attempt to convince the Old Gods of the case for full-out war, with Laura and Mad Sweeney in tow.",
+          "air_date" : "2019-03-10",
+          "name" : "Season 2"
         },
         {
-          "english_name": "Spanish",
-          "iso_639_1": "es",
-          "name": "Español"
+          "poster_path" : "\/tZrBtmZANKKuCjgKMKXqOGzVNBD.jpg",
+          "id" : 166922,
+          "season_number" : 3,
+          "episode_count" : 10,
+          "overview" : "In Season 3 Shadow angrily pushes this apparent destiny away, and settles in the idyllic snowy town of Lakeside, Wisconsin — to make his own path, guided by the gods of his black ancestors, the Orishas. But he’ll soon discover that this town's still waters run deep, and dark, and bloody, and that you don’t get to simply reject being a god. The only choice — and a choice you have to make — is what kind of god you’re going to be.",
+          "air_date" : "2021-01-10",
+          "name" : "Season 3"
         }
       ],
-      "status": "Returning Series",
-      "tagline": "",
-      "type": "Miniseries",
-      "vote_average": 8,
-      "vote_count": 159
+      "id" : 46639,
+      "next_episode_to_air" : {
+        "production_code" : "",
+        "id" : 2617094,
+        "episode_number" : 6,
+        "season_number" : 3,
+        "still_path" : "\/xumxNai0t5724GEqPI3HQw2acXI.jpg",
+        "vote_count" : 0,
+        "vote_average" : 0,
+        "overview" : "",
+        "air_date" : "2021-02-21",
+        "name" : "Conscience of The King"
+      },
+      "type" : "Scripted",
+      "number_of_seasons" : 3,
+      "last_episode_to_air" : {
+        "production_code" : "",
+        "id" : 2617091,
+        "episode_number" : 5,
+        "season_number" : 3,
+        "still_path" : "\/em0Ux2gxNdfi01OskfO6NDcNp0U.jpg",
+        "vote_count" : 1,
+        "vote_average" : 8,
+        "overview" : "Shadow explores notions of purpose, destiny and identity with a newly enlightened Bilquis. Elsewhere, Technical Boy struggles with an identity crisis of his own. Wednesday asks Shadow to assist in a new con.",
+        "air_date" : "2021-02-14",
+        "name" : "Sister Rising"
+      },
+      "popularity" : 344.64299999999997,
+      "genres" : [
+        {
+          "id" : 18,
+          "name" : "Drama"
+        },
+        {
+          "id" : 9648,
+          "name" : "Mystery"
+        },
+        {
+          "id" : 10765,
+          "name" : "Sci-Fi & Fantasy"
+        }
+      ],
+      "created_by" : [
+        {
+          "gender" : 2,
+          "id" : 191937,
+          "credit_id" : "5588b8a3c3a3686acb000688",
+          "name" : "Michael Green",
+          "profile_path" : "\/oXmMv1vlJf2G9xWwCXBPrRY50EV.jpg"
+        },
+        {
+          "gender" : 2,
+          "id" : 17311,
+          "credit_id" : "5588b903c3a3680545001ddd",
+          "name" : "Bryan Fuller",
+          "profile_path" : "\/yeGxbuZ1Wzv8qhTDkdrIQfxKGkW.jpg"
+        }
+      ],
+      "production_companies" : [
+        {
+          "logo_path" : "\/nGvh7WJCDYmXZjOAOJ7VoC4vEw0.png",
+          "id" : 11226,
+          "origin_country" : "US",
+          "name" : "FremantleMedia North America"
+        }
+      ],
+      "videos" : {
+        "results" : [
+          {
+            "site" : "YouTube",
+            "id" : "5c6ead5f0e0a265627ac27f4",
+            "size" : 1080,
+            "iso_639_1" : "en",
+            "key" : "3awG5wEE7LU",
+            "iso_3166_1" : "US",
+            "name" : "American Gods | Season 1 Official Trailer Starring Ian McShane & Ricky Whittle | STARZ",
+            "type" : "Trailer"
+          }
+        ]
+      },
+      "languages" : [
+        "en"
+      ],
+      "spoken_languages" : [
+        {
+          "english_name" : "English",
+          "name" : "English",
+          "iso_639_1" : "en"
+        }
+      ],
+      "vote_average" : 7.0999999999999996
     }
     """#
 }

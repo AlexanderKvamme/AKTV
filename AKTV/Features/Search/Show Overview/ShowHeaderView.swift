@@ -8,7 +8,7 @@
 
 import UIKit
 import ComplimentaryGradientView
-
+import AVKit
 
 final class ShowHeaderView: UIView {
 
@@ -57,6 +57,7 @@ final class ShowHeaderView: UIView {
 
     private func addGestureRecognizers() {
         iconRow.descriptionButton.addTarget(self, action: #selector(displayShowDescription), for: .touchUpInside)
+        iconRow.trailersButton.addTarget(self, action: #selector(displayTrailer), for: .touchUpInside)
     }
 
     @objc private func displayShowDescription() {
@@ -64,6 +65,29 @@ final class ShowHeaderView: UIView {
         vc.episodeHeader.text = "ABOUT"
         vc.episodeTextView.text = showOverview?.overview
         findViewController()?.present(vc, animated: true, completion: nil)
+    }
+
+    @objc private func displayTrailer() {
+        guard let videos = showOverview?.videos,
+              let firstResult = videos.results?.first,
+              let key = firstResult.key else {
+            return
+        }
+
+        if videos.results?.count ?? 0 > 1 {
+            print("Multiple trailers/teasers received but not handled")
+        }
+
+        // TODO: Handle multiple videos for example multiple trailers/teasers
+        let youtubeUrl = "https://www.youtube.com/watch?v="
+        let videoString = youtubeUrl + key
+
+        guard let trailerUrl = URL(string: videoString) else {
+            print("bad video url")
+            return
+        }
+
+        // FIXME: Dislay the video at url
     }
 
     private func isFavorite() -> Bool {
