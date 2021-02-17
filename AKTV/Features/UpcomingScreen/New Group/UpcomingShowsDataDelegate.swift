@@ -37,7 +37,8 @@ final class UpcomingShowsDataDelegate: NSObject, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingShowCell.identifier) as? UpcomingShowCell ?? UpcomingShowCell()
+//        let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingShowCell.identifier) as? UpcomingShowCell ?? UpcomingShowCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: UpcomingShowCell2.identifier) as? UpcomingShowCell2 ?? UpcomingShowCell2()
         let sortedDays: Array<DayModel> = Array(data.keys.sorted())
         let day = sortedDays[indexPath.section]
         if let shows = data[day] {
