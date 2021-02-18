@@ -43,7 +43,6 @@ final class UpcomingScreen: UIViewController {
         tableViewController.dataSource = dataDelegate
         tableViewController.delegate = dataDelegate
         tableViewController.separatorStyle = .none
-        header.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
         tableViewController.tableHeaderView = header
     }
     

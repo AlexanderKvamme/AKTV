@@ -12,18 +12,36 @@ import UIKit
 extension UILabel {
     enum LabelStyle {
         case subtitle
+        case header
     }
 
-    static func make(_ style: LabelStyle) -> UILabel {
+    static func make(_ style: LabelStyle, _ content: String? = "") -> UILabel {
+        var label: UILabel
         switch style {
-        case .subtitle: return makeSubtitle()
+        case .subtitle:
+            label = makeSubtitle()
+        case .header:
+            label = makeSubtitle()
         }
+        label.text = content
+        return label
+    }
+
+    private static func makeLabel() -> UILabel {
+        let label = UILabel()
+        label.textColor = UIColor(light)
+        return label
+    }
+
+    private static func makeHeader() -> UILabel {
+        let label = makeLabel()
+        label.font = UIFont.gilroy(.heavy, 64)
+        return label
     }
 
     private static func makeSubtitle() -> UILabel {
-        let label = UILabel()
+        let label = makeLabel()
         label.font = UIFont.gilroy(.heavy, 32)
-        label.textColor = UIColor(light)
         return label
     }
 }
