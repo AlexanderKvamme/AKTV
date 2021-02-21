@@ -8,11 +8,15 @@
 
 import Foundation
 
+struct Genre: Codable, Identifiable {
+    let id = UUID()
+    var name: String
+}
 
 struct ShowOverview: Codable {
 //    var productionCompanies: ProductionCompany
     var status: String
-//    var genres: [Genre]
+    var genres: [Genre]?
     var numberOfSeasons: Int
 //    var networks: [Network]
 //    var popularity: Double
@@ -32,7 +36,7 @@ struct ShowOverview: Codable {
     var id: Int
 //    var lastAirDate: Date?
 //    var episodeRunTime: Int
-//    var posterPath: String
+    var posterPath: String?
     var overview: String // overview?
 //    var originalCountry: [Country]?
     var videos: Videos?

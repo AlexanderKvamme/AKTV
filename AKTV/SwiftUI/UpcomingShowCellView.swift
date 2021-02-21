@@ -11,6 +11,7 @@ import Kingfisher
 
 struct UpcomingShowCellView: View {
 
+    var overview: ShowOverview
     var title: String
     var imageURL: String?
     var day: String
@@ -20,6 +21,13 @@ struct UpcomingShowCellView: View {
         }
 
         return URL.createLocalUrl(forImageNamed: "default-placeholder-image")!
+    }
+
+    init(_ overview: ShowOverview) {
+        self.overview = overview
+        self.title = overview.name
+        self.imageURL = overview.backdropPath
+        self.day = "SOMEDAY"
     }
 
     var body: some View {
@@ -66,7 +74,7 @@ struct UpcomingShowCellView: View {
 struct UpcomingShowCellView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            UpcomingShowCellView(title: "Test", imageURL: "test", day: "Day name")
+            UpcomingShowCellView(ShowOverview.mock)
                              .previewLayout(.fixed(width: 414, height: 200))
         }
     }

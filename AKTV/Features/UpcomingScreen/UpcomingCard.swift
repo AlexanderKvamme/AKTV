@@ -1,0 +1,107 @@
+//
+//  UpcomingCard.swift
+//  AKTV
+//
+//  Created by Alexander Kvamme on 22/02/2021.
+//  Copyright © 2021 Alexander Kvamme. All rights reserved.
+//
+
+import UIKit
+
+final class UpcomingCard: UIView {
+
+    // MARK: Properties
+
+    private let hStack = UIStackView()
+    private let leftVStack = UIStackView()
+    private let headerLabel = UILabel.make(.subtitle)
+    private let badgeStack = UIStackView()
+    private let episodeNumberLabel = UILabel()
+    private let timeLabel = UILabel()
+    private let dayNameLabel = UILabel()
+
+    // MARK: Initializers
+
+    init() {
+        super.init(frame: .zero)
+
+        backgroundColor = .white
+        layer.cornerRadius = 24
+
+        setup()
+        addSubviewsAndConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Private methods
+
+    private func setup() {
+        headerLabel.text = "Adventure Time: Distant Lands"
+        headerLabel.textColor = UIColor(dark)
+        headerLabel.font = UIFont.gilroy(.heavy, 26)
+        headerLabel.numberOfLines = 0
+
+        episodeNumberLabel.text = "40"
+        episodeNumberLabel.textAlignment = .center
+        episodeNumberLabel.font = UIFont.gilroy(.extraBold, 40)
+        episodeNumberLabel.textColor = UIColor(dark)
+        episodeNumberLabel.alpha = Alpha.faded
+
+        timeLabel.text = "24:00"
+        timeLabel.textAlignment = .center
+        timeLabel.font = UIFont.gilroy(.extraBold, 20)
+        timeLabel.textColor = UIColor(dark)
+
+        dayNameLabel.text = "WEDNESDAY"
+        dayNameLabel.textAlignment = .center
+        dayNameLabel.font = UIFont.gilroy(.extraBold, 10)
+        dayNameLabel.textColor = UIColor(dark)
+        dayNameLabel.sizeToFit()
+
+        // Badge stack
+        badgeStack.axis = .horizontal
+        badgeStack.alignment = .leading
+        badgeStack.spacing = 8
+
+        // Left stack
+        leftVStack.axis = .vertical
+        leftVStack.alignment = .leading
+        leftVStack.spacing = 8
+        leftVStack.addArrangedSubview(headerLabel)
+        leftVStack.addArrangedSubview(badgeStack)
+
+        hStack.addArrangedSubview(leftVStack)
+    }
+
+    private func addSubviewsAndConstraints() {
+        let hspacing: CGFloat = 16
+        let vspacing: CGFloat = 24
+
+        [hStack].forEach({ addSubview($0) })
+
+        hStack.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().inset(hspacing)
+            make.right.equalToSuperview().inset(hspacing)
+            make.top.bottom.equalToSuperview().inset(vspacing)
+        }
+
+        episodeNumberLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+    }
+
+    // MARK: Helper methods
+
+    func update(with show: ShowOverview) {
+        badgeStack.removeAllArrangedSubviews()
+
+        headerLabel.text = show.name
+        episodeNumberLabel.text = String(show.nextEpisodeToAir?.episodeNumber ?? 0)
+
+        if let genres = show.genres {
+            let badgeViews: [BadgeView] = Array(genres.map({ genre in BadgeView(text: genre.name) }).prefix(2))
+            badgeViews.forEach({ badgeStack.addArrangedSubview($0) })
+        }
+    }
+}

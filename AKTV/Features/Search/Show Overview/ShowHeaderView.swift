@@ -14,8 +14,6 @@ final class ShowHeaderView: UIView {
 
     // MARK: Properties
 
-    static var height = 480
-
     var titleLabel = BottomAlignedLabel()
     var showOverview: ShowOverview?
     let imageView = UIImageView()
@@ -26,7 +24,7 @@ final class ShowHeaderView: UIView {
     // MARK: Initializers
 
     init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: Int(screenWidth), height: Self.height))
+        super.init(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
 
         setup()
         addSubviewsAndConstraints()
