@@ -122,7 +122,7 @@ extension TabBarView {
 
     private func makeButton(iconName: String) -> UIButton {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 22, weight: .black, scale: .large)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 22, weight: .bold, scale: .medium)
         let symbolImage = UIImage(systemName: iconName, withConfiguration: imageConfig)!
         button.setImage(symbolImage, for: .normal)
         button.tintColor = TabBarSettings.sectionButtonColor
