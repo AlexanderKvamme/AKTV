@@ -67,6 +67,7 @@ final class ShowOverviewScreen: UIViewController {
     }
     
     private func addSubviewsAndConstraints() {
+        header.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 500)
         tableView.tableHeaderView = header
 
         view.addSubview(backgroundView)

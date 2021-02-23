@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ComplimentaryGradientView
 
 final class UpcomingCard: UIView {
 
@@ -104,4 +105,37 @@ final class UpcomingCard: UIView {
             badgeViews.forEach({ badgeStack.addArrangedSubview($0) })
         }
     }
+
+    func setColors(_ cols: UIImageColors) {
+        let colors = [cols.background, cols.detail, cols.primary, cols.secondary]
+
+        badgeStack.arrangedSubviews.enumerated().forEach({ (i, badge) in
+            if let badgeBg = colors[i], let badge = badge as? BadgeView {
+                let textColor = getTextColor(bgColor: badgeBg)
+                badge.setColor(text: textColor, background: badgeBg)
+            }
+        })
+    }
 }
+
+
+// Returns black if the given background color is light or white if the given color is dark
+func getTextColor(bgColor: UIColor) -> UIColor {
+    var r: CGFloat = 0.0
+    var g: CGFloat = 0.0
+    var b: CGFloat = 0.0
+    var a: CGFloat = 0.0
+    var brightness: CGFloat = 0.0
+
+    bgColor.getRed(&r, green: &g, blue: &b, alpha: &a)
+
+    // algorithm from: http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
+    brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    if (brightness < 0.5) {
+        return .white
+    }
+    else {
+        return .black
+    }
+}
+

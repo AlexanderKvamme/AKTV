@@ -35,6 +35,7 @@ final class UpcomingCell: UICollectionViewCell {
     // MARK: Internal methods
 
     private func setup() {
+        imageView.backgroundColor = .white
         imageView.layer.cornerRadius = 40
         imageView.clipsToBounds = true
     }
@@ -67,19 +68,25 @@ final class UpcomingCell: UICollectionViewCell {
     }
 
     func update(with showOverview: ShowOverview) {
-        var testURL = URL.createLocalUrl(forImageNamed: "default-placeholder-image")!
-        if let imageURL = showOverview.posterPath, let url = URL(string: APIDAO.imageRoot+imageURL) {
-            testURL = url
+        var imageURL = URL.createLocalUrl(forImageNamed: "default-placeholder-image")!
+        if let posterPath = showOverview.posterPath, let actualImageURL = URL(string: APIDAO.imageRoot+posterPath) {
+            imageURL = actualImageURL
         }
 
-        imageView.kf.setImage(with: testURL) { (result) in
-            do {
-                let test = try result.get()
-                self.imageView.contentMode = .scaleAspectFill
-            } catch {
-                print(error)
-            }
+        imageView.kf.setImage(with: imageURL) { (result) in
+            self.imageView.contentMode = .scaleAspectFill
 
+            // Set colors asyncronously (was choppy)
+            do {
+                let image = try result.get().image
+                DispatchQueue.main.async {
+                    image.getColors { (colors) in
+                        self.card.setColors(colors)
+                    }
+                }
+            } catch {
+                // Possibly not needed
+            }
         }
 
         card.update(with: showOverview)

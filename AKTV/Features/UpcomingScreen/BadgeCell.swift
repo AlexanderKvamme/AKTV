@@ -37,25 +37,34 @@ class BadgeView: UIView {
 
     private func setup() {
         label.font = UIFont.gilroy(.semibold, 12)
-        label.alpha = 0.8
 
         layer.cornerRadius = 8
         clipsToBounds = true
-
-        backgroundView.backgroundColor = .purple
-        backgroundView.alpha = Alpha.faded
     }
 
     private func addSubviewsAndConstraints() {
-        addSubview(label)
         addSubview(backgroundView)
+        addSubview(label)
+
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+
         label.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview().inset(4)
             make.left.right.equalToSuperview().inset(8)
         }
+    }
 
-        backgroundView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+    func setColor(text: UIColor, background: UIColor) {
+        label.textColor = text
+        backgroundView.backgroundColor = background
+        backgroundView.alpha = Alpha.faded
+
+        if text == .black {
+            label.alpha = 0.5
+        } else {
+            label.alpha = 0.9
         }
     }
 }

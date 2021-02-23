@@ -127,6 +127,13 @@ final class ShowHeaderView: UIView {
             make.top.equalTo(iconRow.snp.bottom)
             make.height.equalTo(46)
         }
+
+        clipsToBounds = true
+        
+        snp.makeConstraints { (make) in
+            make.width.equalTo(screenWidth)
+            make.bottom.equalTo(showStatusView.snp.bottom)
+        }
     }
 
     func update(withShow showOverview: ShowOverview) {
