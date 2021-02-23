@@ -37,7 +37,6 @@
 		DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */; };
 		DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */; };
 		DD5A7E9624576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9524576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift */; };
-		DD5A7E9824576BB100507BFE /* UpcomingShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9724576BB100507BFE /* UpcomingShowCell.swift */; };
 		DD6DDEC225CC7A2900A19F3A /* UpcomingShowCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6DDEC125CC7A2900A19F3A /* UpcomingShowCellView.swift */; };
 		DD6DDF3625CD50CF00A19F3A /* Gilroy-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2125CD50CE00A19F3A /* Gilroy-Semibold.ttf */; };
 		DD6DDF3725CD50CF00A19F3A /* Gilroy-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2225CD50CE00A19F3A /* Gilroy-SemiboldItalic.ttf */; };
@@ -155,7 +154,6 @@
 		DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowSearchScreen.swift; path = "Shows table/ShowSearchScreen.swift"; sourceTree = "<group>"; };
 		DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingScreen.swift; sourceTree = "<group>"; };
 		DD5A7E9524576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowsCollectionViewDataDelegate.swift; sourceTree = "<group>"; };
-		DD5A7E9724576BB100507BFE /* UpcomingShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowCell.swift; sourceTree = "<group>"; };
 		DD6DDEC125CC7A2900A19F3A /* UpcomingShowCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowCellView.swift; sourceTree = "<group>"; };
 		DD6DDF2125CD50CE00A19F3A /* Gilroy-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Semibold.ttf"; sourceTree = "<group>"; };
 		DD6DDF2225CD50CE00A19F3A /* Gilroy-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiboldItalic.ttf"; sourceTree = "<group>"; };
@@ -308,7 +306,6 @@
 			children = (
 				DD5A7E9524576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift */,
 				DDB26BB025DC6DCC007FF941 /* BadgeCell.swift */,
-				DD5A7E9724576BB100507BFE /* UpcomingShowCell.swift */,
 				DD25A0E125E15C3F00B39ACA /* UpcomingCell.swift */,
 				DD25A10C25E3287D00B39ACA /* UpcomingCard.swift */,
 				DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */,
@@ -826,7 +823,6 @@
 				DD25A10025E327D300B39ACA /* ShadowView.swift in Sources */,
 				DDB8E5C825DBD4FB0053F6FA /* Videos.swift in Sources */,
 				DD39527E25D6D0FE00C918F3 /* GeneralExtensions.swift in Sources */,
-				DD5A7E9824576BB100507BFE /* UpcomingShowCell.swift in Sources */,
 				DD25A10D25E3287D00B39ACA /* UpcomingCard.swift in Sources */,
 				DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */,
 				DD1A56E325DC0D7800C242FB /* VideoPlayer.swift in Sources */,
