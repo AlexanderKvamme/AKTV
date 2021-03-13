@@ -14,15 +14,19 @@ final class UpcomingCell: UICollectionViewCell {
     // MARK: Properties
 
     static var identifier = "UpcomingCell"
-    private let imageView = UIImageView()
-    private let card = UpcomingCard()
-    private let cardShadow = ShadowView()
-    private let imageShadow = ShadowView(opacity: 0.3)
+    static let cornerRadius: CGFloat = 40
+
+    let imageView = UIImageView()
+    let card = UpcomingCard()
+    private let cardShadow = ShadowView2()
+    private let imageShadow = ShadowView2()
     
     // MARK: Initializers
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        imageShadow.opacity = 0.3
+        imageShadow.offset = CGSize(width: 0, height: 30)
 
         setup()
         addSubviewsAndConstraints()
@@ -36,7 +40,7 @@ final class UpcomingCell: UICollectionViewCell {
 
     private func setup() {
         imageView.backgroundColor = .white
-        imageView.layer.cornerRadius = 40
+        imageView.layer.cornerRadius = Self.cornerRadius
         imageView.clipsToBounds = true
     }
 

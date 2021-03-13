@@ -51,9 +51,7 @@ final class ShowOverviewScreenHeader: UIView {
         heartIcon.backgroundColor = .purple
         heartIcon.layer.borderColor = UIColor.green.cgColor
         heartIcon.layer.borderWidth = 10
-        
-        let userPreferenceManager = UserProfileManager()
-        
+
         heartIcon.addTarget(self, action: #selector(toggleHeart), for: .touchUpInside)
     }
     

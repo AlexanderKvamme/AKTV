@@ -14,6 +14,9 @@ extension CGFloat {
 }
 
 extension UIDevice {
+
+    static var notchHeight = hasNotch ? 24 : 0 // TODO: Get real value
+
     static var hasNotch: Bool {
         return (UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0) > 0
     }

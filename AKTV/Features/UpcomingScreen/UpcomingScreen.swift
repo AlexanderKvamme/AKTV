@@ -8,13 +8,26 @@
 
 import UIKit
 
+
+extension UpcomingScreen: UIViewControllerTransitioningDelegate {
+
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let cell = tappedCell else { return nil }
+
+        return UpcomingToDetailedAnimationController(cell)
+    }
+}
+
+
 final class UpcomingScreen: UIViewController {
     
     // MARK: Properties
 
     var collectionView: UICollectionView
-    let dataDelegate = UpcomingShowsCollectionViewDataDelegate()
+    var dataDelegate: UpcomingShowsCollectionViewDataDelegate!
     let header = UpcomingTableHeader()
+
+    weak var tappedCell: UpcomingCell?
     
     // MARK: Initializers
     
@@ -37,6 +50,10 @@ final class UpcomingScreen: UIViewController {
     // MARK: Private methods
     
     private func setup() {
+        transitioningDelegate = self
+
+        self.dataDelegate = UpcomingShowsCollectionViewDataDelegate(self)
+
         collectionView.dataSource = dataDelegate
         collectionView.delegate = dataDelegate
         collectionView.isPagingEnabled = true
@@ -76,8 +93,25 @@ final class UpcomingScreen: UIViewController {
     func update(withShow show: ShowOverview) {
         dataDelegate.update(withShow: show)
 
-        print("bam updating with 1 show")
         // FIXME: remove this later
         collectionView.reloadData()
+    }
+
+    func didTapCard(_ episodeCell: UpcomingCell, _ episode: Episode) {
+        let episodeScreen = EpisodeScreen2()
+        episodeScreen.transitioningDelegate = self
+        episodeScreen.update(show: ShowOverview.mock, episode: Episode.mock)
+        self.tappedCell = episodeCell
+
+        episodeScreen.modalPresentationStyle = .fullScreen
+        present(episodeScreen, animated: true, completion: nil)
+    }
+}
+
+
+extension UIView {
+    var globalFrame: CGRect? {
+        let rootView = UIApplication.shared.keyWindow?.rootViewController?.view
+        return self.superview?.convert(self.frame, to: rootView)
     }
 }

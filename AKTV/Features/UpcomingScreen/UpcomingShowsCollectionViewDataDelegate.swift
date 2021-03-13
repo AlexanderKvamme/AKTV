@@ -12,9 +12,18 @@ import SwiftUI
 
 final class UpcomingShowsCollectionViewDataDelegate: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
 
-    // MARK: Properties
+    // MARK: - Properties
 
     private var data = [ShowOverview]()
+    weak var upcomingScreen: UpcomingScreen?
+
+    // MARK: - Initializers
+
+    init(_ upcomingScreen: UpcomingScreen) {
+        self.upcomingScreen = upcomingScreen
+    }
+
+    // MARK: - Method
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
@@ -41,7 +50,9 @@ final class UpcomingShowsCollectionViewDataDelegate: NSObject, UICollectionViewD
             return
         }
 
-        display(episode: episode, from: collectionView)
+        if let card = collectionView.cellForItem(at: indexPath) as? UpcomingCell {
+            upcomingScreen?.didTapCard(card, episode)
+        }
     }
 
     // MARK: Internal methods
