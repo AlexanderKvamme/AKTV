@@ -95,6 +95,12 @@ final class UpcomingToDetailedAnimationController: NSObject, UIViewControllerAni
             return
         }
 
+        if let badgeColors = originCard.getColors() {
+            toVC.headerCard.setColors(badgeColors)
+        } else {
+            fatalError()
+        }
+
         containerView.addSubview(toVC.view)
 
         let newImageView = toVC.imageView

@@ -107,11 +107,12 @@ final class ShowsSearchScreen: UIViewController {
         searchField.backgroundColor = UIColor(dark)
         searchField.textColor = UIColor(light)
         searchField.textAlignment = .center
-        searchField.placeholder = "Search her"
+        searchField.placeholder = "Game of thrones"
         searchField.font = UIFont.gilroy(.heavy, 60)
         searchField.delegate = self
         searchField.isUserInteractionEnabled = true
         searchField.becomeFirstResponder()
+        searchField.adjustsFontSizeToFitWidth = true
 
         episodesSearchResultViewController.tableView.dataSource = episodesSearchResultDataDelegate
         episodesSearchResultViewController.tableView.delegate = episodesSearchResultDataDelegate
@@ -125,7 +126,7 @@ final class ShowsSearchScreen: UIViewController {
         view.addSubview(searchField)
         searchField.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(80)
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(200)
         }
 

@@ -13,6 +13,8 @@ final class UpcomingCard: UIView {
 
     // MARK: Properties
 
+    static let preferredSize = CGSize(width: screenWidth, height: 120)
+
     private let hStack = UIStackView()
     private let leftVStack = UIStackView()
     private let headerLabel = UILabel.make(.subtitle)
@@ -20,6 +22,8 @@ final class UpcomingCard: UIView {
     private let episodeNumberLabel = UILabel()
     private let timeLabel = UILabel()
     private let dayNameLabel = UILabel()
+
+    private var badgeColors: UIImageColors?
 
     // MARK: Initializers
 
@@ -107,14 +111,19 @@ final class UpcomingCard: UIView {
     }
 
     func setColors(_ cols: UIImageColors) {
-        let colors = [cols.background, cols.detail, cols.primary, cols.secondary]
+        self.badgeColors = cols
+        let badgeColors = [cols.background, cols.detail, cols.primary, cols.secondary]
 
         badgeStack.arrangedSubviews.enumerated().forEach({ (i, badge) in
-            if let badgeBg = colors[i], let badge = badge as? BadgeView {
+            if let badgeBg = badgeColors[i], let badge = badge as? BadgeView {
                 let textColor = getTextColor(bgColor: badgeBg)
                 badge.setColor(text: textColor, background: badgeBg)
             }
         })
+    }
+
+    func getColors() -> UIImageColors? {
+        return badgeColors
     }
 }
 
