@@ -134,7 +134,7 @@ final class UpcomingScreen: UIViewController {
         episodeScreen.update(show: show, episode: episode)
         self.tappedCell = episodeCell
 
-        episodeScreen.modalPresentationStyle = .fullScreen
+        episodeScreen.modalPresentationStyle = .overCurrentContext
         present(episodeScreen, animated: true, completion: nil)
     }
 }
