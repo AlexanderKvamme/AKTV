@@ -87,11 +87,10 @@ final class UpcomingDetailedScreen: UIViewController {
     func getCardEndFrame() -> CGRect {
         let cardWidth = Self.cardSize.width
         let cardX = CGFloat(screenWidth - cardWidth)/2
-        return CGRect(x: cardX, y: CGFloat(Self.imageHeight-48), width: Self.cardSize.width, height: Self.cardSize.height)
+        return CGRect(x: cardX, y: CGFloat(Self.imageHeight-48), width: Self.cardSize.width, height: UpcomingCard.preferredSize.height)
     }
 
     func getImageViewEndFrame() -> CGRect {
-
         // TODO: Make the height dynamic
         return CGRect(x: 0, y: 0, width: Int(screenWidth), height: Self.imageHeight)
     }
@@ -105,7 +104,7 @@ final class UpcomingDetailedScreen: UIViewController {
 
     func getTextCardEndFrame() -> CGRect {
         var f = getCardEndFrame()
-        f.origin.y += Self.cardSize.height + Self.cardVSpacing
+        f.origin.y += UpcomingCard.preferredSize.height + Self.cardVSpacing
         f.size.height = 300
         return f
     }

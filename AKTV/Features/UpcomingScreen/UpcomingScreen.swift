@@ -61,8 +61,6 @@ final class UpcomingScreen: UIViewController {
 
         setup()
         addSubviewsAndConstraints()
-
-        print("bam init")
     }
     
     required init?(coder: NSCoder) {

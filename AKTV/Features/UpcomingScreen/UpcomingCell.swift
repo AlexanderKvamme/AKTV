@@ -62,6 +62,7 @@ final class UpcomingCell: UICollectionViewCell {
 
         card.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview().offset(-180)
+            make.height.equalTo(UpcomingCard.preferredSize.height)
             make.centerX.equalToSuperview()
             make.width.equalTo(imageView.snp.width).offset(-32)
         }

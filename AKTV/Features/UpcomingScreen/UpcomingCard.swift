@@ -13,7 +13,7 @@ final class UpcomingCard: UIView {
 
     // MARK: Properties
 
-    static let preferredSize = CGSize(width: screenWidth, height: 120)
+    static let preferredSize = CGSize(width: screenWidth, height: 110)
 
     private let hStack = UIStackView()
     private let leftVStack = UIStackView()
@@ -48,6 +48,7 @@ final class UpcomingCard: UIView {
         headerLabel.textColor = UIColor(dark)
         headerLabel.font = UIFont.gilroy(.heavy, 26)
         headerLabel.numberOfLines = 0
+        headerLabel.adjustsFontSizeToFitWidth = true
 
         episodeNumberLabel.text = "40"
         episodeNumberLabel.textAlignment = .center
