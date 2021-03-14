@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct SeasonOverview: Codable {
+struct SeasonOverview: Codable, Hashable {
     var airDate: String?
     var episodeCount: Int
     var id: Int
@@ -28,7 +28,7 @@ struct Season: Codable {
     var posterPath: String?
  }
 
-struct Episode: Codable {
+struct Episode: Codable, Hashable {
     var name: String
     var episodeNumber: Int
     var airDate: String

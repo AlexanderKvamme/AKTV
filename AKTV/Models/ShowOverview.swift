@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct Genre: Codable, Identifiable {
+struct Genre: Codable, Identifiable, Hashable {
     let id = UUID()
     var name: String
 }
 
-struct ShowOverview: Codable {
+struct ShowOverview: Codable, Hashable {
 //    var productionCompanies: ProductionCompany
     var status: String
     var genres: [Genre]?

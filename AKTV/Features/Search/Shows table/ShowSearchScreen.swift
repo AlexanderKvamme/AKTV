@@ -120,14 +120,6 @@ final class ShowsSearchScreen: UIViewController {
 
         episodesSearchResultDataDelegate.detailedShowPresenter = self
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        let tempScreen = ShowOverviewScreen(dao: APIDAO())
-        tempScreen.update(with: ShowOverview.mock)
-        present(tempScreen, animated: true, completion: nil)
-    }
     
     private func addSubviewsAndConstraints() {
         view.addSubview(searchField)

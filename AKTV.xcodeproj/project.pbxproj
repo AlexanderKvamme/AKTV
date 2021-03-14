@@ -98,6 +98,7 @@
 		DDE38904242BF5F60049D881 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE38903242BF5F60049D881 /* Show.swift */; };
 		DDE38906242BF6E00049D881 /* APIDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE38905242BF6E00049D881 /* APIDAO.swift */; };
 		DDE3890B242BF75A0049D881 /* ShowSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE3890A242BF75A0049D881 /* ShowSearchResult.swift */; };
+		DDE5D68725FE03B70065EA8C /* UpcomingDetailedScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE5D68625FE03B70065EA8C /* UpcomingDetailedScreen.swift */; };
 		DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF8774A244366D400461A0E /* ShowOverviewDataDelegate.swift */; };
 		DDF92A1C25CDAE7100326E20 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF92A1B25CDAE7100326E20 /* ColorExtensions.swift */; };
 /* End PBXBuildFile section */
@@ -222,6 +223,7 @@
 		DDE38903242BF5F60049D881 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		DDE38905242BF6E00049D881 /* APIDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDAO.swift; sourceTree = "<group>"; };
 		DDE3890A242BF75A0049D881 /* ShowSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSearchResult.swift; sourceTree = "<group>"; };
+		DDE5D68625FE03B70065EA8C /* UpcomingDetailedScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingDetailedScreen.swift; sourceTree = "<group>"; };
 		DDF8774A244366D400461A0E /* ShowOverviewDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOverviewDataDelegate.swift; sourceTree = "<group>"; };
 		DDF92A1B25CDAE7100326E20 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -319,6 +321,7 @@
 				DD2D804225E54D19004DF85A /* Animations */,
 				DDB26BB025DC6DCC007FF941 /* BadgeCell.swift */,
 				DD25A0E125E15C3F00B39ACA /* UpcomingCell.swift */,
+				DDE5D68625FE03B70065EA8C /* UpcomingDetailedScreen.swift */,
 				DD25A10C25E3287D00B39ACA /* UpcomingCard.swift */,
 				DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */,
 				DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */,
@@ -861,6 +864,7 @@
 				DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */,
 				DD3952BF25D86F3800C918F3 /* Alpha.swift in Sources */,
 				DDB26BB125DC6DCC007FF941 /* BadgeCell.swift in Sources */,
+				DDE5D68725FE03B70065EA8C /* UpcomingDetailedScreen.swift in Sources */,
 				DD6DDF5C25CDA0F500A19F3A /* FontExtensions.swift in Sources */,
 				DD3952B525D834DF00C918F3 /* UIViewExtensions.swift in Sources */,
 				DD3952AD25D6E82400C918F3 /* AnimatableNumberLabel.swift in Sources */,
@@ -1057,15 +1061,17 @@
 			baseConfigurationReference = 736990A011CE4B25CBAFA119 /* Pods-AKTV.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B5GRZ5GU65;
+				DEVELOPMENT_TEAM = RMURDMDZGD;
 				INFOPLIST_FILE = AKTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = comsz.HomeOfficesInternational.AKTVh;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HomeOfficesInternational.AKTV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1076,15 +1082,17 @@
 			baseConfigurationReference = 8122959452FF3DC7D9161EC1 /* Pods-AKTV.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B5GRZ5GU65;
+				DEVELOPMENT_TEAM = RMURDMDZGD;
 				INFOPLIST_FILE = AKTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = comsz.HomeOfficesInternational.AKTVh;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HomeOfficesInternational.AKTV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

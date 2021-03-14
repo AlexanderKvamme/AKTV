@@ -3,74 +3,51 @@
 //  AKTV
 //
 //  Created by Alexander Kvamme on 27/04/2020.
-//  Copyright © 2020 Alexander Kvamme. All rights reserved.
+//  Copyright © 2020 Alexander Kvamme. All r1ights reserved.
 //
 
+import Foundation
 import UIKit
-import SwiftUI
 
 
-final class UpcomingShowsCollectionViewDataDelegate: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
+final class UpcomingShowsCollectionViewDataDelegate: NSObject, UICollectionViewDelegate {
 
     // MARK: - Properties
 
-    private var data = [ShowOverview]()
     weak var upcomingScreen: UpcomingScreen?
+    weak var dataSource: UpcomingDataSource?
 
     // MARK: - Initializers
 
-    init(_ upcomingScreen: UpcomingScreen) {
+    init(_ upcomingScreen: UpcomingScreen, dataSource: UpcomingDataSource) {
         self.upcomingScreen = upcomingScreen
+        self.dataSource = dataSource
     }
 
-    // MARK: - Method
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UpcomingCell.identifier, for: indexPath) as? UpcomingCell ?? UpcomingCell()
-        cell.update(with: data[indexPath.row])
-        return cell
-    }
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = collectionView.frame.size
-        return size
-    }
+    // MARK: - Delegate Methods
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let episode = data[indexPath.row].nextEpisodeToAir else {
-            print("No next episode to display info about")
+        guard let dataSource = dataSource,
+              let show = dataSource.itemIdentifier(for: indexPath)
+        else {
+            fatalError("no datasource")
+        }
+
+        guard let episode = show.nextEpisodeToAir else {
+            print("No next episode to display")
             return
         }
 
         if let card = collectionView.cellForItem(at: indexPath) as? UpcomingCell {
-            upcomingScreen?.didTapCard(card, episode)
+            upcomingScreen?.didTapCard(card, episode, show)
         }
     }
 
     // MARK: Internal methods
 
-    // TODO: Use this and gather all shows in one fetch
-    func update(withShows shows: [ShowOverview]) {
-        fatalError("Implement me")
-    }
-
-    func update(withShow show: ShowOverview) {
-        data.append(show)
-    }
-
-    // MARK: - Helper methods
-
     func display(episode: Episode, from view: UIView) {
         let episodeScreen = EpisodeScreen(episode)
+        episodeScreen.update(with: episode)
         view.findViewController()?.present(episodeScreen, animated: true, completion: nil)
     }
 }
-

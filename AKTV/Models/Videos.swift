@@ -25,11 +25,11 @@ import Foundation
 }
 */
 
-struct Videos: Codable {
+struct Videos: Codable, Hashable {
     var results: [VideosResults]?
 }
 
-struct VideosResults: Codable {
+struct VideosResults: Codable, Hashable {
     var site: String
     var id: String
     var key: String?

@@ -7,7 +7,15 @@
 //
 
 import UIKit
+import Foundation
 
+// MARK: - Types and typealiases
+
+enum UpcomingSection: Int, CaseIterable {
+    case tvShows
+}
+
+typealias UpcomingDataSource = UICollectionViewDiffableDataSource<UpcomingSection, ShowOverview>
 
 extension UpcomingScreen: UIViewControllerTransitioningDelegate {
 
@@ -20,48 +28,71 @@ extension UpcomingScreen: UIViewControllerTransitioningDelegate {
 
 
 final class UpcomingScreen: UIViewController {
+    func makeDataSource() -> UpcomingDataSource {
+        UICollectionViewDiffableDataSource(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, showOverview in
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: UpcomingCell.identifier,
+                    for: indexPath
+                ) as! UpcomingCell
+
+                cell.update(with: showOverview)
+                return cell
+            }
+        )
+    }
+
+    private lazy var collectionView = makeCollectionView()
+    private lazy var dataSource = makeDataSource()
+    private lazy var delegate = makeDelegate()
+
+    var data: [ShowOverview] = []
     
     // MARK: Properties
 
-    var collectionView: UICollectionView
-    var dataDelegate: UpcomingShowsCollectionViewDataDelegate!
     let header = UpcomingTableHeader()
-
     weak var tappedCell: UpcomingCell?
     
     // MARK: Initializers
     
     init() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-
         super.init(nibName: nil, bundle: nil)
 
         setup()
         addSubviewsAndConstraints()
+
+        print("bam init")
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func makeDelegate() -> UICollectionViewDelegate {
+        return UpcomingShowsCollectionViewDataDelegate(self, dataSource: dataSource)
+    }
+
+    func makeCollectionView() -> UICollectionView {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.itemSize = CGSize(width: screenWidth, height: 500)
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = UIColor(light)
+        cv.isPagingEnabled = true
+        cv.showsHorizontalScrollIndicator = false
+        cv.register(UpcomingCell.self, forCellWithReuseIdentifier: UpcomingCell.identifier)
+        return cv
+    }
     
     // MARK: Private methods
     
     private func setup() {
+        view.backgroundColor = UIColor(light)
         transitioningDelegate = self
 
-        self.dataDelegate = UpcomingShowsCollectionViewDataDelegate(self)
-
-        collectionView.dataSource = dataDelegate
-        collectionView.delegate = dataDelegate
-        collectionView.isPagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(UpcomingCell.self, forCellWithReuseIdentifier: UpcomingCell.identifier)
-
-        collectionView.backgroundColor = UIColor(light)
-        view.backgroundColor = UIColor(light)
+        collectionView.delegate = delegate
     }
     
     private func addSubviewsAndConstraints() {
@@ -83,24 +114,24 @@ final class UpcomingScreen: UIViewController {
     }
 
     // MARK: Internal methods
-    
-    func update(withShows shows: [ShowOverview]) {
-        print("bam updating with multiple")
-        dataDelegate.update(withShows: shows)
-        collectionView.reloadData()
+
+    func updateSnapShot() {
+        var snapshot = NSDiffableDataSourceSnapshot<UpcomingSection, ShowOverview>()
+        snapshot.appendSections(UpcomingSection.allCases)
+        snapshot.appendItems(data, toSection: .tvShows)
+
+        dataSource.apply(snapshot)
     }
     
     func update(withShow show: ShowOverview) {
-        dataDelegate.update(withShow: show)
-
-        // FIXME: remove this later
-        collectionView.reloadData()
+        data.append(show)
+        updateSnapShot()
     }
 
-    func didTapCard(_ episodeCell: UpcomingCell, _ episode: Episode) {
-        let episodeScreen = EpisodeScreen2()
+    func didTapCard(_ episodeCell: UpcomingCell, _ episode: Episode, _ show: ShowOverview) {
+        let episodeScreen = UpcomingDetailedScreen()
         episodeScreen.transitioningDelegate = self
-        episodeScreen.update(show: ShowOverview.mock, episode: Episode.mock)
+        episodeScreen.update(show: show, episode: episode)
         self.tappedCell = episodeCell
 
         episodeScreen.modalPresentationStyle = .fullScreen

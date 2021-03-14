@@ -89,7 +89,7 @@ final class UpcomingToDetailedAnimationController: NSObject, UIViewControllerAni
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
         guard let fromVC = transitionContext.viewController(forKey: .from),
-              let toVC = transitionContext.viewController(forKey: .to) as? EpisodeScreen2,
+              let toVC = transitionContext.viewController(forKey: .to) as? UpcomingDetailedScreen,
               let snapshotStart = fromVC.view.snapshotView(afterScreenUpdates: true)
         else {
             return
@@ -142,7 +142,7 @@ final class UpcomingToDetailedAnimationController: NSObject, UIViewControllerAni
                 UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
                     // Fill screen with bg
                     whiteBg.frame = screenFrame
-                    whiteBg.frame.origin.y = CGFloat(EpisodeScreen2.imageHeight) // Offset to deal with animation overshoot
+                    whiteBg.frame.origin.y = CGFloat(UpcomingDetailedScreen.imageHeight) // Offset to deal with animation overshoot
 
                     // Scale up image
                     newImageView.layer.cornerRadius = 0
