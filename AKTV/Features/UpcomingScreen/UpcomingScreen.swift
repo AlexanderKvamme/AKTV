@@ -97,15 +97,12 @@ final class UpcomingScreen: UIViewController {
     
     private func addSubviewsAndConstraints() {
         view.addSubview(header)
-
         header.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(32)
+            make.top.equalToSuperview().offset(16)
             make.left.right.equalToSuperview()
-            make.height.equalTo(142)
         }
 
         view.addSubview(collectionView)
-        collectionView.clipsToBounds = true
         collectionView.snp.makeConstraints { (make) in
             make.top.equalTo(header.snp.bottom)
             make.left.right.equalToSuperview()

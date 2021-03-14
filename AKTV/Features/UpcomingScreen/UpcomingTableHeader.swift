@@ -39,20 +39,19 @@ final class UpcomingTableHeader: UIView {
     // MARK: - Methods
 
     private func setup() {
-//                overviewLabel.backgroundColor = .yellow
-//                headerLabel.backgroundColor = .cyan
-//                dayStack.backgroundColor = .purple
+        backgroundColor = UIColor(light)
 
         overviewLabel.font = UIFont.gilroy(.semibold, 24)
         overviewLabel.alpha = Alpha.faded
         overviewLabel.textColor = UIColor(dark)
         headerLabel.text = "Upcoming shows".uppercased()
         headerLabel.textColor = UIColor(dark)
+        headerLabel.numberOfLines = 0
 
         dayStack.axis = .horizontal
         dayStack.spacing = 4
 
-        backgroundColor = UIColor(light)
+        clipsToBounds = true
     }
 
     private func addSubviewsAndConstraints() {
@@ -67,12 +66,14 @@ final class UpcomingTableHeader: UIView {
 
         overviewLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(48)
-            make.left.equalToSuperview().offset(48)
+            make.left.equalToSuperview().offset(36)
         }
 
         headerLabel.snp.makeConstraints { (make) in
             make.top.equalTo(overviewLabel.snp.bottom)
+            make.right.equalToSuperview()
             make.left.equalTo(overviewLabel)
+            make.height.lessThanOrEqualTo(100)
         }
 
         dayChain.snp.makeConstraints { (make) in
@@ -83,6 +84,7 @@ final class UpcomingTableHeader: UIView {
             make.top.equalTo(headerLabel.snp.bottom).offset(8)
             make.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
+            make.height.equalTo(stackHeight)
         }
     }
 

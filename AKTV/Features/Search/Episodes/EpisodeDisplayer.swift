@@ -45,7 +45,7 @@ extension UILabel {
 
     private static func makeHeader() -> UILabel {
         let label = makeLabel()
-        label.font = UIFont.gilroy(.heavy, 64)
+        label.font = UIFont.gilroy(.heavy, 40)
         return label
     }
 
