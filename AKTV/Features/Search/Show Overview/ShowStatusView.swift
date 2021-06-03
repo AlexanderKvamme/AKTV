@@ -33,13 +33,13 @@ final class ShowStatusView: UIView {
     // MARK: - Methods
 
     private func setup() {
-        header.textColor = UIColor(light)
+        header.textColor = UIColor(dark)
         header.font = UIFont.gilroy(.bold, 14)
         header.alpha = Alpha.faded
         header.text = "STATUS"
         header.textAlignment = .center
 
-        body.textColor = UIColor(light)
+        body.textColor = UIColor(dark)
         body.font = UIFont.gilroy(.bold, 16)
         body.alpha = 0.7
         body.textAlignment = .center

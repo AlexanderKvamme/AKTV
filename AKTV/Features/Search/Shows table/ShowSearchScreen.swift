@@ -26,6 +26,7 @@ private final class HeaderContainer: UIViewController {
         headerField.textAlignment = .center
         headerField.text = "What are you looking for?"
         headerField.textColor = UIColor(dark)
+        headerField.alpha = 0.4
 
         searchField.textColor = UIColor(light)
         searchField.backgroundColor = .clear
@@ -41,13 +42,13 @@ private final class HeaderContainer: UIViewController {
     func addSubviewsAndConstraints() {
         view.addSubview(headerField)
         headerField.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()//.offset(40)
-            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(view.snp.top).offset(40)
+            make.left.right.equalToSuperview()
         }
 
         view.addSubview(searchField)
         searchField.snp.makeConstraints { (make) in
-            make.top.equalTo(headerField).offset(80)
+            make.top.equalTo(headerField.snp.bottom)//.offset(16)
             make.left.right.equalToSuperview().inset(16)
             make.bottom.equalToSuperview()
         }
@@ -96,7 +97,7 @@ final class ShowsSearchScreen: UIViewController, UITableViewDataSource, UITableV
     private func addSubviewsAndConstraints() {
         view.addSubview(headerContainer.view)
 
-        headerContainer.view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 240)
+        headerContainer.view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 180)
         view.addSubview(episodesSearchResultViewController.view)
         addChild(episodesSearchResultViewController)
         

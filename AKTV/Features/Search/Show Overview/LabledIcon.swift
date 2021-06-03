@@ -35,9 +35,9 @@ class LabeledIconButton: UIButton {
         let iconConfiguration = UIImage.SymbolConfiguration(scale: .medium)
         icon.image = UIImage(systemName: iconName, withConfiguration: iconConfiguration)
         icon.contentMode = .scaleAspectFit
-        icon.tintColor = UIColor(light)
+        icon.tintColor = UIColor(dark)
         label.text = text.uppercased()
-        label.textColor = UIColor(light)
+        label.textColor = UIColor(dark)
         label.textAlignment = .center
         label.font = UIFont.gilroy(.semibold, 12)
         label.alpha = Alpha.faded
@@ -132,7 +132,7 @@ final class StarLabeledIcon: LabeledIconButton {
     // MARK: - Initializers
 
     init() {
-        super.init(text: "FAVOURITE", icon: "restart")
+        super.init(text: "FAVORITE", icon: "restart")
 
         addTarget(self, action: #selector(didTapHeart), for: .touchUpInside)
     }

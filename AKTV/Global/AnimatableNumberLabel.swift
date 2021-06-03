@@ -18,7 +18,7 @@ final class UpCountingLabel: UILabel {
 
         adjustsFontSizeToFitWidth = true
         font = UIFont.gilroy(.bold, 28)
-        textColor = UIColor(light)
+        textColor = UIColor(dark)
         textAlignment = .center
         text = "0"
     }

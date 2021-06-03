@@ -58,9 +58,10 @@ final class ShowOverviewScreen: UIViewController {
     // MARK: Private methods
     
     private func setup() {
-        view.backgroundColor = UIColor(dark)
+        view.backgroundColor = UIColor(light)
 
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = UIColor(light)
+        tableView.separatorStyle = .none
         tableView.delegate = showOverviewDataDelegate
         tableView.dataSource = showOverviewDataDelegate
         showOverviewDataDelegate.seasonPresenter = self

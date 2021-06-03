@@ -38,7 +38,7 @@ final class ShowHeaderView: UIView {
     // MARK: Private methods
 
     private func setup() {
-        backgroundColor = UIColor(dark)
+        backgroundColor = UIColor(light)
 
         imageView.contentMode = .scaleAspectFill
 

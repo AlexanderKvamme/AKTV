@@ -13,7 +13,7 @@ final class IconRowView: UIView {
     // MARK: - Properties
 
     let stackView = UIStackView()
-    let descriptionButton = LabeledIconButton(text: "DESCRIPTION", icon: "text.justifyleft")
+    let descriptionButton = LabeledIconButton(text: "INFO", icon: "text.justifyleft")
     let trailersButton = LabeledIconButton(text: "Trailers", icon: "film")
     let starButton = StarLabeledIcon()
     var ratingIcon = RatingIcon(text: "RATING", targetNumber: 0)

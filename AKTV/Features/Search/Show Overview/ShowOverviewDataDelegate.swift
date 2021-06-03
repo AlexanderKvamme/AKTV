@@ -72,8 +72,8 @@ final class SeasonOverviewCell: UITableViewCell {
 
         seasonLabel.text = "Season goes here"
         seasonLabel.textAlignment = .center
-        seasonLabel.font = UIFont.gilroy(.semibold, 20)
-        seasonLabel.textColor = UIColor(light)
+        seasonLabel.font = UIFont.gilroy(.bold, 20)
+        seasonLabel.textColor = UIColor(dark)
     }
     
     private func addSubviewsAndConstraints() {
