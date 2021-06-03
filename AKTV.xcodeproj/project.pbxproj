@@ -512,10 +512,10 @@
 		DDE388F52427D0990049D881 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */,
 				DD2B110625D58E05000CFF84 /* Seasons */,
 				DD000A9E2454357300CB095D /* Episodes */,
 				DDF87749244366B200461A0E /* Show Overview */,
-				DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */,
 				DDE38902242BF5D90049D881 /* Shows table */,
 				DDE38901242BF3C60049D881 /* Episodes table */,
 			);
@@ -1063,7 +1063,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RMURDMDZGD;
+				DEVELOPMENT_TEAM = 52VSB9N5CT;
 				INFOPLIST_FILE = AKTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1084,7 +1084,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RMURDMDZGD;
+				DEVELOPMENT_TEAM = 52VSB9N5CT;
 				INFOPLIST_FILE = AKTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
