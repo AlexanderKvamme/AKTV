@@ -22,54 +22,6 @@ protocol ModelPresenter {
     func displayEpisode(_ episode: Episode)
 }
 
-// TODO: Remove if not used
-final class ShowOverviewScreenHeader: UIView {
-    
-    // MARK: Properties
-    
-    private let heartIcon = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-    
-    // MARK: Initializers
-    
-    init() {
-        super.init(frame: .zero)
-        
-        // FIXME: Add heart button
-        backgroundColor = .darkGray
-
-        setup()
-        addSubviewsAndConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: Private methods
-    
-    private func setup() {
-        heartIcon.backgroundColor = .purple
-        heartIcon.layer.borderColor = UIColor.green.cgColor
-        heartIcon.layer.borderWidth = 10
-
-        heartIcon.addTarget(self, action: #selector(toggleHeart), for: .touchUpInside)
-    }
-    
-    private func addSubviewsAndConstraints() {
-        addSubview(heartIcon)
-
-        heartIcon.snp.makeConstraints { (make) in
-            make.top.right.equalToSuperview()
-        }
-    }
-    
-    // MARK: Helper methods
-    
-    @objc func toggleHeart() {
-        heartIcon.backgroundColor = heartIcon.backgroundColor == .red ? .green : .purple
-    }
-}
-
 
 final class ShowsSearchScreen: UIViewController {
     
