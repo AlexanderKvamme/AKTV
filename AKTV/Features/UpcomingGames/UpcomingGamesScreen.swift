@@ -125,6 +125,11 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
         genreLabel.textColor = UIColor(dark)
         genreLabel.font = UIFont.gilroy(.bold, 12)
         genreLabel.alpha = 0.4
+        xButton.addTarget(self, action: #selector(exitScreen), for: .touchDown)
+    }
+
+    @objc func exitScreen() {
+        print("Would exit screen")
     }
 
     private func addSubviewsAndConstraints() {

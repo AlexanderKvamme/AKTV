@@ -35,7 +35,7 @@ class GameCard: UIView {
 
     private func setup() {
         clipsToBounds = true
-        layer.cornerRadius = 30
+        layer.cornerRadius = 32
         layer.cornerCurve = .continuous
     }
 
@@ -122,7 +122,6 @@ class SampleSwipeableCard: SwipeableCardViewCard {
         let inset: CGFloat = 24
         card.frame = CGRect(x: inset, y: 0, width: screenWidth-2*inset, height: 400)
 
-//        imageView.frame =
 //        print(imageView.frame)
 
         configureShadow()
@@ -135,8 +134,8 @@ class SampleSwipeableCard: SwipeableCardViewCard {
         self.shadowView?.removeFromSuperview()
         let shadowView = UIView(frame: CGRect(x: SampleSwipeableCard.kInnerMargin,
                                               y: SampleSwipeableCard.kInnerMargin,
-                                              width: bounds.width - (2 * SampleSwipeableCard.kInnerMargin),
-                                              height: bounds.height - (2 * SampleSwipeableCard.kInnerMargin)))
+                                              width: card.frame.width,
+                                              height: card.frame.height))
         insertSubview(shadowView, at: 0)
         self.shadowView = shadowView
 
@@ -156,12 +155,12 @@ class SampleSwipeableCard: SwipeableCardViewCard {
 
     private func applyShadow(width: CGFloat, height: CGFloat) {
         if let shadowView = shadowView {
-            let shadowPath = UIBezierPath(roundedRect: shadowView.bounds, cornerRadius: 14.0)
+            let shadowPath = UIBezierPath(roundedRect: shadowView.bounds, cornerRadius: 32.0)
             shadowView.layer.masksToBounds = false
             shadowView.layer.shadowRadius = 8.0
             shadowView.layer.shadowColor = UIColor.black.cgColor
             shadowView.layer.shadowOffset = CGSize(width: width, height: height)
-            shadowView.layer.shadowOpacity = 0.15
+            shadowView.layer.shadowOpacity = 0.1
             shadowView.layer.shadowPath = shadowPath.cgPath
         }
     }
