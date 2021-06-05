@@ -43,7 +43,7 @@ final class IGDBService {
         let wrapper = IGDBWrapper(clientID: IGDBService.clientID, accessToken: authToken.accessToken)
 
         let test = wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
-            if let game = games.first { print(game) }
+//            if let game = games.first { print(game) }
 
 //            let gameData = wrapper
 

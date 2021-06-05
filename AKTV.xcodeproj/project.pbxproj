@@ -72,6 +72,19 @@
 		DD7E660C25D538F7006553D1 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7E660B25D538F7006553D1 /* URLExtensions.swift */; };
 		DD9BC9D1266B5553009B2DD8 /* IGDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9D0266B5553009B2DD8 /* IGDBService.swift */; };
 		DD9BC9F1266BC638009B2DD8 /* UpcomingGamesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F0266BC638009B2DD8 /* UpcomingGamesScreen.swift */; };
+		DD9BCA04266BC9CF009B2DD8 /* SwipeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F6266BC9CE009B2DD8 /* SwipeableView.swift */; };
+		DD9BCA05266BC9CF009B2DD8 /* StaticShadowHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F7266BC9CE009B2DD8 /* StaticShadowHeaderView.swift */; };
+		DD9BCA06266BC9CF009B2DD8 /* SwipeableCardViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F8266BC9CE009B2DD8 /* SwipeableCardViewContainer.swift */; };
+		DD9BCA07266BC9CF009B2DD8 /* SwipeableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F9266BC9CF009B2DD8 /* SwipeableViewDelegate.swift */; };
+		DD9BCA08266BC9CF009B2DD8 /* SampleSwipeableCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9FA266BC9CF009B2DD8 /* SampleSwipeableCard.swift */; };
+		DD9BCA09266BC9CF009B2DD8 /* SwipeableCardViewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9FB266BC9CF009B2DD8 /* SwipeableCardViewCard.swift */; };
+		DD9BCA0A266BC9CF009B2DD8 /* SwipeableCardViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9FC266BC9CF009B2DD8 /* SwipeableCardViewDataSource.swift */; };
+		DD9BCA0B266BC9CF009B2DD8 /* CGRect+SwipeAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9FD266BC9CF009B2DD8 /* CGRect+SwipeAdditions.swift */; };
+		DD9BCA0C266BC9CF009B2DD8 /* CGPoint+SwipeableAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9FE266BC9CF009B2DD8 /* CGPoint+SwipeableAdditions.swift */; };
+		DD9BCA0D266BC9CF009B2DD8 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9FF266BC9CF009B2DD8 /* UIView+Constraints.swift */; };
+		DD9BCA0E266BC9CF009B2DD8 /* SwipeableCardViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BCA00266BC9CF009B2DD8 /* SwipeableCardViewDelegate.swift */; };
+		DD9BCA10266BC9CF009B2DD8 /* SampleSwipeableCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BCA02266BC9CF009B2DD8 /* SampleSwipeableCellViewModel.swift */; };
+		DD9BCA11266BC9CF009B2DD8 /* SwipeDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BCA03266BC9CF009B2DD8 /* SwipeDirection.swift */; };
 		DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */; };
 		DDA1A8FD2427B24B00F7907A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */; };
 		DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A8FE2427B24B00F7907A /* SceneDelegate.swift */; };
@@ -193,6 +206,19 @@
 		DD7E660B25D538F7006553D1 /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		DD9BC9D0266B5553009B2DD8 /* IGDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGDBService.swift; sourceTree = "<group>"; };
 		DD9BC9F0266BC638009B2DD8 /* UpcomingGamesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingGamesScreen.swift; sourceTree = "<group>"; };
+		DD9BC9F6266BC9CE009B2DD8 /* SwipeableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableView.swift; sourceTree = "<group>"; };
+		DD9BC9F7266BC9CE009B2DD8 /* StaticShadowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticShadowHeaderView.swift; sourceTree = "<group>"; };
+		DD9BC9F8266BC9CE009B2DD8 /* SwipeableCardViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableCardViewContainer.swift; sourceTree = "<group>"; };
+		DD9BC9F9266BC9CF009B2DD8 /* SwipeableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableViewDelegate.swift; sourceTree = "<group>"; };
+		DD9BC9FA266BC9CF009B2DD8 /* SampleSwipeableCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleSwipeableCard.swift; sourceTree = "<group>"; };
+		DD9BC9FB266BC9CF009B2DD8 /* SwipeableCardViewCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableCardViewCard.swift; sourceTree = "<group>"; };
+		DD9BC9FC266BC9CF009B2DD8 /* SwipeableCardViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableCardViewDataSource.swift; sourceTree = "<group>"; };
+		DD9BC9FD266BC9CF009B2DD8 /* CGRect+SwipeAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+SwipeAdditions.swift"; sourceTree = "<group>"; };
+		DD9BC9FE266BC9CF009B2DD8 /* CGPoint+SwipeableAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+SwipeableAdditions.swift"; sourceTree = "<group>"; };
+		DD9BC9FF266BC9CF009B2DD8 /* UIView+Constraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		DD9BCA00266BC9CF009B2DD8 /* SwipeableCardViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableCardViewDelegate.swift; sourceTree = "<group>"; };
+		DD9BCA02266BC9CF009B2DD8 /* SampleSwipeableCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleSwipeableCellViewModel.swift; sourceTree = "<group>"; };
+		DD9BCA03266BC9CF009B2DD8 /* SwipeDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeDirection.swift; sourceTree = "<group>"; };
 		DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingTableHeader.swift; sourceTree = "<group>"; };
 		DDA1A8F92427B24B00F7907A /* AKTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AKTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -421,6 +447,26 @@
 			path = UpcomingGames;
 			sourceTree = "<group>";
 		};
+		DD9BC9F5266BC9AC009B2DD8 /* CardSwipe */ = {
+			isa = PBXGroup;
+			children = (
+				DD9BC9FA266BC9CF009B2DD8 /* SampleSwipeableCard.swift */,
+				DD9BCA02266BC9CF009B2DD8 /* SampleSwipeableCellViewModel.swift */,
+				DD9BC9F7266BC9CE009B2DD8 /* StaticShadowHeaderView.swift */,
+				DD9BC9FB266BC9CF009B2DD8 /* SwipeableCardViewCard.swift */,
+				DD9BC9F8266BC9CE009B2DD8 /* SwipeableCardViewContainer.swift */,
+				DD9BC9FC266BC9CF009B2DD8 /* SwipeableCardViewDataSource.swift */,
+				DD9BCA00266BC9CF009B2DD8 /* SwipeableCardViewDelegate.swift */,
+				DD9BC9F6266BC9CE009B2DD8 /* SwipeableView.swift */,
+				DD9BC9F9266BC9CF009B2DD8 /* SwipeableViewDelegate.swift */,
+				DD9BCA03266BC9CF009B2DD8 /* SwipeDirection.swift */,
+				DD9BC9FF266BC9CF009B2DD8 /* UIView+Constraints.swift */,
+				DD9BC9FE266BC9CF009B2DD8 /* CGPoint+SwipeableAdditions.swift */,
+				DD9BC9FD266BC9CF009B2DD8 /* CGRect+SwipeAdditions.swift */,
+			);
+			path = CardSwipe;
+			sourceTree = "<group>";
+		};
 		DDA1A8F02427B24B00F7907A = {
 			isa = PBXGroup;
 			children = (
@@ -508,6 +554,7 @@
 		DDC8048125D5757600B0418B /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				DD9BC9F5266BC9AC009B2DD8 /* CardSwipe */,
 				DD9BC9EF266BC61A009B2DD8 /* UpcomingGames */,
 				DD000AA12455BEAE00CB095D /* Storage */,
 				DDA1A92F2427B26400F7907A /* Networking */,
@@ -866,6 +913,7 @@
 				DD25A10525E3281600B39ACA /* UIStackViewExtensions.swift in Sources */,
 				DD25A10025E327D300B39ACA /* ShadowView.swift in Sources */,
 				DDB8E5C825DBD4FB0053F6FA /* Videos.swift in Sources */,
+				DD9BCA04266BC9CF009B2DD8 /* SwipeableView.swift in Sources */,
 				DD39527E25D6D0FE00C918F3 /* GeneralExtensions.swift in Sources */,
 				DD25A10D25E3287D00B39ACA /* UpcomingCard.swift in Sources */,
 				DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */,
@@ -886,14 +934,20 @@
 				DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */,
 				DDA1A8FD2427B24B00F7907A /* AppDelegate.swift in Sources */,
 				DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */,
+				DD9BCA0A266BC9CF009B2DD8 /* SwipeableCardViewDataSource.swift in Sources */,
 				DD5A7E9624576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift in Sources */,
+				DD9BCA0C266BC9CF009B2DD8 /* CGPoint+SwipeableAdditions.swift in Sources */,
 				DDB48F7625D3F694007C0131 /* RoundTabBarButton.swift in Sources */,
+				DD9BCA06266BC9CF009B2DD8 /* SwipeableCardViewContainer.swift in Sources */,
 				DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */,
 				DDB48F7525D3F694007C0131 /* NativeExtensions.swift in Sources */,
 				DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */,
 				DD1A7BD5245C12D1005879F8 /* ColoredViewController.swift in Sources */,
 				DDF8774B244366D400461A0E /* ShowOverviewDataDelegate.swift in Sources */,
+				DD9BCA11266BC9CF009B2DD8 /* SwipeDirection.swift in Sources */,
+				DD9BCA0E266BC9CF009B2DD8 /* SwipeableCardViewDelegate.swift in Sources */,
 				DD3952BF25D86F3800C918F3 /* Alpha.swift in Sources */,
+				DD9BCA0D266BC9CF009B2DD8 /* UIView+Constraints.swift in Sources */,
 				DDB26BB125DC6DCC007FF941 /* BadgeCell.swift in Sources */,
 				DDE5D68725FE03B70065EA8C /* UpcomingDetailedScreen.swift in Sources */,
 				DD9BC9F1266BC638009B2DD8 /* UpcomingGamesScreen.swift in Sources */,
@@ -901,22 +955,28 @@
 				DD3952B525D834DF00C918F3 /* UIViewExtensions.swift in Sources */,
 				DD3952AD25D6E82400C918F3 /* AnimatableNumberLabel.swift in Sources */,
 				DDE38900242BF0730049D881 /* ShowsDataDelegate.swift in Sources */,
+				DD9BCA09266BC9CF009B2DD8 /* SwipeableCardViewCard.swift in Sources */,
 				DDB48F7825D3F694007C0131 /* UIColorExtensions.swift in Sources */,
 				DD3952CD25DA813400C918F3 /* EpisodeDisplayer.swift in Sources */,
+				DD9BCA05266BC9CF009B2DD8 /* StaticShadowHeaderView.swift in Sources */,
 				DDA1A9072427B24B00F7907A /* AKTV.xcdatamodeld in Sources */,
 				DD2B110225D579B2000CFF84 /* ShowHeaderView.swift in Sources */,
 				DD000AA02454358800CB095D /* BasicTextDisplayerViewController.swift in Sources */,
 				DD2D804425E54D3B004DF85A /* UpcomingToDetailedAnimationController.swift in Sources */,
 				DD6DDF4F25CD517800A19F3A /* Themes.swift in Sources */,
 				DDB48F9625D455D9007C0131 /* WellRoundedTabBarController.swift in Sources */,
+				DD9BCA0B266BC9CF009B2DD8 /* CGRect+SwipeAdditions.swift in Sources */,
 				DDE38904242BF5F60049D881 /* Show.swift in Sources */,
 				DDA8EA282444BDD4004D1F14 /* EpisodesTableViewController.swift in Sources */,
 				DD39526825D5DFB300C918F3 /* IconRowView.swift in Sources */,
 				DDE3890B242BF75A0049D881 /* ShowSearchResult.swift in Sources */,
+				DD9BCA07266BC9CF009B2DD8 /* SwipeableViewDelegate.swift in Sources */,
 				DD7E660C25D538F7006553D1 /* URLExtensions.swift in Sources */,
 				DDC8047D25D56C8200B0418B /* ShowOverview.swift in Sources */,
+				DD9BCA10266BC9CF009B2DD8 /* SampleSwipeableCellViewModel.swift in Sources */,
 				DDB48F7925D3F694007C0131 /* GlobalProperties.swift in Sources */,
 				DD39527025D6C07900C918F3 /* LabledIcon.swift in Sources */,
+				DD9BCA08266BC9CF009B2DD8 /* SampleSwipeableCard.swift in Sources */,
 				DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */,
 				DD2B10FD25D5793F000CFF84 /* EpisodeCell.swift in Sources */,
 				DD2B110D25D58E3A000CFF84 /* SeasonDataDelegate.swift in Sources */,

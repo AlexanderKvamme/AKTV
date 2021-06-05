@@ -61,7 +61,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        setViewControllers([upcomingGamesScreen, upcomingScreen, showSearchController, ColoredViewController(color: .purple), ColoredViewController(color: .red)], animated: true)
+        setViewControllers([upcomingGamesScreen, upcomingScreen, showSearchController, ColoredViewController(color: .cyan), ColoredViewController(color: .red)], animated: true)
 
         selectedIndex = 0
         configureTabBarButtons()

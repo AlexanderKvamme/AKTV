@@ -6,6 +6,7 @@ target 'AKTV' do
   use_frameworks!
 
   # Pods for AKTV
+  pod 'pop', '1.0.10'
   pod 'SnapKit'
   pod 'ScreenCorners'
   pod 'ComplimentaryGradientView'
