@@ -38,6 +38,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         let dao = APIDAO()
         let showSearchController = ShowsSearchScreen(dao: dao)
         let upcomingScreen = UpcomingScreen()
+        let upcomingGamesScreen = UpcomingScreen()
 
         // Fetch favourite shows and show next episode dates
         let favouriteShows = UserProfileManager().favouriteShows()
@@ -49,7 +50,18 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        setViewControllers([upcomingScreen, ColoredViewController(color: .blue), showSearchController, ColoredViewController(color: .purple), ColoredViewController(color: .red)], animated: true)
+        // Fetch favourite shows and show next episode dates
+        let favouriteGames = UserProfileManager().favouriteGames()
+        favouriteGames.forEach{ id in
+            dao.game(withId: id) { (gameOverview) in
+                DispatchQueue.main.sync {
+                    // FIXME: Continue here
+                //upcomingGamesScreen.update(withGame: gameOverview)
+                }
+            }
+        }
+
+        setViewControllers([upcomingScreen, upcomingGamesScreen, showSearchController, ColoredViewController(color: .purple), ColoredViewController(color: .red)], animated: true)
 
         selectedIndex = 0
         configureTabBarButtons()

@@ -70,6 +70,7 @@
 		DD704F3225DD402B0021D882 /* DINRoundPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD704F2D25DD402B0021D882 /* DINRoundPro-Light.ttf */; };
 		DD78E2FC25CAF1230084F101 /* DayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78E2FB25CAF1230084F101 /* DayModel.swift */; };
 		DD7E660C25D538F7006553D1 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7E660B25D538F7006553D1 /* URLExtensions.swift */; };
+		DD9BC9D1266B5553009B2DD8 /* IGDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9D0266B5553009B2DD8 /* IGDBService.swift */; };
 		DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */; };
 		DDA1A8FD2427B24B00F7907A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */; };
 		DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A8FE2427B24B00F7907A /* SceneDelegate.swift */; };
@@ -189,6 +190,7 @@
 		DD704F2D25DD402B0021D882 /* DINRoundPro-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINRoundPro-Light.ttf"; sourceTree = "<group>"; };
 		DD78E2FB25CAF1230084F101 /* DayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayModel.swift; sourceTree = "<group>"; };
 		DD7E660B25D538F7006553D1 /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
+		DD9BC9D0266B5553009B2DD8 /* IGDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGDBService.swift; sourceTree = "<group>"; };
 		DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingTableHeader.swift; sourceTree = "<group>"; };
 		DDA1A8F92427B24B00F7907A /* AKTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AKTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -393,6 +395,22 @@
 			path = "Native-Extensions";
 			sourceTree = "<group>";
 		};
+		DD9BC9CE266B5528009B2DD8 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				DDA1A9302427B27C00F7907A /* Networker.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		DD9BC9CF266B5537009B2DD8 /* IGDBService */ = {
+			isa = PBXGroup;
+			children = (
+				DD9BC9D0266B5553009B2DD8 /* IGDBService.swift */,
+			);
+			path = IGDBService;
+			sourceTree = "<group>";
+		};
 		DDA1A8F02427B24B00F7907A = {
 			isa = PBXGroup;
 			children = (
@@ -456,8 +474,9 @@
 		DDA1A92F2427B26400F7907A /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				DD9BC9CF266B5537009B2DD8 /* IGDBService */,
 				DDE38905242BF6E00049D881 /* APIDAO.swift */,
-				DDA1A9302427B27C00F7907A /* Networker.swift */,
+				DD9BC9CE266B5528009B2DD8 /* NetworkService */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -844,6 +863,7 @@
 				DD25A0E225E15C3F00B39ACA /* UpcomingCell.swift in Sources */,
 				DDB48F7725D3F694007C0131 /* TabBarSettings.swift in Sources */,
 				DDE38906242BF6E00049D881 /* APIDAO.swift in Sources */,
+				DD9BC9D1266B5553009B2DD8 /* IGDBService.swift in Sources */,
 				DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */,
 				DDB48F7325D3F694007C0131 /* TabBarView.swift in Sources */,
 				DD2D805D25E6DCEE004DF85A /* EpisodeScreen.swift in Sources */,

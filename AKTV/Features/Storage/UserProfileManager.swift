@@ -10,6 +10,7 @@ import Foundation
 
 enum UserProfileKeys: String {
     case favouriteShows
+    case favouriteGames
 }
 
 final class UserProfileManager: NSObject {
@@ -42,6 +43,28 @@ final class UserProfileManager: NSObject {
             if let i = existingFavourites.firstIndex(of: id) {
                 existingFavourites.remove(at: i)
                 defaults.set(existingFavourites, forKey: UserProfileKeys.favouriteShows.rawValue)
+            }
+        }
+    }
+
+    // FIXME: GET REAL GAMES
+
+    func favouriteGames() -> [Int] {
+        let existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteGames.rawValue) as? [Int] ?? [Int]()
+        return existingFavourites
+    }
+
+    func setFavouriteGame(id: Int, favourite: Bool) {
+        switch favourite {
+        case true:
+            var existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteGames.rawValue) as? [Int] ?? [Int]()
+            existingFavourites.append(id)
+            defaults.set(existingFavourites, forKey: UserProfileKeys.favouriteGames.rawValue)
+        case false:
+            var existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteGames.rawValue) as? [Int] ?? [Int]()
+            if let i = existingFavourites.firstIndex(of: id) {
+                existingFavourites.remove(at: i)
+                defaults.set(existingFavourites, forKey: UserProfileKeys.favouriteGames.rawValue)
             }
         }
     }

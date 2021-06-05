@@ -168,4 +168,42 @@ final class APIDAO: NSObject {
         task.resume()
         
     }
+
+    func game(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
+
+        // FIXME: ACTUALLY GET GAMES
+        
+        let showId = String(withId)
+        let url = URL(string: root + "tv/" + showId + "?" + keyParam + "&append_to_response=videos")
+
+        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+            guard error == nil else {
+                print("returning error")
+                return
+            }
+
+            guard let content = data else {
+                print("not returning data")
+                return
+            }
+
+//            print("bam data: ", data)
+//            print("bam response: ", response)
+//            print("shazam bam showOverview json: ", String(data: content, encoding: String.Encoding.utf8))
+
+            // Got JSON
+            guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] else {
+                print("Not containing JSON")
+                return
+            }
+
+            // Mapping
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let tvShowSeason = try! decoder.decode(ShowOverview.self, from: content)
+            andThen(tvShowSeason)
+        }
+
+        task.resume()
+    }
 }
