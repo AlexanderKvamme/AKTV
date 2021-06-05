@@ -11,9 +11,9 @@ import CoreMotion
 
 class SampleSwipeableCard: SwipeableCardViewCard {
 
+    private var questionLabel = UILabel.make(.header)
     private var titleLabel =  UILabel.make(.header)
     private var subtitleLabel =  UILabel.make(.header)
-    private var addButton = UIView() // FIX
 
     private var imageBackgroundColorView = UIView()
     private var imageView = UIImageView()
@@ -46,19 +46,32 @@ class SampleSwipeableCard: SwipeableCardViewCard {
     }
 
     private func setup() {
-
+        layer.cornerRadius = 30
+        layer.cornerCurve = .continuous
     }
 
     private func addSubviewsAndConstraints() {
         addSubview(titleLabel)
         titleLabel.backgroundColor = .red
-        titleLabel.text = "SHAZAM"
         titleLabel.textAlignment = .center
         titleLabel.snp.makeConstraints { (make) in
             make.width.equalToSuperview().inset(24)
             make.centerX.equalToSuperview()
             make.top.equalTo(safeAreaLayoutGuide).offset(40)
 
+        }
+
+        backgroundColor = .cyan
+
+        imageView.backgroundColor = .green
+        imageView.layer.cornerCurve = .continuous
+        imageView.layer.cornerRadius = 30
+        addSubview(imageView)
+
+        imageView.snp.makeConstraints { (make) in
+            make.height.equalTo(500)
+            make.left.right.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview().offset(-40)
         }
     }
 
@@ -71,14 +84,13 @@ class SampleSwipeableCard: SwipeableCardViewCard {
             imageView.image = viewModel.image
 
             backgroundContainerView.layer.cornerRadius = 14.0
-            addButton.layer.cornerRadius = addButton.frame.size.height/4
         }
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        configureShadow()
+//        configureShadow()
     }
 
     // MARK: - Shadow

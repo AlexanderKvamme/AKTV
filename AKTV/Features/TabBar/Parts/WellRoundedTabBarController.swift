@@ -9,18 +9,21 @@
 import UIKit
 
 
-class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegate {
+class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegate, CustomTabBarDelegate {
 
     // MARK: - Properties
 
     let myTabBar = TabBarView(frame: CGRect(x: 0, y: screenHeight - TabBarSettings.barHeight, width: screenWidth, height: screenHeight))
-
+    let upcomingGamesScreen = UpcomingGamesScreen()
+    
     // MARK: - Initializers
 
     init() {
         super.init(nibName: nil, bundle: nil)
 
         tabBar.isHidden = true
+        print("setting delegate")
+        upcomingGamesScreen.customTabBarDelegate = self
 
         let subVC = myTabBar
         view.addSubview(subVC)
@@ -38,7 +41,6 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         let dao = APIDAO()
         let showSearchController = ShowsSearchScreen(dao: dao)
         let upcomingScreen = UpcomingScreen()
-        let upcomingGamesScreen = UpcomingGamesScreen()
 
         // Fetch favourite shows and show next episode dates
         let favouriteShows = UserProfileManager().favouriteShows()
@@ -56,7 +58,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             dao.game(withId: id) { (gameOverview) in
                 DispatchQueue.main.sync {
                     // FIXME: Continue here
-                //upcomingGamesScreen.update(withGame: gameOverview)
+                    // upcomingGamesScreen.update(withGame: gameOverview)
                 }
             }
         }
@@ -79,4 +81,21 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     @objc func setTab(sender: UIButton) {
         selectedIndex = sender.tag
     }
+
+    func hideIt() {
+        print("would hide")
+        myTabBar.alpha = 0
+    }
+
+    func showIt(){
+        print("would show")
+    }
 }
+
+
+protocol CustomTabBarDelegate: class {
+    func hideIt()
+    func showIt()
+}
+
+

@@ -94,13 +94,6 @@ extension TabBarView {
         let leftStack = makeStack(frame: leftStackFrame)
         let rightStack = makeStack(frame: rightStackFrame)
 
-        if debug {
-            button3.backgroundColor = .red
-            button4.backgroundColor = .cyan
-            button2.backgroundColor = .blue
-            button1.backgroundColor = .orange
-        }
-
         leftStack.addArrangedSubview(button1)
         leftStack.addArrangedSubview(button2)
         rightStack.addArrangedSubview(button3)

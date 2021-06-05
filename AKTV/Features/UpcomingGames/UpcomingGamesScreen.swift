@@ -15,6 +15,7 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
     // MARK: - Properties
 
     private var cardContainer = SwipeableCardViewContainer(frame: screenFrame)
+    weak var customTabBarDelegate: CustomTabBarDelegate?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -31,6 +32,14 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
 
     override func viewDidLoad() {
         cardContainer.dataSource = self
+
+        print("delegate: ", customTabBarDelegate)
+        customTabBarDelegate?.hideIt()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        print("delegate: ", customTabBarDelegate)
+        customTabBarDelegate?.hideIt()
     }
 
     // MARK: - Initializers
@@ -61,7 +70,7 @@ extension UpcomingGamesScreen {
 
     func card(forItemAtIndex index: Int) -> SwipeableCardViewCard {
         let viewModel = viewModels[index]
-        let cardView = SampleSwipeableCard(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+        let cardView = SampleSwipeableCard()
         cardView.viewModel = viewModel
         cardView.layoutSubviews()
         return cardView
