@@ -10,6 +10,7 @@ target 'AKTV' do
   pod 'ScreenCorners'
   pod 'ComplimentaryGradientView'
   pod 'YouTubePlayer'
+  pod 'IGDB-SWIFT-API', git: "https://github.com/husnjak/IGDB-API-SWIFT.git"
 
   # Targets
   target 'AKTVTests' do

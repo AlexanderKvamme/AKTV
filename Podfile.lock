@@ -1,11 +1,17 @@
 PODS:
   - ComplimentaryGradientView (0.3.0)
+  - IGDB-SWIFT-API (0.3.5):
+    - Just (~> 0.8.0)
+    - SwiftProtobuf (~> 1.6.0)
+  - Just (0.8.0)
   - ScreenCorners (1.0.1)
   - SnapKit (5.0.1)
+  - SwiftProtobuf (1.6.0)
   - YouTubePlayer (0.7.2)
 
 DEPENDENCIES:
   - ComplimentaryGradientView
+  - IGDB-SWIFT-API (from `https://github.com/husnjak/IGDB-API-SWIFT.git`)
   - ScreenCorners
   - SnapKit
   - YouTubePlayer
@@ -13,16 +19,30 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - ComplimentaryGradientView
+    - Just
     - ScreenCorners
     - SnapKit
+    - SwiftProtobuf
     - YouTubePlayer
+
+EXTERNAL SOURCES:
+  IGDB-SWIFT-API:
+    :git: https://github.com/husnjak/IGDB-API-SWIFT.git
+
+CHECKOUT OPTIONS:
+  IGDB-SWIFT-API:
+    :commit: f5f34c9a69a60c64f9d33a2b22b9475d75f5bb60
+    :git: https://github.com/husnjak/IGDB-API-SWIFT.git
 
 SPEC CHECKSUMS:
   ComplimentaryGradientView: d874186ea4c37bd08ebd1f2d229698416cacaa39
+  IGDB-SWIFT-API: fe7509dda63a4cd6700fdba788d40af44ab299b4
+  Just: aef5105fb2c7069b65aa6f21aec8f429057f9c19
   ScreenCorners: 9bfdf033122fb645d57cc8f9df7b8ea770720771
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftProtobuf: e905ca1366405696411aaf174411c4b19c0ef73d
   YouTubePlayer: 2b5f2830d8f9b2cde942083211291e382c9e6bd5
 
-PODFILE CHECKSUM: e0e68fa4f5703de97b0331d6263f7c8bcef51ab1
+PODFILE CHECKSUM: c201e4d1acf9cb800f5f0746ce6a3d5cbc6fab8c
 
 COCOAPODS: 1.10.1
