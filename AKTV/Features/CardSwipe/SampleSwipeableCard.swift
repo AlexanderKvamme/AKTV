@@ -9,17 +9,68 @@
 import UIKit
 import CoreMotion
 
+
+class GameCard: UIView {
+
+    // MARK: - Properties
+
+    var titleLabel =  UILabel.make(.header)
+    var subtitleLabel =  UILabel.make(.subtitle)
+    var imageView = UIImageView()
+
+    // MARK: - Initializers
+
+    init() {
+        super.init(frame: .zero)
+
+        setup()
+        addSubviewsAndConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Methods
+
+    private func setup() {
+        clipsToBounds = true
+        layer.cornerRadius = 30
+        layer.cornerCurve = .continuous
+    }
+
+    private func addSubviewsAndConstraints() {
+        addSubview(imageView)
+        addSubview(titleLabel)
+        addSubview(subtitleLabel)
+
+        titleLabel.backgroundColor = .red
+        titleLabel.textAlignment = .left
+
+        backgroundColor = .cyan
+
+        imageView.backgroundColor = .purple
+
+        imageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalTo(imageView)
+        }
+
+        subtitleLabel.backgroundColor = .yellow
+        subtitleLabel.snp.makeConstraints { (make) in
+            make.left.right.equalTo(imageView)
+            make.bottom.equalTo(titleLabel.snp.top)
+        }
+    }
+}
+
+
 class SampleSwipeableCard: SwipeableCardViewCard {
 
-    private var questionLabel = UILabel.make(.header)
-    private var titleLabel =  UILabel.make(.header)
-    private var subtitleLabel =  UILabel.make(.header)
-
-    private var imageBackgroundColorView = UIView()
-    private var imageView = UIImageView()
-    private var backgroundContainerView = UIView()
-
-    /// Core Motion Manager
+    private let card = GameCard()
     private let motionManager = CMMotionManager()
 
     /// Shadow View
@@ -46,51 +97,34 @@ class SampleSwipeableCard: SwipeableCardViewCard {
     }
 
     private func setup() {
-        layer.cornerRadius = 30
-        layer.cornerCurve = .continuous
+
     }
 
     private func addSubviewsAndConstraints() {
-        addSubview(titleLabel)
-        titleLabel.backgroundColor = .red
-        titleLabel.textAlignment = .center
-        titleLabel.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().inset(24)
-            make.centerX.equalToSuperview()
-            make.top.equalTo(safeAreaLayoutGuide).offset(40)
+        layoutSubviews()
 
-        }
-
-        backgroundColor = .cyan
-
-        imageView.backgroundColor = .green
-        imageView.layer.cornerCurve = .continuous
-        imageView.layer.cornerRadius = 30
-        addSubview(imageView)
-
-        imageView.snp.makeConstraints { (make) in
-            make.height.equalTo(500)
-            make.left.right.equalToSuperview().inset(24)
-            make.bottom.equalToSuperview().offset(-40)
-        }
+        addSubview(card)
     }
-
 
     private func configure(forViewModel viewModel: SampleSwipeableCellViewModel?) {
         if let viewModel = viewModel {
-            titleLabel.text = viewModel.title
-            subtitleLabel.text = viewModel.subtitle
-            imageBackgroundColorView.backgroundColor = viewModel.color
-            imageView.image = viewModel.image
 
-            backgroundContainerView.layer.cornerRadius = 14.0
+            card.titleLabel.text = viewModel.title
+            card.subtitleLabel.text = viewModel.subtitle
+            card.imageView.image = viewModel.image
         }
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
 
-//        configureShadow()
+        let inset: CGFloat = 24
+        card.frame = CGRect(x: inset, y: 0, width: screenWidth-2*inset, height: 400)
+
+//        imageView.frame =
+//        print(imageView.frame)
+
+        configureShadow()
     }
 
     // MARK: - Shadow
