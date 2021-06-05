@@ -71,6 +71,7 @@
 		DD78E2FC25CAF1230084F101 /* DayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78E2FB25CAF1230084F101 /* DayModel.swift */; };
 		DD7E660C25D538F7006553D1 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7E660B25D538F7006553D1 /* URLExtensions.swift */; };
 		DD9BC9D1266B5553009B2DD8 /* IGDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9D0266B5553009B2DD8 /* IGDBService.swift */; };
+		DD9BC9F1266BC638009B2DD8 /* UpcomingGamesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F0266BC638009B2DD8 /* UpcomingGamesScreen.swift */; };
 		DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */; };
 		DDA1A8FD2427B24B00F7907A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */; };
 		DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A8FE2427B24B00F7907A /* SceneDelegate.swift */; };
@@ -191,6 +192,7 @@
 		DD78E2FB25CAF1230084F101 /* DayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayModel.swift; sourceTree = "<group>"; };
 		DD7E660B25D538F7006553D1 /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		DD9BC9D0266B5553009B2DD8 /* IGDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGDBService.swift; sourceTree = "<group>"; };
+		DD9BC9F0266BC638009B2DD8 /* UpcomingGamesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingGamesScreen.swift; sourceTree = "<group>"; };
 		DD9C57AB2457FE2B00EE4C6C /* UpcomingTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingTableHeader.swift; sourceTree = "<group>"; };
 		DDA1A8F92427B24B00F7907A /* AKTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AKTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA1A8FC2427B24B00F7907A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -411,6 +413,14 @@
 			path = IGDBService;
 			sourceTree = "<group>";
 		};
+		DD9BC9EF266BC61A009B2DD8 /* UpcomingGames */ = {
+			isa = PBXGroup;
+			children = (
+				DD9BC9F0266BC638009B2DD8 /* UpcomingGamesScreen.swift */,
+			);
+			path = UpcomingGames;
+			sourceTree = "<group>";
+		};
 		DDA1A8F02427B24B00F7907A = {
 			isa = PBXGroup;
 			children = (
@@ -498,6 +508,7 @@
 		DDC8048125D5757600B0418B /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				DD9BC9EF266BC61A009B2DD8 /* UpcomingGames */,
 				DD000AA12455BEAE00CB095D /* Storage */,
 				DDA1A92F2427B26400F7907A /* Networking */,
 				DD1A7BD3245C12B1005879F8 /* TabBar */,
@@ -885,6 +896,7 @@
 				DD3952BF25D86F3800C918F3 /* Alpha.swift in Sources */,
 				DDB26BB125DC6DCC007FF941 /* BadgeCell.swift in Sources */,
 				DDE5D68725FE03B70065EA8C /* UpcomingDetailedScreen.swift in Sources */,
+				DD9BC9F1266BC638009B2DD8 /* UpcomingGamesScreen.swift in Sources */,
 				DD6DDF5C25CDA0F500A19F3A /* FontExtensions.swift in Sources */,
 				DD3952B525D834DF00C918F3 /* UIViewExtensions.swift in Sources */,
 				DD3952AD25D6E82400C918F3 /* AnimatableNumberLabel.swift in Sources */,

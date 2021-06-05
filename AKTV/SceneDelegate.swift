@@ -19,7 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = WellRoundedTabBarController()
         tabBarController.setViewControllers([UpcomingScreen()], animated: true)
 
-        IGDBService.setupAuthentication()
+        let token = IGDBService.authenticate { (authToken) in
+            let service = IGDBService(authToken)
+            service.testGettingSomeGames()
+        }
 
         self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
