@@ -44,25 +44,26 @@ class GameCard: UIView {
         addSubview(titleLabel)
         addSubview(subtitleLabel)
 
-        titleLabel.backgroundColor = .red
         titleLabel.textAlignment = .left
+        titleLabel.textColor = UIColor(dark)
+        subtitleLabel.textColor = UIColor(dark)
+        subtitleLabel.font = UIFont.gilroy(.bold, 16)
+        subtitleLabel.alpha = 0.4
 
-        backgroundColor = .cyan
-
-        imageView.backgroundColor = .purple
+        imageView.backgroundColor = .white
 
         imageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
 
+        let textInset: CGFloat = 24
         titleLabel.snp.makeConstraints { (make) in
-            make.left.right.bottom.equalTo(imageView)
+            make.left.right.bottom.equalTo(imageView).inset(textInset)
         }
 
-        subtitleLabel.backgroundColor = .yellow
         subtitleLabel.snp.makeConstraints { (make) in
-            make.left.right.equalTo(imageView)
-            make.bottom.equalTo(titleLabel.snp.top)
+            make.left.right.equalTo(titleLabel)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-8)
         }
     }
 }
