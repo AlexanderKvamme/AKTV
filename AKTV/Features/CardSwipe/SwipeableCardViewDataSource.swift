@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IGDB_SWIFT_API
 
 /// A DataSource for providing all of the information required
 /// for SwipeableCardViewContainer to layout a series of cards.
@@ -34,4 +35,5 @@ protocol SwipeableCardViewDataSource: class {
     /// - Returns: view to be displayed underneath all cards
     func viewForEmptyCards() -> UIView?
 
+    func items() -> [Proto_Game]
 }

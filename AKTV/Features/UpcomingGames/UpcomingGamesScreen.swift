@@ -174,6 +174,11 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
         viewModels = games
         cardContainer.reloadData()
     }
+
+    func items() -> [Proto_Game] {
+        return viewModels
+    }
+
 }
 
 // MARK: - SwipeableCardViewDataSource

@@ -8,6 +8,7 @@
 
 import Foundation
 import IGDB_SWIFT_API
+import Kingfisher
 
 
 class TwitchAuthResponse: Codable {
@@ -33,12 +34,25 @@ final class IGDBService {
 
     typealias Completion = (([Proto_Game]) -> ())
 
+    func precache(_ items: [Proto_Game]) {
+        print("bam would precache: ", items.map({$0.cover.id}))
 
-    func getCoverImage(id: String, completion: @escaping ((String) -> ())) {
+        let coverId = items.first!.cover.id
+        print("bam would first precache: ", coverId)
+        print()
+        guard let number: Int64? = Int64(coverId) else { fatalError() }
+
+        let trynaGetCoverUrlForKF = getCoverImage(coverId: String(coverId)) { (str) in
+            print("bam new kingfisher url: ", str)
+            KingfisherManager.shared.downloader.downloadImage(with: URL(string: str)!)
+        }
+    }
+
+    func getCoverImage(coverId: String, completion: @escaping ((String) -> ())) {
         let wrapper = IGDBWrapper(clientID: IGDBService.clientID, accessToken: authToken.accessToken)
         let apicalypse = APICalypse()
             .fields(fields: "*")
-            .where(query: "id = \(id);")
+            .where(query: "id = \(coverId);")
 
         wrapper.covers(apiCalypse: apicalypse) { (covers) -> (Void) in
             guard let imageId = covers.first?.imageID else {

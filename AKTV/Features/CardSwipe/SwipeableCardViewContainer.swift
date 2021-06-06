@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
 
     static let horizontalInset: CGFloat = 12.0
@@ -51,6 +52,10 @@ class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
 
         let numberOfCards = dataSource.numberOfCards()
         remainingCards = numberOfCards
+
+        if numberOfCards > Self.numberOfVisibleCards {
+            gamesService?.precache(dataSource.items())
+        }
 
         for index in 0..<min(numberOfCards, SwipeableCardViewContainer.numberOfVisibleCards) {
             addCardView(cardView: dataSource.card(forItemAtIndex: index), atIndex: index)

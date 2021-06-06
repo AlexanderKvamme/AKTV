@@ -109,7 +109,8 @@ class SwipeableGameCard: SwipeableCardViewCard {
             card.subtitleLabel.text = "This is sub"
             print(viewModel)
 
-            gamesService.getCoverImage(id: String(viewModel.cover.id)) { (str) -> () in
+            gamesService?.getCoverImage(coverId: String(viewModel.cover.id)) { (str) -> () in
+                print("bam old kingfisher getting url: ", str)
                 self.card.imageView.kf.setImage(with: URL(string: str))
             }
         }
