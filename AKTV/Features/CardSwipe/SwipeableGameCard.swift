@@ -69,7 +69,7 @@ class GameCard: UIView {
 }
 
 
-class SampleSwipeableCard: SwipeableCardViewCard {
+class SwipeableGameCard: SwipeableCardViewCard {
 
     private let card = GameCard()
     private let motionManager = CMMotionManager()
@@ -132,8 +132,8 @@ class SampleSwipeableCard: SwipeableCardViewCard {
     private func configureShadow() {
         // Shadow View
         self.shadowView?.removeFromSuperview()
-        let shadowView = UIView(frame: CGRect(x: SampleSwipeableCard.kInnerMargin,
-                                              y: SampleSwipeableCard.kInnerMargin,
+        let shadowView = UIView(frame: CGRect(x: SwipeableGameCard.kInnerMargin,
+                                              y: SwipeableGameCard.kInnerMargin,
                                               width: card.frame.width,
                                               height: card.frame.height))
         insertSubview(shadowView, at: 0)

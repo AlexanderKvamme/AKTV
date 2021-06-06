@@ -12,6 +12,7 @@ target 'AKTV' do
   pod 'ComplimentaryGradientView'
   pod 'YouTubePlayer'
   pod 'IGDB-SWIFT-API', git: "https://github.com/husnjak/IGDB-API-SWIFT.git"
+  pod 'Kingfisher', '~> 6.0'
 
   # Targets
   target 'AKTVTests' do
