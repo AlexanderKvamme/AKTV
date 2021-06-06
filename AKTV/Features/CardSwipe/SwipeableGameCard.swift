@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreMotion
+import IGDB_SWIFT_API
+import Kingfisher
 
 
 class GameCard: UIView {
@@ -73,14 +75,10 @@ class SwipeableGameCard: SwipeableCardViewCard {
 
     private let card = GameCard()
     private let motionManager = CMMotionManager()
-
-    /// Shadow View
     private weak var shadowView: UIView?
-
-    /// Inner Margin
     private static let kInnerMargin: CGFloat = 20.0
 
-    var viewModel: SampleSwipeableCellViewModel? {
+    var viewModel: Proto_Game? {
         didSet {
             configure(forViewModel: viewModel)
         }
@@ -97,9 +95,7 @@ class SwipeableGameCard: SwipeableCardViewCard {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setup() {
-
-    }
+    private func setup() {}
 
     private func addSubviewsAndConstraints() {
         layoutSubviews()
@@ -107,12 +103,15 @@ class SwipeableGameCard: SwipeableCardViewCard {
         addSubview(card)
     }
 
-    private func configure(forViewModel viewModel: SampleSwipeableCellViewModel?) {
+    private func configure(forViewModel viewModel: Proto_Game?) {
         if let viewModel = viewModel {
+            card.titleLabel.text = viewModel.name
+            card.subtitleLabel.text = "This is sub"
+            print(viewModel)
 
-            card.titleLabel.text = viewModel.title
-            card.subtitleLabel.text = viewModel.subtitle
-            card.imageView.image = viewModel.image
+            gamesService.getCoverImage(id: String(viewModel.cover.id)) { (str) -> () in
+                self.card.imageView.kf.setImage(with: URL(string: str))
+            }
         }
     }
 
@@ -121,8 +120,6 @@ class SwipeableGameCard: SwipeableCardViewCard {
 
         let inset: CGFloat = 24
         card.frame = CGRect(x: inset, y: 0, width: screenWidth-2*inset, height: 400)
-
-//        print(imageView.frame)
 
         configureShadow()
     }

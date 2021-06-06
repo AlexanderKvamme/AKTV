@@ -19,7 +19,7 @@ class TwitchAuthResponse: Codable {
 
 final class IGDBService {
 
-    private let authToken: TwitchAuthResponse
+    let authToken: TwitchAuthResponse
     static private let clientID = "6w71e2zsvf5ak18snvrtweybwjl877"
     static private let rootURL = "https://api.igdb.com/v4"
 
@@ -31,23 +31,41 @@ final class IGDBService {
 
     // MARK: - Methods
 
-    func testGettingSomeGames() {
-        let apicalypse = APICalypse()
-                  .fields(fields: "*")
-//                  .exclude(fields: "*")
-//                  .limit(value: 10)
-//                  .offset(value: 0)
-                  .search(searchQuery: "Halo")
-//                  .sort(field: "release_dates.date", order: .ASCENDING)
-//                  .where(query: "platforms = 48")
+    typealias Completion = (([Proto_Game]) -> ())
+
+
+    func getCoverImage(id: String, completion: @escaping ((String) -> ())) {
         let wrapper = IGDBWrapper(clientID: IGDBService.clientID, accessToken: authToken.accessToken)
+        let apicalypse = APICalypse()
+            .fields(fields: "*")
+            .where(query: "id = \(id);")
 
-        let test = wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
-//            if let game = games.first { print(game) }
+        wrapper.covers(apiCalypse: apicalypse) { (covers) -> (Void) in
+            guard let imageId = covers.first?.imageID else {
+                print("ERROR could not access cover url")
+                return
+            }
 
-//            let gameData = wrapper
+            let imageURL = imageBuilder(imageID: imageId, size: ImageSize.COVER_BIG)
+            completion(imageURL)
+        } errorResponse: { (requestException) -> (Void) in
+            print("Error getting cover image: ", requestException)
+        }
+    }
 
+    func testGettingSomeGames(completion: @escaping Completion) {
+        let apicalypse = APICalypse()
+            .fields(fields: "*")
+            .search(searchQuery: "Halo")
+            .limit(value: 10)
+//            .sort(field: "release_dates.date", order: .ASCENDING)
 
+        let wrapper = IGDBWrapper(clientID: IGDBService.clientID, accessToken: authToken.accessToken)
+        wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
+            completion(games)
+
+            print(type(of: games))
+//            print(names)
         } errorResponse: { (requestException) -> (Void) in
             print(requestException)
         }

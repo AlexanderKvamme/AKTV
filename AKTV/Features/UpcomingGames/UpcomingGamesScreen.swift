@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import IGDB_SWIFT_API
 
 
 class IconButton: UIButton {
@@ -89,6 +90,8 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
     private var cardContainer = SwipeableCardViewContainer(frame: screenFrame)
     weak var customTabBarDelegate: CustomTabBarDelegate?
 
+    var viewModels = [Proto_Game]()
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
@@ -166,6 +169,11 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
             make.left.right.bottom.equalToSuperview()
         }
     }
+
+    func update(with games: [Proto_Game]) {
+        viewModels = games
+        cardContainer.reloadData()
+    }
 }
 
 // MARK: - SwipeableCardViewDataSource
@@ -173,12 +181,15 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
 extension UpcomingGamesScreen {
 
     func numberOfCards() -> Int {
+        print("numberOfCards: ", viewModels.count)
         return viewModels.count
     }
 
     func card(forItemAtIndex index: Int) -> SwipeableCardViewCard {
+        print("making card")
+
         let viewModel = viewModels[index]
-        let cardView = SampleSwipeableCard()
+        let cardView = SwipeableGameCard()
         cardView.viewModel = viewModel
         cardView.layoutSubviews()
 
@@ -187,35 +198,6 @@ extension UpcomingGamesScreen {
 
     func viewForEmptyCards() -> UIView? {
         return nil
-    }
-
-    var viewModels: [SampleSwipeableCellViewModel] {
-
-        let hamburger = SampleSwipeableCellViewModel(title: "Call of duty",
-                                                     subtitle: "Hamburger",
-                                                     image: UIImage())
-
-        let panda = SampleSwipeableCellViewModel(title: "Warzone",
-                                                  subtitle: "Animal",
-                                                  image: UIImage())
-
-        let puppy = SampleSwipeableCellViewModel(title: "DOTA",
-                                                  subtitle: "Pet",
-                                                  image: UIImage())
-
-        let poop = SampleSwipeableCellViewModel(title: "Fortnite",
-                                                  subtitle: "Smelly",
-                                                  image: UIImage())
-
-        let robot = SampleSwipeableCellViewModel(title: "Teletubbies the game",
-                                                  subtitle: "Future",
-                                                  image: UIImage())
-
-        let clown = SampleSwipeableCellViewModel(title: "Back Flip Trainers",
-                                                  subtitle: "Scary",
-                                                  image: UIImage())
-
-        return [hamburger, panda, puppy, poop, robot, clown]
     }
 
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+var gamesService: IGDBService!
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -19,9 +20,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = WellRoundedTabBarController()
         tabBarController.setViewControllers([UpcomingScreen()], animated: true)
 
-        let token = IGDBService.authenticate { (authToken) in
-            let service = IGDBService(authToken)
-            service.testGettingSomeGames()
+        IGDBService.authenticate { (authToken) in
+            gamesService = IGDBService(authToken)
+            gamesService.testGettingSomeGames { (games) in
+                print("token: ", authToken)
+                print("token a: ", authToken.accessToken)
+                DispatchQueue.main.async {
+                    tabBarController.upcomingGamesScreen.update(with: games)
+                }
+            }
         }
 
         self.window?.rootViewController = tabBarController
