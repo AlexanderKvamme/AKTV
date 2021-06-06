@@ -35,16 +35,10 @@ final class IGDBService {
     typealias Completion = (([Proto_Game]) -> ())
 
     func precache(_ items: [Proto_Game]) {
-        print("bam would precache: ", items.map({$0.cover.id}))
-
-        let coverId = items.first!.cover.id
-        print("bam would first precache: ", coverId)
-        print()
-        guard let number: Int64? = Int64(coverId) else { fatalError() }
-
-        let trynaGetCoverUrlForKF = getCoverImage(coverId: String(coverId)) { (str) in
-            print("bam new kingfisher url: ", str)
-            KingfisherManager.shared.downloader.downloadImage(with: URL(string: str)!)
+        for item in items {
+            getCoverImage(coverId: String(item.cover.id)) { (str) in
+                KingfisherManager.shared.downloader.downloadImage(with: URL(string: str)!)
+            }
         }
     }
 
