@@ -117,12 +117,8 @@ final class APIDAO: NSObject {
                 return
             }
 
-//            print("bam data: ", data)
-//            print("bam response: ", response)
-//            print("shazam bam showOverview json: ", String(data: content, encoding: String.Encoding.utf8))
-
             // Got JSON
-            guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] else {
+            guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
                 print("Not containing JSON")
                 return
             }
@@ -145,7 +141,7 @@ final class APIDAO: NSObject {
         
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
             guard error == nil else {
-                fatalError("error: \(error) ... \(error?.localizedDescription)")
+                fatalError("error: \(String(describing: error)) ... \(String(describing: error?.localizedDescription))")
             }
             
             guard let content = data else {
@@ -153,7 +149,7 @@ final class APIDAO: NSObject {
             }
             
             // Got JSON
-            guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] else {
+            guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
                 print("Not containing JSON")
                 return
             }
@@ -187,12 +183,7 @@ final class APIDAO: NSObject {
                 return
             }
 
-//            print("bam data: ", data)
-//            print("bam response: ", response)
-//            print("shazam bam showOverview json: ", String(data: content, encoding: String.Encoding.utf8))
-
-            // Got JSON
-            guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] else {
+            guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
                 print("Not containing JSON")
                 return
             }

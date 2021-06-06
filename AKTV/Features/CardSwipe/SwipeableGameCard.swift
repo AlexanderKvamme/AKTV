@@ -157,7 +157,7 @@ class SwipeableGameCard: SwipeableCardViewCard {
             shadowView.layer.shadowRadius = 8.0
             shadowView.layer.shadowColor = UIColor.black.cgColor
             shadowView.layer.shadowOffset = CGSize(width: width, height: height)
-            shadowView.layer.shadowOpacity = 0.1
+            shadowView.layer.shadowOpacity = 0.2
             shadowView.layer.shadowPath = shadowPath.cgPath
         }
     }

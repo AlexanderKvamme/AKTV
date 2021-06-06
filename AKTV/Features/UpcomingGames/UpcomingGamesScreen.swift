@@ -181,13 +181,10 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
 extension UpcomingGamesScreen {
 
     func numberOfCards() -> Int {
-        print("numberOfCards: ", viewModels.count)
         return viewModels.count
     }
 
     func card(forItemAtIndex index: Int) -> SwipeableCardViewCard {
-        print("making card")
-
         let viewModel = viewModels[index]
         let cardView = SwipeableGameCard()
         cardView.viewModel = viewModel

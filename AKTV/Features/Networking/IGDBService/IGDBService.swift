@@ -58,14 +58,10 @@ final class IGDBService {
             .fields(fields: "*")
             .search(searchQuery: "Halo")
             .limit(value: 10)
-//            .sort(field: "release_dates.date", order: .ASCENDING)
 
         let wrapper = IGDBWrapper(clientID: IGDBService.clientID, accessToken: authToken.accessToken)
         wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
             completion(games)
-
-            print(type(of: games))
-//            print(names)
         } errorResponse: { (requestException) -> (Void) in
             print(requestException)
         }
