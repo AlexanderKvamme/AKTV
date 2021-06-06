@@ -31,7 +31,7 @@ class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
 
     fileprivate var remainingCards: Int = 0
 
-    static let numberOfVisibleCards: Int = 3
+    static let numberOfVisibleCards: Int = 2
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,7 +58,9 @@ class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
         }
 
         for index in 0..<min(numberOfCards, SwipeableCardViewContainer.numberOfVisibleCards) {
-            addCardView(cardView: dataSource.card(forItemAtIndex: index), atIndex: index)
+            let card = dataSource.card(forItemAtIndex: index)
+            if index == 0 { (card as? SwipeableGameCard)?.card.setForeground(true) }
+            addCardView(cardView: card, atIndex: index)
         }
 
         if let emptyView = dataSource.viewForEmptyCards() {
@@ -96,7 +98,6 @@ class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
         let verticalInset = CGFloat(index) * SwipeableCardViewContainer.verticalInset
 
         cardViewFrame.size.width -= 2 * horizontalInset
-        cardViewFrame.origin.x += horizontalInset
         cardViewFrame.origin.y += verticalInset
 
         cardView.frame = cardViewFrame
@@ -140,6 +141,9 @@ extension SwipeableCardViewContainer {
             // to reveal new card from underneath the stack of existing cards.
             for (cardIndex, cardView) in visibleCardViews.reversed().enumerated() {
                 UIView.animate(withDuration: 0.2, animations: {
+                    if cardIndex == 0, let cv = cardView as? SwipeableGameCard {
+                        cv.card.setForeground(true)
+                    }
                     cardView.center = self.center
                     self.setFrame(forCardView: cardView, atIndex: cardIndex)
                     self.layoutIfNeeded()

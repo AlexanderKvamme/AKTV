@@ -35,7 +35,17 @@ class GameCard: UIView {
 
     // MARK: - Methods
 
+    func setForeground(_ bool: Bool) {
+        if bool {
+            imageView.alpha = 1
+        } else {
+            imageView.alpha = 0
+        }
+    }
+
     private func setup() {
+        setForeground(false)
+        backgroundColor = .white
         clipsToBounds = true
         layer.cornerRadius = 32
         layer.cornerCurve = .continuous
@@ -73,7 +83,7 @@ class GameCard: UIView {
 
 class SwipeableGameCard: SwipeableCardViewCard {
 
-    private let card = GameCard()
+    let card = GameCard()
     private let motionManager = CMMotionManager()
     private weak var shadowView: UIView?
     private static let kInnerMargin: CGFloat = 20.0
@@ -110,7 +120,6 @@ class SwipeableGameCard: SwipeableCardViewCard {
             print(viewModel)
 
             gamesService?.getCoverImage(coverId: String(viewModel.cover.id)) { (str) -> () in
-                print("bam old kingfisher getting url: ", str)
                 self.card.imageView.kf.setImage(with: URL(string: str))
             }
         }
