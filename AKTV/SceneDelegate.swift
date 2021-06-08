@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Make initial view controller
         let tabBarController = WellRoundedTabBarController()
-        tabBarController.setViewControllers([UpcomingScreen()], animated: true)
+        tabBarController.setViewControllers([CalendarScreen()], animated: true)
 
         IGDBService.authenticate { (authToken) in
             gamesService = IGDBService(authToken)

@@ -14,12 +14,12 @@ final class UpcomingShowsCollectionViewDataDelegate: NSObject, UICollectionViewD
 
     // MARK: - Properties
 
-    weak var upcomingScreen: UpcomingScreen?
+    weak var upcomingScreen: CalendarScreen?
     weak var dataSource: UpcomingDataSource?
 
     // MARK: - Initializers
 
-    init(_ upcomingScreen: UpcomingScreen, dataSource: UpcomingDataSource) {
+    init(_ upcomingScreen: CalendarScreen, dataSource: UpcomingDataSource) {
         self.upcomingScreen = upcomingScreen
         self.dataSource = dataSource
     }

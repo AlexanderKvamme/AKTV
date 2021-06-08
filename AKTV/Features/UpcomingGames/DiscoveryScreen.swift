@@ -78,7 +78,7 @@ class ConsoleIconStack: UIStackView {
 }
 
 
-final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
+final class DiscoveryScreen: UIViewController, SwipeableCardViewDataSource {
 
     // MARK: - Properties
 
@@ -133,6 +133,7 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
 
     @objc func exitScreen() {
         print("Would exit screen")
+        tabBarController?.selectedIndex = 0
     }
 
     private func addSubviewsAndConstraints() {
@@ -183,7 +184,7 @@ final class UpcomingGamesScreen: UIViewController, SwipeableCardViewDataSource {
 
 // MARK: - SwipeableCardViewDataSource
 
-extension UpcomingGamesScreen {
+extension DiscoveryScreen {
 
     func numberOfCards() -> Int {
         return viewModels.count

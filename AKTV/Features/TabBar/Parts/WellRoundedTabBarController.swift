@@ -14,7 +14,8 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     // MARK: - Properties
 
     let myTabBar = TabBarView(frame: CGRect(x: 0, y: screenHeight - TabBarSettings.barHeight, width: screenWidth, height: screenHeight))
-    let upcomingGamesScreen = UpcomingGamesScreen()
+    let upcomingGamesScreen = DiscoveryScreen()
+    let upcomingScreen = CalendarScreen()
     
     // MARK: - Initializers
 
@@ -22,7 +23,6 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         super.init(nibName: nil, bundle: nil)
 
         tabBar.isHidden = true
-        print("setting delegate")
         upcomingGamesScreen.customTabBarDelegate = self
 
         let subVC = myTabBar
@@ -40,7 +40,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
         let dao = APIDAO()
         let showSearchController = ShowsSearchScreen(dao: dao)
-        let upcomingScreen = UpcomingScreen()
+
 
         // Fetch favourite shows and show next episode dates
         let favouriteShows = UserProfileManager().favouriteShows()
@@ -63,7 +63,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        setViewControllers([upcomingGamesScreen, upcomingScreen, showSearchController, ColoredViewController(color: .cyan), ColoredViewController(color: .red)], animated: true)
+        setViewControllers([upcomingScreen, upcomingGamesScreen, showSearchController, ColoredViewController(color: .cyan), ColoredViewController(color: .red)], animated: true)
 
         selectedIndex = 0
         configureTabBarButtons()
