@@ -53,6 +53,7 @@ final class CalendarScreen: UIViewController {
 
     let header = UpcomingTableHeader()
     weak var tappedCell: UpcomingCell?
+    weak var customTabBarDelegate: CustomTabBarDelegate?
     
     // MARK: Initializers
     
@@ -85,6 +86,12 @@ final class CalendarScreen: UIViewController {
     }
     
     // MARK: Private methods
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        customTabBarDelegate?.showIt()
+    }
     
     private func setup() {
         view.backgroundColor = UIColor(light)

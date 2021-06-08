@@ -14,8 +14,8 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     // MARK: - Properties
 
     let myTabBar = TabBarView(frame: CGRect(x: 0, y: screenHeight - TabBarSettings.barHeight, width: screenWidth, height: screenHeight))
-    let upcomingGamesScreen = DiscoveryScreen()
-    let upcomingScreen = CalendarScreen()
+    let discoveryScreen = DiscoveryScreen()
+    let calendarScreen = CalendarScreen()
     
     // MARK: - Initializers
 
@@ -23,7 +23,9 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         super.init(nibName: nil, bundle: nil)
 
         tabBar.isHidden = true
-        upcomingGamesScreen.customTabBarDelegate = self
+        discoveryScreen.customTabBarDelegate = self
+        calendarScreen.customTabBarDelegate = self
+
 
         let subVC = myTabBar
         view.addSubview(subVC)
@@ -47,7 +49,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         favouriteShows.forEach{ id in
             dao.show(withId: id) { (showOverview) in
                 DispatchQueue.main.sync {
-                upcomingScreen.update(withShow: showOverview)
+                    self.calendarScreen.update(withShow: showOverview)
                 }
             }
         }
@@ -63,7 +65,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        setViewControllers([upcomingScreen, upcomingGamesScreen, showSearchController, ColoredViewController(color: .cyan), ColoredViewController(color: .red)], animated: true)
+        setViewControllers([calendarScreen, discoveryScreen, showSearchController, ColoredViewController(color: .cyan), ColoredViewController(color: .red)], animated: true)
 
         selectedIndex = 0
         configureTabBarButtons()
@@ -83,12 +85,11 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     }
 
     func hideIt() {
-        print("would hide")
         myTabBar.alpha = 0
     }
 
     func showIt(){
-        print("would show")
+        myTabBar.alpha = 1
     }
 }
 
