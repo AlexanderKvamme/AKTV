@@ -18,7 +18,7 @@ class TwitchAuthResponse: Codable {
 }
 
 
-final class IGDBService {
+final class GameService {
 
     let authToken: TwitchAuthResponse
     static private let clientID = "6w71e2zsvf5ak18snvrtweybwjl877"
@@ -43,7 +43,7 @@ final class IGDBService {
     }
 
     func getCoverImage(coverId: String, completion: @escaping ((String) -> ())) {
-        let wrapper = IGDBWrapper(clientID: IGDBService.clientID, accessToken: authToken.accessToken)
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         let apicalypse = APICalypse()
             .fields(fields: "*")
             .where(query: "id = \(coverId);")
@@ -67,7 +67,7 @@ final class IGDBService {
             .search(searchQuery: "Halo")
             .limit(value: 10)
 
-        let wrapper = IGDBWrapper(clientID: IGDBService.clientID, accessToken: authToken.accessToken)
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
             completion(games)
         } errorResponse: { (requestException) -> (Void) in
@@ -78,7 +78,7 @@ final class IGDBService {
     // MARK: - Static Methods
 
     static func authenticate(completion: @escaping ((TwitchAuthResponse) -> Void)) {
-        let authUrl = URL(string: "https://id.twitch.tv/oauth2/token?client_id=\(IGDBService.clientID)&client_secret=pyjnp1qwivqhskefv1vkqizeg6oge9&grant_type=client_credentials")
+        let authUrl = URL(string: "https://id.twitch.tv/oauth2/token?client_id=\(GameService.clientID)&client_secret=pyjnp1qwivqhskefv1vkqizeg6oge9&grant_type=client_credentials")
         var request = URLRequest(url: authUrl!)
         request.httpMethod = "POST"
 

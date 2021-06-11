@@ -120,7 +120,9 @@ class SwipeableGameCard: SwipeableCardViewCard {
             print(viewModel)
 
             gamesService?.getCoverImage(coverId: String(viewModel.cover.id)) { (str) -> () in
-                self.card.imageView.kf.setImage(with: URL(string: str))
+                DispatchQueue.main.async {
+                    self.card.imageView.kf.setImage(with: URL(string: str))
+                }
             }
         }
     }

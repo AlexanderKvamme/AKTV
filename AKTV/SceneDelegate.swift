@@ -7,7 +7,7 @@
 //
 
 import UIKit
-var gamesService: IGDBService!
+var gamesService: GameService!
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -20,8 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = WellRoundedTabBarController()
         //tabBarController.setViewControllers([CalendarScreen()], animated: true)
 
-        IGDBService.authenticate { (authToken) in
-            gamesService = IGDBService(authToken)
+        GameService.authenticate { (authToken) in
+            gamesService = GameService(authToken)
             gamesService.testGettingSomeGames { (games) in
                 print("token: ", authToken)
                 print("token a: ", authToken.accessToken)
