@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Make initial view controller
         let tabBarController = WellRoundedTabBarController()
-        //tabBarController.setViewControllers([CalendarScreen()], animated: true)
+        tabBarController.selectedIndex = 1
 
         GameService.authenticate { (authToken) in
             gamesService = GameService(authToken)

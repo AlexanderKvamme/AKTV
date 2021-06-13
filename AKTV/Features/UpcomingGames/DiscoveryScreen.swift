@@ -120,7 +120,7 @@ final class DiscoveryScreen: UIViewController, SwipeableCardViewDataSource {
     // MARK: - Methods
 
     private func setup() {
-        headerLabel.text = "Aight,\nhow about this?"
+        headerLabel.text = "This one?"
         headerLabel.textColor = UIColor(dark)
         headerLabel.numberOfLines = 0
         headerLabel.font = UIFont.gilroy(.heavy, 40)

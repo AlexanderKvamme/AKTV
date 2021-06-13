@@ -39,7 +39,7 @@ class GameCard: UIView {
         if bool {
             imageView.alpha = 1
         } else {
-            imageView.alpha = 0
+            imageView.alpha = 0.8
         }
     }
 
@@ -120,6 +120,7 @@ class SwipeableGameCard: SwipeableCardViewCard {
             print(viewModel)
 
             gamesService?.getCoverImage(coverId: String(viewModel.cover.id)) { (str) -> () in
+                guard let str = str else { return }
                 DispatchQueue.main.async {
                     self.card.imageView.kf.setImage(with: URL(string: str))
                 }
