@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SwipeableCardViewDelegate: class {
+protocol SwipeableCardViewDelegate: AnyObject {
 
     func didSelect(card: SwipeableCardViewCard, atIndex index: Int)
 
