@@ -96,7 +96,7 @@ extension ShowOverviewScreen: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         fatalError()
-        if let searchterm = textField.text {
+        if textField.text != nil {
 //            let tvSeries = apiDao.searchShows(string: searchterm)
             // TODO: Actually return a show or somethin
         }
