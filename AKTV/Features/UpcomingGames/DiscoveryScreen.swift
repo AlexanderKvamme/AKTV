@@ -78,7 +78,7 @@ class ConsoleIconStack: UIStackView {
 }
 
 
-final class DiscoveryScreen: UIViewController, SwipeableCardViewDataSource {
+final class DiscoveryScreen: UIViewController, CardViewDataSource {
 
     // MARK: - Properties
 
@@ -87,7 +87,7 @@ final class DiscoveryScreen: UIViewController, SwipeableCardViewDataSource {
     private var genreLabel = UILabel.make(.subtitle)
     private var iconStack = ConsoleIconStack([.xbox, .playstation, .windows])
 
-    private var cardContainer = SwipeableCardViewContainer(frame: screenFrame)
+    private var cardContainer = CardViewContainer(frame: screenFrame)
     weak var customTabBarDelegate: CustomTabBarDelegate?
 
     var viewModels = [Proto_Game]()
@@ -190,7 +190,7 @@ extension DiscoveryScreen {
         return viewModels.count
     }
 
-    func card(forItemAtIndex index: Int) -> SwipeableCardViewCard {
+    func card(forItemAtIndex index: Int) -> SwipeableView {
         let viewModel = viewModels[index]
         let cardView = SwipeableGameCard()
         cardView.viewModel = viewModel

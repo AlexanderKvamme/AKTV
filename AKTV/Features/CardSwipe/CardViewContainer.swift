@@ -9,24 +9,24 @@
 import UIKit
 
 
-class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
+class CardViewContainer: UIView, SwipeableViewDelegate {
 
     static let horizontalInset: CGFloat = 12.0
 
     static let verticalInset: CGFloat = 12.0
 
-    var dataSource: SwipeableCardViewDataSource? {
+    var dataSource: CardViewDataSource? {
         didSet {
             reloadData()
         }
     }
 
-    var delegate: SwipeableCardViewDelegate?
+    var delegate: CardViewDelegate?
 
-    private var cardViews: [SwipeableCardViewCard] = []
+    private var cardViews: [SwipeableView] = []
 
-    private var visibleCardViews: [SwipeableCardViewCard] {
-        return subviews as? [SwipeableCardViewCard] ?? []
+    private var visibleCardViews: [SwipeableView] {
+        return subviews as? [SwipeableView] ?? []
     }
 
     fileprivate var remainingCards: Int = 0
@@ -57,7 +57,7 @@ class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
             gamesService?.precache(dataSource.items())
         }
 
-        for index in 0..<min(numberOfCards, SwipeableCardViewContainer.numberOfVisibleCards) {
+        for index in 0..<min(numberOfCards, CardViewContainer.numberOfVisibleCards) {
             let card = dataSource.card(forItemAtIndex: index)
             if index == 0 { (card as? SwipeableGameCard)?.card.setForeground(true) }
             addCardView(cardView: card, atIndex: index)
@@ -70,7 +70,7 @@ class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
         setNeedsLayout()
     }
 
-    private func addCardView(cardView: SwipeableCardViewCard, atIndex index: Int) {
+    private func addCardView(cardView: SwipeableView, atIndex index: Int) {
         cardView.delegate = self
         setFrame(forCardView: cardView, atIndex: index)
         cardViews.append(cardView)
@@ -92,10 +92,10 @@ class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
     /// - Parameters:
     ///   - cardView: card view to update frame on
     ///   - index: index used to apply horizontal and vertical insets
-    private func setFrame(forCardView cardView: SwipeableCardViewCard, atIndex index: Int) {
+    private func setFrame(forCardView cardView: SwipeableView, atIndex index: Int) {
         var cardViewFrame = bounds
-        let horizontalInset = (CGFloat(index) * SwipeableCardViewContainer.horizontalInset)
-        let verticalInset = CGFloat(index) * SwipeableCardViewContainer.verticalInset
+        let horizontalInset = (CGFloat(index) * CardViewContainer.horizontalInset)
+        let verticalInset = CGFloat(index) * CardViewContainer.verticalInset
 
         cardViewFrame.size.width -= 2 * horizontalInset
         cardViewFrame.origin.y += verticalInset
@@ -107,10 +107,10 @@ class SwipeableCardViewContainer: UIView, SwipeableViewDelegate {
 
 // MARK: - SwipeableViewDelegate
 
-extension SwipeableCardViewContainer {
+extension CardViewContainer {
 
     func didTap(view: SwipeableView) {
-        if let cardView = view as? SwipeableCardViewCard,
+        if let cardView = view as? SwipeableView,
            let index = cardViews.firstIndex(of: cardView) {
             delegate?.didSelect(card: cardView, atIndex: index)
         }

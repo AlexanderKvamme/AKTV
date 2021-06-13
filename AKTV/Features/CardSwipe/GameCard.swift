@@ -81,7 +81,7 @@ class GameCard: UIView {
 }
 
 
-class SwipeableGameCard: SwipeableCardViewCard {
+class SwipeableGameCard: SwipeableView {
 
     let card = GameCard()
     private let motionManager = CMMotionManager()

@@ -11,7 +11,7 @@ import IGDB_SWIFT_API
 
 /// A DataSource for providing all of the information required
 /// for SwipeableCardViewContainer to layout a series of cards.
-protocol SwipeableCardViewDataSource: class {
+protocol CardViewDataSource: AnyObject {
 
     /// Determines the number of cards to be added into the
     /// SwipeableCardViewContainer. Not all cards will initially
@@ -27,7 +27,7 @@ protocol SwipeableCardViewDataSource: class {
     ///
     /// - Parameter index: index of the card to be displayed
     /// - Returns: card view to display
-    func card(forItemAtIndex index: Int) -> SwipeableCardViewCard
+    func card(forItemAtIndex index: Int) -> SwipeableView
 
     /// Provides a View to be displayed underneath all of the
     /// cards when all cards have been swiped away.
