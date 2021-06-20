@@ -65,9 +65,10 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        setViewControllers([calendarScreen, discoveryScreen, showSearchController, ColoredViewController(color: .cyan), ColoredViewController(color: .red)], animated: true)
+        setViewControllers([ColoredViewController(color: .cyan), discoveryScreen, showSearchController, calendarScreen, ColoredViewController(color: .red)], animated: true)
 
-        selectedIndex = 1
+        // Initial View Controller
+        selectedIndex = 0
         configureTabBarButtons()
     }
 
