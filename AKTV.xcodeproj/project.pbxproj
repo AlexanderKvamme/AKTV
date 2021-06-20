@@ -26,6 +26,7 @@
 		DD2D804425E54D3B004DF85A /* UpcomingToDetailedAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2D804325E54D3B004DF85A /* UpcomingToDetailedAnimationController.swift */; };
 		DD2D805D25E6DCEE004DF85A /* EpisodeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2D805C25E6DCED004DF85A /* EpisodeScreen.swift */; };
 		DD2F7383267F5F2A00512512 /* CalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2F7382267F5F2A00512512 /* CalendarScreen.swift */; };
+		DD2F7385267F65F400512512 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2F7384267F65F400512512 /* CalendarCell.swift */; };
 		DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD315B66245D7D570046AB38 /* AKDateFormatter.swift */; };
 		DD39526325D5DAFF00C918F3 /* DiagonalComplimentaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39526225D5DAFF00C918F3 /* DiagonalComplimentaryView.swift */; };
 		DD39526825D5DFB300C918F3 /* IconRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39526725D5DFB300C918F3 /* IconRowView.swift */; };
@@ -160,6 +161,7 @@
 		DD2D804325E54D3B004DF85A /* UpcomingToDetailedAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingToDetailedAnimationController.swift; sourceTree = "<group>"; };
 		DD2D805C25E6DCED004DF85A /* EpisodeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeScreen.swift; sourceTree = "<group>"; };
 		DD2F7382267F5F2A00512512 /* CalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScreen.swift; sourceTree = "<group>"; };
+		DD2F7384267F65F400512512 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		DD315B66245D7D570046AB38 /* AKDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AKDateFormatter.swift; sourceTree = "<group>"; };
 		DD39526225D5DAFF00C918F3 /* DiagonalComplimentaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagonalComplimentaryView.swift; sourceTree = "<group>"; };
 		DD39526725D5DFB300C918F3 /* IconRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconRowView.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				DD2F7382267F5F2A00512512 /* CalendarScreen.swift */,
+				DD2F7384267F65F400512512 /* CalendarCell.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -942,6 +945,7 @@
 				DDA1A9312427B27C00F7907A /* Networker.swift in Sources */,
 				DDE388FE242AB6510049D881 /* Season.swift in Sources */,
 				DDE388FB2427DE9E0049D881 /* ShowsScreen.swift in Sources */,
+				DD2F7385267F65F400512512 /* CalendarCell.swift in Sources */,
 				DD25A10525E3281600B39ACA /* UIStackViewExtensions.swift in Sources */,
 				DD25A10025E327D300B39ACA /* ShadowView.swift in Sources */,
 				DDB8E5C825DBD4FB0053F6FA /* Videos.swift in Sources */,

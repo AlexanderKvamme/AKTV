@@ -116,9 +116,6 @@ class SwipeableGameCard: SwipeableView {
     private func configure(forViewModel viewModel: Proto_Game?) {
         if let viewModel = viewModel {
             card.titleLabel.text = viewModel.name
-            card.subtitleLabel.text = "This is sub"
-            print(viewModel)
-
             gamesService?.getCoverImage(coverId: String(viewModel.cover.id)) { (str) -> () in
                 guard let str = str else { return }
                 DispatchQueue.main.async {

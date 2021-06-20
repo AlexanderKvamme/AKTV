@@ -22,7 +22,7 @@ struct Show: Decodable {
     var posterPath: String?
     var voteAverage: Int?
     var voteCount: Int?
-    
+
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case name = "name"
