@@ -83,6 +83,7 @@ final class EpisodeCell: UITableViewCell {
         episodeNumberLabel.text = "\(episode.episodeNumber)"
         nameLabel.text = episode.name
         nameLabel.sizeToFit()
-        dateLabel.text = episode.airDate
+        // TODO: brb, turning into date
+//        dateLabel.text = episode.getFormattedDate().stringRepresentation()
     }
 }

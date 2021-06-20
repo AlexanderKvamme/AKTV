@@ -28,6 +28,14 @@ struct Season: Codable {
     var posterPath: String?
  }
 
+
+extension Episode {
+    func getFormattedDate() -> Date? {
+        let formatter = DateFormatter.withoutTime
+        return formatter.date(from: airDate)
+    }
+}
+
 struct Episode: Codable, Hashable {
     var name: String
     var episodeNumber: Int
@@ -42,7 +50,6 @@ struct Episode: Codable, Hashable {
 //    var voteCount: Int
 //    var crew: [Crew]
 //    var guestStar: [Star]
-
 
     static var mock: Episode {
         let decoder = JSONDecoder()

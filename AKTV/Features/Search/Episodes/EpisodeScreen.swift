@@ -21,7 +21,9 @@ final class EpisodeScreen: BasicTextDisplayerViewController {
     // MARK: - Initializers
 
     init(_ episode: Episode) {
-        let calendarItem = LabeledIconButton(text: episode.airDate, icon: "calendar")
+        // FIXME: turning into date
+        // let calendarItem = LabeledIconButton(text: episode.airDate, icon: "calendar")
+        let calendarItem = LabeledIconButton(text: "12.34.56", icon: "calendar")
         let numberItem = LabeledIconButton(text: "\(episode.episodeNumber)", icon: "number")
         let listItem = LabeledIconButton(text: "List", icon: "rectangle.grid.1x2")
         let buttons = [calendarItem, numberItem, listItem]
