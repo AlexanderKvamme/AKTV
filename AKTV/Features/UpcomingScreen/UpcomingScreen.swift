@@ -17,7 +17,7 @@ enum UpcomingSection: Int, CaseIterable {
 
 typealias UpcomingDataSource = UICollectionViewDiffableDataSource<UpcomingSection, ShowOverview>
 
-extension CalendarScreen: UIViewControllerTransitioningDelegate {
+extension UpcomingScreen: UIViewControllerTransitioningDelegate {
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         guard let cell = tappedCell else { return nil }
@@ -27,7 +27,7 @@ extension CalendarScreen: UIViewControllerTransitioningDelegate {
 }
 
 
-final class CalendarScreen: UIViewController {
+final class UpcomingScreen: UIViewController {
     func makeDataSource() -> UpcomingDataSource {
         UICollectionViewDiffableDataSource(
             collectionView: collectionView,

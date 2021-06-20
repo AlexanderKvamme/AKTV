@@ -15,6 +15,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
     let myTabBar = TabBarView(frame: CGRect(x: 0, y: screenHeight - TabBarSettings.barHeight, width: screenWidth, height: screenHeight))
     let discoveryScreen = DiscoveryScreen()
+    let upcomingScreen = UpcomingScreen()
     let calendarScreen = CalendarScreen()
     
     // MARK: - Initializers
@@ -24,8 +25,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
         tabBar.isHidden = true
         discoveryScreen.customTabBarDelegate = self
-        calendarScreen.customTabBarDelegate = self
-
+        upcomingScreen.customTabBarDelegate = self
 
         let subVC = myTabBar
         view.addSubview(subVC)
@@ -49,7 +49,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         favouriteShows.forEach{ id in
             dao.show(withId: id) { (showOverview) in
                 DispatchQueue.main.sync {
-                    self.calendarScreen.update(withShow: showOverview)
+                    self.upcomingScreen.update(withShow: showOverview)
                 }
             }
         }
@@ -65,7 +65,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        setViewControllers([ColoredViewController(color: .cyan), discoveryScreen, showSearchController, calendarScreen, ColoredViewController(color: .red)], animated: true)
+        setViewControllers([calendarScreen, discoveryScreen, showSearchController, calendarScreen, upcomingScreen], animated: true)
 
         // Initial View Controller
         selectedIndex = 0
