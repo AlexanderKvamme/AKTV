@@ -3,6 +3,7 @@ PODS:
   - IGDB-SWIFT-API (0.3.5):
     - Just (~> 0.8.0)
     - SwiftProtobuf (~> 1.6.0)
+  - JTAppleCalendar (8.0.0)
   - Just (0.8.0)
   - Kingfisher (6.3.0)
   - pop (1.0.10)
@@ -14,6 +15,7 @@ PODS:
 DEPENDENCIES:
   - ComplimentaryGradientView
   - IGDB-SWIFT-API (from `https://github.com/husnjak/IGDB-API-SWIFT.git`)
+  - JTAppleCalendar (= 8.0)
   - Kingfisher (~> 6.0)
   - pop (= 1.0.10)
   - ScreenCorners
@@ -23,6 +25,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - ComplimentaryGradientView
+    - JTAppleCalendar
     - Just
     - Kingfisher
     - pop
@@ -43,6 +46,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   ComplimentaryGradientView: d874186ea4c37bd08ebd1f2d229698416cacaa39
   IGDB-SWIFT-API: fe7509dda63a4cd6700fdba788d40af44ab299b4
+  JTAppleCalendar: 76ccdc5a8b236166293e50b190c5f2722c30cdcd
   Just: aef5105fb2c7069b65aa6f21aec8f429057f9c19
   Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
@@ -51,6 +55,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: e905ca1366405696411aaf174411c4b19c0ef73d
   YouTubePlayer: 2b5f2830d8f9b2cde942083211291e382c9e6bd5
 
-PODFILE CHECKSUM: ed50a3a2ee766e618e9b4a8a7c33fabbbd231ebf
+PODFILE CHECKSUM: ee5f4d25940698fc31bfcb46bee7ab2a4c76d5b8
 
 COCOAPODS: 1.10.1

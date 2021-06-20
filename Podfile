@@ -16,6 +16,7 @@ target 'AKTV' do
   pod 'YouTubePlayer'
   pod 'IGDB-SWIFT-API', git: "https://github.com/husnjak/IGDB-API-SWIFT.git"
   pod 'Kingfisher', '~> 6.0'
+  pod 'JTAppleCalendar', '8.0'
 
   # Targets
   target 'AKTVTests' do
