@@ -75,7 +75,7 @@
 		DD9BC9F1266BC638009B2DD8 /* DiscoveryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F0266BC638009B2DD8 /* DiscoveryScreen.swift */; };
 		DD9BCA04266BC9CF009B2DD8 /* SwipeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F6266BC9CE009B2DD8 /* SwipeableView.swift */; };
 		DD9BCA05266BC9CF009B2DD8 /* StaticShadowHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F7266BC9CE009B2DD8 /* StaticShadowHeaderView.swift */; };
-		DD9BCA06266BC9CF009B2DD8 /* CardViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F8266BC9CE009B2DD8 /* CardViewContainer.swift */; };
+		DD9BCA06266BC9CF009B2DD8 /* GameCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F8266BC9CE009B2DD8 /* GameCardController.swift */; };
 		DD9BCA07266BC9CF009B2DD8 /* SwipeableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F9266BC9CF009B2DD8 /* SwipeableViewDelegate.swift */; };
 		DD9BCA08266BC9CF009B2DD8 /* GameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9FA266BC9CF009B2DD8 /* GameCard.swift */; };
 		DD9BCA0A266BC9CF009B2DD8 /* CardViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9FC266BC9CF009B2DD8 /* CardViewDataSource.swift */; };
@@ -208,7 +208,7 @@
 		DD9BC9F0266BC638009B2DD8 /* DiscoveryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryScreen.swift; sourceTree = "<group>"; };
 		DD9BC9F6266BC9CE009B2DD8 /* SwipeableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableView.swift; sourceTree = "<group>"; };
 		DD9BC9F7266BC9CE009B2DD8 /* StaticShadowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticShadowHeaderView.swift; sourceTree = "<group>"; };
-		DD9BC9F8266BC9CE009B2DD8 /* CardViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewContainer.swift; sourceTree = "<group>"; };
+		DD9BC9F8266BC9CE009B2DD8 /* GameCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCardController.swift; sourceTree = "<group>"; };
 		DD9BC9F9266BC9CF009B2DD8 /* SwipeableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableViewDelegate.swift; sourceTree = "<group>"; };
 		DD9BC9FA266BC9CF009B2DD8 /* GameCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCard.swift; sourceTree = "<group>"; };
 		DD9BC9FC266BC9CF009B2DD8 /* CardViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewDataSource.swift; sourceTree = "<group>"; };
@@ -478,7 +478,7 @@
 			children = (
 				DD9BC9FA266BC9CF009B2DD8 /* GameCard.swift */,
 				DD1DACEC2676AC73004BB3FE /* Helpers */,
-				DD9BC9F8266BC9CE009B2DD8 /* CardViewContainer.swift */,
+				DD9BC9F8266BC9CE009B2DD8 /* GameCardController.swift */,
 				DD9BC9FC266BC9CF009B2DD8 /* CardViewDataSource.swift */,
 				DD9BCA00266BC9CF009B2DD8 /* CardViewDelegate.swift */,
 				DD9BC9F6266BC9CE009B2DD8 /* SwipeableView.swift */,
@@ -960,7 +960,7 @@
 				DD5A7E9624576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift in Sources */,
 				DD9BCA0C266BC9CF009B2DD8 /* CGPoint+SwipeableAdditions.swift in Sources */,
 				DDB48F7625D3F694007C0131 /* RoundTabBarButton.swift in Sources */,
-				DD9BCA06266BC9CF009B2DD8 /* CardViewContainer.swift in Sources */,
+				DD9BCA06266BC9CF009B2DD8 /* GameCardController.swift in Sources */,
 				DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */,
 				DDB48F7525D3F694007C0131 /* NativeExtensions.swift in Sources */,
 				DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */,

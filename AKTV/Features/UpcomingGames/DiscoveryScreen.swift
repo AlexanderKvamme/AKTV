@@ -87,7 +87,7 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
     private var genreLabel = UILabel.make(.subtitle)
     private var iconStack = ConsoleIconStack([.xbox, .playstation, .windows])
 
-    private var cardContainer = CardViewContainer(frame: screenFrame)
+    private var cardContainer = GameCardController(frame: screenFrame)
     weak var customTabBarDelegate: CustomTabBarDelegate?
 
     var viewModels = [Proto_Game]()

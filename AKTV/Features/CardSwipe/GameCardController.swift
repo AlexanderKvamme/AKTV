@@ -9,7 +9,7 @@
 import UIKit
 
 
-class CardViewContainer: UIView, SwipeableViewDelegate {
+class GameCardController: UIView, SwipeableViewDelegate {
 
     static let horizontalInset: CGFloat = 12.0
 
@@ -57,7 +57,7 @@ class CardViewContainer: UIView, SwipeableViewDelegate {
             gamesService?.precache(dataSource.items())
         }
 
-        for index in 0..<min(numberOfCards, CardViewContainer.numberOfVisibleCards) {
+        for index in 0..<min(numberOfCards, GameCardController.numberOfVisibleCards) {
             let card = dataSource.card(forItemAtIndex: index)
             if index == 0 { (card as? SwipeableGameCard)?.card.setForeground(true) }
             addCardView(cardView: card, atIndex: index)
@@ -94,8 +94,8 @@ class CardViewContainer: UIView, SwipeableViewDelegate {
     ///   - index: index used to apply horizontal and vertical insets
     private func setFrame(forCardView cardView: SwipeableView, atIndex index: Int) {
         var cardViewFrame = bounds
-        let horizontalInset = (CGFloat(index) * CardViewContainer.horizontalInset)
-        let verticalInset = CGFloat(index) * CardViewContainer.verticalInset
+        let horizontalInset = (CGFloat(index) * GameCardController.horizontalInset)
+        let verticalInset = CGFloat(index) * GameCardController.verticalInset
 
         cardViewFrame.size.width -= 2 * horizontalInset
         cardViewFrame.origin.y += verticalInset
@@ -107,12 +107,15 @@ class CardViewContainer: UIView, SwipeableViewDelegate {
 
 // MARK: - SwipeableViewDelegate
 
-extension CardViewContainer {
+extension GameCardController {
 
     func didTap(view: SwipeableView) {
-        if let cardView = view as? SwipeableView,
-           let index = cardViews.firstIndex(of: cardView) {
-            delegate?.didSelect(card: cardView, atIndex: index)
+        if let index = cardViews.firstIndex(of: view) {
+            delegate?.didSelect(card: view, atIndex: index)
+
+            if let game = dataSource?.items() {
+                print("tapped game: ", game[index].name)
+            }
         }
     }
 
@@ -123,6 +126,14 @@ extension CardViewContainer {
     func didEndSwipe(onView view: SwipeableView) {
         guard let dataSource = dataSource else {
             return
+        }
+
+        // Handle finished swipe
+        if let index = cardViews.firstIndex(of: view) {
+            delegate?.didSelect(card: view, atIndex: index)
+
+            let game = dataSource.items()
+            print("swiped game: ", game[index].name)
         }
 
         // Remove swiped card
@@ -149,7 +160,6 @@ extension CardViewContainer {
                     self.layoutIfNeeded()
                 })
             }
-
         }
     }
 
