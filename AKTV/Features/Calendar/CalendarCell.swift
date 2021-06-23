@@ -33,9 +33,6 @@ class CalendarCell: JTACDayCell {
     }
 
     private func setup() {
-
-        
-
         dateLabel.text = "9"
         dateLabel.textColor = UIColor(dark)
         dateLabel.font = UIFont.gilroy(.medium, 18)

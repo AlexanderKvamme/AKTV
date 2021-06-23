@@ -16,12 +16,15 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     let myTabBar = TabBarView(frame: CGRect(x: 0, y: screenHeight - TabBarSettings.barHeight, width: screenWidth, height: screenHeight))
     let discoveryScreen = DiscoveryScreen()
     let upcomingScreen = UpcomingScreen()
-    let calendarScreen = CalendarScreen()
+    var calendarScreen: CalendarScreen!
+
     
     // MARK: - Initializers
 
     init() {
         super.init(nibName: nil, bundle: nil)
+
+        calendarScreen = CalendarScreen(tabBar: self)
 
         tabBar.isHidden = true
         discoveryScreen.customTabBarDelegate = self

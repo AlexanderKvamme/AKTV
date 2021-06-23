@@ -29,7 +29,7 @@ final class CalendarScreen: UIViewController {
 
     // MARK: - Properties
 
-    let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarOffset/2, y: screenHeight-screenWidth-100, width: screenWidth-style.calendarOffset, height: screenWidth-style.calendarOffset-40))
+    let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarOffset/2, y: screenHeight-screenWidth, width: screenWidth-style.calendarOffset, height: screenWidth-style.calendarOffset-40))
     var dayStack: UIStackView!
     var imageView = UIImageView()
     var episodeDict = [Date : (Episode, ShowOverview)]()
@@ -39,11 +39,13 @@ final class CalendarScreen: UIViewController {
             cv.reloadDates(datesAdded)
         }
     }
+    weak var tabBar: CustomTabBarDelegate?
 
     // MARK: - Initializers
 
-    init() {
+    init(tabBar: CustomTabBarDelegate) {
         super.init(nibName: nil, bundle: nil)
+        self.tabBar = tabBar
 
         view.backgroundColor = UIColor(light)
 
@@ -79,11 +81,10 @@ final class CalendarScreen: UIViewController {
     }
 
     private func setup() {
-        if let nav = navigationController  {
-            fatalError("bam success")
-        }
+        tabBar?.hideIt()
+
         dayStack = makeDayStack()
-        imageView.layer.cornerRadius = 8
+        imageView.layer.cornerRadius = 16
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
 
@@ -92,6 +93,8 @@ final class CalendarScreen: UIViewController {
         cv.calendarDelegate = self
         cv.calendarDataSource = self
         cv.minimumInteritemSpacing = 0
+
+        cv.scrollToDate(Date() ,animateScroll: false)
 
         cv.scrollDirection = .horizontal
         cv.scrollingMode = .stopAtEachCalendarFrame
@@ -140,9 +143,11 @@ extension CalendarScreen: JTACMonthViewDataSource {
 
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
         let formatter = DateFormatter()
+        let day: TimeInterval = 60*60*24
+        let month: TimeInterval = day*31
         formatter.dateFormat = "yyyy MM dd"
-        let startDate = Date() // formatter.date(from: "2018 01 01")!
-        let endDate = Date().addingTimeInterval(60*60*24*30)
+        let startDate = Date().addingTimeInterval(-3*month) // formatter.date(from: "2018 01 01")!
+        let endDate = Date().addingTimeInterval(3*month)
         let config = ConfigurationParameters(startDate: startDate, endDate: endDate, generateInDates: InDateCellGeneration.off, generateOutDates: OutDateCellGeneration.tillEndOfGrid, firstDayOfWeek: .monday, hasStrictBoundaries: true)
         return config
     }
