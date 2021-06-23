@@ -33,25 +33,31 @@ class CalendarCell: JTACDayCell {
     }
 
     private func setup() {
+
+        
+
         dateLabel.text = "9"
         dateLabel.textColor = UIColor(dark)
         dateLabel.font = UIFont.gilroy(.medium, 18)
         dateLabel.textAlignment = .center
         dateLabel.isUserInteractionEnabled = false
-        layer.cornerCurve = .continuous
-        layer.cornerRadius = style.cornerRadius
 
-//        let bv = UIView()
-//        bv.backgroundColor = UIColor(dark)
-//        bv.layer.cornerRadius = style.cornerRadius
-//        selectedBackgroundView = bv
+        background.layer.cornerCurve = .continuous
+        background.layer.cornerRadius = style.cornerRadius
     }
 
     private func addSubviewsAndConstraints() {
+        addSubview(background)
         addSubview(dateLabel)
 
         dateLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().offset(2)
+            make.left.right.bottom.equalToSuperview()
+        }
+
+        background.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(4)
         }
     }
 
@@ -59,8 +65,23 @@ class CalendarCell: JTACDayCell {
         return currentEpisode
     }
 
+    private func resetStyle() {
+        background.backgroundColor = .clear
+        dateLabel.textColor = UIColor(dark)
+    }
+
     func configure(for cellState: CellState, upcomingEpisodes: [Episode]) {
+        resetStyle()
+
+        switch cellState.dateBelongsTo {
+        case .thisMonth:
+            dateLabel.alpha = 0.3
+        default:
+            dateLabel.alpha = 0.1
+        }
+
         print("bam checking if self is a date from upcoming: ", upcomingEpisodes)
+
         dateLabel.text = cellState.text
 
         let episodeDates = upcomingEpisodes.compactMap({ $0.getFormattedDate() })
@@ -69,6 +90,11 @@ class CalendarCell: JTACDayCell {
         let matchingDate = episodeDates.first(where: { date in
             let isMatch = date == cellState.date
             print("bam isMatch: ", isMatch)
+            if isMatch {
+                background.backgroundColor = UIColor(dark)
+                dateLabel.textColor = UIColor(light)
+                        dateLabel.alpha = 1
+            }
             return isMatch
         })
 
@@ -80,17 +106,10 @@ class CalendarCell: JTACDayCell {
             print("matching episode: ", matchingEpisode)
         }
 
-        switch cellState.dateBelongsTo {
-        case .thisMonth:
-            dateLabel.alpha = 0.3
-        default:
-            dateLabel.alpha = 0.1
-        }
     }
 
     override func prepareForReuse() {
         dateLabel.textColor = UIColor(dark)
-        backgroundColor = .clear
     }
 }
 

@@ -42,6 +42,7 @@
 		DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */; };
 		DD5A7E9624576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9524576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift */; };
 		DD5B14342674BE8B00E8C68D /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B14332674BE8B00E8C68D /* GameStore.swift */; };
+		DD5BDF70268268BA00A4C2B0 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5BDF6F268268BA00A4C2B0 /* AuthStore.swift */; };
 		DD6DDF3625CD50CF00A19F3A /* Gilroy-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2125CD50CE00A19F3A /* Gilroy-Semibold.ttf */; };
 		DD6DDF3725CD50CF00A19F3A /* Gilroy-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2225CD50CE00A19F3A /* Gilroy-SemiboldItalic.ttf */; };
 		DD6DDF3825CD50CF00A19F3A /* Gilroy-ExtraboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2325CD50CE00A19F3A /* Gilroy-ExtraboldItalic.ttf */; };
@@ -177,6 +178,7 @@
 		DD5A7E9224576A5800507BFE /* UpcomingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingScreen.swift; sourceTree = "<group>"; };
 		DD5A7E9524576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowsCollectionViewDataDelegate.swift; sourceTree = "<group>"; };
 		DD5B14332674BE8B00E8C68D /* GameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
+		DD5BDF6F268268BA00A4C2B0 /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DD6DDF2125CD50CE00A19F3A /* Gilroy-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Semibold.ttf"; sourceTree = "<group>"; };
 		DD6DDF2225CD50CE00A19F3A /* Gilroy-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		DD6DDF2325CD50CE00A19F3A /* Gilroy-ExtraboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ExtraboldItalic.ttf"; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 		DD000AA12455BEAE00CB095D /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				DD5BDF6E268268AD00A4C2B0 /* AuthStore */,
 				DD000AA22455BECE00CB095D /* UserProfileManager.swift */,
 			);
 			path = Storage;
@@ -361,8 +364,8 @@
 		DD2F7381267F5F1900512512 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				DD2F7382267F5F2A00512512 /* CalendarScreen.swift */,
 				DD2F7384267F65F400512512 /* CalendarCell.swift */,
+				DD2F7382267F5F2A00512512 /* CalendarScreen.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -396,6 +399,14 @@
 				DD5B14332674BE8B00E8C68D /* GameStore.swift */,
 			);
 			path = Games;
+			sourceTree = "<group>";
+		};
+		DD5BDF6E268268AD00A4C2B0 /* AuthStore */ = {
+			isa = PBXGroup;
+			children = (
+				DD5BDF6F268268BA00A4C2B0 /* AuthStore.swift */,
+			);
+			path = AuthStore;
 			sourceTree = "<group>";
 		};
 		DD6DDEC025CC7A0A00A19F3A /* SwiftUI */ = {
@@ -954,6 +965,7 @@
 				DD25A10D25E3287D00B39ACA /* UpcomingCard.swift in Sources */,
 				DD315B67245D7D570046AB38 /* AKDateFormatter.swift in Sources */,
 				DD2F7383267F5F2A00512512 /* CalendarScreen.swift in Sources */,
+				DD5BDF70268268BA00A4C2B0 /* AuthStore.swift in Sources */,
 				DD1A56E325DC0D7800C242FB /* VideoPlayer.swift in Sources */,
 				DD39528325D6E3D800C918F3 /* BottomAlignedLabel.swift in Sources */,
 				DD25A0E225E15C3F00B39ACA /* UpcomingCell.swift in Sources */,

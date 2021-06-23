@@ -29,17 +29,16 @@ final class CalendarScreen: UIViewController {
 
     // MARK: - Properties
 
-    let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarOffset/2, y: screenHeight-screenWidth-100, width: screenWidth-style.calendarOffset, height: screenWidth-style.calendarOffset))
+    let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarOffset/2, y: screenHeight-screenWidth-100, width: screenWidth-style.calendarOffset, height: screenWidth-style.calendarOffset-40))
     var dayStack: UIStackView!
     var imageView = UIImageView()
-    var episodeDict = [Date : Episode]()
+    var episodeDict = [Date : (Episode, ShowOverview)]()
     var upcomingFavourites = [Episode]() {
         didSet {
             let datesAdded = upcomingFavourites.compactMap{ $0.getFormattedDate() }
             cv.reloadDates(datesAdded)
         }
     }
-
 
     // MARK: - Initializers
 
@@ -58,6 +57,7 @@ final class CalendarScreen: UIViewController {
     }
 
     // MARK: - Methods
+
     private func fetchPremiereDates() {
         let dao = APIDAO()
         let favShows = UserProfileManager().favouriteShows()
@@ -69,8 +69,7 @@ final class CalendarScreen: UIViewController {
                 if let nextAirDate = overview.nextEpisodeToAir {
                     DispatchQueue.main.async {
                         if let formattedDate = nextAirDate.getFormattedDate() {
-                            self.episodeDict[formattedDate] = nextAirDate
-                            print("dictionray now: ", self.episodeDict)
+                            self.episodeDict[formattedDate] = (nextAirDate, overview)
                         }
                         self.upcomingFavourites.append(nextAirDate)
                     }
@@ -80,9 +79,13 @@ final class CalendarScreen: UIViewController {
     }
 
     private func setup() {
+        if let nav = navigationController  {
+            fatalError("bam success")
+        }
         dayStack = makeDayStack()
-        imageView.backgroundColor = .green
         imageView.layer.cornerRadius = 8
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
 
         cv.backgroundColor = .clear
         cv.register(CalendarCell.self, forCellWithReuseIdentifier: "CalendarCell")
@@ -91,7 +94,7 @@ final class CalendarScreen: UIViewController {
         cv.minimumInteritemSpacing = 0
 
         cv.scrollDirection = .horizontal
-        cv.scrollingMode   = .stopAtEachCalendarFrame
+        cv.scrollingMode = .stopAtEachCalendarFrame
         cv.showsHorizontalScrollIndicator = false
         cv.clipsToBounds = true
     }
@@ -102,7 +105,7 @@ final class CalendarScreen: UIViewController {
         view.addSubview(imageView)
 
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.right.equalToSuperview().inset(24)
             make.bottom.equalTo(dayStack.snp.top).offset(-24)
         }
@@ -134,6 +137,7 @@ final class CalendarScreen: UIViewController {
 }
 
 extension CalendarScreen: JTACMonthViewDataSource {
+
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy MM dd"
@@ -146,27 +150,34 @@ extension CalendarScreen: JTACMonthViewDataSource {
 
 
 extension CalendarScreen: JTACMonthViewDelegate {
-
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
-        let episodeToHighlight = cell.getEpisode()
+//        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
 
         // FIXME: Vis denne frem i headeren
-        if let episode = episodeDict[date] {
-            print("would display this episode: ", episode)
+        if let showOverview = episodeDict[date]?.1 {
+            if let posterPath = showOverview.posterPath, let posterURL = URL(string: APIDAO.imageRoot+posterPath) {
+                print("successfully got poster path:" , posterURL)
+                self.imageView.kf.setImage(with: posterURL)
+            }
         }
     }
 
     func calendar(_ calendar: JTACMonthView, willDisplay cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         print("bam will display: ", indexPath)
-        cell.backgroundColor = .orange
+//        cell.backgroundColor = .orange
 
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
+        guard let cell = cell as? CalendarCell else {
+            fatalError()
+        }
+
         cell.configure(for: cellState, upcomingEpisodes: upcomingFavourites)
     }
 
     func calendar(_ calendar: JTACMonthView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTACDayCell {
+        print("bam cell for item ", indexPath)
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
+
+        // Cell is being rendered, but the dequeue is fucking it up
         cell.configure(for: cellState, upcomingEpisodes: upcomingFavourites)
         return cell
     }

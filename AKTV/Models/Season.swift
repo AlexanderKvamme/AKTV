@@ -44,7 +44,7 @@ struct Episode: Codable, Hashable {
     var overview: String
 //    var productionCode: String
     var seasonNumber: Int
-//    var showId: Int
+//    var showId: Int // Trokke denne finnes
     var stillPath: String?
     var voteAverage: Double
 //    var voteCount: Int
