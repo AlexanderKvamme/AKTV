@@ -70,27 +70,28 @@ class CalendarCell: JTACDayCell {
     func configure(for cellState: CellState, upcomingEpisodes: [Episode]) {
         resetStyle()
 
-        switch cellState.dateBelongsTo {
-        case .thisMonth:
+        dateLabel.text = cellState.text
+
+        let isCurrentMonth = cellState.dateBelongsTo == .thisMonth
+
+        switch isCurrentMonth {
+        case true:
             dateLabel.alpha = 0.3
-        default:
+        case false:
             dateLabel.alpha = 0.1
         }
 
-        print("bam checking if self is a date from upcoming: ", upcomingEpisodes)
-
-        dateLabel.text = cellState.text
+        if !isCurrentMonth { return }
 
         let episodeDates = upcomingEpisodes.compactMap({ $0.getFormattedDate() })
 
         // TODO: Multiple episodes on one day
         let matchingDate = episodeDates.first(where: { date in
             let isMatch = date == cellState.date
-            print("bam isMatch: ", isMatch)
             if isMatch {
                 background.backgroundColor = UIColor(dark)
                 dateLabel.textColor = UIColor(light)
-                        dateLabel.alpha = 1
+                dateLabel.alpha = 1
             }
             return isMatch
         })
@@ -100,9 +101,7 @@ class CalendarCell: JTACDayCell {
                 episode.getFormattedDate() == matchingDate
             }
             currentEpisode = matchingEpisode
-            print("matching episode: ", matchingEpisode)
         }
-
     }
 
     override func prepareForReuse() {

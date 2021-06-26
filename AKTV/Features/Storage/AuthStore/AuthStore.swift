@@ -9,6 +9,6 @@
 import Foundation
 
 
-final class AuthStore {
-    static var gameAuthToken: String!
-}
+//final class AuthStore {
+//    static var gameAuthToken: String!
+//}

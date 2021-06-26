@@ -63,18 +63,18 @@ final class CalendarScreen: UIViewController {
     private func fetchPremiereDates() {
         let dao = APIDAO()
         let favShows = UserProfileManager().favouriteShows()
-        print("bam favShows: ", favShows)
 
-        // Fetch shows and then put to dataSource
-        favShows.forEach{
+        favShows.forEach {
             dao.show(withId: $0) { overview in
-                if let nextAirDate = overview.nextEpisodeToAir {
+                dao.episodes(showId: overview.id, seasonNumber: overview.numberOfSeasons) { season in
                     DispatchQueue.main.async {
-                        if let formattedDate = nextAirDate.getFormattedDate() {
-                            self.episodeDict[formattedDate] = (nextAirDate, overview)
+                    season.episodes.forEach { episode in
+                        if let formattedDate = episode.getFormattedDate() {
+                            // FIXME: Should allow for multiple episodes on one day
+                            self.episodeDict[formattedDate] = (episode, overview)
+                            self.upcomingFavourites.append(episode)
                         }
-                        self.upcomingFavourites.append(nextAirDate)
-                    }
+                    }}
                 }
             }
         }
@@ -93,8 +93,7 @@ final class CalendarScreen: UIViewController {
         cv.calendarDelegate = self
         cv.calendarDataSource = self
         cv.minimumInteritemSpacing = 0
-
-        cv.scrollToDate(Date() ,animateScroll: false)
+        cv.scrollToDate(Date(), animateScroll: false)
 
         cv.scrollDirection = .horizontal
         cv.scrollingMode = .stopAtEachCalendarFrame
@@ -148,7 +147,7 @@ extension CalendarScreen: JTACMonthViewDataSource {
         formatter.dateFormat = "yyyy MM dd"
         let startDate = Date().addingTimeInterval(-3*month) // formatter.date(from: "2018 01 01")!
         let endDate = Date().addingTimeInterval(3*month)
-        let config = ConfigurationParameters(startDate: startDate, endDate: endDate, generateInDates: InDateCellGeneration.off, generateOutDates: OutDateCellGeneration.tillEndOfGrid, firstDayOfWeek: .monday, hasStrictBoundaries: true)
+        let config = ConfigurationParameters(startDate: startDate, endDate: endDate, generateInDates: InDateCellGeneration.forAllMonths, generateOutDates: OutDateCellGeneration.tillEndOfGrid, firstDayOfWeek: .monday, hasStrictBoundaries: true)
         return config
     }
 }
@@ -156,21 +155,15 @@ extension CalendarScreen: JTACMonthViewDataSource {
 
 extension CalendarScreen: JTACMonthViewDelegate {
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
-//        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
-
         // FIXME: Vis denne frem i headeren
         if let showOverview = episodeDict[date]?.1 {
             if let posterPath = showOverview.posterPath, let posterURL = URL(string: APIDAO.imageRoot+posterPath) {
-                print("successfully got poster path:" , posterURL)
                 self.imageView.kf.setImage(with: posterURL)
             }
         }
     }
 
     func calendar(_ calendar: JTACMonthView, willDisplay cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        print("bam will display: ", indexPath)
-//        cell.backgroundColor = .orange
-
         guard let cell = cell as? CalendarCell else {
             fatalError()
         }
@@ -179,10 +172,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
     }
 
     func calendar(_ calendar: JTACMonthView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTACDayCell {
-        print("bam cell for item ", indexPath)
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
-
-        // Cell is being rendered, but the dequeue is fucking it up
         cell.configure(for: cellState, upcomingEpisodes: upcomingFavourites)
         return cell
     }
