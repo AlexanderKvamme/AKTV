@@ -34,6 +34,8 @@ final class CalendarScreen: UIViewController {
 
     let xButton = IconButton.make(.x)
     let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarHorizontalOffset/2, y: screenHeight-style.calendarHeight-style.calendarBottomOffset, width: screenWidth-style.calendarHorizontalOffset, height: style.calendarHeight))
+    var monthLabel = UILabel.make(.header)
+    var yearLabel = UILabel.make(.subtitle)
     var dayStack: UIStackView!
     var imageView = UIImageView()
     var episodeDict = [Date : (Episode, ShowOverview)]()
@@ -93,7 +95,16 @@ final class CalendarScreen: UIViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
 
-        cv.backgroundColor = .clear
+        monthLabel.text = "January"
+        monthLabel.textColor = UIColor(dark)
+        monthLabel.font = UIFont.round(.bold, 24)
+        monthLabel.sizeToFit()
+
+        yearLabel.text = "2021"
+        yearLabel.textColor = UIColor(dark)
+        yearLabel.font = UIFont.round(.light, 24)
+        yearLabel.alpha = 0.4
+
         cv.register(CalendarCell.self, forCellWithReuseIdentifier: "CalendarCell")
         cv.calendarDelegate = self
         cv.calendarDataSource = self
@@ -112,6 +123,8 @@ final class CalendarScreen: UIViewController {
         view.addSubview(cv)
         view.addSubview(dayStack)
         view.addSubview(imageView)
+        view.addSubview(monthLabel)
+        view.addSubview(yearLabel)
 
         xButton.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -119,10 +132,23 @@ final class CalendarScreen: UIViewController {
             make.size.equalTo(48)
         }
 
+        monthLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
         imageView.snp.makeConstraints { make in
             make.top.equalTo(xButton.snp.bottom).offset(16)
             make.left.right.equalToSuperview().inset(24)
-            make.bottom.equalTo(dayStack.snp.top).offset(-24)
+            make.bottom.equalTo(monthLabel.snp.top).offset(-24)
+        }
+
+        monthLabel.snp.makeConstraints { make in
+            make.left.equalTo(cv).offset(16)
+            make.bottom.equalTo(dayStack.snp.top).offset(-16)
+        }
+
+        yearLabel.snp.makeConstraints { make in
+            make.top.bottom.equalTo(monthLabel)
+            make.left.equalTo(monthLabel.snp.right).offset(8)
+            make.right.equalTo(cv)
         }
 
         dayStack.snp.makeConstraints { make in
