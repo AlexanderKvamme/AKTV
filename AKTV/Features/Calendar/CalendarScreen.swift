@@ -21,15 +21,18 @@ extension DateFormatter {
 
 
 fileprivate struct style {
-    static let calendarOffset: CGFloat = 32
-    static let cornerRadius: CGFloat = 5
+    static let calendarHorizontalOffset: CGFloat    = 32
+    static let calendarHeight: CGFloat              = 240
+    static let calendarBottomOffset: CGFloat        = 40
+
+    static let cornerRadius: CGFloat                = 5
 }
 
 final class CalendarScreen: UIViewController {
 
     // MARK: - Properties
 
-    let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarOffset/2, y: screenHeight-screenWidth, width: screenWidth-style.calendarOffset, height: screenWidth-style.calendarOffset-40))
+    let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarHorizontalOffset/2, y: screenHeight-style.calendarHeight-style.calendarBottomOffset, width: screenWidth-style.calendarHorizontalOffset, height: style.calendarHeight))
     var dayStack: UIStackView!
     var imageView = UIImageView()
     var episodeDict = [Date : (Episode, ShowOverview)]()
@@ -114,7 +117,7 @@ final class CalendarScreen: UIViewController {
 
         dayStack.snp.makeConstraints { make in
             make.height.equalTo(40)
-            make.left.right.equalToSuperview().inset(style.calendarOffset)
+            make.left.right.equalToSuperview().inset(style.calendarHorizontalOffset)
             make.bottom.equalTo(cv.snp.top).offset(-8)
         }
     }
