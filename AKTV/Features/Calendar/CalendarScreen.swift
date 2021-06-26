@@ -98,6 +98,7 @@ final class CalendarScreen: UIViewController {
         cv.calendarDelegate = self
         cv.calendarDataSource = self
         cv.minimumInteritemSpacing = 0
+        cv.minimumLineSpacing = 0
         cv.scrollToDate(Date(), animateScroll: false)
 
         cv.scrollDirection = .horizontal

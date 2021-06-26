@@ -13,7 +13,7 @@ import Just
 
 
 fileprivate struct style {
-    static let cornerRadius: CGFloat = 5
+    static let cornerRadius: CGFloat = 8
 }
 
 
@@ -54,8 +54,7 @@ class CalendarCell: JTACDayCell {
         }
 
         background.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview().inset(4)
+            make.edges.equalToSuperview().inset(4)
         }
     }
 
