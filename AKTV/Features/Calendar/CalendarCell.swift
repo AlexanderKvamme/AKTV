@@ -63,6 +63,7 @@ class CalendarCell: JTACDayCell {
         background.backgroundColor = .clear
         dateLabel.textColor = UIColor(dark)
 
+        // Fade months outside of current
         let isCurrentMonth = cellState.dateBelongsTo == .thisMonth
         switch isCurrentMonth {
         case true:
@@ -78,7 +79,7 @@ class CalendarCell: JTACDayCell {
         // TODO: Multiple episodes on one day
 
         if cellState.dateBelongsTo == .thisMonth {
-            updateCellDesign(for: episode, overview)
+            updateCellDesign(for: episode, overview, cellState: cellState)
         }
     }
 
@@ -86,11 +87,21 @@ class CalendarCell: JTACDayCell {
         dateLabel.textColor = UIColor(dark)
     }
 
-    private func updateCellDesign(for episode: Episode, _ overview: ShowOverview) {
+    private func updateCellDesign(for episode: Episode, _ overview: ShowOverview, cellState: CellState) {
+        let formatter = DateFormatter.withoutTime
+        let isToday = formatter.string(from: Date()) == formatter.string(from: cellState.date)
+
         // Basic "date has episode" styles
         background.backgroundColor = UIColor(dark)
         dateLabel.textColor = UIColor(light)
         dateLabel.alpha = 1
+
+        // Highlight today
+        if isToday {
+            background.layer.cornerRadius = background.frame.width/2
+            background.backgroundColor = .red
+            return
+        }
 
         guard let stillPath = overview.posterPath else { return }
 
@@ -103,7 +114,7 @@ class CalendarCell: JTACDayCell {
                         let unwrappedResult = try result.get()
                         unwrappedResult.image.getColors { (colors) in
                             ColorStore.save(colors, forOverview: overview)
-                            self.updateCellDesign(for: episode, overview)
+                            self.updateCellDesign(for: episode, overview, cellState: cellState)
                         }
                     } catch {
                         print("bam had error while retrieving image from stillPath")
