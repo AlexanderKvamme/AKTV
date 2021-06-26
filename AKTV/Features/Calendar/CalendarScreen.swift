@@ -184,12 +184,21 @@ extension CalendarScreen: JTACMonthViewDelegate {
             fatalError()
         }
 
-        cell.configure(for: cellState, upcomingEpisodes: upcomingFavourites)
+        cell.resetStyle(cellState)
+
+        if let (episode, overview) = episodeDict[date] {
+            cell.configure(for: cellState, episode: episode, overview: overview)
+        }
     }
 
     func calendar(_ calendar: JTACMonthView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTACDayCell {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
-        cell.configure(for: cellState, upcomingEpisodes: upcomingFavourites)
+
+        cell.resetStyle(cellState)
+
+        if let (episode, overview) = episodeDict[date] {
+            cell.configure(for: cellState, episode: episode, overview: overview)
+        }
         return cell
     }
 }

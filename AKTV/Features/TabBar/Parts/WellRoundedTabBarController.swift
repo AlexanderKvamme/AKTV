@@ -90,10 +90,12 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
     func hideIt() {
         myTabBar.alpha = 0
+        myTabBar.plusButton.isUserInteractionEnabled = false
     }
 
     func showIt(){
         myTabBar.alpha = 1
+        myTabBar.plusButton.isUserInteractionEnabled = true
     }
 }
 

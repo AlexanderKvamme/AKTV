@@ -8,6 +8,8 @@
 
 import UIKit
 import JTAppleCalendar
+import Kingfisher
+import Just
 
 
 fileprivate struct style {
@@ -57,43 +59,60 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    private func resetStyle() {
+    func resetStyle(_ cellState: CellState) {
+        dateLabel.text = cellState.text
         background.backgroundColor = .clear
         dateLabel.textColor = UIColor(dark)
-    }
-
-    func configure(for cellState: CellState, upcomingEpisodes: [Episode]) {
-        resetStyle()
-
-        dateLabel.text = cellState.text
 
         let isCurrentMonth = cellState.dateBelongsTo == .thisMonth
-
         switch isCurrentMonth {
         case true:
             dateLabel.alpha = 0.3
         case false:
             dateLabel.alpha = 0.1
         }
+    }
 
-        if !isCurrentMonth { return }
-
-        let episodeDates = upcomingEpisodes.compactMap({ $0.getFormattedDate() })
+    func configure(for cellState: CellState, episode: Episode, overview: ShowOverview) {
+        resetStyle(cellState)
 
         // TODO: Multiple episodes on one day
-        let matchingDate = episodeDates.first(where: { date in
-            let isMatch = date == cellState.date
-            if isMatch {
-                background.backgroundColor = UIColor(dark)
-                dateLabel.textColor = UIColor(light)
-                dateLabel.alpha = 1
-            }
-            return isMatch
-        })
+
+        if cellState.dateBelongsTo == .thisMonth {
+            updateCellDesign(for: episode, overview)
+        }
     }
 
     override func prepareForReuse() {
         dateLabel.textColor = UIColor(dark)
+    }
+
+    private func updateCellDesign(for episode: Episode, _ overview: ShowOverview) {
+        // Basic "date has episode" styles
+        background.backgroundColor = UIColor(dark)
+        dateLabel.textColor = UIColor(light)
+        dateLabel.alpha = 1
+
+        guard let stillPath = overview.posterPath else { return }
+
+        if let existingColors = ColorStore.get(colorsFrom: overview) {
+            background.backgroundColor = existingColors.secondary
+        } else {
+            DispatchQueue.main.async {
+                UIImageView().kf.setImage(with: URL(string: APIDAO.imageRoot+stillPath), completionHandler: { result in
+                    do {
+                        let unwrappedResult = try result.get()
+                        unwrappedResult.image.getColors { (colors) in
+                            ColorStore.save(colors, forOverview: overview)
+                            self.updateCellDesign(for: episode, overview)
+                        }
+                    } catch {
+                        print("bam had error while retrieving image from stillPath")
+                    }
+                })
+            }
+        }
+
     }
 }
 
