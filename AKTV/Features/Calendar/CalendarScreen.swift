@@ -32,6 +32,7 @@ final class CalendarScreen: UIViewController {
 
     // MARK: - Properties
 
+    let xButton = IconButton.make(.x)
     let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarHorizontalOffset/2, y: screenHeight-style.calendarHeight-style.calendarBottomOffset, width: screenWidth-style.calendarHorizontalOffset, height: style.calendarHeight))
     var dayStack: UIStackView!
     var imageView = UIImageView()
@@ -84,6 +85,7 @@ final class CalendarScreen: UIViewController {
     }
 
     private func setup() {
+        xButton.addTarget(self, action: #selector(exitScreen), for: .touchDown)
         tabBar?.hideIt()
 
         dayStack = makeDayStack()
@@ -105,12 +107,19 @@ final class CalendarScreen: UIViewController {
     }
 
     private func addSubviewsAndConstraints() {
+        view.addSubview(xButton)
         view.addSubview(cv)
         view.addSubview(dayStack)
         view.addSubview(imageView)
 
+        xButton.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.left.equalTo(view.safeAreaLayoutGuide).offset(16)
+            make.size.equalTo(48)
+        }
+
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(xButton.snp.bottom).offset(16)
             make.left.right.equalToSuperview().inset(24)
             make.bottom.equalTo(dayStack.snp.top).offset(-24)
         }
@@ -120,6 +129,10 @@ final class CalendarScreen: UIViewController {
             make.left.right.equalToSuperview().inset(style.calendarHorizontalOffset)
             make.bottom.equalTo(cv.snp.top).offset(-8)
         }
+    }
+
+    @objc func exitScreen() {
+        tabBarController?.selectedIndex = 1
     }
 
     private func makeDayStack() -> UIStackView {
