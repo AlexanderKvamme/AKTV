@@ -19,7 +19,6 @@ class CalendarCell: JTACDayCell {
 
     let dateLabel = UILabel()
     let background = UIView()
-    var currentEpisode: Episode?
 
     override init(frame: CGRect) {
         super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
@@ -58,10 +57,6 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    func getEpisode() -> Episode? {
-        return currentEpisode
-    }
-
     private func resetStyle() {
         background.backgroundColor = .clear
         dateLabel.textColor = UIColor(dark)
@@ -95,13 +90,6 @@ class CalendarCell: JTACDayCell {
             }
             return isMatch
         })
-
-        if let matchingDate = matchingDate {
-            let matchingEpisode = upcomingEpisodes.first { episode in
-                episode.getFormattedDate() == matchingDate
-            }
-            currentEpisode = matchingEpisode
-        }
     }
 
     override func prepareForReuse() {
