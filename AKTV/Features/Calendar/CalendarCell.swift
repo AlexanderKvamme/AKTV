@@ -62,6 +62,7 @@ class CalendarCell: JTACDayCell {
         dateLabel.text = cellState.text
         background.backgroundColor = .clear
         dateLabel.textColor = UIColor(dark)
+        background.layer.cornerRadius = style.cornerRadius
 
         // Fade months outside of current
         let isCurrentMonth = cellState.dateBelongsTo == .thisMonth
