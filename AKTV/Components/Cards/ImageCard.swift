@@ -13,6 +13,7 @@ class ImageCard: Card {
     // MARK: - Properties
 
     let imageView = UIImageView()
+    let placeholderText = UILabel()
 
     // MARK: - Initializers
 
@@ -30,19 +31,27 @@ class ImageCard: Card {
     // MARK: - Methods
 
     private func setup() {
+        placeholderText.text = "No episode selected"
+        placeholderText.textColor = UIColor(dark).withAlphaComponent(0.2)
+        placeholderText.font = UIFont.round(.light, 24)
+        placeholderText.textAlignment = .center
+
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = defaultCornerRadius
     }
 
     private func addSubviewsAndConstraints() {
+        addSubview(placeholderText)
         addSubview(imageView)
+
+        placeholderText.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
 
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
-
-
 
 }
