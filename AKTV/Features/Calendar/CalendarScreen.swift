@@ -23,8 +23,10 @@ extension DateFormatter {
 fileprivate struct style {
     static let calendarHeaderHeight: CGFloat        = 80
     static let calendarHorizontalOffset: CGFloat    = 32
-    static let calendarHeight: CGFloat              = 240 + calendarHeaderHeight
+    static let calendarHeight: CGFloat              = 190 + calendarHeaderHeight
     static let calendarBottomOffset: CGFloat        = 40
+
+    static let cardHorizontals: CGFloat             = 24
 
     static let cornerRadius: CGFloat                = 5
 }
@@ -34,7 +36,10 @@ final class CalendarScreen: UIViewController {
     // MARK: - Properties
 
     let xButton = IconButton.make(.x)
-    let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarHorizontalOffset/2, y: screenHeight-style.calendarHeight-style.calendarBottomOffset, width: screenWidth-style.calendarHorizontalOffset, height: style.calendarHeight))
+    let cv = JTACMonthView(frame: CGRect(x: style.calendarHorizontalOffset/2+style.cardHorizontals,
+                                         y: screenHeight-style.calendarHeight-style.calendarBottomOffset,
+                                         width: screenWidth-style.calendarHorizontalOffset-2*style.cardHorizontals,
+                                         height: style.calendarHeight))
     var calendarCard = Card()
     var imageView = UIImageView()
     var episodeDict = [Date : (Episode, ShowOverview)]()
@@ -126,7 +131,7 @@ final class CalendarScreen: UIViewController {
 
         calendarCard.snp.makeConstraints { make in
             make.top.equalTo(cv.snp.top).offset(-16)
-            make.left.right.equalToSuperview().inset(8)
+            make.left.right.equalToSuperview().inset(style.cardHorizontals)
             make.bottom.equalToSuperview().offset(-32)
         }
 
@@ -219,4 +224,3 @@ extension CalendarScreen: JTACMonthViewDelegate {
         return MonthSize(defaultSize: style.calendarHeaderHeight)
     }
 }
-
