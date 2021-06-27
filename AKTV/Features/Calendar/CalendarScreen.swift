@@ -21,8 +21,9 @@ extension DateFormatter {
 
 
 fileprivate struct style {
+    static let calendarHeaderHeight: CGFloat        = 80
     static let calendarHorizontalOffset: CGFloat    = 32
-    static let calendarHeight: CGFloat              = 240
+    static let calendarHeight: CGFloat              = 240 + calendarHeaderHeight
     static let calendarBottomOffset: CGFloat        = 40
 
     static let cornerRadius: CGFloat                = 5
@@ -34,7 +35,6 @@ final class CalendarScreen: UIViewController {
 
     let xButton = IconButton.make(.x)
     let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarHorizontalOffset/2, y: screenHeight-style.calendarHeight-style.calendarBottomOffset, width: screenWidth-style.calendarHorizontalOffset, height: style.calendarHeight))
-    var dayStack: UIStackView!
     var calendarCard = Card()
     var imageView = UIImageView()
     var episodeDict = [Date : (Episode, ShowOverview)]()
@@ -90,11 +90,9 @@ final class CalendarScreen: UIViewController {
         xButton.addTarget(self, action: #selector(exitScreen), for: .touchDown)
         tabBar?.hideIt()
 
-        dayStack = makeDayStack()
         imageView.layer.cornerRadius = 16
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-
 
         cv.backgroundColor = .clear
         cv.register(CalendarCell.self, forCellWithReuseIdentifier: "CalendarCell")
@@ -118,7 +116,6 @@ final class CalendarScreen: UIViewController {
         view.addSubview(calendarCard)
         view.addSubview(xButton)
         view.addSubview(cv)
-        view.addSubview(dayStack)
         view.addSubview(imageView)
 
         xButton.snp.makeConstraints { (make) in
@@ -128,7 +125,7 @@ final class CalendarScreen: UIViewController {
         }
 
         calendarCard.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(-16)
+            make.top.equalTo(cv.snp.top).offset(-16)
             make.left.right.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().offset(-32)
         }
@@ -139,34 +136,12 @@ final class CalendarScreen: UIViewController {
             make.bottom.equalTo(calendarCard.snp.top).offset(-24)
         }
 
-        dayStack.snp.makeConstraints { make in
-            make.height.equalTo(40)
-            make.left.right.equalToSuperview().inset(style.calendarHorizontalOffset)
-            make.bottom.equalTo(cv.snp.top).offset(-8)
-        }
     }
 
     @objc func exitScreen() {
         tabBarController?.selectedIndex = 1
     }
 
-    private func makeDayStack() -> UIStackView {
-        let days = ["M", "T", "W", "T", "F", "S", "S"]
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = UIStackView.Distribution.equalCentering
-
-        let dayLabels = days.map{ (str) -> UILabel in
-            let lbl = UILabel()
-            lbl.font = UIFont.round(.bold, 28)
-            lbl.text = str
-            lbl.textColor = UIColor(dark)
-            return lbl
-        }
-
-        dayLabels.forEach{ stackView.addArrangedSubview($0) }
-        return stackView
-    }
 }
 
 extension CalendarScreen: JTACMonthViewDataSource {
@@ -241,7 +216,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
     }
 
     func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {
-        return MonthSize(defaultSize: 50)
+        return MonthSize(defaultSize: style.calendarHeaderHeight)
     }
 }
 
