@@ -41,7 +41,7 @@ final class CalendarScreen: UIViewController {
                                          width: screenWidth-style.calendarHorizontalOffset-2*style.cardHorizontals,
                                          height: style.calendarHeight))
     var calendarCard = Card()
-    var imageView = UIImageView()
+    var imageView = ImageCard()
     var episodeDict = [Date : (Episode, ShowOverview)]()
     var formatter = DateFormatter.withoutTime
     var upcomingFavourites = [Episode]() {
@@ -94,10 +94,6 @@ final class CalendarScreen: UIViewController {
     private func setup() {
         xButton.addTarget(self, action: #selector(exitScreen), for: .touchDown)
         tabBar?.hideIt()
-
-        imageView.layer.cornerRadius = 16
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
 
         cv.backgroundColor = .clear
         cv.register(CalendarCell.self, forCellWithReuseIdentifier: "CalendarCell")
@@ -173,7 +169,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
         DispatchQueue.main.async {
             if let showOverview = self.episodeDict[date]?.1 {
                 if let posterPath = showOverview.posterPath, let posterURL = URL(string: APIDAO.imageRoot+posterPath) {
-                    self.imageView.kf.setImage(with: posterURL)
+                    self.imageView.imageView.kf.setImage(with: posterURL)
                 }
             }
         }
