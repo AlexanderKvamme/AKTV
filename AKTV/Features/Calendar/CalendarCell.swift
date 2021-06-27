@@ -104,14 +104,14 @@ class CalendarCell: JTACDayCell {
         // Highlight today
         if isToday {
             background.layer.cornerRadius = background.frame.width/2
-            background.backgroundColor = .red
             return
         }
 
         guard let stillPath = overview.posterPath else { return }
 
         if let existingColors = ColorStore.get(colorsFrom: overview) {
-            background.backgroundColor = existingColors.secondary
+            background.backgroundColor = existingColors.detail
+            dateLabel.textColor = existingColors.background
         } else {
             DispatchQueue.main.async {
                 UIImageView().kf.setImage(with: URL(string: APIDAO.imageRoot+stillPath), completionHandler: { result in
