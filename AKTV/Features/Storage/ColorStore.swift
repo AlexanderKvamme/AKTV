@@ -38,7 +38,6 @@ final class ColorStore {
             let encoder = JSONEncoder()
             let encodedData = try encoder.encode(encodableColors)
             let episodeKey = showOverviewKey(for: overview)
-            print("bam key set: ", episodeKey)
             UserDefaults.standard.set(encodedData, forKey: episodeKey)
         } catch let error {
             fatalError("could not store color: \(error.localizedDescription)")
@@ -47,7 +46,6 @@ final class ColorStore {
 
     static func get(colorsFrom overview: ShowOverview) -> UIImageColors? {
         let episodeKey = showOverviewKey(for: overview)
-        print("bam key get: ", episodeKey)
         guard let data = UserDefaults.standard.data(forKey: episodeKey) else { return nil }
 
         do {

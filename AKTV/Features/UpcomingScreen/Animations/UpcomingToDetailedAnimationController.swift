@@ -82,9 +82,7 @@ final class UpcomingToDetailedAnimationController: NSObject, UIViewControllerAni
         0.35
     }
 
-    func animationEnded(_ transitionCompleted: Bool) {
-        print("bam animationEnded completed: ", transitionCompleted)
-    }
+    func animationEnded(_ transitionCompleted: Bool) {}
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView

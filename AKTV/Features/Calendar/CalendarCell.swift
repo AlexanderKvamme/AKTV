@@ -58,11 +58,16 @@ class CalendarCell: JTACDayCell {
         }
     }
 
+    func setSelected(_ b: Bool) {
+        backgroundColor = b ? UIColor(dark).withAlphaComponent(0.075) : .clear
+    }
+
     func resetStyle(_ cellState: CellState) {
         dateLabel.text = cellState.text
         background.backgroundColor = .clear
         dateLabel.textColor = UIColor(dark)
         background.layer.cornerRadius = style.cornerRadius
+        backgroundColor = .clear
 
         // Fade months outside of current
         let isCurrentMonth = cellState.dateBelongsTo == .thisMonth
@@ -78,7 +83,6 @@ class CalendarCell: JTACDayCell {
         resetStyle(cellState)
 
         // TODO: Multiple episodes on one day
-
         if cellState.dateBelongsTo == .thisMonth {
             updateCellDesign(for: episode, overview, cellState: cellState)
         }
@@ -118,12 +122,11 @@ class CalendarCell: JTACDayCell {
                             self.updateCellDesign(for: episode, overview, cellState: cellState)
                         }
                     } catch {
-                        print("bam had error while retrieving image from stillPath")
+                        print("Error: while retrieving image from stillPath")
                     }
                 })
             }
         }
-
     }
 }
 

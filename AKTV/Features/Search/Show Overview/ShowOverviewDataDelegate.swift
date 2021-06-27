@@ -28,7 +28,7 @@ final class ShowOverviewDataDelegate: NSObject, UITableViewDataSource, UITableVi
         if let cell = cell as? SeasonOverviewCell {
             cell.update(with: seasonOverview)
         } else {
-            fatalError("bam could not cast")
+            fatalError("Error: could not cast")
         }
         return cell
     }

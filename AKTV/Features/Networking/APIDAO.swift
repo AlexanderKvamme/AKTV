@@ -36,9 +36,7 @@ final class APIDAO: NSObject {
     //            let decoder = JSONDecoder()
     //
     //            do {
-    //                print("bam tryna decode from content: ", content)
     //                let decoded = try decoder.decode(T.self, from: content)
-    //                print("bam decoded: ", decoded)
     //            } catch {
     //                print("Error could not decode a tv show 2")
     //            }
@@ -65,7 +63,7 @@ final class APIDAO: NSObject {
         
         let urlString = "https://api.themoviedb.org/3/search/tv?api_key=\(key)&query=\(encodedString)"
         guard let url = URL(string: urlString) else {
-            print("bam Error: Could not make url")
+            print("Error: Could not make url")
             return
         }
         

@@ -117,7 +117,7 @@ protocol SeriesReceiver {
 
 extension ShowOverviewScreen: SeriesReceiver {
     func receive(series: [Series]) {
-        print("bam returned series: ", series)
+        print("returned series: ", series)
     }
 }
 

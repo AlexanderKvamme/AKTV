@@ -112,6 +112,8 @@ final class CalendarScreen: UIViewController {
         cv.minimumLineSpacing = 0
         cv.scrollToDate(Date(), animateScroll: false)
 
+        cv.allowsMultipleSelection = false
+
         cv.scrollDirection = .horizontal
         cv.scrollingMode = .stopAtEachCalendarFrame
         cv.showsHorizontalScrollIndicator = false
@@ -197,19 +199,31 @@ extension CalendarScreen: JTACMonthViewDataSource {
 
 
 extension CalendarScreen: JTACMonthViewDelegate {
+
+    // selected cell
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
-        // FIXME: Vis denne frem i headeren
-        if let showOverview = episodeDict[date]?.1 {
-            if let posterPath = showOverview.posterPath, let posterURL = URL(string: APIDAO.imageRoot+posterPath) {
-                self.imageView.kf.setImage(with: posterURL)
+
+        guard let cell = cell as? CalendarCell else { fatalError() }
+        cell.setSelected(true)
+
+        DispatchQueue.main.async {
+            if let showOverview = self.episodeDict[date]?.1 {
+                if let posterPath = showOverview.posterPath, let posterURL = URL(string: APIDAO.imageRoot+posterPath) {
+                    self.imageView.kf.setImage(with: posterURL)
+                }
             }
         }
     }
 
+    // de-selected cell
+    func calendar(_ calendar: JTACMonthView, didDeselectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
+        guard let cell = cell as? CalendarCell else { return }
+        cell.setSelected(false)
+    }
+
+    // willDisplay
     func calendar(_ calendar: JTACMonthView, willDisplay cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        guard let cell = cell as? CalendarCell else {
-            fatalError()
-        }
+        guard let cell = cell as? CalendarCell else { fatalError() }
 
         cell.resetStyle(cellState)
 
