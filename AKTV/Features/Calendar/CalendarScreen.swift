@@ -34,11 +34,11 @@ final class CalendarScreen: UIViewController {
 
     let xButton = IconButton.make(.x)
     let cv = JTACMonthView(frame: CGRect(x: 0+style.calendarHorizontalOffset/2, y: screenHeight-style.calendarHeight-style.calendarBottomOffset, width: screenWidth-style.calendarHorizontalOffset, height: style.calendarHeight))
-    var monthLabel = UILabel.make(.header)
-    var yearLabel = UILabel.make(.subtitle)
     var dayStack: UIStackView!
+    var calendarCard = Card()
     var imageView = UIImageView()
     var episodeDict = [Date : (Episode, ShowOverview)]()
+    var formatter = DateFormatter.withoutTime
     var upcomingFavourites = [Episode]() {
         didSet {
             let datesAdded = upcomingFavourites.compactMap{ $0.getFormattedDate() }
@@ -95,22 +95,16 @@ final class CalendarScreen: UIViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
 
-        monthLabel.text = "January"
-        monthLabel.textColor = UIColor(dark)
-        monthLabel.font = UIFont.round(.bold, 24)
-        monthLabel.sizeToFit()
 
-        yearLabel.text = "2021"
-        yearLabel.textColor = UIColor(dark)
-        yearLabel.font = UIFont.round(.light, 24)
-        yearLabel.alpha = 0.4
-
+        cv.backgroundColor = .clear
         cv.register(CalendarCell.self, forCellWithReuseIdentifier: "CalendarCell")
         cv.calendarDelegate = self
         cv.calendarDataSource = self
         cv.minimumInteritemSpacing = 0
         cv.minimumLineSpacing = 0
         cv.scrollToDate(Date(), animateScroll: false)
+
+        cv.register(DateHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "DateHeader")
 
         cv.allowsMultipleSelection = false
 
@@ -121,12 +115,11 @@ final class CalendarScreen: UIViewController {
     }
 
     private func addSubviewsAndConstraints() {
+        view.addSubview(calendarCard)
         view.addSubview(xButton)
         view.addSubview(cv)
         view.addSubview(dayStack)
         view.addSubview(imageView)
-        view.addSubview(monthLabel)
-        view.addSubview(yearLabel)
 
         xButton.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -134,23 +127,16 @@ final class CalendarScreen: UIViewController {
             make.size.equalTo(48)
         }
 
-        monthLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        calendarCard.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(-16)
+            make.left.right.equalToSuperview().inset(8)
+            make.bottom.equalToSuperview().offset(-32)
+        }
 
         imageView.snp.makeConstraints { make in
             make.top.equalTo(xButton.snp.bottom).offset(16)
             make.left.right.equalToSuperview().inset(24)
-            make.bottom.equalTo(monthLabel.snp.top).offset(-24)
-        }
-
-        monthLabel.snp.makeConstraints { make in
-            make.left.equalTo(cv).offset(16)
-            make.bottom.equalTo(dayStack.snp.top).offset(-16)
-        }
-
-        yearLabel.snp.makeConstraints { make in
-            make.top.bottom.equalTo(monthLabel)
-            make.left.equalTo(monthLabel.snp.right).offset(8)
-            make.right.equalTo(cv)
+            make.bottom.equalTo(calendarCard.snp.top).offset(-24)
         }
 
         dayStack.snp.makeConstraints { make in
@@ -186,10 +172,8 @@ final class CalendarScreen: UIViewController {
 extension CalendarScreen: JTACMonthViewDataSource {
 
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
-        let formatter = DateFormatter()
         let day: TimeInterval = 60*60*24
         let month: TimeInterval = day*31
-        formatter.dateFormat = "yyyy MM dd"
         let startDate = Date().addingTimeInterval(-3*month) // formatter.date(from: "2018 01 01")!
         let endDate = Date().addingTimeInterval(3*month)
         let config = ConfigurationParameters(startDate: startDate, endDate: endDate, generateInDates: InDateCellGeneration.forAllMonths, generateOutDates: OutDateCellGeneration.tillEndOfGrid, firstDayOfWeek: .monday, hasStrictBoundaries: true)
@@ -242,4 +226,22 @@ extension CalendarScreen: JTACMonthViewDelegate {
         }
         return cell
     }
+
+    // Header
+    func calendar(_ calendar: JTACMonthView, headerViewForDateRange range: (start: Date, end: Date), at indexPath: IndexPath) -> JTACMonthReusableView {
+        formatter.dateFormat = "MMMM"
+
+        guard let header = calendar.dequeueReusableJTAppleSupplementaryView(withReuseIdentifier: "DateHeader", for: indexPath) as? DateHeader else {
+            print("Error could not dequeue calendar header")
+            return JTACMonthReusableView()
+        }
+
+        header.monthLabel.text = formatter.string(from: range.start)
+        return header
+    }
+
+    func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {
+        return MonthSize(defaultSize: 50)
+    }
 }
+
