@@ -41,7 +41,7 @@ final class CalendarScreen: UIViewController {
                                          width: screenWidth-style.calendarHorizontalOffset-2*style.cardHorizontals,
                                          height: style.calendarHeight))
     var calendarCard = Card()
-    var imageView = ImageCard()
+    var imageCard = ImageCard()
     var episodeDict = [Date : (Episode, ShowOverview)]()
     var formatter = DateFormatter.withoutTime
     var upcomingFavourites = [Episode]() {
@@ -117,7 +117,7 @@ final class CalendarScreen: UIViewController {
         view.addSubview(calendarCard)
         view.addSubview(xButton)
         view.addSubview(cv)
-        view.addSubview(imageView)
+        view.addSubview(imageCard)
 
         xButton.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -131,7 +131,7 @@ final class CalendarScreen: UIViewController {
             make.bottom.equalToSuperview().offset(-32)
         }
 
-        imageView.snp.makeConstraints { make in
+        imageCard.snp.makeConstraints { make in
             make.top.equalTo(xButton.snp.bottom).offset(16)
             make.left.right.equalToSuperview().inset(24)
             make.bottom.equalTo(calendarCard.snp.top).offset(-24)
@@ -169,9 +169,12 @@ extension CalendarScreen: JTACMonthViewDelegate {
         DispatchQueue.main.async {
             if let showOverview = self.episodeDict[date]?.1 {
                 if let posterPath = showOverview.posterPath, let posterURL = URL(string: APIDAO.imageRoot+posterPath) {
-                    self.imageView.imageView.kf.setImage(with: posterURL)
+                    self.imageCard.imageView.kf.setImage(with: posterURL)
+                    return
                 }
             }
+
+            self.imageCard.imageView.image = nil
         }
     }
 
