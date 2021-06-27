@@ -27,17 +27,19 @@ class DateHeader: JTACMonthReusableView {
     }
 
     private func setup() {
+        let fontsize: CGFloat = 24
+
         dayStack = makeDayStack()
         monthLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         monthLabel.text = "January"
         monthLabel.textColor = UIColor(dark)
-        monthLabel.font = UIFont.round(.bold, 30)
+        monthLabel.font = UIFont.round(.bold, fontsize)
         monthLabel.sizeToFit()
         monthLabel.clipsToBounds = false
 
         yearLabel.text = "2021"
         yearLabel.textColor = UIColor(dark)
-        yearLabel.font = UIFont.round(.light, 30)
+        yearLabel.font = UIFont.round(.light, fontsize)
         yearLabel.alpha = 0.4
     }
 
@@ -75,9 +77,9 @@ class DateHeader: JTACMonthReusableView {
 
         let dayLabels = days.map{ (str) -> UILabel in
             let lbl = UILabel()
-            lbl.font = UIFont.round(.bold, 20)
-            lbl.text = str
+            lbl.font = UIFont.round(.bold, 12)
             lbl.textColor = UIColor(dark)
+            lbl.text = str
             return lbl
         }
 

@@ -67,6 +67,7 @@ class CalendarCell: JTACDayCell {
         background.backgroundColor = .clear
         dateLabel.textColor = UIColor(dark)
         background.layer.cornerRadius = style.cornerRadius
+        background.removeExternalBorders()
         backgroundColor = .clear
 
         // Fade months outside of current
@@ -97,13 +98,14 @@ class CalendarCell: JTACDayCell {
         let isToday = formatter.string(from: Date()) == formatter.string(from: cellState.date)
 
         // Basic "date has episode" styles
-        background.backgroundColor = UIColor(dark)
         dateLabel.textColor = UIColor(light)
-        dateLabel.alpha = 1
+        dateLabel.alpha = 0.6
 
         // Highlight today
         if isToday {
-            background.layer.cornerRadius = background.frame.width/2
+            dateLabel.textColor = .red
+            dateLabel.font = UIFont.gilroy(.semibold, dateLabel.font.pointSize)
+            background.addExternalBorder(borderWidth: 3, borderColor: .red)
             return
         }
 
@@ -140,4 +142,39 @@ extension Date {
     func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         return calendar.component(component, from: self)
     }
+}
+
+// TODO: MOVE ME
+
+extension UIView {
+
+    struct Constants {
+        static let ExternalBorderName = "externalBorder"
+    }
+
+    @discardableResult func addExternalBorder(borderWidth: CGFloat = 2.0, borderColor: UIColor = UIColor.white) -> CALayer {
+        let externalBorder = CALayer()
+        externalBorder.cornerRadius = frame.size.height/2
+        externalBorder.frame = CGRect(x: -borderWidth, y: -borderWidth, width: frame.size.width + 2 * borderWidth, height: frame.size.height + 2 * borderWidth)
+        externalBorder.borderColor = borderColor.cgColor
+        externalBorder.borderWidth = borderWidth
+        externalBorder.name = Constants.ExternalBorderName
+
+        layer.insertSublayer(externalBorder, at: 0)
+        layer.masksToBounds = false
+
+        return externalBorder
+    }
+
+    func removeExternalBorders() {
+        layer.sublayers?.filter() { $0.name == Constants.ExternalBorderName }.forEach() {
+            $0.removeFromSuperlayer()
+        }
+    }
+
+    func removeExternalBorder(externalBorder: CALayer) {
+        guard externalBorder.name == Constants.ExternalBorderName else { return }
+        externalBorder.removeFromSuperlayer()
+    }
+
 }
