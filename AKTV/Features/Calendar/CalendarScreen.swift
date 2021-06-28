@@ -61,12 +61,25 @@ final class CalendarScreen: UIViewController {
         view.backgroundColor = UIColor(light)
 
         setup()
-        fetchPremiereDates()
         addSubviewsAndConstraints()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Life Cycle
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        tabBar?.hideIt()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        fetchPremiereDates()
     }
 
     // MARK: - Methods
@@ -140,7 +153,8 @@ final class CalendarScreen: UIViewController {
     }
 
     @objc func exitScreen() {
-        tabBarController?.selectedIndex = 1
+        navigationController?.popToRootViewController(animated: true)
+        tabBar?.showIt()
     }
 
 }

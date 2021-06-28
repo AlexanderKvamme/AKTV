@@ -46,7 +46,6 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         let dao = APIDAO()
         let showSearchController = ShowsSearchScreen(dao: dao)
 
-
         // Fetch favourite shows and show next episode dates
         let favouriteShows = UserProfileManager().favouriteShows()
         favouriteShows.forEach{ id in
@@ -68,10 +67,11 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        setViewControllers([calendarScreen, discoveryScreen, showSearchController, calendarScreen, upcomingScreen], animated: true)
+        screens = [calendarScreen, discoveryScreen, showSearchController, calendarScreen, upcomingScreen]
+        setViewControllers(screens, animated: true)
 
         // Initial View Controller
-        selectedIndex = 0
+        selectedIndex = 3
         configureTabBarButtons()
     }
 
