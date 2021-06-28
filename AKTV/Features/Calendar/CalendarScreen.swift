@@ -24,7 +24,7 @@ fileprivate struct style {
     static let calendarHeaderHeight: CGFloat        = 80
     static let calendarHorizontalOffset: CGFloat    = 32
     static let calendarHeight: CGFloat              = 190 + calendarHeaderHeight
-    static let calendarBottomOffset: CGFloat        = 40
+    static let calendarBottomOffset: CGFloat        = 100
 
     static let cardHorizontals: CGFloat             = 24
 
@@ -35,7 +35,7 @@ final class CalendarScreen: UIViewController {
 
     // MARK: - Properties
 
-    let xButton = IconButton.make(.x)
+    let chevronButton = UIImageView()
     let cv = JTACMonthView(frame: CGRect(x: style.calendarHorizontalOffset/2+style.cardHorizontals,
                                          y: screenHeight-style.calendarHeight-style.calendarBottomOffset,
                                          width: screenWidth-style.calendarHorizontalOffset-2*style.cardHorizontals,
@@ -105,7 +105,10 @@ final class CalendarScreen: UIViewController {
     }
 
     private func setup() {
-        xButton.addTarget(self, action: #selector(exitScreen), for: .touchDown)
+        let exitTapGesture = UITapGestureRecognizer(target: self, action: #selector(exitScreen))
+        chevronButton.addGestureRecognizer(exitTapGesture)
+        chevronButton.isUserInteractionEnabled = true
+
         tabBar?.hideIt()
 
         cv.backgroundColor = .clear
@@ -128,28 +131,32 @@ final class CalendarScreen: UIViewController {
 
     private func addSubviewsAndConstraints() {
         view.addSubview(calendarCard)
-        view.addSubview(xButton)
         view.addSubview(cv)
         view.addSubview(imageCard)
+        view.addSubview(chevronButton)
 
-        xButton.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.left.equalTo(view.safeAreaLayoutGuide).offset(16)
-            make.size.equalTo(48)
+        imageCard.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.right.equalToSuperview().inset(24)
+            make.bottom.equalTo(calendarCard.snp.top).offset(-16)
         }
 
         calendarCard.snp.makeConstraints { make in
-            make.top.equalTo(cv.snp.top).offset(-16)
-            make.left.right.equalToSuperview().inset(style.cardHorizontals)
-            make.bottom.equalToSuperview().offset(-32)
+            make.top.equalTo(cv).offset(-24)
+            make.left.right.equalTo(imageCard)
+            make.bottom.equalTo(cv).offset(24)
         }
 
-        imageCard.snp.makeConstraints { make in
-            make.top.equalTo(xButton.snp.bottom).offset(16)
-            make.left.right.equalToSuperview().inset(24)
-            make.bottom.equalTo(calendarCard.snp.top).offset(-24)
-        }
+        let configuration = UIImage.SymbolConfiguration (pointSize: 24.0, weight: .light)
+        chevronButton.image = UIImage(systemName: "chevron.down", withConfiguration: configuration)?.withRenderingMode(.alwaysTemplate)
+        chevronButton.tintColor = UIColor(dark).withAlphaComponent(0.0)
 
+        chevronButton.snp.makeConstraints { make in
+            make.width.equalTo(56)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-24)
+        }
     }
 
     @objc func exitScreen() {
