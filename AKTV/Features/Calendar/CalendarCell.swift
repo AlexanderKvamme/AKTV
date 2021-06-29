@@ -80,12 +80,25 @@ class CalendarCell: JTACDayCell {
         }
     }
 
+    func setIsTodayStyle(cellState: CellState) {
+        let formatter = DateFormatter.withoutTime
+        let isToday = formatter.string(from: Date()) == formatter.string(from: cellState.date)
+
+        // Highlight today
+        if isToday {
+            dateLabel.font = UIFont.gilroy(.semibold, dateLabel.font.pointSize)
+            background.addExternalBorder(borderWidth: 3, borderColor: .red)
+            return
+        }
+    }
+
     func configure(for cellState: CellState, episode: Episode, overview: ShowOverview) {
         resetStyle(cellState)
 
         // TODO: Multiple episodes on one day
         if cellState.dateBelongsTo == .thisMonth {
             updateCellDesign(for: episode, overview, cellState: cellState)
+            setIsTodayStyle(cellState: cellState)
         }
     }
 
@@ -94,20 +107,9 @@ class CalendarCell: JTACDayCell {
     }
 
     private func updateCellDesign(for episode: Episode, _ overview: ShowOverview, cellState: CellState) {
-        let formatter = DateFormatter.withoutTime
-        let isToday = formatter.string(from: Date()) == formatter.string(from: cellState.date)
-
         // Basic "date has episode" styles
         dateLabel.textColor = UIColor(light)
         dateLabel.alpha = 0.6
-
-        // Highlight today
-        if isToday {
-            dateLabel.textColor = .red
-            dateLabel.font = UIFont.gilroy(.semibold, dateLabel.font.pointSize)
-            background.addExternalBorder(borderWidth: 3, borderColor: .red)
-            return
-        }
 
         guard let stillPath = overview.posterPath else { return }
 
