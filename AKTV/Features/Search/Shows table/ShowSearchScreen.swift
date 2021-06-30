@@ -1,6 +1,60 @@
 import UIKit
 
 
+final class SearchShowTextField: UIView {
+
+    // MARK: - Properties
+
+    let searchField = UITextField()
+    let shadowView = ShadowView2(frame: CGRect(x: 0, y: 0, width: 300, height: 100))
+
+    // MARK: - Initializers
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        setup()
+        addSubviewsAndConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Methods
+
+    private func setup() {
+        searchField.backgroundColor = .clear
+        searchField.textAlignment = .center
+        searchField.placeholder = "Game of thrones"
+        searchField.font = UIFont.gilroy(.bold, 24)
+        searchField.textColor = UIColor(light)
+        searchField.isUserInteractionEnabled = true
+        searchField.becomeFirstResponder()
+        searchField.adjustsFontSizeToFitWidth = true
+        searchField.layer.cornerCurve = .continuous
+        searchField.layer.cornerRadius = 16
+
+        searchField.backgroundColor = UIColor(dark)
+    }
+
+    private func addSubviewsAndConstraints() {
+        addSubview(shadowView)
+        addSubview(searchField)
+
+        searchField.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.bottom.equalToSuperview().offset(16)
+        }
+
+        shadowView.snp.makeConstraints { make in
+            make.top.equalTo(searchField).offset(16)
+            make.left.right.equalToSuperview().inset(16)
+            make.height.equalTo(searchField).offset(-8)
+        }
+    }
+}
+
 protocol SeasonPresenter {
     func displaySeason(showId: Int?, seasonNumber: Int?)
 }
@@ -13,8 +67,9 @@ protocol ModelPresenter {
 
 private final class HeaderContainer: UIViewController {
 
-    private let headerField = UILabel()
-    let searchField = UITextField()
+    private let header = UILabel()
+    private let subHeader = UILabel()
+    let searchField = SearchShowTextField(frame: .zero)
 
     override func viewDidLoad() {
         setup()
@@ -22,35 +77,42 @@ private final class HeaderContainer: UIViewController {
     }
 
     func setup() {
-        headerField.font = UIFont.gilroy(.bold, 20)
-        headerField.textAlignment = .center
-        headerField.text = "What are you looking for?"
-        headerField.textColor = UIColor(dark)
-        headerField.alpha = 0.4
+        header.font = UIFont.gilroy(.heavy, 38)
+        header.textAlignment = .left
+        header.text = "What are you looking for?"
+        header.textColor = UIColor(dark)
+        header.numberOfLines = 0
 
-        searchField.textColor = UIColor(light)
-        searchField.backgroundColor = .clear
-        searchField.textAlignment = .center
-        searchField.placeholder = "Game of thrones"
-        searchField.font = UIFont.gilroy(.heavy, 60)
-        searchField.textColor = UIColor(dark)
-        searchField.isUserInteractionEnabled = true
-        searchField.becomeFirstResponder()
-        searchField.adjustsFontSizeToFitWidth = true
+        subHeader.font = UIFont.gilroy(.regular, 20)
+        subHeader.textAlignment = .left
+        subHeader.alpha = 0.4
+        subHeader.text = "Search for any TV show in the world!"
+        subHeader.textColor = UIColor(dark)
+        subHeader.numberOfLines = 0
     }
 
     func addSubviewsAndConstraints() {
-        view.addSubview(headerField)
-        headerField.snp.makeConstraints { (make) in
-            make.top.equalTo(view.snp.top).offset(40)
-            make.left.right.equalToSuperview()
+        let hInset: CGFloat = 40
+        let vinset: CGFloat = 16
+
+        view.addSubview(header)
+        header.snp.makeConstraints { (make) in
+            make.top.equalTo(view.snp.top).offset(80).priority(.high)
+            make.left.right.equalToSuperview().inset(hInset)
+        }
+
+        view.addSubview(subHeader)
+        subHeader.snp.makeConstraints { make in
+            make.top.equalTo(header.snp.bottom).offset(vinset).priority(.high)
+            make.left.right.equalToSuperview().inset(hInset)
         }
 
         view.addSubview(searchField)
         searchField.snp.makeConstraints { (make) in
-            make.top.equalTo(headerField.snp.bottom)//.offset(16)
-            make.left.right.equalToSuperview().inset(16)
+            make.top.equalTo(subHeader.snp.bottom).offset(vinset).priority(.low)
+            make.left.right.equalToSuperview().inset(hInset)
             make.bottom.equalToSuperview()
+            make.height.equalTo(60)
         }
     }
 }
@@ -81,9 +143,9 @@ final class ShowsSearchScreen: UIViewController, UITableViewDataSource, UITableV
     // MARK: Private methods
     
     private func setup() {
-        view.backgroundColor = UIColor(hex: "#F6FAFB")
+        view.backgroundColor = UIColor(hex: "#F7F7F7")
 
-        headerContainer.searchField.delegate = self
+        headerContainer.searchField.searchField.delegate = self
 
         episodesSearchResultViewController.tableView.dataSource = self
         episodesSearchResultViewController.tableView.delegate = self
@@ -97,12 +159,12 @@ final class ShowsSearchScreen: UIViewController, UITableViewDataSource, UITableV
     private func addSubviewsAndConstraints() {
         view.addSubview(headerContainer.view)
 
-        headerContainer.view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 180)
+        headerContainer.view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 280)
         view.addSubview(episodesSearchResultViewController.view)
         addChild(episodesSearchResultViewController)
         
         episodesSearchResultViewController.view.snp.makeConstraints { (make) in
-            make.top.equalTo(headerContainer.view.snp.bottom)
+            make.top.equalTo(headerContainer.view.snp.bottom).offset(32)
             make.left.right.bottom.equalToSuperview()
         }
     }
@@ -172,7 +234,7 @@ extension ShowsSearchScreen: ModelPresenter {
 extension ShowsSearchScreen: UITextFieldDelegate {
 
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        textField.text = textField.text?.uppercased()
+        textField.text = textField.text//?.uppercased()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -180,7 +242,7 @@ extension ShowsSearchScreen: UITextFieldDelegate {
             return false
         }
         
-        _ = apiDao.searchShows(string: searchterm) { (shows) in
+        apiDao.searchShows(string: searchterm) { (shows) in
             DispatchQueue.main.async {
                 self.shows = shows
                 self.episodesSearchResultViewController.tableView.reloadData()
