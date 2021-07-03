@@ -56,6 +56,7 @@ final class ShowCell: UITableViewCell {
         labelStack.axis = .vertical
         labelStack.distribution = UIStackView.Distribution.fill
         labelStack.alignment = .leading
+        labelStack.spacing = 4
 
         let imageInset: CGFloat = 4
         let img = UIImage(systemName: "film", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .bold))?
