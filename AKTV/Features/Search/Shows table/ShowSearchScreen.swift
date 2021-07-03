@@ -192,7 +192,6 @@ final class ShowsSearchScreen: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let show = shows[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ShowCell.identifier) ?? ShowCell(for: shows[indexPath.row])
-        cell.backgroundColor = .clear
         if let cell = cell as? ShowCell {
             cell.update(with: show)
         } else {
@@ -203,6 +202,10 @@ final class ShowsSearchScreen: UIViewController, UITableViewDataSource, UITableV
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         detailedShowPresenter?.displayShow(shows[indexPath.row].id)
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return ShowCell.estimatedHeight
     }
 }
 

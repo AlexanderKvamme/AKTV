@@ -17,7 +17,7 @@ class ImageCard: Card {
 
     // MARK: - Initializers
 
-    override init() {
+    init() {
         super.init()
 
         setup()
@@ -38,7 +38,7 @@ class ImageCard: Card {
 
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = defaultCornerRadius
+        imageView.layer.cornerRadius = Self.defaultCornerRadius
     }
 
     private func addSubviewsAndConstraints() {

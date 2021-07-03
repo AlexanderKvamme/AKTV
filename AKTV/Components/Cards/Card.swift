@@ -11,15 +11,15 @@ import UIKit
 
 class Card: UIView {
 
-    let defaultCornerRadius: CGFloat = 32
+    static let defaultCornerRadius: CGFloat = 32
 
-    init() {
+    init(radius: CGFloat = defaultCornerRadius) {
         super.init(frame: .zero)
 
         layer.shadowColor = UIColor(dark).cgColor
         layer.shadowOpacity = 0.1
         layer.cornerCurve = .continuous
-        layer.cornerRadius = defaultCornerRadius
+        layer.cornerRadius = radius
         layer.shadowRadius = 20
         layer.shadowOffset = CGSize(width: 0, height: 16)
 
