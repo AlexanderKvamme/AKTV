@@ -149,7 +149,7 @@ final class CalendarScreen: UIViewController {
 
         let configuration = UIImage.SymbolConfiguration (pointSize: 24.0, weight: .light)
         chevronButton.image = UIImage(systemName: "chevron.down", withConfiguration: configuration)?.withRenderingMode(.alwaysTemplate)
-        chevronButton.tintColor = UIColor(dark).withAlphaComponent(0.0)
+        chevronButton.tintColor = UIColor(dark).withAlphaComponent(0.1)
 
         chevronButton.snp.makeConstraints { make in
             make.width.equalTo(56)
