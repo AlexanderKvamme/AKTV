@@ -68,7 +68,7 @@ protocol ModelPresenter {
 private final class HeaderContainer: UIViewController {
 
     private let header = UILabel()
-    private let subHeader = UILabel()
+    let subHeader = UILabel()
     let searchField = SearchShowTextField(frame: .zero)
 
     override func viewDidLoad() {
@@ -126,7 +126,9 @@ final class ShowsSearchScreen: UIViewController, UITableViewDataSource, UITableV
     private let episodesSearchResultDataDelegate = self
     private let apiDao: APIDAO
     private let headerContainer = HeaderContainer()
-    
+    var shows = [Show]()
+    var detailedShowPresenter: ModelPresenter?
+
     // MARK: Initializers
     
     init(dao: APIDAO) {
@@ -169,21 +171,22 @@ final class ShowsSearchScreen: UIViewController, UITableViewDataSource, UITableV
         }
     }
 
+    // MARK: ScrollView Delegate methods
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
+        let normalized200 = offset.y/200
+
         if (offset.y > 200) {
             return
         }
 
+        headerContainer.subHeader.alpha = min(1-normalized200, 0.4)
+
         headerContainer.view.frame.origin.y = -offset.y
     }
 
-    // MARK: Properties
-
-    var shows = [Show]()
-    var detailedShowPresenter: ModelPresenter?
-
-    // MARK: Delegate methods
+    // MARK: TableView Delegate methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shows.count

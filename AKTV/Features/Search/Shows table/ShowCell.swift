@@ -72,7 +72,7 @@ final class ShowCell: UITableViewCell {
         contentView.addSubview(iconImageView)
 
         card.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(8)
+            make.top.bottom.equalToSuperview().inset(4)
             make.left.right.equalToSuperview().inset(24)
         }
 
