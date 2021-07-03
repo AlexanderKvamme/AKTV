@@ -110,7 +110,7 @@ private final class HeaderContainer: UIViewController {
         view.addSubview(searchField)
         searchField.snp.makeConstraints { (make) in
             make.top.equalTo(subHeader.snp.bottom).offset(vinset).priority(.low)
-            make.left.right.equalToSuperview().inset(hInset)
+            make.left.right.equalToSuperview().inset(16)
             make.bottom.equalToSuperview()
             make.height.equalTo(60)
         }

@@ -18,7 +18,7 @@ final class ShowCell: UITableViewCell {
     let labelStack = UIStackView()
     var header = UILabel()
     var subheader = UILabel()
-    var card = Card(radius: 16)
+    var card = Card(radius: 24)
 
     // MARK: Initializers
     
@@ -57,10 +57,16 @@ final class ShowCell: UITableViewCell {
         labelStack.distribution = UIStackView.Distribution.fill
         labelStack.alignment = .leading
 
-        let img = UIImage(systemName: "film")?.withTintColor(.red, renderingMode: .alwaysTemplate)
+        let imageInset: CGFloat = 4
+        let img = UIImage(systemName: "film", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .bold))?
+            .withInset(UIEdgeInsets(top: imageInset, left: imageInset, bottom: imageInset, right: imageInset))
         iconImageView.image = img
         iconImageView.contentMode = .scaleAspectFit
-        iconImageView.tintColor = UIColor(dark)
+        iconImageView.backgroundColor = UIColor(dark).withAlphaComponent(0.05)
+        iconImageView.backgroundColor = UIColor(hex: "#FFBC54")?.withAlphaComponent(0.5)
+        iconImageView.layer.cornerRadius = 16
+
+        card.layer.shadowOpacity = 0.0
     }
     
     private func addSubviewsAndConstraints() {
@@ -72,20 +78,20 @@ final class ShowCell: UITableViewCell {
         contentView.addSubview(iconImageView)
 
         card.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(4)
-            make.left.right.equalToSuperview().inset(24)
+            make.top.bottom.equalToSuperview().inset(6)
+            make.left.right.equalToSuperview().inset(16)
         }
 
         iconImageView.snp.makeConstraints { make in
-            make.left.equalTo(card).inset(24)
+            make.left.equalTo(card).inset(16)
             make.centerY.equalToSuperview()
-            make.size.equalTo(24)
+            make.size.equalTo(48)
         }
         
         labelStack.snp.makeConstraints { make in
             make.centerY.equalTo(card)
             make.right.equalTo(card).offset(-16)
-            make.left.equalTo(iconImageView.snp.right).offset(24)
+            make.left.equalTo(iconImageView.snp.right).offset(16)
         }
     }
     
@@ -95,5 +101,23 @@ final class ShowCell: UITableViewCell {
     
     func update(with show: Show) {
         header.text = show.name
+    }
+}
+
+
+
+extension UIImage {
+
+    func withInset(_ insets: UIEdgeInsets) -> UIImage? {
+        let cgSize = CGSize(width: self.size.width + insets.left * self.scale + insets.right * self.scale,
+                            height: self.size.height + insets.top * self.scale + insets.bottom * self.scale)
+
+        UIGraphicsBeginImageContextWithOptions(cgSize, false, self.scale)
+        defer { UIGraphicsEndImageContext() }
+
+        let origin = CGPoint(x: insets.left * self.scale, y: insets.top * self.scale)
+        self.draw(at: origin)
+
+        return UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(self.renderingMode)
     }
 }
