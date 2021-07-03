@@ -13,7 +13,7 @@ class TabBarView: UIView {
 
     lazy var plusButton = RoundTabBarButton(frame: CGRect(x: screenWidth/2 - TabBarSettings.circleRadius, y: -TabBarSettings.barOffsetFromButton, width: TabBarSettings.circleRadius*2, height: TabBarSettings.circleRadius*2))
     lazy var button1 = makeButton(iconName: "calendar")
-    lazy var button2 = makeButton(iconName: "newspaper")
+    lazy var button2 = makeButton(iconName: "icon-cards", isAsset: true)
     lazy var button3 = makeButton(iconName: "video")
     lazy var button4 = makeButton(iconName: "gearshape")
 
@@ -113,7 +113,16 @@ extension TabBarView {
         return stack
     }
 
-    private func makeButton(iconName: String) -> UIButton {
+    private func makeButton(iconName: String, isAsset: Bool = false) -> UIButton {
+        guard !isAsset else {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
+            let assetImage = UIImage(named: iconName)?.withInset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+            button.setImage(assetImage, for: .normal)
+            button.tintColor = TabBarSettings.sectionButtonColor
+//            button.backgroundColor = .green
+            return button
+        }
+
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 22, weight: .bold, scale: .medium)
         let symbolImage = UIImage(systemName: iconName, withConfiguration: imageConfig)!
