@@ -119,7 +119,6 @@ extension TabBarView {
             let assetImage = UIImage(named: iconName)?.withInset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
             button.setImage(assetImage, for: .normal)
             button.tintColor = TabBarSettings.sectionButtonColor
-//            button.backgroundColor = .green
             return button
         }
 

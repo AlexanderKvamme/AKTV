@@ -83,12 +83,12 @@ class CalendarCell: JTACDayCell {
     func setIsTodayStyle(cellState: CellState) {
         let formatter = DateFormatter.withoutTime
         let isToday = formatter.string(from: Date()) == formatter.string(from: cellState.date)
+        let isThisMonth = cellState.dateBelongsTo == .thisMonth
 
         // Highlight today
-        if isToday {
+        if isToday && isThisMonth {
             dateLabel.font = UIFont.gilroy(.semibold, dateLabel.font.pointSize)
-            background.addExternalBorder(borderWidth: 3, borderColor: .red)
-            return
+            background.addExternalBorder(borderWidth: 3, borderColor: UIColor(dark))
         }
     }
 
@@ -98,8 +98,8 @@ class CalendarCell: JTACDayCell {
         // TODO: Multiple episodes on one day
         if cellState.dateBelongsTo == .thisMonth {
             updateCellDesign(for: episode, overview, cellState: cellState)
-            setIsTodayStyle(cellState: cellState)
         }
+        setIsTodayStyle(cellState: cellState)
     }
 
     override func prepareForReuse() {
