@@ -45,6 +45,7 @@ final class ShowCell: UITableViewCell {
         header.font = UIFont.gilroy(.bold, 18)
         header.layoutMargins = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 0)
         header.adjustsFontSizeToFitWidth = true
+        header.numberOfLines = 2
 
         subheader.text = "Televison, 2021"
         subheader.textColor = UIColor(dark)
@@ -53,7 +54,7 @@ final class ShowCell: UITableViewCell {
         subheader.layoutMargins = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 0)
 
         labelStack.axis = .vertical
-        labelStack.distribution = UIStackView.Distribution.fillEqually
+        labelStack.distribution = UIStackView.Distribution.fill
         labelStack.alignment = .leading
 
         let img = UIImage(systemName: "film")?.withTintColor(.red, renderingMode: .alwaysTemplate)
@@ -63,10 +64,8 @@ final class ShowCell: UITableViewCell {
     }
     
     private func addSubviewsAndConstraints() {
-        labelStack.addArrangedSubview(UIView())
         labelStack.addArrangedSubview(header)
         labelStack.addArrangedSubview(subheader)
-        labelStack.addArrangedSubview(UIView())
 
         contentView.addSubview(card)
         contentView.addSubview(labelStack)
@@ -84,7 +83,7 @@ final class ShowCell: UITableViewCell {
         }
         
         labelStack.snp.makeConstraints { make in
-            make.top.bottom.equalTo(card)
+            make.centerY.equalTo(card)
             make.right.equalTo(card).offset(-16)
             make.left.equalTo(iconImageView.snp.right).offset(24)
         }
