@@ -82,7 +82,7 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
 
     // MARK: - Properties
 
-    private var xButton = IconButton.make(.x)
+    private var xButton = UIImageView()
     private var headerLabel = UILabel.make(.header)
     private var genreLabel = UILabel.make(.subtitle)
     private var iconStack = ConsoleIconStack([.xbox, .playstation, .windows])
@@ -128,12 +128,22 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
         genreLabel.textColor = UIColor(dark)
         genreLabel.font = UIFont.gilroy(.bold, 12)
         genreLabel.alpha = 0.4
-        xButton.addTarget(self, action: #selector(exitScreen), for: .touchDown)
+
+        let tapRec = UITapGestureRecognizer(target: self, action: #selector(exitScreen))
+        xButton.addGestureRecognizer(tapRec)
+
+        let configuration = UIImage.SymbolConfiguration (pointSize: 24.0, weight: .light)
+        xButton.image = UIImage(systemName: "chevron.down", withConfiguration: configuration)?.withRenderingMode(.alwaysTemplate)
+        xButton.tintColor = UIColor(dark).withAlphaComponent(0.1)
+        xButton.isUserInteractionEnabled = true
     }
 
     @objc func exitScreen() {
-        print("Would exit screen")
-        tabBarController?.selectedIndex = 0
+        customTabBarDelegate?.showIt()
+        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+        tabBarController?.dismiss(animated: true, completion: nil)
     }
 
     private func addSubviewsAndConstraints() {
@@ -143,14 +153,9 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
         view.addSubview(iconStack)
         view.addSubview(cardContainer)
 
-        xButton.snp.makeConstraints { (make) in
-            make.top.left.equalTo(view.safeAreaLayoutGuide).offset(24)
-            make.size.equalTo(48)
-        }
-
         headerLabel.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().inset(24)
-            make.top.equalTo(xButton.snp.bottom).offset(24)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(24)
         }
 
         genreLabel.snp.makeConstraints { (make) in
@@ -167,8 +172,17 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
 
         cardContainer.snp.makeConstraints { (make) in
             make.top.equalTo(iconStack.snp.bottom).offset(24)
-            make.left.right.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(xButton.snp.top)
         }
+
+        xButton.snp.makeConstraints { make in
+            make.width.equalTo(56)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-24)
+        }
+
     }
 
     func update(with games: [Proto_Game]) {
