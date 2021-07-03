@@ -149,6 +149,7 @@ final class ShowsSearchScreen: UIViewController, UITableViewDataSource, UITableV
 
         headerContainer.searchField.searchField.delegate = self
 
+        episodesSearchResultViewController.tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
         episodesSearchResultViewController.tableView.dataSource = self
         episodesSearchResultViewController.tableView.delegate = self
         episodesSearchResultViewController.tableView.estimatedRowHeight = ShowCell.estimatedHeight
