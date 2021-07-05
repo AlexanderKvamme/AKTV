@@ -239,10 +239,6 @@ extension ShowsSearchScreen: ModelPresenter {
 // MARK: - Make self textview delegate
 
 extension ShowsSearchScreen: UITextFieldDelegate {
-
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        textField.text = textField.text//?.uppercased()
-    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let searchterm = textField.text else {

@@ -67,8 +67,8 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        screens = [calendarScreen, discoveryScreen, showSearchController, calendarScreen, upcomingScreen]
-        setViewControllers(screens, animated: true)
+//        screens = [calendarScreen, discoveryScreen, showSearchController, calendarScreen, upcomingScreen]
+//        setViewControllers(screens, animated: true)
 
         // Initial View Controller
         selectedIndex = 3
