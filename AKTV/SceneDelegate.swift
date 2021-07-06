@@ -52,44 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 
-typealias IDRange = CountableClosedRange<Int>
 
-class RangeStore {
-
-    static let userDefault = UserDefaults.standard
-
-    private static func makeKey(_ platform: GamePlatform) -> String {
-        "completed-ranges-\(platform.rawValue)"
-    }
-
-    /// Used to convert ranges to custom array with 2 numbers
-    /// [[Int]] can be saved to userDefaults while ranges cant
-    static func arrayifyRanges( _ ranges: [IDRange]) -> [[Int]] {
-        ranges.map { range in [range.lowerBound, range.upperBound]}
-    }
-
-    static func rangifyArrays( _ arrays: [[Int]]) -> [IDRange] {
-        arrays.map { array in array[0]...array[1]}
-    }
-
-    static func setCompleted(ranges: [IDRange], for platform: GamePlatform) {
-        let arrayified = arrayifyRanges(ranges)
-        userDefault.set(arrayified, forKey: makeKey(platform))
-    }
-
-    static func getCompleted(for platform: GamePlatform) -> [IDRange] {
-        guard let data = userDefault.object(forKey: makeKey(platform)) as? [[Int]] else {
-            return []
-        }
-
-        let rangified = rangifyArrays(data)
-        return rangified
-    }
-
-    static func deleteAllEntries(platform: GamePlatform) {
-        userDefault.removeObject(forKey: makeKey(platform))
-    }
-}
 
 class RangeExperiments: UIViewController {
 
@@ -103,18 +66,30 @@ class RangeExperiments: UIViewController {
         let platform = GamePlatform.PlayStation5
 
         // TODO: REMOVE THIS
-        RangeStore.deleteAllEntries(platform: platform)
+        GameStore.deleteAllEntries(platform: platform)
 
-        let noExistingRanges = RangeStore.getCompleted(for: platform)
+        let noExistingRanges = GameStore.getCompleted(for: platform)
         print("bam should be nil: ", noExistingRanges)
 
         // Set ranges
         let mockRanges = testMerge()
-        RangeStore.setCompleted(ranges: mockRanges, for: platform)
+        GameStore.setCompleted(ranges: mockRanges, for: platform)
 
         // Get ranges
-        let rangesAfterSet = RangeStore.getCompleted(for: platform)
+        let rangesAfterSet = GameStore.getCompleted(for: platform)
         print("bam should have some ranges: ", rangesAfterSet)
+
+        // Fetch and check highest ID
+        let remoteHighestID = fetchHighestAvaiableID()
+        print("bam remote highest ID: ", remoteHighestID)
+        let next10IDs = GameStore.getRangeToFetch(remoteMax: remoteHighestID, platform: platform)
+        print("bam next 10 IDs: ", next10IDs)
+
+        // User receives for example 5 cards, swipes
+
+        // Swipe a few cards
+        let swipedCards = GameRange(upper: 999, lower: 990)
+//        GameStore.setDiscoveredGameRange(<#T##limit: GameRange##GameRange#>, platform: <#T##GamePlatform#>)
     }
 
     @discardableResult func testMerge() -> [IDRange] {

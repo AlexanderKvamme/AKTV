@@ -112,6 +112,7 @@
 		DDB48F9625D455D9007C0131 /* WellRoundedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */; };
 		DDB8E5C825DBD4FB0053F6FA /* Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB8E5C725DBD4FB0053F6FA /* Videos.swift */; };
 		DDC8047D25D56C8200B0418B /* ShowOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC8047C25D56C8200B0418B /* ShowOverview.swift */; };
+		DDE00F7E26960BD40083B6DF /* RangeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE00F7D26960BD40083B6DF /* RangeStore.swift */; };
 		DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388F82427DD7D0049D881 /* SeriesListTableViewController.swift */; };
 		DDE388FB2427DE9E0049D881 /* ShowsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388FA2427DE9E0049D881 /* ShowsScreen.swift */; };
 		DDE388FE242AB6510049D881 /* Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388FD242AB6510049D881 /* Season.swift */; };
@@ -258,6 +259,7 @@
 		DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellRoundedTabBarController.swift; sourceTree = "<group>"; };
 		DDB8E5C725DBD4FB0053F6FA /* Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Videos.swift; sourceTree = "<group>"; };
 		DDC8047C25D56C8200B0418B /* ShowOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOverview.swift; sourceTree = "<group>"; };
+		DDE00F7D26960BD40083B6DF /* RangeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeStore.swift; sourceTree = "<group>"; };
 		DDE388F82427DD7D0049D881 /* SeriesListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListTableViewController.swift; sourceTree = "<group>"; };
 		DDE388FA2427DE9E0049D881 /* ShowsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsScreen.swift; sourceTree = "<group>"; };
 		DDE388FD242AB6510049D881 /* Season.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Season.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				DD5B14332674BE8B00E8C68D /* GameStore.swift */,
+				DDE00F7D26960BD40083B6DF /* RangeStore.swift */,
 			);
 			path = Games;
 			sourceTree = "<group>";
@@ -1011,6 +1014,7 @@
 				DD39526325D5DAFF00C918F3 /* DiagonalComplimentaryView.swift in Sources */,
 				DD2B110825D58E12000CFF84 /* SeasonHeaderView.swift in Sources */,
 				DD5B14342674BE8B00E8C68D /* GameStore.swift in Sources */,
+				DDE00F7E26960BD40083B6DF /* RangeStore.swift in Sources */,
 				DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */,
 				DDA1A8FD2427B24B00F7907A /* AppDelegate.swift in Sources */,
 				DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */,

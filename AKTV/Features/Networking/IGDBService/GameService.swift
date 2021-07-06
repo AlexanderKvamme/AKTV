@@ -97,7 +97,7 @@ final class GameService {
     }
 
     func testGettingSomeGames(completion: @escaping Completion) {
-        let whereQuery = makeWhereQuery(platform: .PlayStation5, range: GameStore().getDiscoveredGameRange(platform: .PlayStation5))
+        let whereQuery = makeWhereQuery(platform: .PlayStation5, range: GameStore.getDiscoveredGameRange(platform: .PlayStation5))
         print(whereQuery)
 
         // Funker
