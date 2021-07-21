@@ -24,14 +24,18 @@ enum GamePlatform: String {
 
 final class GameService {
 
-    let authToken: TwitchAuthResponse
+    static var authToken: TwitchAuthResponse!
     static private let clientID = "6w71e2zsvf5ak18snvrtweybwjl877"
     static private let rootURL = "https://api.igdb.com/v4"
+
+    private static let minimumRequiredFields = "name,cover,id,platforms"
+    private static let MAX_GAMES_PER_REQUEST: Int32 = 50
+
 
     // MARK: - Initializers
 
     init(_ authToken: TwitchAuthResponse) {
-        self.authToken = authToken
+        Self.authToken = authToken
     }
 
     // MARK: - Methods
@@ -48,7 +52,7 @@ final class GameService {
     }
 
     func getCoverImage(coverId: String, completion: @escaping ((String?) -> ())) {
-        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: Self.authToken.accessToken)
         let apicalypse = APICalypse()
             .fields(fields: "*")
             .where(query: "id = \(coverId);")
@@ -66,9 +70,6 @@ final class GameService {
         }
     }
 
-    private let minimumRequiredFields = "name,cover,id,platforms"
-    private let MAX_GAMES_PER_REQUEST: Int32 = 50
-
 /**
  - User can only search for one playform at a time (for now)
  - Discoverable games are tracked via an upper and a lower range, so that both new and old games can be discovered
@@ -76,35 +77,29 @@ final class GameService {
     - Sort
  */
 
-    private func makePlatformRequirement(for platform: GamePlatform) -> String {
+    private static func makePlatformRequirement(for platform: GamePlatform) -> String {
         return "platforms = " + platform.rawValue
     }
 
-    private func makeIdLimitRequirement(_ platform: GamePlatform, limit: GameRange) -> String {
+    private static func makeIdLimitRequirement(_ platform: GamePlatform, limit: GameRange) -> String {
         var query = ""
         query += "id > \(limit.lower)"
         query += " & id < \(limit.upper);"
         return query
     }
 
-    func makeWhereQuery(platform: GamePlatform, range: GameRange) -> String {
+    static func makeWhereQuery(platform: GamePlatform, range: GameRange) -> String {
         var query = "where "
         query += makePlatformRequirement(for: platform)
         query += " & "
         query += makeIdLimitRequirement(platform, limit: range)
-        print("with platform and id reqs: ", query)
         return query
     }
 
-    func testGettingSomeGames(completion: @escaping Completion) {
-        let whereQuery = makeWhereQuery(platform: .PlayStation5, range: GameStore.getDiscoveredGameRange(platform: .PlayStation5))
-        print(whereQuery)
+    typealias GamesCompletionHandler = (([Proto_Game]) -> ())
 
-        // Funker
-        let testQuery = "where platforms = 167 & id > 0 & id < 216;"
-        print("working: ", testQuery)
-
-        print("not working: ", whereQuery)
+    static func fetchGames(_ range: GameRange, _ platform: GamePlatform, completion: @escaping GamesCompletionHandler) {
+        let whereQuery = makeWhereQuery(platform: platform, range: range)
 
         let apicalypse = APICalypse()
             .fields(fields: minimumRequiredFields)
@@ -119,6 +114,7 @@ final class GameService {
             print(requestException)
         }
     }
+
 
     // MARK: - Static Methods
 

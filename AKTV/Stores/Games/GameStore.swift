@@ -82,9 +82,9 @@ final class GameStore {
         print("bam --- getRangeToFetch")
         let allRanges = getCompleted(for: platform)
         print("bam all Ranges: ", allRanges)
-        guard let existingUpperBound = allRanges.max { a, b in
+        guard let existingUpperBound = allRanges.max(by: { a, b in
             a.upperBound < b.upperBound
-        }?.upperBound else {
+        })?.upperBound else {
             print("bam had no stored max. returning greatest...0")
             return GameRange(upper: Int.max, lower: 0)
         }
@@ -95,6 +95,10 @@ final class GameStore {
 
     static func deleteAllEntries(platform: GamePlatform) {
         UserDefaults.standard.removeObject(forKey: makeKey(platform))
+    }
+
+    static func getNextRange(for platform: GamePlatform) -> GameRange {
+        return getDiscoveredGameRange(platform: platform)
     }
 
 }

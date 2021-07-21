@@ -15,21 +15,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        //        RangeExperiments().testExample()
+        //        return
 
-        RangeExperiments().testExample()
-
-        return
         // Make initial view controller
         tabBarController.selectedIndex = 1
 
+        // Authenticate
         GameService.authenticate { (authToken) in
             gamesService = GameService(authToken)
-            gamesService.testGettingSomeGames { (games) in
-                print("token: ", authToken)
-                print("token a: ", authToken.accessToken)
-                DispatchQueue.main.async {
+
+            // Get initial Swipeables
+            let testPlatform = GamePlatform.NintendoSwitch
+            let initialRange = GameStore.getNextRange(for: testPlatform)
+
+            GameService.fetchGames(initialRange, testPlatform) { games in
+                print("bam succesfully got some games: ", games)
+                DispatchQueue.main.sync {
                     tabBarController.discoveryScreen.update(with: games)
                 }
             }
@@ -40,10 +43,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
@@ -57,8 +56,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 class RangeExperiments: UIViewController {
 
     // MARK: Properties
-
-
 
     // MARK: Methods
 
@@ -89,7 +86,7 @@ class RangeExperiments: UIViewController {
 
         // Swipe a few cards
         let swipedCards = GameRange(upper: 999, lower: 990)
-//        GameStore.setDiscoveredGameRange(<#T##limit: GameRange##GameRange#>, platform: <#T##GamePlatform#>)
+//        GameStore.setDiscoveredGameRange(gameRange, platform: platform)
     }
 
     @discardableResult func testMerge() -> [IDRange] {
