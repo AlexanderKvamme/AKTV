@@ -71,7 +71,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         setViewControllers(screens, animated: true)
 
         // Initial View Controller
-        selectedIndex = 3
+        selectedIndex = 1
         configureTabBarButtons()
     }
 

@@ -19,9 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //        RangeExperiments().testExample()
         //        return
 
-        // Make initial view controller
-        tabBarController.selectedIndex = 1
-
         // Authenticate
         GameService.authenticate { (authToken) in
             gamesService = GameService(authToken)
