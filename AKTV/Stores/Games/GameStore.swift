@@ -14,10 +14,12 @@ struct GameRange {
     let lower: Int
 }
 
+
 enum DiscoveryLimitType: String {
     case upper = "upper"
     case lower = "lower"
 }
+
 
 final class GameStore {
 

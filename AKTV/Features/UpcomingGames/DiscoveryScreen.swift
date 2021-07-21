@@ -92,9 +92,8 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
 
     var viewModels = [Proto_Game]()
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
+    init() {
+        super.init(nibName: nil, bundle: nil)
         view.backgroundColor = UIColor(light)
 
         setup()
@@ -215,6 +214,13 @@ extension DiscoveryScreen {
 
     func viewForEmptyCards() -> UIView? {
         return nil
+        return makeEmptyCardView()
+    }
+
+    private func makeEmptyCardView() -> UIView {
+        let v = UIView()
+        v.backgroundColor = .green
+        return v
     }
 
 }
