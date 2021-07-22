@@ -23,14 +23,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         GameService.authenticate { (authToken) in
             gamesService = GameService(authToken)
 
-            // Get initial Swipeables
-            let testPlatform = GamePlatform.NintendoSwitch
-            let initialRange = GameStore.getNextRange(for: testPlatform)
+            GameService.getCurrentHighestID(GamePlatform.NintendoSwitch) { highestRemoteGameID in
+                print("Highest current platform is: ", highestRemoteGameID)
 
-            GameService.fetchGames(initialRange, testPlatform) { games in
-                print("bam succesfully got some games: ", games)
-                DispatchQueue.main.sync {
-                    tabBarController.discoveryScreen.update(with: games)
+                // Get initial Swipeables
+                let testPlatform = GamePlatform.NintendoSwitch
+                let initialRange = GameStore.getNextRange(for: testPlatform, highestRemoteID: highestRemoteGameID)
+
+                GameService.fetchGames(initialRange, testPlatform) { games in
+                    DispatchQueue.main.sync {
+                        tabBarController.discoveryScreen.update(with: games, range: initialRange, platform: testPlatform)
+                    }
                 }
             }
         }
@@ -46,72 +49,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 
-
-
-
-
-class RangeExperiments: UIViewController {
-
-    // MARK: Properties
-
-    // MARK: Methods
-
-    func testExample() {
-        let platform = GamePlatform.PlayStation5
-
-        // TODO: REMOVE THIS
-        GameStore.deleteAllEntries(platform: platform)
-
-        let noExistingRanges = GameStore.getCompleted(for: platform)
-        print("bam should be nil: ", noExistingRanges)
-
-        // Set ranges
-        let mockRanges = testMerge()
-        GameStore.setCompleted(ranges: mockRanges, for: platform)
-
-        // Get ranges
-        let rangesAfterSet = GameStore.getCompleted(for: platform)
-        print("bam should have some ranges: ", rangesAfterSet)
-
-        // Fetch and check highest ID
-        let remoteHighestID = fetchHighestAvaiableID()
-        print("bam remote highest ID: ", remoteHighestID)
-        let next10IDs = GameStore.getRangeToFetch(remoteMax: remoteHighestID, platform: platform)
-        print("bam next 10 IDs: ", next10IDs)
-
-        // User receives for example 5 cards, swipes
-
-        // Swipe a few cards
-        let swipedCards = GameRange(upper: 999, lower: 990)
-//        GameStore.setDiscoveredGameRange(gameRange, platform: platform)
-    }
-
-    @discardableResult func testMerge() -> [IDRange] {
-        let r1: IDRange = 211...244
-        let r2: IDRange = 255...279
-        let r3: IDRange = 260...300
-
-        let mergedRanges = mergeRanges([r1,r2,r3])
-        print("mergedRange works: ", mergedRanges)
-        return mergedRanges
-    }
-
-    //    @discardableResult func testGetNextRange(max: Int) -> IDRange {
-    //        print("max: ", max)
-    //
-    //    }
-
-    // Helpers
-
-    func mergeRanges(_ ranges: [IDRange]) -> [IDRange] {
-        return combinedIntervals(intervals: ranges)
-    }
-
-    func fetchHighestAvaiableID() -> Int {
-        return 999
-    }
-
-}
 
 // Link: https://gist.github.com/proxpero/0cee32a53b94c37e1e92
 func combinedIntervals(intervals: [CountableClosedRange<Int>]) -> [CountableClosedRange<Int>] {

@@ -35,5 +35,10 @@ protocol CardViewDataSource: AnyObject {
     /// - Returns: view to be displayed underneath all cards
     func viewForEmptyCards() -> UIView?
 
-    func items() -> [Proto_Game]
+    // Game related
+    // TODO: Move to separate datasource or something
+
+    var initialRange: GameRange { get set } // Used to track the range of swiped IDs
+    var initialPlatform: GamePlatform { get set }
+    func getItems() -> [Proto_Game]
 }

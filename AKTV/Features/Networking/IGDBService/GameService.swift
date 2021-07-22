@@ -20,6 +20,7 @@ class TwitchAuthResponse: Codable {
 enum GamePlatform: String {
     case PlayStation5 = "167"
     case NintendoSwitch = "130"
+    case tbd = "tbd" // Temp
 }
 
 final class GameService {
@@ -115,8 +116,26 @@ final class GameService {
         }
     }
 
-
     // MARK: - Static Methods
+
+    static func getCurrentHighestID(_ platform: GamePlatform, completion: @escaping ((Int) -> ())) {
+        let whereQuery = makeWhereQuery(platform: platform, range: GameRange(upper: Int.max, lower: 0))
+
+        let apicalypse = APICalypse()
+            .fields(fields: minimumRequiredFields)
+            .limit(value: 3)
+            .where(query: whereQuery)
+            .sort(field: "id", order: .DESCENDING)
+
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
+        wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
+            if let id = games.first?.id {
+                completion(Int(id))
+            }
+        } errorResponse: { (requestException) -> (Void) in
+            print(requestException)
+        }
+    }
 
     static func authenticate(completion: @escaping ((TwitchAuthResponse) -> Void)) {
         let authUrl = URL(string: "https://id.twitch.tv/oauth2/token?client_id=\(GameService.clientID)&client_secret=pyjnp1qwivqhskefv1vkqizeg6oge9&grant_type=client_credentials")

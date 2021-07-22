@@ -54,7 +54,7 @@ class GameCardController: UIView, SwipeableViewDelegate {
         remainingCards = numberOfCards
 
         if numberOfCards > Self.numberOfVisibleCards {
-            gamesService?.precache(dataSource.items())
+            gamesService?.precache(dataSource.getItems())
         }
 
         for index in 0..<min(numberOfCards, GameCardController.numberOfVisibleCards) {
@@ -113,7 +113,7 @@ extension GameCardController {
         if let index = cardViews.firstIndex(of: view) {
             delegate?.didSelect(card: view, atIndex: index)
 
-            if let game = dataSource?.items() {
+            if let game = dataSource?.getItems() {
                 print("tapped game: ", game[index].name)
             }
         }
@@ -132,8 +132,26 @@ extension GameCardController {
         if let index = cardViews.firstIndex(of: view) {
             delegate?.didSelect(card: view, atIndex: index)
 
-            let game = dataSource.items()
-            print("swiped game: ", game[index].name)
+            let game = dataSource.getItems()[index]
+            print("bam didEndSwipe game: ", game.name)
+            print("bam initial range is then: ", dataSource.initialRange)
+
+            let swipedRange = GameRange(upper: dataSource.initialRange.upper, lower: Int(game.id))
+            print("bam swiped range is then: ", swipedRange)
+
+            GameStore.addCompleted(swipedRange, for: dataSource.initialPlatform)
+            GameStore.printStatus()
+
+            // TODO: Prefetch
+
+        }
+
+        removeSwipedCard(view)
+    }
+
+    private func removeSwipedCard(_ view: SwipeableView) {
+        guard let dataSource = dataSource else {
+            return
         }
 
         // Remove swiped card

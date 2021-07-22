@@ -79,6 +79,10 @@ class ConsoleIconStack: UIStackView {
 
 
 final class DiscoveryScreen: UIViewController, CardViewDataSource {
+    // TODO: Clean up and rethink
+    var initialRange: GameRange = GameRange(upper: Int.max, lower: Int.min)
+    
+    var initialPlatform = GamePlatform.tbd
 
     // MARK: - Properties
 
@@ -184,12 +188,14 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
 
     }
 
-    func update(with games: [Proto_Game]) {
+    func update(with games: [Proto_Game], range: GameRange, platform: GamePlatform) {
+        initialRange = range
+        initialPlatform = platform
         viewModels = games
         cardContainer.reloadData()
     }
 
-    func items() -> [Proto_Game] {
+    func getItems() -> [Proto_Game] {
         return viewModels
     }
 

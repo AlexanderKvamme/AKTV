@@ -9,5 +9,5 @@
 import Foundation
 
 
-typealias IDRange = CountableClosedRange<Int>
 
+// TODO: Delete file
