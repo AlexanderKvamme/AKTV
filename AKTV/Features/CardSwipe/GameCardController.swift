@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 
 class GameCardController: UIView, SwipeableViewDelegate {
@@ -45,14 +46,14 @@ class GameCardController: UIView, SwipeableViewDelegate {
     /// card stack. Removes all existing card views and
     /// calls the dataSource to layout new card views.
     func reloadData() {
+        guard let dataSource = dataSource else { return }
+
         removeAllCardViews()
-        guard let dataSource = dataSource else {
-            return
-        }
 
         let numberOfCards = dataSource.numberOfCards()
         remainingCards = numberOfCards
 
+        // Precache
         if numberOfCards > Self.numberOfVisibleCards {
             gamesService?.precache(dataSource.getItems())
         }
@@ -114,7 +115,7 @@ extension GameCardController {
             delegate?.didSelect(card: view, atIndex: index)
 
             if let game = dataSource?.getItems() {
-                print("tapped game: ", game[index].name)
+                print("tapped game: ", game[index])
             }
         }
     }
@@ -129,27 +130,35 @@ extension GameCardController {
         }
 
         // Handle finished swipe
-        if let index = cardViews.firstIndex(of: view) {
-            delegate?.didSelect(card: view, atIndex: index)
-
-            let game = dataSource.getItems()[index]
-            print("bam didEndSwipe game: ", game.name)
-            print("bam initial range is then: ", dataSource.initialRange)
-
-            let swipedRange = GameRange(upper: dataSource.initialRange.upper, lower: Int(game.id))
-            print("bam swiped range is then: ", swipedRange)
-
+        if let _ = cardViews.firstIndex(of: view) {
+            let swipedGame = dataSource.getItems().first
+            let swipedRange = GameRange(upper: dataSource.initialRange.upper, lower: Int(swipedGame!.id))
             GameStore.addCompleted(swipedRange, for: dataSource.initialPlatform)
-            GameStore.printStatus()
 
-            // TODO: Prefetch
+            // Get next range to fetch
+            let sortedItems = dataSource.getItems().map({$0.id})
+            let min = sortedItems.min()
 
+            // Fetch 1 item
+            GameService.fetchGame(currentLowestID: Int(min!), dataSource.initialPlatform) { game in
+                guard let game = game.first else {
+                    return
+                }
+
+                print("Adding game to stack: ", game)
+
+                // Add this item to its correct spot in the datasource
+                dataSource.addGames([game])
+                self.remainingCards += 1
+
+                // TODO: Possibly remove the games swiped away?
+            }
         }
 
-        removeSwipedCard(view)
+        goToNextCard(view)
     }
 
-    private func removeSwipedCard(_ view: SwipeableView) {
+    private func goToNextCard(_ view: SwipeableView) {
         guard let dataSource = dataSource else {
             return
         }
@@ -157,27 +166,29 @@ extension GameCardController {
         // Remove swiped card
         view.removeFromSuperview()
 
-        // Only add a new card if there are cards remaining
-        if remainingCards > 0 {
+        // Add cards if any
+        guard remainingCards > 0 else {
+            print("No remainingCards.. ")
+            return
+        }
 
-            // Calculate new card's index
-            let newIndex = dataSource.numberOfCards() - remainingCards
+        // Calculate new card's index
+        let newIndex = dataSource.numberOfCards() - remainingCards
 
-            // Add new card as Subview
-            addCardView(cardView: dataSource.card(forItemAtIndex: newIndex), atIndex: 2)
+        // Add new card as Subview
+        addCardView(cardView: dataSource.card(forItemAtIndex: newIndex), atIndex: 2)
 
-            // Update all existing card's frames based on new indexes, animate frame change
-            // to reveal new card from underneath the stack of existing cards.
-            for (cardIndex, cardView) in visibleCardViews.reversed().enumerated() {
-                UIView.animate(withDuration: 0.2, animations: {
-                    if cardIndex == 0, let cv = cardView as? SwipeableGameCard {
-                        cv.card.setForeground(true)
-                    }
-                    cardView.center = self.center
-                    self.setFrame(forCardView: cardView, atIndex: cardIndex)
-                    self.layoutIfNeeded()
-                })
-            }
+        // Update all existing card's frames based on new indexes, animate frame change
+        // to reveal new card from underneath the stack of existing cards.
+        for (cardIndex, cardView) in visibleCardViews.reversed().enumerated() {
+            UIView.animate(withDuration: 0.2, animations: {
+                if cardIndex == 0, let cv = cardView as? SwipeableGameCard {
+                    cv.card.setForeground(true)
+                }
+                cardView.center = self.center
+                self.setFrame(forCardView: cardView, atIndex: cardIndex)
+                self.layoutIfNeeded()
+            })
         }
     }
 

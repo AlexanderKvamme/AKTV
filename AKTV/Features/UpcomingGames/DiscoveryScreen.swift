@@ -83,6 +83,7 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
     var initialRange: GameRange = GameRange(upper: Int.max, lower: Int.min)
     
     var initialPlatform = GamePlatform.tbd
+    var initialHighestRemoteID: Int = Int.max
 
     // MARK: - Properties
 
@@ -188,15 +189,49 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
 
     }
 
-    func update(with games: [Proto_Game], range: GameRange, platform: GamePlatform) {
+    func addGame(_ game: Proto_Game) {
+        // TODO: Make sure the games are added in order
+
+        guard !viewModels.contains(game) else {
+            print("Error: game \(game.id) was already contained in the datasource \(viewModels.map({$0.id})) so it will be skipped")
+            return
+        }
+
+        let firstIndex = viewModels.firstIndex { existingGame in
+            existingGame.id < game.id
+        }
+
+        // Add to end
+
+        if firstIndex == nil {
+            viewModels.append(game)
+        }
+
+        // FIXME: Make sure the game is added with a card
+    }
+
+    func addGames(_ games: [Proto_Game]) {
+        games.forEach({addGame($0)})
+    }
+
+    func update(with games: [Proto_Game], range: GameRange, platform: GamePlatform, initialHighestRemoteID: Int? = nil) {
+        if let initialHighestRemoteID = initialHighestRemoteID {
+            self.initialHighestRemoteID = initialHighestRemoteID
+        }
+
         initialRange = range
         initialPlatform = platform
+
         viewModels = games
         cardContainer.reloadData()
     }
 
     func getItems() -> [Proto_Game] {
         return viewModels
+    }
+
+    func removeFirstGame() {
+        viewModels.remove(at: 0)
     }
 
 }

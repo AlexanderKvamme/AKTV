@@ -16,10 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        //        RangeExperiments().testExample()
-        //        return
-
         // Authenticate
+
+        // REMOVE AFTER TESTING
+        GameStore.deleteAllEntries(platform: GamePlatform.NintendoSwitch)
+
         GameService.authenticate { (authToken) in
             gamesService = GameService(authToken)
 
@@ -32,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
                 GameService.fetchGames(initialRange, testPlatform) { games in
                     DispatchQueue.main.sync {
-                        tabBarController.discoveryScreen.update(with: games, range: initialRange, platform: testPlatform)
+                        tabBarController.discoveryScreen.update(with: games, range: initialRange, platform: testPlatform, initialHighestRemoteID: highestRemoteGameID)
                     }
                 }
             }

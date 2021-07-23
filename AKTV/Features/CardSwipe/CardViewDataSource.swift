@@ -40,5 +40,8 @@ protocol CardViewDataSource: AnyObject {
 
     var initialRange: GameRange { get set } // Used to track the range of swiped IDs
     var initialPlatform: GamePlatform { get set }
+    var initialHighestRemoteID: Int { get set }
     func getItems() -> [Proto_Game]
+    func addGames(_ games: [Proto_Game])
+    func removeFirstGame()
 }

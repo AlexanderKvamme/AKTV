@@ -99,12 +99,19 @@ final class GameService {
 
     typealias GamesCompletionHandler = (([Proto_Game]) -> ())
 
-    static func fetchGames(_ range: GameRange, _ platform: GamePlatform, completion: @escaping GamesCompletionHandler) {
+
+    static func fetchGame(currentLowestID: Int, _ platform: GamePlatform, completion: @escaping GamesCompletionHandler) {
+        let range: GameRange = GameStore.getNextRangeAfterSwipe(for: platform, newRangeTop: currentLowestID-1)
+        print("Range for next single game fetch: ", range)
+        fetchGames(range, platform, amount: 1, completion: completion)
+    }
+
+    static func fetchGames(_ range: GameRange, _ platform: GamePlatform, amount: Int32 = 10, completion: @escaping GamesCompletionHandler) {
         let whereQuery = makeWhereQuery(platform: platform, range: range)
 
         let apicalypse = APICalypse()
             .fields(fields: minimumRequiredFields)
-            .limit(value: 10)
+            .limit(value: amount)
             .where(query: whereQuery)
             .sort(field: "id", order: .DESCENDING)
 
