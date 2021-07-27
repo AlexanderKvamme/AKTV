@@ -85,8 +85,12 @@ final class GameService {
     private static func makeIdLimitRequirement(_ platform: GamePlatform, limit: GameRange) -> String {
         var query = ""
         query += "id > \(limit.lower)"
-        query += " & id < \(limit.upper);"
+        query += " & id < \(limit.upper)"
         return query
+    }
+    
+    private static func makeCoverRequirement() -> String {
+        return "cover != null"
     }
 
     static func makeWhereQuery(platform: GamePlatform, range: GameRange) -> String {
@@ -94,6 +98,9 @@ final class GameService {
         query += makePlatformRequirement(for: platform)
         query += " & "
         query += makeIdLimitRequirement(platform, limit: range)
+        query += " & "
+        query += makeCoverRequirement()
+        query += ";"
         return query
     }
 
