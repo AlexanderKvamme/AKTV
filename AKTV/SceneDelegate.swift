@@ -16,17 +16,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        // TODO: REMOVE AFTER TESTING
+//        GameStore.deleteAllEntries(platform: GamePlatform.NintendoSwitch)
+//        GameStore.deleteAllFavourites()
+        
         // Authenticate
-
-        // REMOVE AFTER TESTING
-        GameStore.deleteAllEntries(platform: GamePlatform.NintendoSwitch)
 
         GameService.authenticate { (authToken) in
             gamesService = GameService(authToken)
 
             GameService.getCurrentHighestID(GamePlatform.NintendoSwitch) { highestRemoteGameID in
-                print("Highest current platform is: ", highestRemoteGameID)
-
                 // Get initial Swipeables
                 let testPlatform = GamePlatform.NintendoSwitch
                 let initialRange = GameStore.getNextRange(for: testPlatform, highestRemoteID: highestRemoteGameID)
@@ -36,6 +36,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         tabBarController.discoveryScreen.update(with: games, range: initialRange, platform: testPlatform, initialHighestRemoteID: highestRemoteGameID)
                     }
                 }
+                
+                // TODO: Clean up
+                // TODO: Test getting favourite games
+//                let ids = GameStore.getFavourites(.NintendoSwitch)
+                let ids = [111, 222, 333]
+                
+                GameService.testFetchGames(IDs: ids, completion: { (games) in
+                    print("successfully fetched games: ", games.map({$0.firstReleaseDate.date}))
+                })
             }
         }
 

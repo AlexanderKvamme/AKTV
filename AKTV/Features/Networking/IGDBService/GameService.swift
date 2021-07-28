@@ -17,7 +17,7 @@ class TwitchAuthResponse: Codable {
     let tokenType: String
 }
 
-enum GamePlatform: String {
+enum GamePlatform: String, CaseIterable {
     case PlayStation5 = "167"
     case NintendoSwitch = "130"
     case tbd = "tbd" // Temp
@@ -40,6 +40,21 @@ final class GameService {
     }
 
     // MARK: - Methods
+    
+    static func testFetchGames(IDs: [Int], completion: @escaping (([Proto_Game]) -> ())) {
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: Self.authToken.accessToken)
+        
+        let gameArrayString = "(" + IDs.map({ String($0) }).joined(separator: ",") + ");"
+        let apicalypse = APICalypse()
+            .fields(fields: "*")
+            .where(query: "id = " + gameArrayString)
+        
+        wrapper.games(apiCalypse: apicalypse) { games in
+            completion(games)
+        } errorResponse: { requestException in
+            print("Error fetching games: ", requestException)
+        }
+    }
 
     typealias Completion = (([Proto_Game]) -> ())
 

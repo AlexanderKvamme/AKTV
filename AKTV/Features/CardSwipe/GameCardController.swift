@@ -31,6 +31,7 @@ class GameCardController: UIView, SwipeableViewDelegate {
     }
 
     fileprivate var remainingCards: Int = 0
+    fileprivate var cardIndex: Int = 0
 
     static let numberOfVisibleCards: Int = 2
 
@@ -124,16 +125,21 @@ extension GameCardController {
         // React to Swipe Began?
     }
 
-    func didEndSwipe(onView view: SwipeableView) {
+    func didEndSwipe(onView view: SwipeableView, _ swipeDirection: SwipeDirection) {
         guard let dataSource = dataSource else {
             return
         }
 
         // Handle finished swipe
-        if let _ = cardViews.firstIndex(of: view) {
-            let swipedGame = dataSource.getItems().first
-            let swipedRange = GameRange(upper: dataSource.initialRange.upper, lower: Int(swipedGame!.id))
+        if let _ = cardViews.reversed().firstIndex(of: view) {
+            let swipedGame = dataSource.getItems()[cardIndex]
+            let swipedRange = GameRange(upper: dataSource.initialRange.upper, lower: Int(swipedGame.id))
             GameStore.addCompleted(swipedRange, for: dataSource.initialPlatform)
+            
+            let leftSwipes: [SwipeDirection] = [.left, .bottomLeft, .topLeft]
+            if leftSwipes.contains(swipeDirection) {
+                GameStore.addFavourite(swipedGame, true, platform: dataSource.initialPlatform)
+            }
 
             // Get next range to fetch
             let sortedItems = dataSource.getItems().map({$0.id})
@@ -145,8 +151,6 @@ extension GameCardController {
                     return
                 }
 
-                print("Adding game to stack: ", game)
-
                 // Add this item to its correct spot in the datasource
                 dataSource.addGames([game])
                 self.remainingCards += 1
@@ -155,6 +159,8 @@ extension GameCardController {
             }
         }
 
+        cardIndex += 1
+        
         goToNextCard(view)
     }
 

@@ -142,13 +142,13 @@ class SwipeableView: UIView {
     }
 
     private func endedPanAnimation() {
-        if let dragDirection = dragDirection, dragPercentage >= SwipeableView.swipePercentageMargin {
+        if let swipeDirection = dragDirection, dragPercentage >= SwipeableView.swipePercentageMargin {
             let translationAnimation = POPBasicAnimation(propertyNamed: kPOPLayerTranslationXY)
             translationAnimation?.duration = SwipeableView.finalizeSwipeActionAnimationDuration
             translationAnimation?.fromValue = NSValue(cgPoint: POPLayerGetTranslationXY(layer))
-            translationAnimation?.toValue = NSValue(cgPoint: animationPointForDirection(dragDirection))
+            translationAnimation?.toValue = NSValue(cgPoint: animationPointForDirection(swipeDirection))
             layer.pop_add(translationAnimation, forKey: "swipeTranslationAnimation")
-            self.delegate?.didEndSwipe(onView: self)
+            self.delegate?.didEndSwipe(onView: self, swipeDirection)
         } else {
             resetCardViewPosition()
         }

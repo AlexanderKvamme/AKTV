@@ -33,10 +33,42 @@ final class GameStore {
     static let userDefaults = UserDefaults.standard
 
     // MARK: - Methods
+    
+    static func deleteAllFavourites() {
+        print("deleteAllFavourites()")
+        GamePlatform.allCases.forEach({ setFavourites([], platform: $0)})
+    }
+    
+    static func addFavourite(_ game: Proto_Game, _ isFavourite: Bool, platform: GamePlatform) {
+        let id = Int(game.id)
+        print("Adding to fav: ", game)
+        var existingFavs = getFavourites(platform)
+        if !existingFavs.contains(id) {
+            existingFavs.append(id)
+        }
+        
+        setFavourites(existingFavs, platform: platform)
+    }
+    
+    static func getFavourites(_ platform: GamePlatform) -> [Int] {
+        let res = userDefaults.object(forKey: makeFavouriteKey(platform: platform)) as? [Int] ?? []
+        return res
+    }
+    
+    static func setFavourites(_ gameIds: [Int], platform: GamePlatform) {
+        userDefaults.set(gameIds, forKey: makeFavouriteKey(platform: platform))
+    }
+    
+    // MARK: - Private methods
 
     private static func makeLimitKey(_ type: DiscoveryLimitType, platform: GamePlatform) -> String {
         return "limit-\(type.rawValue)-\(platform.rawValue)"
     }
+    
+    private static func makeFavouriteKey(platform: GamePlatform) -> String {
+        return "favourite-game-\(platform.rawValue)"
+    }
+    
 
     static func getNextRange(for platform: GamePlatform, highestRemoteID: Int) -> GameRange {
         let existingRanges = getCompletedRanges(for: platform)
