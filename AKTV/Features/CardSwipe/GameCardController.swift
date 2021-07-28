@@ -112,13 +112,11 @@ class GameCardController: UIView, SwipeableViewDelegate {
 extension GameCardController {
 
     func didTap(view: SwipeableView) {
-        if let index = cardViews.firstIndex(of: view) {
-            delegate?.didSelect(card: view, atIndex: index)
-
-            if let game = dataSource?.getItems() {
-                print("tapped game: ", game[index])
-            }
-        }
+        guard let tappedGame = dataSource?.getItems()[cardIndex] else { return }
+        let gameScreen = GameScreen(tappedGame)
+        
+        view.findViewController()?.present(gameScreen, animated: true, completion: nil )
+        tabBarController.navigationController?.pushViewController(gameScreen, animated: true)
     }
 
     func didBeginSwipe(onView view: SwipeableView) {

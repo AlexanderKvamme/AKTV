@@ -59,7 +59,7 @@ final class GameService {
 
     typealias Completion = (([Proto_Game]) -> ())
 
-    static func getCoverUrl(_ coverId: UInt64) -> String? {
+    static func getCachedCoverUrl(_ coverId: UInt64) -> String? {
         if let existing = coverUrls[String(coverId)] {
             return existing
         } else {

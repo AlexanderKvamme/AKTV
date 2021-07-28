@@ -118,7 +118,7 @@ class SwipeableGameCard: SwipeableView {
         if let viewModel = viewModel {
             card.titleLabel.text = viewModel.name
         
-            let coverUrl = GameService.getCoverUrl(viewModel.cover.id)
+            let coverUrl = GameService.getCachedCoverUrl(viewModel.cover.id)
             
             if let coverUrl = coverUrl {
                 KingfisherManager.shared.cache.retrieveImage(forKey: coverUrl) { (res) in

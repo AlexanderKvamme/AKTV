@@ -11,7 +11,7 @@
 		BF849344A52AA51E913C9DA1 /* Pods_AKTVTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200AC8BA1859A1C40EB1583B /* Pods_AKTVTests.framework */; };
 		DD000AA02454358800CB095D /* BasicTextDisplayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000A9F2454358800CB095D /* BasicTextDisplayerViewController.swift */; };
 		DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000AA22455BECE00CB095D /* UserProfileManager.swift */; };
-		DD041DB125CB05FB003933AE /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = DD041DB025CB05FB003933AE /* SwiftPackageProductDependency */; };
+		DD041DB125CB05FB003933AE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DD041DB025CB05FB003933AE /* Kingfisher */; };
 		DD1A56E325DC0D7800C242FB /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1A56E225DC0D7800C242FB /* VideoPlayer.swift */; };
 		DD1A7BD5245C12D1005879F8 /* ColoredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1A7BD4245C12D1005879F8 /* ColoredViewController.swift */; };
 		DD25A0E225E15C3F00B39ACA /* UpcomingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD25A0E125E15C3F00B39ACA /* UpcomingCell.swift */; };
@@ -44,6 +44,7 @@
 		DD5A7E9624576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5A7E9524576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift */; };
 		DD5B14342674BE8B00E8C68D /* GameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B14332674BE8B00E8C68D /* GameStore.swift */; };
 		DD5BDF70268268BA00A4C2B0 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5BDF6F268268BA00A4C2B0 /* AuthStore.swift */; };
+		DD5D9C6026B1ADA800605616 /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5D9C5F26B1ADA800605616 /* GameScreen.swift */; };
 		DD699E1B2688E6AF00A1C263 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD699E1A2688E6AF00A1C263 /* Card.swift */; };
 		DD699E1D2688E70500A1C263 /* ImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD699E1C2688E70500A1C263 /* ImageCard.swift */; };
 		DD6DDF3625CD50CF00A19F3A /* Gilroy-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD6DDF2125CD50CE00A19F3A /* Gilroy-Semibold.ttf */; };
@@ -186,6 +187,7 @@
 		DD5A7E9524576AFB00507BFE /* UpcomingShowsCollectionViewDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingShowsCollectionViewDataDelegate.swift; sourceTree = "<group>"; };
 		DD5B14332674BE8B00E8C68D /* GameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStore.swift; sourceTree = "<group>"; };
 		DD5BDF6F268268BA00A4C2B0 /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
+		DD5D9C5F26B1ADA800605616 /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
 		DD699E1A2688E6AF00A1C263 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		DD699E1C2688E70500A1C263 /* ImageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCard.swift; sourceTree = "<group>"; };
 		DD6DDF2125CD50CE00A19F3A /* Gilroy-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Semibold.ttf"; sourceTree = "<group>"; };
@@ -277,7 +279,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD041DB125CB05FB003933AE /* BuildFile in Frameworks */,
+				DD041DB125CB05FB003933AE /* Kingfisher in Frameworks */,
 				3EEE179A9117AC5A9DE522F4 /* Pods_AKTV.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,6 +432,14 @@
 				DD5BDF6F268268BA00A4C2B0 /* AuthStore.swift */,
 			);
 			path = AuthStore;
+			sourceTree = "<group>";
+		};
+		DD5D9C5E26B1AD9800605616 /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				DD5D9C5F26B1ADA800605616 /* GameScreen.swift */,
+			);
+			path = Games;
 			sourceTree = "<group>";
 		};
 		DD699E182688E68E00A1C263 /* Components */ = {
@@ -640,6 +650,7 @@
 		DDC8048125D5757600B0418B /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				DD5D9C5E26B1AD9800605616 /* Games */,
 				DD2F7381267F5F1900512512 /* Calendar */,
 				DD9BC9F5266BC9AC009B2DD8 /* CardSwipe */,
 				DD9BC9EF266BC61A009B2DD8 /* UpcomingGames */,
@@ -749,7 +760,7 @@
 			);
 			name = AKTV;
 			packageProductDependencies = (
-				DD041DB025CB05FB003933AE /* SwiftPackageProductDependency */,
+				DD041DB025CB05FB003933AE /* Kingfisher */,
 			);
 			productName = AKTV;
 			productReference = DDA1A8F92427B24B00F7907A /* AKTV.app */;
@@ -826,7 +837,7 @@
 			);
 			mainGroup = DDA1A8F02427B24B00F7907A;
 			packageReferences = (
-				DD041DAF25CB05FB003933AE /* RemoteSwiftPackageReference */,
+				DD041DAF25CB05FB003933AE /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = DDA1A8FA2427B24B00F7907A /* Products */;
 			projectDirPath = "";
@@ -1002,6 +1013,7 @@
 				DD39528325D6E3D800C918F3 /* BottomAlignedLabel.swift in Sources */,
 				DD25A0E225E15C3F00B39ACA /* UpcomingCell.swift in Sources */,
 				DDB48F7725D3F694007C0131 /* TabBarSettings.swift in Sources */,
+				DD5D9C6026B1ADA800605616 /* GameScreen.swift in Sources */,
 				DD3ABA192688A40B00D1F57D /* DateHeader.swift in Sources */,
 				DDE38906242BF6E00049D881 /* APIDAO.swift in Sources */,
 				DD9BC9D1266B5553009B2DD8 /* GameService.swift in Sources */,
@@ -1406,7 +1418,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		DD041DAF25CB05FB003933AE /* RemoteSwiftPackageReference */ = {
+		DD041DAF25CB05FB003933AE /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -1417,9 +1429,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DD041DB025CB05FB003933AE /* SwiftPackageProductDependency */ = {
+		DD041DB025CB05FB003933AE /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DD041DAF25CB05FB003933AE /* RemoteSwiftPackageReference */;
+			package = DD041DAF25CB05FB003933AE /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
