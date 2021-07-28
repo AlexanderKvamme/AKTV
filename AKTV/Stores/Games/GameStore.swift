@@ -73,7 +73,6 @@ final class GameStore {
     static func getNextRange(for platform: GamePlatform, highestRemoteID: Int) -> GameRange {
         let existingRanges = getCompletedRanges(for: platform)
         let remoteTop = highestRemoteID
-        print("bam existing ranges: ", existingRanges)
 
         if existingRanges.isEmpty {
             return GameRange(upper: remoteTop, lower: 0)
@@ -95,7 +94,6 @@ final class GameStore {
         }
 
         if (localTop.upperBound > highestRemoteID) {
-            print("bam Local top is greater than remote top. Something is wrong")
             return GameRange(upper: highestRemoteID, lower: localTop.upperBound)
         }
 
@@ -103,8 +101,6 @@ final class GameStore {
         // 2. [x] if remote is greater than top-local, use top-remote...top-local
         // 3. [x] if remote is lesser, something is wrong
         // 4. [x] if remote is equal, get first gap
-
-        print("--- bam getNextRange ---")
 
         if localTop.upperBound == highestRemoteID {
             print("No new unswiped releases. Find first gap and get busy")
@@ -123,25 +119,19 @@ final class GameStore {
                 print("Everything is swiped. Show some card indicating this")
             } else {
                 let nextRange = GameRange(upper: lastRange.lowerBound, lower: 0)
-                print("bam returning range: ", nextRange)
                 return nextRange
             }
         }
-
-        // FIXME: DONOW: Return the first gap
-        print("bam would get first gap from: ", existingRanges)
 
         let l = existingRanges[0]
         let r = existingRanges[1]
 
         let res = GameRange(upper: l.lowerBound, lower: r.upperBound)
-        print("bam resulting gap was this range: ", res)
         return res
     }
 
     static func getNextRangeAfterSwipe(for platform: GamePlatform, newRangeTop: Int) -> GameRange {
         let existingRanges = getCompletedRanges(for: platform)
-        print("bam existing ranges ( getNextRangeAfterSwipe ): ", existingRanges)
 
         if existingRanges.isEmpty {
             return GameRange(upper: newRangeTop, lower: 0)
@@ -162,7 +152,7 @@ final class GameStore {
             return GameRange(upper: newRangeTop, lower: localTop.upperBound)
         }
 
-        print("bam Local top is greater than remote top. Something is wrong")
+        print("Local top is greater than remote top. Something is wrong")
         return GameRange(upper: newRangeTop, lower: 0)
     }
 
@@ -184,41 +174,29 @@ final class GameStore {
     }
 
     static private func setCompleted(ranges: [IDRange], for platform: GamePlatform) {
-        print("BAM setCompleted: \(ranges) for \(platform)")
         let arrayified = arrayifyRanges(ranges)
-        print("bam arrayified values to set: ", arrayified)
         UserDefaults.standard.set(arrayified, forKey: makeKey(platform))
-
-        print("bam - userdefaults are now: ", getCompletedRanges(for: platform))
     }
 
     static func getCompletedRanges(for platform: GamePlatform) -> [IDRange] {
-        print("bam making this key: ", makeKey(platform))
         guard
             let data = UserDefaults.standard.object(forKey: makeKey(platform)),
             let intified = data as? [[Int]] else {
-                print("bam had data but could not intify")
-                print("bam data: ", UserDefaults.standard.object(forKey: makeKey(platform)))
                 return []
             }
-
-        print("bam getCompletedRanges data: ", intified)
         let rangified = rangifyArrays(intified)
         return rangified
     }
 
     static func getRangeToFetch(remoteMax: Int, platform: GamePlatform) -> GameRange? {
         let allRanges = getCompletedRanges(for: platform)
-        print("bam all Ranges: ", allRanges)
 
         guard let existingUpperBound = allRanges.max(by: { a, b in
             a.upperBound < b.upperBound
         })?.upperBound else {
-            print("bam had no stored max. returning greatest...0")
             return GameRange(upper: Int.max, lower: 0)
         }
 
-        print("bam existing max was: ", existingUpperBound)
         return GameRange(upper: remoteMax, lower: existingUpperBound)
     }
 
@@ -227,8 +205,6 @@ final class GameStore {
     }
 
     static func addCompleted(_ range: GameRange, for platform: GamePlatform) {
-        print("bam MERGETEST - will now addCompleted range \(range) to \(Self.getCompletedRanges(for: platform))")
-
         let newIDRange = range.lower...range.upper
         let existingRanges = getCompletedRanges(for: platform)
 
@@ -238,10 +214,8 @@ final class GameStore {
 
         var allRanges = existingRanges
         allRanges.append(newIDRange)
-        print("bam MERGETEST new allRanges: ", allRanges)
 
         let mergedRanges = mergeRanges(allRanges)
-        print("bam MERGETEST - mergedRanges: ", mergedRanges)
 
         setCompleted(ranges: mergedRanges, for: platform)
     }
@@ -271,7 +245,6 @@ class RangeExperiments: UIViewController {
 //        GameStore.deleteAllEntries(platform: platform)
 
         let noExistingRanges = GameStore.getCompletedRanges(for: platform)
-        print("bam should be nil: ", noExistingRanges)
 
         // Set ranges
         _ = testMerge()
@@ -279,13 +252,10 @@ class RangeExperiments: UIViewController {
 
         // Get ranges
         let rangesAfterSet = GameStore.getCompletedRanges(for: platform)
-        print("bam should have some ranges: ", rangesAfterSet)
 
         // Fetch and check highest ID
         let remoteHighestID = fetchHighestAvailableID()
-        print("bam remote highest ID: ", remoteHighestID)
         let next10IDs = GameStore.getRangeToFetch(remoteMax: remoteHighestID, platform: platform)
-        print("bam next 10 IDs: ", next10IDs)
 
         // User receives for example 5 cards, swipes
 
