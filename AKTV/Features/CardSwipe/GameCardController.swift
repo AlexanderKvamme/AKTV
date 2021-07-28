@@ -155,6 +155,9 @@ extension GameCardController {
                 dataSource.addGames([game])
                 self.remainingCards += 1
 
+                // Prefetch
+                GameService.precache([game])
+                
                 // TODO: Possibly remove the games swiped away?
             }
         }
