@@ -56,7 +56,7 @@ class GameCardController: UIView, SwipeableViewDelegate {
 
         // Precache
         if numberOfCards > Self.numberOfVisibleCards {
-            gamesService?.precache(dataSource.getItems())
+            GameService.precache(dataSource.getItems())
         }
 
         for index in 0..<min(numberOfCards, GameCardController.numberOfVisibleCards) {

@@ -32,7 +32,8 @@ final class GameService {
     private static let minimumRequiredFields = "name,cover,id,platforms"
     private static let MAX_GAMES_PER_REQUEST: Int32 = 50
 
-
+    private static var coverUrls: [String:String] = [:]
+    
     // MARK: - Initializers
 
     init(_ authToken: TwitchAuthResponse) {
@@ -58,16 +59,30 @@ final class GameService {
 
     typealias Completion = (([Proto_Game]) -> ())
 
-    func precache(_ items: [Proto_Game]) {
+    static func getCoverUrl(_ coverId: UInt64) -> String? {
+        if let existing = coverUrls[String(coverId)] {
+            return existing
+        } else {
+            return nil
+        }
+    }
+    
+    static func precache(_ items: [Proto_Game]) {
         for item in items {
-            getCoverImage(coverId: String(item.cover.id)) { (str) in
-                guard let str = str else { return }
-                KingfisherManager.shared.downloader.downloadImage(with: URL(string: str)!)
+            let coverId = String(item.cover.id)
+            getCoverImageURL(coverId: coverId) { (coverUrl) in
+                guard let str = coverUrl else { return }
+                
+                Self.coverUrls[coverId] = str
+                let url = URL(string: str)!
+                let resource = ImageResource(downloadURL: url)
+
+                KingfisherManager.shared.retrieveImage(with: resource) { res in }
             }
         }
     }
 
-    func getCoverImage(coverId: String, completion: @escaping ((String?) -> ())) {
+    static func getCoverImageURL(coverId: String, completion: @escaping ((String?) -> ())) {
         let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: Self.authToken.accessToken)
         let apicalypse = APICalypse()
             .fields(fields: "*")
