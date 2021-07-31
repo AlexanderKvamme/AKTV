@@ -39,12 +39,29 @@ final class GameStore {
         GamePlatform.allCases.forEach({ setFavourites([], platform: $0)})
     }
     
-    static func addFavourite(_ game: Proto_Game, _ isFavourite: Bool, platform: GamePlatform) {
+//    static func addFavourite(_ game: Proto_Game, _ isFavourite: Bool, platform: GamePlatform) {
+//        let id = Int(game.id)
+//        print("Adding to fav: ", game)
+//        var existingFavs = getFavourites(platform)
+//        if !existingFavs.contains(id) {
+//            existingFavs.append(id)
+//        }
+//
+//        setFavourites(existingFavs, platform: platform)
+//    }
+    
+    static func setFavourite(_ game: Proto_Game, _ isFavourite: Bool, platform: GamePlatform) {
         let id = Int(game.id)
-        print("Adding to fav: ", game)
         var existingFavs = getFavourites(platform)
-        if !existingFavs.contains(id) {
-            existingFavs.append(id)
+        print("Adding \(game.name) to fav: \(isFavourite)")
+        
+        switch isFavourite {
+        case true:
+            if !existingFavs.contains(id) {
+                existingFavs.append(id)
+            }
+        case false:
+            existingFavs = existingFavs.filter({ $0 != game.id})
         }
         
         setFavourites(existingFavs, platform: platform)

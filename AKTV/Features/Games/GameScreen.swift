@@ -20,8 +20,13 @@ final class GameScreen: UIViewController {
     private let header = UILabel.make(.header)
     private let sub = UILabel.make(.subtitle)
     private let body = UITextView.makeBodyTextView()
+    private let game: Proto_Game
+    private let platform: GamePlatform
 
-    init(_ game: Proto_Game) {
+    init(_ game: Proto_Game, platform: GamePlatform) {
+        self.game = game
+        self.platform = platform
+        
         super.init(nibName: nil, bundle: nil)
         
         setup()
@@ -37,12 +42,30 @@ final class GameScreen: UIViewController {
     private func setup() {
         view.backgroundColor = UIColor(dark)
         imageView.backgroundColor = .orange
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         header.text = "Header"
         sub.text = "Sub"
         body.text = loremIpsum
         body.textColor = UIColor(light)
         
-        setFilled(true)
+        let tr = UITapGestureRecognizer(target: self, action: #selector(didTapStar))
+        icon.addGestureRecognizer(tr)
+        icon.isUserInteractionEnabled = true
+        
+        // Update favourite icon
+        let isFavourite = GameStore.getFavourites(platform).contains(Int(game.id))
+        setFilled(isFavourite)
+    }
+    
+    @objc private func didTapStar() {
+        print("bam would setFavourite")
+        
+        let isFavourite = GameStore.getFavourites(platform).contains(Int(game.id))
+        setFilled(!isFavourite)
+        
+        print("bam isFav: ", isFavourite)
+        GameStore.setFavourite(self.game, !isFavourite, platform: platform)
     }
     
     private func fetchContent(_ game: Proto_Game) {

@@ -112,8 +112,9 @@ class GameCardController: UIView, SwipeableViewDelegate {
 extension GameCardController {
 
     func didTap(view: SwipeableView) {
-        guard let tappedGame = dataSource?.getItems()[cardIndex] else { return }
-        let gameScreen = GameScreen(tappedGame)
+        guard let dataSource = dataSource else { return }
+        let tappedGame = dataSource.getItems()[cardIndex]
+        let gameScreen = GameScreen(tappedGame, platform: dataSource.initialPlatform)
         
         view.findViewController()?.present(gameScreen, animated: true, completion: nil )
         tabBarController.navigationController?.pushViewController(gameScreen, animated: true)
@@ -134,9 +135,9 @@ extension GameCardController {
             let swipedRange = GameRange(upper: dataSource.initialRange.upper, lower: Int(swipedGame.id))
             GameStore.addCompleted(swipedRange, for: dataSource.initialPlatform)
             
-            let leftSwipes: [SwipeDirection] = [.left, .bottomLeft, .topLeft]
-            if leftSwipes.contains(swipeDirection) {
-                GameStore.addFavourite(swipedGame, true, platform: dataSource.initialPlatform)
+            let rightSwipes: [SwipeDirection] = [.right, .bottomRight, .topRight]
+            if rightSwipes.contains(swipeDirection) {
+                GameStore.setFavourite(swipedGame, true, platform: dataSource.initialPlatform)
             }
 
             // Get next range to fetch
