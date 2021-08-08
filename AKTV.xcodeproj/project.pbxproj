@@ -12,6 +12,7 @@
 		DD000AA02454358800CB095D /* BasicTextDisplayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000A9F2454358800CB095D /* BasicTextDisplayerViewController.swift */; };
 		DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000AA22455BECE00CB095D /* UserProfileManager.swift */; };
 		DD041DB125CB05FB003933AE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DD041DB025CB05FB003933AE /* Kingfisher */; };
+		DD19BE1726BF447B00D3D2EC /* MediaTypePickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD19BE1626BF447B00D3D2EC /* MediaTypePickerScreen.swift */; };
 		DD1A56E325DC0D7800C242FB /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1A56E225DC0D7800C242FB /* VideoPlayer.swift */; };
 		DD1A7BD5245C12D1005879F8 /* ColoredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1A7BD4245C12D1005879F8 /* ColoredViewController.swift */; };
 		DD25A0E225E15C3F00B39ACA /* UpcomingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD25A0E125E15C3F00B39ACA /* UpcomingCell.swift */; };
@@ -103,6 +104,8 @@
 		DDA1A9312427B27C00F7907A /* Networker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA1A9302427B27C00F7907A /* Networker.swift */; };
 		DDA8EA282444BDD4004D1F14 /* EpisodesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA8EA272444BDD4004D1F14 /* EpisodesTableViewController.swift */; };
 		DDB26BB125DC6DCC007FF941 /* BadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB26BB025DC6DCC007FF941 /* BadgeCell.swift */; };
+		DDB3C70A26BFC0F900CB88D7 /* PickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C70926BFC0F900CB88D7 /* PickerScreen.swift */; };
+		DDB3C72026C080FF00CB88D7 /* MinimalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C71F26C080FF00CB88D7 /* MinimalNavigationController.swift */; };
 		DDB48F7325D3F694007C0131 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6C25D3F694007C0131 /* TabBarView.swift */; };
 		DDB48F7525D3F694007C0131 /* NativeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6E25D3F694007C0131 /* NativeExtensions.swift */; };
 		DDB48F7625D3F694007C0131 /* RoundTabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6F25D3F694007C0131 /* RoundTabBarButton.swift */; };
@@ -155,6 +158,7 @@
 		D94F952407FDABD1D76A79DA /* Pods-AKTVTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKTVTests.debug.xcconfig"; path = "Target Support Files/Pods-AKTVTests/Pods-AKTVTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD000A9F2454358800CB095D /* BasicTextDisplayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextDisplayerViewController.swift; sourceTree = "<group>"; };
 		DD000AA22455BECE00CB095D /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
+		DD19BE1626BF447B00D3D2EC /* MediaTypePickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypePickerScreen.swift; sourceTree = "<group>"; };
 		DD1A56E225DC0D7800C242FB /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		DD1A7BD4245C12D1005879F8 /* ColoredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredViewController.swift; sourceTree = "<group>"; };
 		DD25A0E125E15C3F00B39ACA /* UpcomingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingCell.swift; sourceTree = "<group>"; };
@@ -252,6 +256,8 @@
 		DDA1A9302427B27C00F7907A /* Networker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networker.swift; sourceTree = "<group>"; };
 		DDA8EA272444BDD4004D1F14 /* EpisodesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesTableViewController.swift; sourceTree = "<group>"; };
 		DDB26BB025DC6DCC007FF941 /* BadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCell.swift; sourceTree = "<group>"; };
+		DDB3C70926BFC0F900CB88D7 /* PickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerScreen.swift; sourceTree = "<group>"; };
+		DDB3C71F26C080FF00CB88D7 /* MinimalNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalNavigationController.swift; sourceTree = "<group>"; };
 		DDB48F6C25D3F694007C0131 /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		DDB48F6E25D3F694007C0131 /* NativeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeExtensions.swift; sourceTree = "<group>"; };
 		DDB48F6F25D3F694007C0131 /* RoundTabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundTabBarButton.swift; sourceTree = "<group>"; };
@@ -345,6 +351,15 @@
 				DD3ABA1626875FD600D1F57D /* ColorStore.swift */,
 			);
 			path = Storage;
+			sourceTree = "<group>";
+		};
+		DD19BE1526BF443100D3D2EC /* PickerScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DD19BE1626BF447B00D3D2EC /* MediaTypePickerScreen.swift */,
+				DDB3C70926BFC0F900CB88D7 /* PickerScreen.swift */,
+			);
+			path = PickerScreen;
 			sourceTree = "<group>";
 		};
 		DD1A7BD3245C12B1005879F8 /* TabBar */ = {
@@ -445,6 +460,7 @@
 		DD699E182688E68E00A1C263 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				DD19BE1526BF443100D3D2EC /* PickerScreen */,
 				DD699E192688E6A500A1C263 /* Cards */,
 			);
 			path = Components;
@@ -633,6 +649,14 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		DDB3C71E26C080E000CB88D7 /* Reusable-components */ = {
+			isa = PBXGroup;
+			children = (
+				DDB3C71F26C080FF00CB88D7 /* MinimalNavigationController.swift */,
+			);
+			path = "Reusable-components";
+			sourceTree = "<group>";
+		};
 		DDB48F6B25D3F694007C0131 /* Parts */ = {
 			isa = PBXGroup;
 			children = (
@@ -668,6 +692,7 @@
 		DDC8048825D575D600B0418B /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				DDB3C71E26C080E000CB88D7 /* Reusable-components */,
 				DD6DDF6325CDA0FE00A19F3A /* Native-Extensions */,
 				DD6DDF4E25CD517800A19F3A /* Themes.swift */,
 				DD39528225D6E3D800C918F3 /* BottomAlignedLabel.swift */,
@@ -996,6 +1021,7 @@
 			files = (
 				DD78E2FC25CAF1230084F101 /* DayModel.swift in Sources */,
 				DDA1A9312427B27C00F7907A /* Networker.swift in Sources */,
+				DDB3C72026C080FF00CB88D7 /* MinimalNavigationController.swift in Sources */,
 				DDE388FE242AB6510049D881 /* Season.swift in Sources */,
 				DDE388FB2427DE9E0049D881 /* ShowsScreen.swift in Sources */,
 				DD2F7385267F65F400512512 /* CalendarCell.swift in Sources */,
@@ -1057,6 +1083,7 @@
 				DD3952CD25DA813400C918F3 /* EpisodeDisplayer.swift in Sources */,
 				DD9BCA05266BC9CF009B2DD8 /* StaticShadowHeaderView.swift in Sources */,
 				DDA1A9072427B24B00F7907A /* AKTV.xcdatamodeld in Sources */,
+				DDB3C70A26BFC0F900CB88D7 /* PickerScreen.swift in Sources */,
 				DD2B110225D579B2000CFF84 /* ShowHeaderView.swift in Sources */,
 				DD000AA02454358800CB095D /* BasicTextDisplayerViewController.swift in Sources */,
 				DD2D804425E54D3B004DF85A /* UpcomingToDetailedAnimationController.swift in Sources */,
@@ -1074,6 +1101,7 @@
 				DD39527025D6C07900C918F3 /* LabledIcon.swift in Sources */,
 				DD9BCA08266BC9CF009B2DD8 /* GameCard.swift in Sources */,
 				DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */,
+				DD19BE1726BF447B00D3D2EC /* MediaTypePickerScreen.swift in Sources */,
 				DD2B10FD25D5793F000CFF84 /* EpisodeCell.swift in Sources */,
 				DD2B110D25D58E3A000CFF84 /* SeasonDataDelegate.swift in Sources */,
 			);

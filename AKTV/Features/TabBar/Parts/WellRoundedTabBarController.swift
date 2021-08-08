@@ -69,7 +69,8 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        screens = [calendarScreen, discoveryScreen, showSearchController, calendarScreen, upcomingScreen]
+        let searchTabScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen())
+        screens = [calendarScreen, discoveryScreen, searchTabScreen, calendarScreen, upcomingScreen]
         setViewControllers(screens, animated: true)
 
         // Initial View Controller
