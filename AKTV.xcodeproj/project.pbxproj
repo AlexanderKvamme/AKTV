@@ -106,6 +106,7 @@
 		DDB26BB125DC6DCC007FF941 /* BadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB26BB025DC6DCC007FF941 /* BadgeCell.swift */; };
 		DDB3C70A26BFC0F900CB88D7 /* PickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C70926BFC0F900CB88D7 /* PickerScreen.swift */; };
 		DDB3C72026C080FF00CB88D7 /* MinimalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C71F26C080FF00CB88D7 /* MinimalNavigationController.swift */; };
+		DDB3C72526C081BF00CB88D7 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C72426C081BF00CB88D7 /* UIImageViewExtensions.swift */; };
 		DDB48F7325D3F694007C0131 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6C25D3F694007C0131 /* TabBarView.swift */; };
 		DDB48F7525D3F694007C0131 /* NativeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6E25D3F694007C0131 /* NativeExtensions.swift */; };
 		DDB48F7625D3F694007C0131 /* RoundTabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6F25D3F694007C0131 /* RoundTabBarButton.swift */; };
@@ -258,6 +259,7 @@
 		DDB26BB025DC6DCC007FF941 /* BadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCell.swift; sourceTree = "<group>"; };
 		DDB3C70926BFC0F900CB88D7 /* PickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerScreen.swift; sourceTree = "<group>"; };
 		DDB3C71F26C080FF00CB88D7 /* MinimalNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalNavigationController.swift; sourceTree = "<group>"; };
+		DDB3C72426C081BF00CB88D7 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
 		DDB48F6C25D3F694007C0131 /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		DDB48F6E25D3F694007C0131 /* NativeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeExtensions.swift; sourceTree = "<group>"; };
 		DDB48F6F25D3F694007C0131 /* RoundTabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundTabBarButton.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 				DD315B66245D7D570046AB38 /* AKDateFormatter.swift */,
 				DD6DDF5B25CDA0F500A19F3A /* FontExtensions.swift */,
 				DD3952B425D834DF00C918F3 /* UIViewExtensions.swift */,
+				DDB3C72426C081BF00CB88D7 /* UIImageViewExtensions.swift */,
 				DDF92A1B25CDAE7100326E20 /* ColorExtensions.swift */,
 				DD3952BE25D86F3700C918F3 /* Alpha.swift */,
 				DD7E660B25D538F7006553D1 /* URLExtensions.swift */,
@@ -1061,6 +1064,7 @@
 				DD9BCA0C266BC9CF009B2DD8 /* CGPoint+SwipeableAdditions.swift in Sources */,
 				DDB48F7625D3F694007C0131 /* RoundTabBarButton.swift in Sources */,
 				DD9BCA06266BC9CF009B2DD8 /* GameCardController.swift in Sources */,
+				DDB3C72526C081BF00CB88D7 /* UIImageViewExtensions.swift in Sources */,
 				DD000AA32455BECE00CB095D /* UserProfileManager.swift in Sources */,
 				DDB48F7525D3F694007C0131 /* NativeExtensions.swift in Sources */,
 				DDA1A8FF2427B24B00F7907A /* SceneDelegate.swift in Sources */,
