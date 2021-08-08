@@ -18,10 +18,12 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     let upcomingScreen = UpcomingScreen()
     var calendarScreen: CalendarScreen!
     var screens: [UIViewController]!
+    var initialIndex: Int
     
     // MARK: - Initializers
 
-    init() {
+    init(_ initalIndex: Int = 0) {
+        self.initialIndex = initalIndex
         super.init(nibName: nil, bundle: nil)
 
         calendarScreen = CalendarScreen(tabBar: self)
@@ -71,7 +73,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         setViewControllers(screens, animated: true)
 
         // Initial View Controller
-        selectedIndex = 1
+        selectedIndex = initialIndex
         configureTabBarButtons()
     }
 
