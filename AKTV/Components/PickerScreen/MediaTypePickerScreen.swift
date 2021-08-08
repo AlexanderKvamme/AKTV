@@ -9,11 +9,6 @@
 import UIKit
 
 
-
-
-
-
-
 final class MediaTypePickerScreen: PickerScreen {
 
     // MARK: - Initializers

@@ -107,6 +107,8 @@
 		DDB3C70A26BFC0F900CB88D7 /* PickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C70926BFC0F900CB88D7 /* PickerScreen.swift */; };
 		DDB3C72026C080FF00CB88D7 /* MinimalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C71F26C080FF00CB88D7 /* MinimalNavigationController.swift */; };
 		DDB3C72526C081BF00CB88D7 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C72426C081BF00CB88D7 /* UIImageViewExtensions.swift */; };
+		DDB3C72A26C084B500CB88D7 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C72926C084B500CB88D7 /* SearchScreen.swift */; };
+		DDB3C72F26C0855B00CB88D7 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB3C72E26C0855B00CB88D7 /* SearchTextField.swift */; };
 		DDB48F7325D3F694007C0131 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6C25D3F694007C0131 /* TabBarView.swift */; };
 		DDB48F7525D3F694007C0131 /* NativeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6E25D3F694007C0131 /* NativeExtensions.swift */; };
 		DDB48F7625D3F694007C0131 /* RoundTabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F6F25D3F694007C0131 /* RoundTabBarButton.swift */; };
@@ -260,6 +262,8 @@
 		DDB3C70926BFC0F900CB88D7 /* PickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerScreen.swift; sourceTree = "<group>"; };
 		DDB3C71F26C080FF00CB88D7 /* MinimalNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalNavigationController.swift; sourceTree = "<group>"; };
 		DDB3C72426C081BF00CB88D7 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
+		DDB3C72926C084B500CB88D7 /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
+		DDB3C72E26C0855B00CB88D7 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		DDB48F6C25D3F694007C0131 /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		DDB48F6E25D3F694007C0131 /* NativeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeExtensions.swift; sourceTree = "<group>"; };
 		DDB48F6F25D3F694007C0131 /* RoundTabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundTabBarButton.swift; sourceTree = "<group>"; };
@@ -715,6 +719,8 @@
 		DDE388F52427D0990049D881 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				DDB3C72926C084B500CB88D7 /* SearchScreen.swift */,
+				DDB3C72E26C0855B00CB88D7 /* SearchTextField.swift */,
 				DD58E4BF2435D012005492E3 /* ShowSearchScreen.swift */,
 				DD2B110625D58E05000CFF84 /* Seasons */,
 				DD000A9E2454357300CB095D /* Episodes */,
@@ -1045,6 +1051,7 @@
 				DD5D9C6026B1ADA800605616 /* GameScreen.swift in Sources */,
 				DD3ABA192688A40B00D1F57D /* DateHeader.swift in Sources */,
 				DDE38906242BF6E00049D881 /* APIDAO.swift in Sources */,
+				DDB3C72F26C0855B00CB88D7 /* SearchTextField.swift in Sources */,
 				DD9BC9D1266B5553009B2DD8 /* GameService.swift in Sources */,
 				DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */,
 				DDB48F7325D3F694007C0131 /* TabBarView.swift in Sources */,
@@ -1057,6 +1064,7 @@
 				DD5B14342674BE8B00E8C68D /* GameStore.swift in Sources */,
 				DDE00F7E26960BD40083B6DF /* RangeStore.swift in Sources */,
 				DD9C57AC2457FE2B00EE4C6C /* UpcomingTableHeader.swift in Sources */,
+				DDB3C72A26C084B500CB88D7 /* SearchScreen.swift in Sources */,
 				DDA1A8FD2427B24B00F7907A /* AppDelegate.swift in Sources */,
 				DD58E4C02435D012005492E3 /* ShowSearchScreen.swift in Sources */,
 				DD9BCA0A266BC9CF009B2DD8 /* CardViewDataSource.swift in Sources */,
