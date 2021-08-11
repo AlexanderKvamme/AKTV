@@ -131,6 +131,12 @@ extension GameCardController {
 
         // Handle finished swipe
         if let _ = cardViews.reversed().firstIndex(of: view) {
+            guard dataSource.getItems().count > cardIndex else {
+                print("Index too big")
+                reloadData()
+                return
+            }
+
             let swipedGame = dataSource.getItems()[cardIndex]
             let swipedRange = GameRange(upper: dataSource.initialRange.upper, lower: Int(swipedGame.id))
             GameStore.addCompleted(swipedRange, for: dataSource.initialPlatform)

@@ -9,7 +9,7 @@
 import UIKit
 var gamesService: GameService!
 
-let tabBarController = WellRoundedTabBarController()
+let tabBarController = WellRoundedTabBarController(2)
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

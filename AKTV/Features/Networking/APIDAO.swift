@@ -56,7 +56,7 @@ final class APIDAO: NSObject {
     //
     
     // TODO: Make this function actually search and return a lsit of shows after unwrapping result
-    func searchShows(string: String, andThen: @escaping (([Show]) -> ())) {
+    func searchShows(string: String, andThen: @escaping (([Media]) -> ())) {
         guard let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
             fatalError()
         }
@@ -68,6 +68,7 @@ final class APIDAO: NSObject {
         }
         
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            print("bam data response: ", data)
             guard error == nil else {
                 return
             }
@@ -77,14 +78,18 @@ final class APIDAO: NSObject {
             }
             
             let decoder = JSONDecoder()
-            var result: TVShowSearchResult?
+            var result: MediaSearchResult?
             
             do {
-                let decoded = try decoder.decode(TVShowSearchResult.self, from: content)
+                print("bam tryna decode")
+                let decoded = try decoder.decode(MediaSearchResult.self, from: content)
+                print("bam decoded: ", decoded)
                 if let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] {
                 }
                 
                 let results = decoded.results.map({ $0.name })
+
+                print("bam results: ", results)
                 result = decoded
                 andThen(decoded.results)
             } catch {
