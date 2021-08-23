@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - APIDAO
 
-final class APIDAO: NSObject {
+final class APIDAO: NSObject, MediaSearcher {
     
     // MARK: Properties
     
@@ -19,44 +19,8 @@ final class APIDAO: NSObject {
     static let imageRoot = "https://image.tmdb.org/t/p/original/"
     
     typealias JSONCompletion = (([String: Any]?) -> Void)
-    
-    //    func fetch<T: Codable>(type: T, from url: URL, andThen completion: @escaping JSONCompletion){
-    //        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-    //            guard error == nil else {
-    //                print("returning error")
-    //                return
-    //            }
-    //
-    //            guard let content = data else {
-    //                print("not returning data")
-    //                return
-    //            }
-    //
-    //            // NEW TEST OF CODABLE
-    //            let decoder = JSONDecoder()
-    //
-    //            do {
-    //                let decoded = try decoder.decode(T.self, from: content)
-    //            } catch {
-    //                print("Error could not decode a tv show 2")
-    //            }
-    //
-    //            // OLD
-    //
-    //            // Got JSON
-    //            guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] else {
-    //                print("Not containing JSON")
-    //                completion(nil)
-    //                return
-    //            }
-    //
-    //            completion(json)
-    //        }
-    //        task.resume()
-    //
-    
-    // TODO: Make this function actually search and return a lsit of shows after unwrapping result
-    func searchShows(string: String, andThen: @escaping (([Show]) -> ())) {
+
+    func search(_ string: String, andThen: @escaping (([Media]) -> ())) {
         guard let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
             fatalError()
         }
@@ -67,7 +31,8 @@ final class APIDAO: NSObject {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+        let _ = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            print("bam data response: ", data)
             guard error == nil else {
                 return
             }
@@ -77,14 +42,18 @@ final class APIDAO: NSObject {
             }
             
             let decoder = JSONDecoder()
-            var result: TVShowSearchResult?
+            var result: MediaSearchResult?
             
             do {
-                let decoded = try decoder.decode(TVShowSearchResult.self, from: content)
+                print("bam tryna decode")
+                let decoded = try decoder.decode(MediaSearchResult.self, from: content)
+                print("bam decoded: ", decoded)
                 if let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] {
                 }
                 
                 let results = decoded.results.map({ $0.name })
+
+                print("bam results: ", results)
                 result = decoded
                 andThen(decoded.results)
             } catch {
@@ -97,8 +66,6 @@ final class APIDAO: NSObject {
             }
         }.resume()
     }
-    
-    // FIXME: Get full tv series out with all seasons and shit
     
     func show(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
         let showId = String(withId)

@@ -64,7 +64,10 @@ final class MediaTypePickerScreen: PickerScreen {
 
         switch picked {
         case MediaPickable.game:
-            print("show game screen")
+            let dao = APIDAO() // TODO: Maybe game dao?
+            let searchController = GameSearchScreen(dao: dao)
+            searchController.modalPresentationStyle = .fullScreen
+            navigationController?.pushViewController(searchController, animated: true)
         case MediaPickable.movieAndTV:
             let dao = APIDAO()
             let showSearchController = ShowsSearchScreen(dao: dao)

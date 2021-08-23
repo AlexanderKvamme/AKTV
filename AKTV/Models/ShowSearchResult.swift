@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct TVShowSearchResult: Decodable {
+struct MediaSearchResult: Decodable {
     
     // Properties
     
     var page: Int
 //    var totalPages: Int
-    var results: [Show]
+    var results: [Media]
     
     enum CodingKeys: String, CodingKey {
         case page = "page"

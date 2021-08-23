@@ -24,7 +24,7 @@ final class ShowOverviewDataDelegate: NSObject, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let seasonOverview = showOverview!.seasons[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: ShowCell.identifier) ?? SeasonOverviewCell(for: showOverview!.seasons[indexPath.row])
+        let cell = tableView.dequeueReusableCell(withIdentifier: MediaSearchResultCell.identifier) ?? SeasonOverviewCell(for: showOverview!.seasons[indexPath.row])
         if let cell = cell as? SeasonOverviewCell {
             cell.update(with: seasonOverview)
         } else {
@@ -54,7 +54,7 @@ final class SeasonOverviewCell: UITableViewCell {
     static let identifier = "SeasonOverviewCell"
     
     init(for episode: SeasonOverview) {
-        super.init(style: .default, reuseIdentifier: ShowCell.identifier)
+        super.init(style: .default, reuseIdentifier: MediaSearchResultCell.identifier)
         
         setup()
         addSubviewsAndConstraints()

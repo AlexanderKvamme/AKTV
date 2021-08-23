@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class ShowCell: UITableViewCell {
+final class MediaSearchResultCell: UITableViewCell {
     
     // MARK: Properties
 
@@ -24,8 +24,8 @@ final class ShowCell: UITableViewCell {
     
     static let identifier = "EpisodeCell"
     
-    init(for episode: Show) {
-        super.init(style: .default, reuseIdentifier: ShowCell.identifier)
+    init(for media: Media) {
+        super.init(style: .default, reuseIdentifier: MediaSearchResultCell.identifier)
 
         setup()
         addSubviewsAndConstraints()
@@ -100,8 +100,8 @@ final class ShowCell: UITableViewCell {
     
     // MARK: Internal methods
     
-    func update(with show: Show) {
-        header.text = show.name
+    func update(with media: Media) {
+        header.text = media.name
     }
 }
 
