@@ -26,7 +26,7 @@ enum GamePlatform: String, CaseIterable {
 final class GameService {
 
     static var authToken: TwitchAuthResponse!
-    static private let clientID = "6w71e2zsvf5ak18snvrtweybwjl877"
+    static let clientID = "6w71e2zsvf5ak18snvrtweybwjl877"
     static private let rootURL = "https://api.igdb.com/v4"
 
     private static let minimumRequiredFields = "name,cover,id,platforms"

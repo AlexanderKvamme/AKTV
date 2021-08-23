@@ -16,12 +16,10 @@ enum MediaType {
 }
 
 protocol MediaSearchResult {
-    var name: String? { get }
+    var name: String { get }
 }
 
-extension Proto_Game: MediaSearchResult {
-    var name: String? { "test name" }
-}
+extension Proto_Search: MediaSearchResult {}
 
 // MARK: - APIDAO
 
@@ -76,7 +74,7 @@ final class APIDAO: NSObject, MediaSearcher {
                 let decoded = try decoder.decode(TVShowSearchResult.self, from: content)
                 print("bam decoded: ", decoded)
 
-                if let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] {
+                if let _ = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] {
                 }
 
                 let results = decoded.results.map({ $0.name })
@@ -85,7 +83,7 @@ final class APIDAO: NSObject, MediaSearcher {
                 andThen(decoded.results)
             } catch {
                 // Got JSON
-                guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]
+                guard let _ = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]
                     else {
                         print("Not containing JSON")
                         return
@@ -94,8 +92,17 @@ final class APIDAO: NSObject, MediaSearcher {
         }.resume()
     }
 
-    func searchGames( _ string: String, andThen: @escaping (([Proto_Game]) -> ())) {
-        print("bam would search games")
+    func searchGames( _ string: String, andThen: @escaping (([Proto_Search]) -> ())) {
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: GameService.authToken.accessToken)
+        let apicalypse = APICalypse()
+            .search(searchQuery: string)
+            .fields(fields: "name")
+
+        wrapper.search(apiCalypse: apicalypse, result: { searchResults in
+            andThen(searchResults)
+        }) { error in
+            // TODO: Handle error
+        }
     }
     
     func show(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
