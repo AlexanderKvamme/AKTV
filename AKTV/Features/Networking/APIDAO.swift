@@ -7,6 +7,21 @@
 //
 
 import Foundation
+import IGDB_SWIFT_API
+
+// MARK: - Protocols
+
+enum MediaType {
+    case movie, series, game
+}
+
+protocol MediaSearchResult {
+    var name: String? { get }
+}
+
+extension Proto_Game: MediaSearchResult {
+    var name: String? { "test name" }
+}
 
 // MARK: - APIDAO
 
@@ -20,41 +35,53 @@ final class APIDAO: NSObject, MediaSearcher {
     
     typealias JSONCompletion = (([String: Any]?) -> Void)
 
-    func search(_ string: String, andThen: @escaping (([Media]) -> ())) {
+    // FIXME: Make this generic search function propegate to specific search functions
+    // FIXME: Dont default
+
+    func search(_ type: MediaType? = MediaType.series, _ string: String, andThen: @escaping (([MediaSearchResult]) -> ())) {
+        switch type {
+        case .series:
+            searchSeries(string, andThen: andThen)
+        case .game:
+            searchGames(string, andThen: andThen)
+        default:
+            fatalError("Not yet implemented")
+        }
+    }
+
+    func searchSeries( _ string: String, andThen: @escaping (([Show]) -> ())) {
         guard let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
             fatalError()
         }
-        
+
         let urlString = "https://api.themoviedb.org/3/search/tv?api_key=\(key)&query=\(encodedString)"
         guard let url = URL(string: urlString) else {
             print("Error: Could not make url")
             return
         }
-        
+
         let _ = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            print("bam data response: ", data)
             guard error == nil else {
                 return
             }
-            
+
             guard let content = data else {
                 return
             }
-            
+
             let decoder = JSONDecoder()
-            var result: MediaSearchResult?
-            
+
             do {
                 print("bam tryna decode")
-                let decoded = try decoder.decode(MediaSearchResult.self, from: content)
+                let decoded = try decoder.decode(TVShowSearchResult.self, from: content)
                 print("bam decoded: ", decoded)
+
                 if let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] {
                 }
-                
+
                 let results = decoded.results.map({ $0.name })
 
                 print("bam results: ", results)
-                result = decoded
                 andThen(decoded.results)
             } catch {
                 // Got JSON
@@ -65,6 +92,10 @@ final class APIDAO: NSObject, MediaSearcher {
                 }
             }
         }.resume()
+    }
+
+    func searchGames( _ string: String, andThen: @escaping (([Proto_Game]) -> ())) {
+        print("bam would search games")
     }
     
     func show(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {

@@ -37,3 +37,5 @@ struct Show: Decodable {
         case posterPath = "poster_path"
     }
 }
+
+extension Show: MediaSearchResult {}

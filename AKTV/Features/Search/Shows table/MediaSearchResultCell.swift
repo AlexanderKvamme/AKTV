@@ -24,7 +24,7 @@ final class MediaSearchResultCell: UITableViewCell {
     
     static let identifier = "EpisodeCell"
     
-    init(for media: Media) {
+    init(for media: MediaSearchResult) {
         super.init(style: .default, reuseIdentifier: MediaSearchResultCell.identifier)
 
         setup()
@@ -100,7 +100,7 @@ final class MediaSearchResultCell: UITableViewCell {
     
     // MARK: Internal methods
     
-    func update(with media: Media) {
+    func update(with media: MediaSearchResult) {
         header.text = media.name
     }
 }

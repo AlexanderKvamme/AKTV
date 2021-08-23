@@ -46,7 +46,6 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         super.viewDidAppear(animated)
 
         let dao = APIDAO()
-        let showSearchController = ShowsSearchScreen(dao: dao)
 
         // Fetch favourite shows and show next episode dates
         let favouriteShows = UserProfileManager().favouriteShows()

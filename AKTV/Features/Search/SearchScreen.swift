@@ -11,14 +11,17 @@ import UIKit
 // MARK: - Protocols
 
 /// A film, series, or a game
-protocol MediaType: Decodable {
-    var name: String { get set }
-    var subtitle: String { get set }
-}
+//protocol MediaType {
+//    var name: String { get set }
+//    var subtitle: String { get set }
+//}
 
-struct Media: MediaType {
+
+
+
+struct Media: Decodable {
     var name: String
-    var subtitle: String
+//    var subtitle: String
 }
 
 
@@ -33,13 +36,15 @@ class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate
     private let episodesSearchResultViewController = UITableViewController()
     private let episodesSearchResultDataDelegate = self
     var detailedShowPresenter: ModelPresenter?
-    var shows = [Media]()
+    var searchResults = [MediaSearchResult]()
     var dao: MediaSearcher
+    var searchTypes: MediaType
 
     // MARK: - Initializer
 
-    init(dao: MediaSearcher) {
+    init(dao: MediaSearcher, searchTypes: MediaType) {
         self.dao = dao
+        self.searchTypes = searchTypes
         super.init(nibName: nil, bundle: nil)
         setup()
         addSubviewsAndConstraints()
@@ -96,12 +101,12 @@ class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate
     // MARK: TableView Delegate methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return shows.count
+        return searchResults.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let show = shows[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: MediaSearchResultCell.identifier) ?? MediaSearchResultCell(for: shows[indexPath.row])
+        let show = searchResults[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: MediaSearchResultCell.identifier) ?? MediaSearchResultCell(for: searchResults[indexPath.row])
         if let cell = cell as? MediaSearchResultCell {
             cell.update(with: show)
         } else {
@@ -128,11 +133,11 @@ extension SearchScreen: UITextFieldDelegate {
             return false
         }
 
-        dao.search(searchterm) { (shows) in
+        dao.search(searchTypes, searchterm) { (shows) in
             print("bam searchResult outer: ", shows)
             DispatchQueue.main.async {
                 print("bam searchResult innter: ", shows)
-                self.shows = shows
+                self.searchResults = shows
                 self.episodesSearchResultViewController.tableView.reloadData()
             }
         }
