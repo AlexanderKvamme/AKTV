@@ -178,13 +178,13 @@ extension SearchScreen: ModelPresenter {
 
     func displayShow(_ id: UInt64?) {
         guard let id = id else { fatalError("Show had no id to present from") }
-
-//        dao.show(withId: id) { (showOverview) in
-//            DispatchQueue.main.async {
-//                let next = ShowOverviewScreen(dao: self.dao)
-//                next.update(with: showOverview)
-//                self.present(next, animated: true, completion: nil)
-//            }
-//        }
+        let dao = self.dao as! APIDAO
+        dao.show(withId: Int(id)) { (showOverview) in
+            DispatchQueue.main.async {
+                let next = ShowOverviewScreen(dao: dao)
+                next.update(with: showOverview)
+                self.present(next, animated: true, completion: nil)
+            }
+        }
     }
 }
