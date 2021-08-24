@@ -12,7 +12,7 @@ struct Show: Decodable {
     var backdropPath: String?
     var firstAirDate: String?
     var genreIds: [Int]?
-    var id: Int?
+    var id: UInt64
     var name: String
     var originCountry: [String]?
     var originalLanguage: String?

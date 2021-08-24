@@ -59,8 +59,9 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
         // Fetch favourite shows and show next episode dates
         let favouriteGames = UserProfileManager().favouriteGames()
+        // TODO: Maybe transition to using UInt64 for all ID's, as IGDB uses it
         favouriteGames.forEach{ id in
-            dao.game(withId: id) { (gameOverview) in
+            dao.game(withId: UInt64(id)) { (gameOverview) in
                 DispatchQueue.main.sync {
                     // FIXME: Continue here
                     // upcomingGamesScreen.update(withGame: gameOverview)

@@ -17,9 +17,10 @@ enum MediaType {
 
 protocol MediaSearchResult {
     var name: String { get }
+    var id: UInt64 { get }
 }
 
-extension Proto_Search: MediaSearchResult {}
+extension Proto_Game: MediaSearchResult {}
 
 // MARK: - APIDAO
 
@@ -33,9 +34,7 @@ final class APIDAO: NSObject, MediaSearcher {
     
     typealias JSONCompletion = (([String: Any]?) -> Void)
 
-    // FIXME: Make this generic search function propegate to specific search functions
-    // FIXME: Dont default
-
+    // TODO: Dont default
     func search(_ type: MediaType? = MediaType.series, _ string: String, andThen: @escaping (([MediaSearchResult]) -> ())) {
         switch type {
         case .series:
@@ -70,16 +69,11 @@ final class APIDAO: NSObject, MediaSearcher {
             let decoder = JSONDecoder()
 
             do {
-                print("bam tryna decode")
                 let decoded = try decoder.decode(TVShowSearchResult.self, from: content)
-                print("bam decoded: ", decoded)
-
                 if let _ = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] {
                 }
 
                 let results = decoded.results.map({ $0.name })
-
-                print("bam results: ", results)
                 andThen(decoded.results)
             } catch {
                 // Got JSON
@@ -92,16 +86,16 @@ final class APIDAO: NSObject, MediaSearcher {
         }.resume()
     }
 
-    func searchGames( _ string: String, andThen: @escaping (([Proto_Search]) -> ())) {
+    func searchGames( _ string: String, andThen: @escaping (([Proto_Game]) -> ())) {
         let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: GameService.authToken.accessToken)
         let apicalypse = APICalypse()
             .search(searchQuery: string)
             .fields(fields: "name")
 
-        wrapper.search(apiCalypse: apicalypse, result: { searchResults in
+        wrapper.games(apiCalypse: apicalypse, result: { searchResults in
             andThen(searchResults)
         }) { error in
-            // TODO: Handle error
+            print("Search games Error: ", error)
         }
     }
     
@@ -139,9 +133,7 @@ final class APIDAO: NSObject, MediaSearcher {
     func episodes(showId: Int, seasonNumber: Int, andThen: @escaping ((Season) -> ())) {
         let showId = String(showId)
         let seasonNumber = String(seasonNumber)
-
         let url = URL(string: root + "tv/" + showId + "/season/" + seasonNumber + "?" + keyParam)
-        
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
             guard error == nil else {
                 fatalError("error: \(String(describing: error)) ... \(String(describing: error?.localizedDescription))")
@@ -165,39 +157,21 @@ final class APIDAO: NSObject, MediaSearcher {
         }
         
         task.resume()
-        
     }
 
-    func game(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
-
-        // FIXME: ACTUALLY GET GAMES
-        
-        let showId = String(withId)
-        let url = URL(string: root + "tv/" + showId + "?" + keyParam + "&append_to_response=videos")
-
-        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            guard error == nil else {
-                print("returning error")
-                return
+    func game(withId: UInt64, andThen: @escaping ((Proto_Game) -> ()))  {
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: GameService.authToken.accessToken)
+        let apicalypse = APICalypse()
+            .where(query: "id = \(withId);")
+            .fields(fields: "*")
+        wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
+            if let game = games.first {
+                andThen(game)
+            } else {
+                print("Error: Too many games to handle")
             }
-
-            guard let content = data else {
-                print("not returning data")
-                return
-            }
-
-            guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
-                print("Not containing JSON")
-                return
-            }
-
-            // Mapping
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let tvShowSeason = try! decoder.decode(ShowOverview.self, from: content)
-            andThen(tvShowSeason)
+        } errorResponse: { (requestException) -> (Void) in
+            print("Request exception: ", requestException)
         }
-
-        task.resume()
     }
 }

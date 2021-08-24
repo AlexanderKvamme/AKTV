@@ -8,7 +8,8 @@ protocol SeasonPresenter {
 }
 
 protocol ModelPresenter {
-    func displayShow(_ id: Int?)
+    func display(_ searchResult: MediaSearchResult)
+    func displayShow(_ id: UInt64?)
     func displayEpisode(_ episode: Episode)
 }
 

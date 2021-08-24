@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IGDB_SWIFT_API
 
 // MARK: - Protocols
 
@@ -116,7 +117,7 @@ class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        detailedShowPresenter?.displayShow(shows[indexPath.row].id)
+        detailedShowPresenter?.display(searchResults[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -134,9 +135,7 @@ extension SearchScreen: UITextFieldDelegate {
         }
 
         dao.search(searchTypes, searchterm) { (shows) in
-            print("bam searchResult outer: ", shows)
             DispatchQueue.main.async {
-                print("bam searchResult innter: ", shows)
                 self.searchResults = shows
                 self.episodesSearchResultViewController.tableView.reloadData()
             }
@@ -151,11 +150,33 @@ extension SearchScreen: UITextFieldDelegate {
 
 extension SearchScreen: ModelPresenter {
 
+    func display(_ searchResult: MediaSearchResult) {
+        switch searchTypes {
+        case .series:
+            let res = searchResult as! Show
+            displayShow(res.id)
+        case .game:
+            displayGame(searchResult)
+        default:
+            fatalError("Implement me")
+        }
+    }
+
     func displayEpisode(_ episode: Episode) {
         fatalError("SUCCESS! Now actually make VC and present to screen")
     }
 
-    func displayShow(_ id: Int?) {
+    func displayGame(_ searchResult: MediaSearchResult) {
+        let dao = self.dao as! APIDAO
+        dao.game(withId: searchResult.id) { (game) in
+            DispatchQueue.main.async {
+                let vc = GameScreen(game, platform: .tbd)
+                self.present(vc, animated: true)
+            }
+        }
+    }
+
+    func displayShow(_ id: UInt64?) {
         guard let id = id else { fatalError("Show had no id to present from") }
 
 //        dao.show(withId: id) { (showOverview) in
