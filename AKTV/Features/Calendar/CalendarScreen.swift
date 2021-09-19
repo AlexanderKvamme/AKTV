@@ -70,12 +70,6 @@ final class CalendarScreen: UIViewController {
 
     // MARK: - Life Cycle
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        tabBar?.hideIt()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -108,8 +102,6 @@ final class CalendarScreen: UIViewController {
         let exitTapGesture = UITapGestureRecognizer(target: self, action: #selector(exitScreen))
         chevronButton.addGestureRecognizer(exitTapGesture)
         chevronButton.isUserInteractionEnabled = true
-
-        tabBar?.hideIt()
 
         cv.backgroundColor = .clear
         cv.register(CalendarCell.self, forCellWithReuseIdentifier: "CalendarCell")
