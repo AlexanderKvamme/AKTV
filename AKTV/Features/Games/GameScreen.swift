@@ -71,16 +71,19 @@ final class GameScreen: UIViewController {
     private func fetchContent(_ game: Proto_Game) {
         // TODO: Do this in one async method call
         if let coverUrl = GameService.getCachedCoverUrl(game.cover.id) {
-            let url = URL(string: coverUrl)
-            
-            imageView.kf.setImage(with: url)
+            DispatchQueue.main.async {
+                let url = URL(string: coverUrl)
+                self.imageView.kf.setImage(with: url)
+            }
         } else {
             // TODO: Set image that was not
             GameService.getCoverImageURL(coverId: String(game.cover.id)) { str in
                 guard let str = str, let url = URL(string: str) else { return }
-                
-                let resource = ImageResource(downloadURL: url)
-                self.imageView.kf.setImage(with: resource)
+
+                DispatchQueue.main.async {
+                    let resource = ImageResource(downloadURL: url)
+                    self.imageView.kf.setImage(with: resource)
+                }
             }
         }
     }
