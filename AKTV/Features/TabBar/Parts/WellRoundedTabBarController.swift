@@ -22,7 +22,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     
     // MARK: - Initializers
 
-    init(_ initalIndex: Int = 0) {
+    init(initalIndex: Int = 0) {
         self.initialIndex = initalIndex
         super.init(nibName: nil, bundle: nil)
 
@@ -70,7 +70,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         }
 
         let searchTabScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen())
-        screens = [calendarScreen, discoveryScreen, searchTabScreen, calendarScreen, upcomingScreen]
+        screens = [calendarScreen, discoveryScreen, searchTabScreen, upcomingScreen, UIViewController()]
         setViewControllers(screens, animated: true)
 
         // Initial View Controller

@@ -33,7 +33,7 @@ class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate
 
     // MARK: - Properties
 
-    let headerContainer = SearchHeaderContainer()
+    let headerContainer: SearchHeaderContainer
     private let episodesSearchResultViewController = UITableViewController()
     private let episodesSearchResultDataDelegate = self
     var detailedShowPresenter: ModelPresenter?
@@ -44,6 +44,7 @@ class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate
     // MARK: - Initializer
 
     init(dao: MediaSearcher, searchTypes: MediaType) {
+        self.headerContainer = SearchHeaderContainer(searchTypes)
         self.dao = dao
         self.searchTypes = searchTypes
         super.init(nibName: nil, bundle: nil)

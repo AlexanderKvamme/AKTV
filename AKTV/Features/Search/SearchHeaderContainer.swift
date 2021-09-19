@@ -13,6 +13,17 @@ final class SearchHeaderContainer: UIViewController {
     private let header = UILabel()
     let subHeader = UILabel()
     let searchField = SearchShowTextField(frame: .zero)
+    private var mediaType: MediaType
+
+    init(_ mediaType: MediaType) {
+        self.mediaType = mediaType
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         setup()
@@ -20,6 +31,16 @@ final class SearchHeaderContainer: UIViewController {
     }
 
     func setup() {
+
+        switch mediaType {
+        case .movie:
+            subHeader.text = "Search for any movie in the world!"
+        case .series:
+            subHeader.text = "Search for any TV show in the world!"
+        case .game:
+            subHeader.text = "Search for any game in the world!"
+        }
+
         header.font = UIFont.gilroy(.heavy, 38)
         header.textAlignment = .left
         header.text = "What are you looking for?"
@@ -29,7 +50,6 @@ final class SearchHeaderContainer: UIViewController {
         subHeader.font = UIFont.gilroy(.regular, 20)
         subHeader.textAlignment = .left
         subHeader.alpha = 0.4
-        subHeader.text = "Search for any TV show in the world!"
         subHeader.textColor = UIColor(dark)
         subHeader.numberOfLines = 0
     }
