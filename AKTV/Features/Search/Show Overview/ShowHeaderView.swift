@@ -141,7 +141,7 @@ final class ShowHeaderView: UIView {
         titleLabel.text = showOverview.name.uppercased()
 
         if let imagePath = showOverview.backdropPath,
-           let url = URL(string: APIDAO.imageRoot+imagePath) {
+           let url = URL(string: APIDAO.imdbImageRoot+imagePath) {
 
             imageView.kf.setImage(with: url) { result in
                 switch result {

@@ -8,6 +8,7 @@
 
 import Foundation
 import ComplimentaryGradientView
+import IGDB_SWIFT_API
 
 
 final class ColorStore {
@@ -27,7 +28,15 @@ final class ColorStore {
         // TODO: Use url path for a more generic color storage
         return "episode-key-\(path)"
     }
-    
+
+    private static func gameArtKey(for game: Proto_Game) -> String {
+        let path = game.cover.url
+        print("bam cover: ", game.cover)
+        print("bam game cover path: ", path)
+        // TODO: Use url path for a more generic color storage
+        return "game-key-\(path)"
+    }
+
     static func save(_ colors: UIImageColors, forOverview overview: ShowOverview) {
         let encodableColors = UIImageColorsWrapper(background: colors.background,
                                                    detail: colors.detail,
@@ -44,8 +53,40 @@ final class ColorStore {
         }
     }
 
+    static func save(_ colors: UIImageColors, forGame game: Proto_Game) {
+        let encodableColors = UIImageColorsWrapper(background: colors.background,
+                                                   detail: colors.detail,
+                                                   primary: colors.primary,
+                                                   secondary: colors.secondary)
+
+        do {
+            let encoder = JSONEncoder()
+            let encodedData = try encoder.encode(encodableColors)
+            let episodeKey = gameArtKey(for: game)
+            UserDefaults.standard.set(encodedData, forKey: episodeKey)
+        } catch let error {
+            fatalError("could not store color: \(error.localizedDescription)")
+        }
+    }
+
     static func get(colorsFrom overview: ShowOverview) -> UIImageColors? {
         let episodeKey = showOverviewKey(for: overview)
+        guard let data = UserDefaults.standard.data(forKey: episodeKey) else { return nil }
+
+        do {
+            let decoder = JSONDecoder()
+            let decodedData = try decoder.decode(UIImageColorsWrapper.self, from: data)
+            return UIImageColors(background: decodedData.background.color,
+                                 primary: decodedData.primary.color,
+                                 secondary: decodedData.secondary.color,
+                                 detail: decodedData.detail.color)
+        } catch {
+            fatalError("Failed retrieving colors from userdefaults")
+        }
+    }
+
+    static func get(colorsFrom game: Proto_Game) -> UIImageColors? {
+        let episodeKey = gameArtKey(for: game)
         guard let data = UserDefaults.standard.data(forKey: episodeKey) else { return nil }
 
         do {

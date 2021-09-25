@@ -9,7 +9,7 @@
 import UIKit
 var gamesService: GameService!
 
-let tabBarController = WellRoundedTabBarController(initalIndex: 0)
+let tabBarController = WellRoundedTabBarController(initalIndex: 4)
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -23,11 +23,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Authenticate
 
+
+
         GameService.authenticate { (authToken) in
             gamesService = GameService(authToken)
 
+            GameService.testFetchCover { cover in
+                print("bam successfully got covers: ", cover)
+
+                let imageId = cover.imageID
+                print("bam imageID: ", imageId)
+
+                GameService.fetchCoverImageUrl(gameId: 161120) { coverImageUrl in
+                    print("bam successfully got cover url: ", coverImageUrl)
+                }
+            }
+
             GameService.getCurrentHighestID(GamePlatform.NintendoSwitch) { highestRemoteGameID in
                 // Get initial Swipeables
+                return
                 let testPlatform = GamePlatform.NintendoSwitch
                 let initialRange = GameStore.getNextRange(for: testPlatform, highestRemoteID: highestRemoteGameID)
 

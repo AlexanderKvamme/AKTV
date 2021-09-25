@@ -45,36 +45,36 @@ final class UpcomingCell: UICollectionViewCell {
     }
 
     private func addSubviewsAndConstraints() {
-        addSubview(imageShadow)
-        addSubview(imageView)
-        addSubview(cardShadow)
-        addSubview(card)
+//        addSubview(imageShadow)
+//        addSubview(imageView)
+//        addSubview(cardShadow)
+//        addSubview(card)
 
-        imageShadow.snp.makeConstraints { (make) in
-            make.edges.equalTo(imageView)
-        }
-
-        imageView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(16)
-            make.left.right.equalToSuperview().inset(24)
-            make.bottom.equalTo(card.snp.centerY)
-        }
-
-        card.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(-180)
-            make.height.equalTo(UpcomingCard.preferredSize.height)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(imageView.snp.width).offset(-32)
-        }
-
-        cardShadow.snp.makeConstraints { (make) in
-            make.edges.equalTo(card)
-        }
+//        imageShadow.snp.makeConstraints { (make) in
+//            make.edges.equalTo(imageView)
+//        }
+//
+//        imageView.snp.makeConstraints { (make) in
+//            make.top.equalToSuperview().offset(16)
+//            make.left.right.equalToSuperview().inset(24)
+//            make.bottom.equalTo(card.snp.centerY)
+//        }
+//
+//        card.snp.makeConstraints { (make) in
+//            make.bottom.equalToSuperview().offset(-180)
+//            make.height.equalTo(UpcomingCard.preferredSize.height)
+//            make.centerX.equalToSuperview()
+//            make.width.equalTo(imageView.snp.width).offset(-32)
+//        }
+//
+//        cardShadow.snp.makeConstraints { (make) in
+//            make.edges.equalTo(card)
+//        }
     }
 
     func update(with showOverview: ShowOverview) {
         var imageURL = URL.createLocalUrl(forImageNamed: "default-placeholder-image")!
-        if let posterPath = showOverview.posterPath, let actualImageURL = URL(string: APIDAO.imageRoot+posterPath) {
+        if let posterPath = showOverview.posterPath, let actualImageURL = URL(string: APIDAO.imdbImageRoot+posterPath) {
             imageURL = actualImageURL
         }
 

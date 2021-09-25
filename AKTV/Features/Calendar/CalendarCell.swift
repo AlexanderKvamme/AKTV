@@ -10,6 +10,7 @@ import UIKit
 import JTAppleCalendar
 import Kingfisher
 import Just
+import IGDB_SWIFT_API
 
 
 fileprivate struct style {
@@ -102,8 +103,67 @@ class CalendarCell: JTACDayCell {
         setIsTodayStyle(cellState: cellState)
     }
 
+    // Skal jeg overloade med en egen metode for games?
+    // Eller subclasse
+
+    func configure(for cellState: CellState, game: Proto_Game) {
+        print("bam success configuring for game")
+        resetStyle(cellState)
+
+        // TODO: Multiple episodes on one day
+        if cellState.dateBelongsTo == .thisMonth {
+            updateCellDesign(for: game, cellState: cellState)
+        }
+
+        setIsTodayStyle(cellState: cellState)
+    }
+
     override func prepareForReuse() {
         dateLabel.textColor = UIColor(dark)
+    }
+
+    private func updateCellDesign(for game: Proto_Game, cellState: CellState) {
+        print("bam success!! tryna make game cell now")
+        // Basic "date has episode" styles
+        dateLabel.textColor = UIColor(light)
+        dateLabel.alpha = 0.6
+        dateLabel.textColor = .green
+
+//        guard let stillPath = overview.posterPath else { return }
+
+        // FIXME: Get the correct url for a cover image in postman, when you get it, proceed here
+        let stillPath = game.cover.url
+
+        print("bam stillPath: ", stillPath)
+
+        // FIXME: MOVE THIS AWAY. gonna try to get a cover object instead
+
+        if let existingColors = ColorStore.get(colorsFrom: game) {
+            background.backgroundColor = existingColors.detail
+            dateLabel.textColor = existingColors.background
+        } else {
+
+            DispatchQueue.main.async {
+
+                // FIXME: Use proper ID here
+
+                GameService.fetchCoverImageUrl(gameId: game.id) { coverImageUrl in
+                    print("bam successfully got cover url: ", coverImageUrl)
+
+                    UIImageView().kf.setImage(with: URL(string: coverImageUrl), completionHandler: { result in
+                        do {
+                            let unwrappedResult = try result.get()
+                            unwrappedResult.image.getColors { (colors) in
+                                ColorStore.save(colors, forGame: game)
+                                self.updateCellDesign(for: game, cellState: cellState)
+                            }
+                        } catch {
+                            print("Error: while retrieving image from stillPath")
+                        }
+                    })
+                }
+            }
+        }
     }
 
     private func updateCellDesign(for episode: Episode, _ overview: ShowOverview, cellState: CellState) {
@@ -118,7 +178,7 @@ class CalendarCell: JTACDayCell {
             dateLabel.textColor = existingColors.background
         } else {
             DispatchQueue.main.async {
-                UIImageView().kf.setImage(with: URL(string: APIDAO.imageRoot+stillPath), completionHandler: { result in
+                UIImageView().kf.setImage(with: URL(string: APIDAO.imdbImageRoot+stillPath), completionHandler: { result in
                     do {
                         let unwrappedResult = try result.get()
                         unwrappedResult.image.getColors { (colors) in

@@ -30,8 +30,10 @@ final class APIDAO: NSObject, MediaSearcher {
     
     private let root = "https://api.themoviedb.org/3/"
     private let keyParam = "api_key=a1549fe4c5cb82a960b858411d70112c"
-    static let imageRoot = "https://image.tmdb.org/t/p/original/"
-    
+    static let imdbImageRoot = "https://image.tmdb.org/t/p/original/"
+
+    static let igdbImageRoot = "https://api.igdb.com/v4/covers/"
+
     typealias JSONCompletion = (([String: Any]?) -> Void)
 
     // TODO: Dont default
@@ -87,7 +89,12 @@ final class APIDAO: NSObject, MediaSearcher {
     }
 
     func searchGames( _ string: String, andThen: @escaping (([Proto_Game]) -> ())) {
-        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: GameService.authToken.accessToken)
+        guard let authToken = GameService.authToken else {
+            print("Missing authToken")
+            return
+        }
+
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         let apicalypse = APICalypse()
             .search(searchQuery: string)
             .fields(fields: "name")
@@ -160,7 +167,12 @@ final class APIDAO: NSObject, MediaSearcher {
     }
 
     func game(withId: UInt64, andThen: @escaping ((Proto_Game) -> ()))  {
-        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: GameService.authToken.accessToken)
+        guard let authToken = GameService.authToken else {
+            print("Missing authToken")
+            return
+        }
+
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         let apicalypse = APICalypse()
             .where(query: "id = \(withId);")
             .fields(fields: "*")
@@ -174,4 +186,31 @@ final class APIDAO: NSObject, MediaSearcher {
             print("Request exception: ", requestException)
         }
     }
+
+    func getGameReleaseDate(_ releaseDateId: Int, andThen: @escaping (([Date]) -> ())) {
+        guard let authToken = GameService.authToken else {
+            print("Missing authToken")
+            return
+        }
+
+        let gameId = DummyGameIDs.diablo2Resurrected
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
+        let apicalypse = APICalypse()
+            .where(query: "game = \(gameId);")
+            .fields(fields: "*")
+
+        wrapper.releaseDates(apiCalypse: apicalypse) { releasedates in
+            let dates = releasedates.map({$0.date.date})
+            print("bam game dates: ", dates)
+
+            andThen(dates)
+        } errorResponse: { reqException in
+            print("bam reqException: ", reqException)
+        }
+    }
+}
+
+
+class DummyGameIDs {
+    static let diablo2Resurrected = 142803
 }

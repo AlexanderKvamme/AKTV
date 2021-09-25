@@ -67,9 +67,24 @@ final class GameStore {
         setFavourites(existingFavs, platform: platform)
     }
     
-    static func getFavourites(_ platform: GamePlatform) -> [Int] {
+    static func getFavourites(_ gamePlatform: GamePlatform? = nil) -> [Int] {
+        guard let platform = gamePlatform else {
+            return getAllFavouriteGames()
+        }
+
         let res = userDefaults.object(forKey: makeFavouriteKey(platform: platform)) as? [Int] ?? []
         return res
+    }
+
+    private static func getAllFavouriteGames() -> [Int] {
+        var items = [Int]()
+
+        for platform in GamePlatform.allCases {
+            let platformGames = getFavourites(platform)
+            items.append(contentsOf: platformGames)
+        }
+
+        return items
     }
     
     static func setFavourites(_ gameIds: [Int], platform: GamePlatform) {

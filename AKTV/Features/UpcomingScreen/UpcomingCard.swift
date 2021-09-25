@@ -70,7 +70,7 @@ final class UpcomingCard: UIView {
         // Badge stack
         badgeStack.axis = .horizontal
         badgeStack.alignment = .leading
-        badgeStack.spacing = 8
+//        badgeStack.spacing = 8
 
         // Left stack
         leftVStack.axis = .vertical
@@ -88,11 +88,12 @@ final class UpcomingCard: UIView {
 
         [hStack].forEach({ addSubview($0) })
 
-        hStack.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().inset(hspacing)
-            make.right.equalToSuperview().inset(hspacing)
-            make.top.bottom.equalToSuperview().inset(vspacing)
-        }
+//        hStack.snp.makeConstraints { (make) in
+//            make.left.equalToSuperview().inset(hspacing)
+//            make.right.equalToSuperview().inset(hspacing)
+//            make.bottom.equalToSuperview().inset(vspacing)
+//            make.top.equalToSuperview()
+//        }
 
         episodeNumberLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
     }
@@ -106,7 +107,7 @@ final class UpcomingCard: UIView {
         episodeNumberLabel.text = String(show.nextEpisodeToAir?.episodeNumber ?? 0)
 
         if let genres = show.genres {
-            let badgeViews: [BadgeView] = Array(genres.map({ genre in BadgeView(text: genre.name) }).prefix(2))
+            let badgeViews: [BadgeView] = [] // Array(genres.map({ genre in BadgeView(text: genre.name) }).prefix(2))
             badgeViews.forEach({ badgeStack.addArrangedSubview($0) })
         }
     }

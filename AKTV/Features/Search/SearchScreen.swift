@@ -135,10 +135,12 @@ extension SearchScreen: UITextFieldDelegate {
             return false
         }
 
-        dao.search(searchTypes, searchterm) { (shows) in
+        dao.search(searchTypes, searchterm) { (results) in
             DispatchQueue.main.async {
-                self.searchResults = shows
+                print("bam got games: ", results)
+                self.searchResults = results
                 self.episodesSearchResultViewController.tableView.reloadData()
+                print("bam results: ", self.episodesSearchResultViewController.view.frame)
             }
         }
 

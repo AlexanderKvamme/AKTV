@@ -25,7 +25,7 @@ enum GamePlatform: String, CaseIterable {
 
 final class GameService {
 
-    static var authToken: TwitchAuthResponse!
+    static var authToken: TwitchAuthResponse?
     static let clientID = "6w71e2zsvf5ak18snvrtweybwjl877"
     static private let rootURL = "https://api.igdb.com/v4"
 
@@ -37,13 +37,19 @@ final class GameService {
     // MARK: - Initializers
 
     init(_ authToken: TwitchAuthResponse) {
+        print("bam got accessToken: ", authToken.accessToken)
+        print("bam got clientId: ", Self.clientID)
         Self.authToken = authToken
     }
 
     // MARK: - Methods
     
     static func testFetchGames(IDs: [Int], completion: @escaping (([Proto_Game]) -> ())) {
-        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: Self.authToken.accessToken)
+        guard let authToken = authToken else {
+            print("Missing authToken")
+            return
+        }
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         
         let gameArrayString = "(" + IDs.map({ String($0) }).joined(separator: ",") + ");"
         let apicalypse = APICalypse()
@@ -54,6 +60,49 @@ final class GameService {
             completion(games)
         } errorResponse: { requestException in
             print("Error fetching games: ", requestException)
+        }
+    }
+
+    static func testFetchCover(id: UInt64? = 161120, completion: @escaping ((Proto_Cover) -> ())) {
+        guard let authToken = authToken else {
+            print("Missing authToken")
+            return
+        }
+
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
+        let str = String(Int(id!))
+        let apicalypse = APICalypse()
+            .fields(fields: "*")
+            .where(query: "id = " + str)
+
+        wrapper.covers(apiCalypse: apicalypse) { covers in
+            print("bam success got covers: ", covers)
+            completion(covers.first!)
+        } errorResponse: { reqException in
+            print("bam reqEx: ", reqException)
+        }
+    }
+
+
+    static func fetchCoverImageUrl(gameId id: UInt64, completion: @escaping ((String) -> ())) {
+
+        guard let authToken = authToken else {
+            print("Missing authToken")
+            return
+        }
+
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
+        let str = String(id)
+        let apicalypse = APICalypse()
+            .fields(fields: "*")
+            .where(query: "id = " + str)
+
+        wrapper.covers(apiCalypse: apicalypse) { cover in
+            guard let cover = cover.first else { return }
+            let imageId = cover.imageID
+            let coverUrl = getCoverImageURL(coverId: imageId, completion: completion)
+        } errorResponse: { reqException in
+            print("bam reqEx: ", reqException)
         }
     }
 
@@ -71,10 +120,8 @@ final class GameService {
         for item in items {
             let coverId = String(item.cover.id)
             getCoverImageURL(coverId: coverId) { (coverUrl) in
-                guard let str = coverUrl else { return }
-                
-                Self.coverUrls[coverId] = str
-                let url = URL(string: str)!
+                Self.coverUrls[coverId] = coverUrl
+                let url = URL(string: coverUrl)!
                 let resource = ImageResource(downloadURL: url)
 
                 KingfisherManager.shared.retrieveImage(with: resource) { res in }
@@ -82,23 +129,35 @@ final class GameService {
         }
     }
 
-    static func getCoverImageURL(coverId: String, completion: @escaping ((String?) -> ())) {
-        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: Self.authToken.accessToken)
+    static func getCoverImageURL(coverId: String, completion: @escaping ((String) -> ())) {
+        guard let authToken = authToken else {
+            print("Missing authToken")
+            return
+        }
+        print("bam using this coverId: ", coverId)
+
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         let apicalypse = APICalypse()
             .fields(fields: "*")
-            .where(query: "id = \(coverId);")
+            .where(query: "id = co3gbk;")
 
-        wrapper.covers(apiCalypse: apicalypse) { (covers) -> (Void) in
-            guard let imageId = covers.first?.imageID else {
-                print("ERROR could not access cover url. Use default")
-                return
-            }
+        let imageURL = imageBuilder(imageID: coverId, size: ImageSize.COVER_BIG)
+        completion(imageURL)
+        print("bam imagebuilder url: ", imageURL)
 
-            let imageURL = imageBuilder(imageID: imageId, size: ImageSize.COVER_BIG)
-            completion(imageURL)
-        } errorResponse: { (requestException) -> (Void) in
-            print("Error getting cover image: ", requestException)
-        }
+        //            completion("https://images.igdb.com/igdb/image/upload/t_thumb/co3gbk.jpg")
+//        wrapper.covers(apiCalypse: apicalypse) { (covers) -> (Void) in
+//            guard let imageId = covers.first?.imageID else {
+//                print("ERROR could not access cover url. Use default")
+//                return
+//            }
+//
+////            let imageURL = imageBuilder(imageID: imageId, size: ImageSize.COVER_BIG)
+////            print("bam imageUrl: ", imageURL)
+//            completion("https://images.igdb.com/igdb/image/upload/t_thumb/co3gbk.jpg")
+//        } errorResponse: { (requestException) -> (Void) in
+//            print("Error getting cover image: ", requestException)
+//        }
     }
 
 /**
@@ -152,6 +211,11 @@ final class GameService {
             .where(query: whereQuery)
             .sort(field: "id", order: .DESCENDING)
 
+        guard let authToken = authToken else {
+            print("Missing authToken")
+            return
+        }
+
         let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
             completion(games)
@@ -170,6 +234,11 @@ final class GameService {
             .limit(value: 3)
             .where(query: whereQuery)
             .sort(field: "id", order: .DESCENDING)
+        
+        guard let authToken = authToken else {
+            print("Missing authToken")
+            return
+        }
 
         let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in

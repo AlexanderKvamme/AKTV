@@ -78,7 +78,7 @@ final class GameScreen: UIViewController {
         } else {
             // TODO: Set image that was not
             GameService.getCoverImageURL(coverId: String(game.cover.id)) { str in
-                guard let str = str, let url = URL(string: str) else { return }
+                guard let url = URL(string: str) else { return }
 
                 DispatchQueue.main.async {
                     let resource = ImageResource(downloadURL: url)

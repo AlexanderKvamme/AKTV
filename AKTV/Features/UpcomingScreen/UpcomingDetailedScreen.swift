@@ -111,7 +111,7 @@ final class UpcomingDetailedScreen: UIViewController {
 
     func update(show: ShowOverview, episode: Episode) {
         if let posterPath = show.posterPath {
-            let posterURL = URL(string: APIDAO.imageRoot+posterPath)
+            let posterURL = URL(string: APIDAO.imdbImageRoot+posterPath)
             imageView.kf.setImage(with: posterURL)
         }
 

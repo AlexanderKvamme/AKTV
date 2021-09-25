@@ -9,6 +9,7 @@
 import UIKit
 import JTAppleCalendar
 import SnapKit
+import IGDB_SWIFT_API
 
 
 extension DateFormatter {
@@ -42,7 +43,8 @@ final class CalendarScreen: UIViewController {
                                          height: style.calendarHeight))
     var calendarCard = Card()
     var imageCard = ImageCard()
-    var episodeDict = [Date : (Episode, ShowOverview)]()
+    var episodeDict = [String : (Episode, ShowOverview)]()
+    var gameDict = [String: Proto_Game]()
     var formatter = DateFormatter.withoutTime
     var upcomingFavourites = [Episode]() {
         didSet {
@@ -81,18 +83,41 @@ final class CalendarScreen: UIViewController {
     private func fetchPremiereDates() {
         let dao = APIDAO()
         let favShows = UserProfileManager().favouriteShows()
+        let favGames = GameStore.getFavourites()
+        print("favShowS: ", favShows)
+        print("favGames: ", favGames)
 
         favShows.forEach {
             dao.show(withId: $0) { overview in
                 dao.episodes(showId: overview.id, seasonNumber: overview.numberOfSeasons) { season in
                     DispatchQueue.main.async {
-                    season.episodes.forEach { episode in
-                        if let formattedDate = episode.getFormattedDate() {
-                            // FIXME: Should allow for multiple episodes on one day
-                            self.episodeDict[formattedDate] = (episode, overview)
-                            self.upcomingFavourites.append(episode)
+                        season.episodes.forEach { episode in
+                            if let formattedDate = episode.getFormattedDate() {
+                                let str = DateFormatter.withSimplifiedDayStyle.string(from: formattedDate)
+
+                                // FIXME: Should allow for multiple episodes on one day
+                                self.episodeDict[str] = (episode, overview)
+                                self.upcomingFavourites.append(episode)
+                            }
                         }
-                    }}
+                    }
+                }
+            }
+        }
+
+        favGames.forEach { gameId in
+            dao.game(withId: UInt64(gameId)) { game in
+                dao.getGameReleaseDate(gameId) { dates in
+                    let dateSet = Set(dates)
+
+                    for date in dateSet {
+                        print("bam appending to gameDict: ", date)
+                        let dateFormatter = DateFormatter.withSimplifiedDayStyle
+                        let str = dateFormatter.string(from: date)
+                        self.gameDict[str] = game
+                    }
+                    print("bam keys in dict: ", self.gameDict.keys)
+//                    self.upcomingFavourites.append(game) // Is this needed?
                 }
             }
         }
@@ -180,8 +205,10 @@ extension CalendarScreen: JTACMonthViewDelegate {
         cell.setSelected(true)
 
         DispatchQueue.main.async {
-            if let showOverview = self.episodeDict[date]?.1 {
-                if let posterPath = showOverview.posterPath, let posterURL = URL(string: APIDAO.imageRoot+posterPath) {
+            let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
+
+            if let showOverview = self.episodeDict[key]?.1 {
+                if let posterPath = showOverview.posterPath, let posterURL = URL(string: APIDAO.imdbImageRoot+posterPath) {
                     self.imageCard.imageView.kf.setImage(with: posterURL)
                     return
                 }
@@ -203,19 +230,31 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
         cell.resetStyle(cellState)
 
-        if let (episode, overview) = episodeDict[date] {
+        let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
+
+        if let (episode, overview) = episodeDict[key] {
             cell.configure(for: cellState, episode: episode, overview: overview)
         }
     }
 
+    // Use dataSource to make cells
     func calendar(_ calendar: JTACMonthView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTACDayCell {
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
 
+        // FIXME: Find a way to display multiple episodes and games on one date
+
+        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
         cell.resetStyle(cellState)
 
-        if let (episode, overview) = episodeDict[date] {
+        let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
+        if let (episode, overview) = episodeDict[key] {
             cell.configure(for: cellState, episode: episode, overview: overview)
         }
+
+        if let game = gameDict[key] {
+            print("bam success")
+            cell.configure(for: cellState, game: game)
+        }
+
         return cell
     }
 
@@ -235,4 +274,15 @@ extension CalendarScreen: JTACMonthViewDelegate {
     func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {
         return MonthSize(defaultSize: style.calendarHeaderHeight)
     }
+}
+
+
+
+extension DateFormatter {
+    static var withSimplifiedDayStyle: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        return dateFormatter
+    }()
 }
