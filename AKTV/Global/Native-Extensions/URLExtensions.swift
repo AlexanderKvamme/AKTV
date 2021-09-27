@@ -28,3 +28,13 @@ extension URL {
         return url
     }
 }
+
+extension URLRequest {
+    static let igdbAuthenticationRequest: URLRequest = {
+        let authUrl = URL(string: "https://id.twitch.tv/oauth2/token?client_id=\(GameService.clientID)&client_secret=pyjnp1qwivqhskefv1vkqizeg6oge9&grant_type=client_credentials")!
+        var authenticationRequest = URLRequest(url: authUrl)
+        authenticationRequest.httpMethod = "POST"
+        authenticationRequest.setValue(String(format: "Bearer %s", clientID), forHTTPHeaderField: "Authorization")
+        return authenticationRequest
+    }()
+}

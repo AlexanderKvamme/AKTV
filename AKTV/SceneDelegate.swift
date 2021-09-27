@@ -7,61 +7,42 @@
 //
 
 import UIKit
-var gamesService: GameService!
+import Combine
 
+
+// Twitch API
+let clientID = "6w71e2zsvf5ak18snvrtweybwjl877"
+var subscriptions = Set<AnyCancellable>()
+var gamesService: GameService!
 let tabBarController = WellRoundedTabBarController(initalIndex: 4)
+
+// MARK: - Temporary spot for global publishers
+
+let gameAuthPublisher = URLSession.shared
+    .dataTaskPublisher(for: .igdbAuthenticationRequest)
+    .map(\.data)
+    .decode(type: TwitchAuthResponse.self, decoder: JSONDecoder.snakeCaseConverting)
+
+// MARK: - Class
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
-        // TODO: REMOVE AFTER TESTING
-//        GameStore.deleteAllEntries(platform: GamePlatform.NintendoSwitch)
-//        GameStore.deleteAllFavourites()
-        
-        // Authenticate
 
-
-
-        GameService.authenticate { (authToken) in
-            gamesService = GameService(authToken)
-
-            GameService.testFetchCover { cover in
-                print("bam successfully got covers: ", cover)
-
-                let imageId = cover.imageID
-                print("bam imageID: ", imageId)
-
-                GameService.fetchCoverImageUrl(gameId: 161120) { coverImageUrl in
-                    print("bam successfully got cover url: ", coverImageUrl)
-                }
+        gameAuthPublisher
+            .sink { _ in
+            } receiveValue: { authToken in
+                gamesService = GameService(authToken)
+                testGettingCovers()
             }
+            .store(in: &subscriptions)
 
-            GameService.getCurrentHighestID(GamePlatform.NintendoSwitch) { highestRemoteGameID in
-                // Get initial Swipeables
-                return
-                let testPlatform = GamePlatform.NintendoSwitch
-                let initialRange = GameStore.getNextRange(for: testPlatform, highestRemoteID: highestRemoteGameID)
+        setRootController()
+    }
 
-                GameService.fetchGames(initialRange, testPlatform) { games in
-                    DispatchQueue.main.sync {
-                        tabBarController.discoveryScreen.update(with: games, range: initialRange, platform: testPlatform, initialHighestRemoteID: highestRemoteGameID)
-                    }
-                }
-                
-                // TODO: Clean up
-                // TODO: Test getting favourite games
-//                let ids = GameStore.getFavourites(.NintendoSwitch)
-                let ids = [111, 222, 333]
-                
-                GameService.testFetchGames(IDs: ids, completion: { (games) in
-                    print("successfully fetched games: ", games.map({$0.firstReleaseDate.date}))
-                })
-            }
-        }
-
+    private func setRootController() {
         self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
     }
@@ -72,39 +53,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
-
-
-// Link: https://gist.github.com/proxpero/0cee32a53b94c37e1e92
-func combinedIntervals(intervals: [CountableClosedRange<Int>]) -> [CountableClosedRange<Int>] {
-
-    var combined = [CountableClosedRange<Int>]()
-    var accumulator = (0...0) // empty range
-
-    for interval in intervals.sorted(by: { $0.lowerBound  < $1.lowerBound  } ) {
-
-        if accumulator == (0...0) {
-            accumulator = interval
-        }
-
-        if accumulator.upperBound >= interval.upperBound {
-            // interval is already inside accumulator
-        }
-
-        else if accumulator.upperBound >= interval.lowerBound  {
-            // interval hangs off the back end of accumulator
-            accumulator = (accumulator.lowerBound...interval.upperBound)
-        }
-
-        else if accumulator.upperBound <= interval.lowerBound  {
-            // interval does not overlap
-            combined.append(accumulator)
-            accumulator = interval
-        }
+func testGettingCovers() {
+    GameService.fetchCoverImageUrl(gameId: 161120) { coverImageUrl in
+        print("bam successfully got cover url: ", coverImageUrl)
     }
-
-    if accumulator != (0...0) {
-        combined.append(accumulator)
-    }
-
-    return combined
 }
+
+func testGettingSwipeableGames() {
+    GameService.getCurrentHighestID(GamePlatform.NintendoSwitch) { highestRemoteGameID in
+        // Get initial Swipeables
+        let testPlatform = GamePlatform.NintendoSwitch
+        let initialRange = GameStore.getNextRange(for: testPlatform, highestRemoteID: highestRemoteGameID)
+
+        GameService.fetchGames(initialRange, testPlatform) { games in
+            DispatchQueue.main.sync {
+                tabBarController.discoveryScreen.update(with: games, range: initialRange, platform: testPlatform, initialHighestRemoteID: highestRemoteGameID)
+            }
+        }
+
+        // TODO: Clean up
+        // TODO: Test getting favourite games
+        // let ids = GameStore.getFavourites(.NintendoSwitch)
+        let ids = [111, 222, 333]
+
+        GameService.testFetchGames(IDs: ids, completion: { (games) in
+            print("successfully fetched games: ", games.map({$0.firstReleaseDate.date}))
+        })
+    }
+}
+

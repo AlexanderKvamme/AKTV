@@ -80,6 +80,8 @@
 		DD704F3225DD402B0021D882 /* DINRoundPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD704F2D25DD402B0021D882 /* DINRoundPro-Light.ttf */; };
 		DD78E2FC25CAF1230084F101 /* DayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD78E2FB25CAF1230084F101 /* DayModel.swift */; };
 		DD7E660C25D538F7006553D1 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7E660B25D538F7006553D1 /* URLExtensions.swift */; };
+		DD9A33832702268C0024C5C3 /* DecoderExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9A33822702268C0024C5C3 /* DecoderExtensions.swift */; };
+		DD9A3385270249000024C5C3 /* IntervalCombiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9A3384270249000024C5C3 /* IntervalCombiner.swift */; };
 		DD9BC9D1266B5553009B2DD8 /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9D0266B5553009B2DD8 /* GameService.swift */; };
 		DD9BC9F1266BC638009B2DD8 /* DiscoveryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F0266BC638009B2DD8 /* DiscoveryScreen.swift */; };
 		DD9BCA04266BC9CF009B2DD8 /* SwipeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9F6266BC9CE009B2DD8 /* SwipeableView.swift */; };
@@ -230,6 +232,8 @@
 		DD704F2D25DD402B0021D882 /* DINRoundPro-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINRoundPro-Light.ttf"; sourceTree = "<group>"; };
 		DD78E2FB25CAF1230084F101 /* DayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayModel.swift; sourceTree = "<group>"; };
 		DD7E660B25D538F7006553D1 /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
+		DD9A33822702268C0024C5C3 /* DecoderExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderExtensions.swift; sourceTree = "<group>"; };
+		DD9A3384270249000024C5C3 /* IntervalCombiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalCombiner.swift; sourceTree = "<group>"; };
 		DD9BC9D0266B5553009B2DD8 /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
 		DD9BC9F0266BC638009B2DD8 /* DiscoveryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryScreen.swift; sourceTree = "<group>"; };
 		DD9BC9F6266BC9CE009B2DD8 /* SwipeableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableView.swift; sourceTree = "<group>"; };
@@ -544,6 +548,7 @@
 				DD7E660B25D538F7006553D1 /* URLExtensions.swift */,
 				DD39527D25D6D0FE00C918F3 /* GeneralExtensions.swift */,
 				DD25A10425E3281600B39ACA /* UIStackViewExtensions.swift */,
+				DD9A33822702268C0024C5C3 /* DecoderExtensions.swift */,
 			);
 			path = "Native-Extensions";
 			sourceTree = "<group>";
@@ -704,6 +709,7 @@
 				DDB3C71E26C080E000CB88D7 /* Reusable-components */,
 				DD6DDF6325CDA0FE00A19F3A /* Native-Extensions */,
 				DD6DDF4E25CD517800A19F3A /* Themes.swift */,
+				DD9A3384270249000024C5C3 /* IntervalCombiner.swift */,
 				DD39528225D6E3D800C918F3 /* BottomAlignedLabel.swift */,
 				DD3952AC25D6E82400C918F3 /* AnimatableNumberLabel.swift */,
 			);
@@ -1115,6 +1121,8 @@
 				DDC8047D25D56C8200B0418B /* ShowOverview.swift in Sources */,
 				DDB48F7925D3F694007C0131 /* GlobalProperties.swift in Sources */,
 				DD39527025D6C07900C918F3 /* LabledIcon.swift in Sources */,
+				DD9A3385270249000024C5C3 /* IntervalCombiner.swift in Sources */,
+				DD9A33832702268C0024C5C3 /* DecoderExtensions.swift in Sources */,
 				DD9BCA08266BC9CF009B2DD8 /* GameCard.swift in Sources */,
 				DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */,
 				DD19BE1726BF447B00D3D2EC /* MediaTypePickerScreen.swift in Sources */,
