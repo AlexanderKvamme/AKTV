@@ -59,12 +59,9 @@ final class GameScreen: UIViewController {
     }
     
     @objc private func didTapStar() {
-        print("bam would setFavourite")
-        
         let isFavourite = GameStore.getFavourites(platform).contains(Int(game.id))
         setFilled(!isFavourite)
         
-        print("bam isFav: ", isFavourite)
         GameStore.setFavourite(self.game, !isFavourite, platform: platform)
     }
     

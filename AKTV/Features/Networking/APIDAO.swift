@@ -201,11 +201,9 @@ final class APIDAO: NSObject, MediaSearcher {
 
         wrapper.releaseDates(apiCalypse: apicalypse) { releasedates in
             let dates = releasedates.map({$0.date.date})
-            print("bam game dates: ", dates)
-
             andThen(dates)
         } errorResponse: { reqException in
-            print("bam reqException: ", reqException)
+            print("reqException: ", reqException)
         }
     }
 }

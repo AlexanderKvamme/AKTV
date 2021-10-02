@@ -46,10 +46,18 @@ final class CalendarScreen: UIViewController {
     var episodeDict = [String : (Episode, ShowOverview)]()
     var gameDict = [String: Proto_Game]()
     var formatter = DateFormatter.withoutTime
-    var upcomingFavourites = [Episode]() {
+    var upcomingShows = [Episode]() {
         didSet {
-            let datesAdded = upcomingFavourites.compactMap{ $0.getFormattedDate() }
+            let datesAdded = upcomingShows.compactMap{ $0.getFormattedDate() }
             cv.reloadDates(datesAdded)
+        }
+    }
+    var upcomingGames = [Proto_Game]() {
+        didSet {
+            let datesAdded = upcomingGames.compactMap{ $0.firstReleaseDate.date }
+            DispatchQueue.main.async {
+                self.cv.reloadDates(datesAdded)
+            }
         }
     }
     weak var tabBar: CustomTabBarDelegate?
@@ -97,7 +105,7 @@ final class CalendarScreen: UIViewController {
 
                                 // FIXME: Should allow for multiple episodes on one day
                                 self.episodeDict[str] = (episode, overview)
-                                self.upcomingFavourites.append(episode)
+                                self.upcomingShows.append(episode)
                             }
                         }
                     }
@@ -107,18 +115,10 @@ final class CalendarScreen: UIViewController {
 
         favGames.forEach { gameId in
             dao.game(withId: UInt64(gameId)) { game in
-                dao.getGameReleaseDate(gameId) { dates in
-                    let dateSet = Set(dates)
-
-                    for date in dateSet {
-                        print("bam appending to gameDict: ", date)
-                        let dateFormatter = DateFormatter.withSimplifiedDayStyle
-                        let str = dateFormatter.string(from: date)
-                        self.gameDict[str] = game
-                    }
-                    print("bam keys in dict: ", self.gameDict.keys)
-//                    self.upcomingFavourites.append(game) // Is this needed?
-                }
+                let dateFormatter = DateFormatter.withSimplifiedDayStyle
+                let str = dateFormatter.string(from: game.firstReleaseDate.date)
+                self.gameDict[str] = game
+                self.upcomingGames.append(game)
             }
         }
     }
@@ -214,6 +214,17 @@ extension CalendarScreen: JTACMonthViewDelegate {
                 }
             }
 
+            if let game = self.gameDict[key] {
+                let gameId = game.cover.id
+                GameService.fetchCoverImageUrl(coverId: gameId) { coverImageUrl in
+                    if let url = URL(string: coverImageUrl) {
+                        DispatchQueue.main.async {
+                            self.imageCard.imageView.kf.setImage(with: url)
+                        }
+                    }
+                }
+            }
+
             self.imageCard.imageView.image = nil
         }
     }
@@ -251,7 +262,6 @@ extension CalendarScreen: JTACMonthViewDelegate {
         }
 
         if let game = gameDict[key] {
-            print("bam success")
             cell.configure(for: cellState, game: game)
         }
 

@@ -37,8 +37,8 @@ final class GameService {
     // MARK: - Initializers
 
     init(_ authToken: TwitchAuthResponse) {
-        print("bam got accessToken: ", authToken.accessToken)
-        print("bam got clientId: ", Self.clientID)
+        print("IGDB accessToken: ", authToken.accessToken)
+        print("IGDB clientId: ", Self.clientID)
         Self.authToken = authToken
     }
 
@@ -76,16 +76,13 @@ final class GameService {
             .where(query: "id = " + str)
 
         wrapper.covers(apiCalypse: apicalypse) { covers in
-            print("bam success got covers: ", covers)
             completion(covers.first!)
         } errorResponse: { reqException in
-            print("bam reqEx: ", reqException)
+            print("reqEx: ", reqException)
         }
     }
 
-
-    static func fetchCoverImageUrl(gameId id: UInt64, completion: @escaping ((String) -> ())) {
-
+    static func fetchCoverImageUrl(coverId id: UInt64, completion: @escaping ((String) -> ())) {
         guard let authToken = authToken else {
             print("Missing authToken")
             return
@@ -100,9 +97,9 @@ final class GameService {
         wrapper.covers(apiCalypse: apicalypse) { cover in
             guard let cover = cover.first else { return }
             let imageId = cover.imageID
-            let coverUrl = getCoverImageURL(coverId: imageId, completion: completion)
+            getCoverImageURL(coverId: imageId, completion: completion)
         } errorResponse: { reqException in
-            print("bam reqEx: ", reqException)
+            print("reqEx: ", reqException)
         }
     }
 
@@ -134,7 +131,6 @@ final class GameService {
             print("Missing authToken")
             return
         }
-        print("bam using this coverId: ", coverId)
 
         let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         let apicalypse = APICalypse()
@@ -143,7 +139,6 @@ final class GameService {
 
         let imageURL = imageBuilder(imageID: coverId, size: ImageSize.COVER_BIG)
         completion(imageURL)
-        print("bam imagebuilder url: ", imageURL)
 
         //            completion("https://images.igdb.com/igdb/image/upload/t_thumb/co3gbk.jpg")
 //        wrapper.covers(apiCalypse: apicalypse) { (covers) -> (Void) in

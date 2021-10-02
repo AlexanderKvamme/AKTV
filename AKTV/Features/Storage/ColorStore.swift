@@ -30,9 +30,7 @@ final class ColorStore {
     }
 
     private static func gameArtKey(for game: Proto_Game) -> String {
-        let path = game.cover.url
-        print("bam cover: ", game.cover)
-        print("bam game cover path: ", path)
+        let path = game.cover.id
         // TODO: Use url path for a more generic color storage
         return "game-key-\(path)"
     }
@@ -86,8 +84,8 @@ final class ColorStore {
     }
 
     static func get(colorsFrom game: Proto_Game) -> UIImageColors? {
-        let episodeKey = gameArtKey(for: game)
-        guard let data = UserDefaults.standard.data(forKey: episodeKey) else { return nil }
+        let gameArtKey = gameArtKey(for: game)
+        guard let data = UserDefaults.standard.data(forKey: gameArtKey) else { return nil }
 
         do {
             let decoder = JSONDecoder()

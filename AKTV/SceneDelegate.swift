@@ -35,7 +35,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .sink { _ in
             } receiveValue: { authToken in
                 gamesService = GameService(authToken)
-                testGettingCovers()
             }
             .store(in: &subscriptions)
 
@@ -50,12 +49,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
-    }
-}
-
-func testGettingCovers() {
-    GameService.fetchCoverImageUrl(gameId: 161120) { coverImageUrl in
-        print("bam successfully got cover url: ", coverImageUrl)
     }
 }
 

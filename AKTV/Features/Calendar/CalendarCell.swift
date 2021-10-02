@@ -107,7 +107,6 @@ class CalendarCell: JTACDayCell {
     // Eller subclasse
 
     func configure(for cellState: CellState, game: Proto_Game) {
-        print("bam success configuring for game")
         resetStyle(cellState)
 
         // TODO: Multiple episodes on one day
@@ -123,18 +122,10 @@ class CalendarCell: JTACDayCell {
     }
 
     private func updateCellDesign(for game: Proto_Game, cellState: CellState) {
-        print("bam success!! tryna make game cell now")
         // Basic "date has episode" styles
         dateLabel.textColor = UIColor(light)
         dateLabel.alpha = 0.6
         dateLabel.textColor = .green
-
-//        guard let stillPath = overview.posterPath else { return }
-
-        // FIXME: Get the correct url for a cover image in postman, when you get it, proceed here
-        let stillPath = game.cover.url
-
-        print("bam stillPath: ", stillPath)
 
         // FIXME: MOVE THIS AWAY. gonna try to get a cover object instead
 
@@ -142,14 +133,9 @@ class CalendarCell: JTACDayCell {
             background.backgroundColor = existingColors.detail
             dateLabel.textColor = existingColors.background
         } else {
-
-            DispatchQueue.main.async {
-
-                // FIXME: Use proper ID here
-
-                GameService.fetchCoverImageUrl(gameId: game.id) { coverImageUrl in
-                    print("bam successfully got cover url: ", coverImageUrl)
-
+            let gameId = game.cover.id
+            GameService.fetchCoverImageUrl(coverId: gameId) { coverImageUrl in
+                DispatchQueue.main.async {
                     UIImageView().kf.setImage(with: URL(string: coverImageUrl), completionHandler: { result in
                         do {
                             let unwrappedResult = try result.get()
