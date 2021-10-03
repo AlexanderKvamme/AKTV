@@ -52,26 +52,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
-func testGettingSwipeableGames() {
-    GameService.getCurrentHighestID(GamePlatform.NintendoSwitch) { highestRemoteGameID in
-        // Get initial Swipeables
-        let testPlatform = GamePlatform.NintendoSwitch
-        let initialRange = GameStore.getNextRange(for: testPlatform, highestRemoteID: highestRemoteGameID)
-
-        GameService.fetchGames(initialRange, testPlatform) { games in
-            DispatchQueue.main.sync {
-                tabBarController.discoveryScreen.update(with: games, range: initialRange, platform: testPlatform, initialHighestRemoteID: highestRemoteGameID)
-            }
-        }
-
-        // TODO: Clean up
-        // TODO: Test getting favourite games
-        // let ids = GameStore.getFavourites(.NintendoSwitch)
-        let ids = [111, 222, 333]
-
-        GameService.testFetchGames(IDs: ids, completion: { (games) in
-            print("successfully fetched games: ", games.map({$0.firstReleaseDate.date}))
-        })
-    }
-}
-

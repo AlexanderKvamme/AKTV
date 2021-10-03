@@ -43,25 +43,6 @@ final class GameService {
     }
 
     // MARK: - Methods
-    
-    static func testFetchGames(IDs: [Int], completion: @escaping (([Proto_Game]) -> ())) {
-        guard let authToken = authToken else {
-            print("Missing authToken")
-            return
-        }
-        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
-        
-        let gameArrayString = "(" + IDs.map({ String($0) }).joined(separator: ",") + ");"
-        let apicalypse = APICalypse()
-            .fields(fields: "*")
-            .where(query: "id = " + gameArrayString)
-        
-        wrapper.games(apiCalypse: apicalypse) { games in
-            completion(games)
-        } errorResponse: { requestException in
-            print("Error fetching games: ", requestException)
-        }
-    }
 
     static func testFetchCover(id: UInt64? = 161120, completion: @escaping ((Proto_Cover) -> ())) {
         guard let authToken = authToken else {
