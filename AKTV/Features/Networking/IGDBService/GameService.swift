@@ -44,29 +44,6 @@ final class GameService {
 
     // MARK: - Methods
 
-    static func testFetchCover(coverId: UInt64? = 161120, completion: @escaping ((Proto_Cover) -> ())) {
-        guard let authToken = authToken else {
-            print("Missing authToken")
-            return
-        }
-
-        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
-        let str = String(Int(coverId!))
-        let apicalypse = APICalypse()
-            .fields(fields: "*")
-            .where(query: "id = " + str)
-
-        wrapper.covers(apiCalypse: apicalypse) { covers in
-            guard let firstCover = covers.first else {
-                print("no covers fetched")
-                return
-            }
-            completion(firstCover)
-        } errorResponse: { reqException in
-            print("reqEx: ", reqException)
-        }
-    }
-
     static func fetchCoverImageUrl(cover: Proto_Cover, completion: @escaping ((String) -> ())) {
         // Look through cache
         let key = KeyGenerator.coverUrl(coverId: cover.id)
@@ -99,13 +76,13 @@ final class GameService {
 
     typealias Completion = (([Proto_Game]) -> ())
 
-    static func getCachedCoverUrl(_ coverId: UInt64) -> String? {
-        if let existing = coverUrls[coverId] {
-            return existing
-        } else {
-            return nil
-        }
-    }
+//    static func getCachedCoverUrl(_ coverId: UInt64) -> String? {
+//        if let existing = coverUrls[coverId] {
+//            return existing
+//        } else {
+//            return nil
+//        }
+//    }
 
     static func precache(_ items: [Proto_Game]) {
         for item in items {
@@ -120,6 +97,11 @@ final class GameService {
     }
 
     static func getCoverImageURL(cover: Proto_Cover, completion: @escaping ((String) -> ())) {
+        guard cover.imageID != "" else {
+            print("Error: cover must have imageID to get Url to it")
+            return
+        }
+
         let coverURL = imageBuilder(imageID: String(cover.imageID), size: ImageSize.COVER_BIG)
         let key = KeyGenerator.coverUrl(coverId: cover.id)
         URLCache.setCoverUrl(forKey: key, to: coverURL)

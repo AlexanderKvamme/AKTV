@@ -60,6 +60,9 @@ final class CalendarScreen: UIViewController {
             }
         }
     }
+
+    fileprivate var currentlySelectedGame: Proto_Game?
+
     weak var tabBar: CustomTabBarDelegate?
 
     // MARK: - Initializers
@@ -72,10 +75,17 @@ final class CalendarScreen: UIViewController {
 
         setup()
         addSubviewsAndConstraints()
+
+        addGestureToImageCard()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func addGestureToImageCard() {
+        let tr = UITapGestureRecognizer(target: self, action: #selector(test))
+        self.imageCard.addGestureRecognizer(tr)
     }
 
     // MARK: - Life Cycle
@@ -201,6 +211,8 @@ extension CalendarScreen: JTACMonthViewDelegate {
     // selected cell
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
 
+        currentlySelectedGame = nil
+
         guard let cell = cell as? CalendarCell else { fatalError() }
         cell.setSelected(true)
 
@@ -215,6 +227,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
             }
 
             if let game = self.gameDict[key] {
+                self.currentlySelectedGame = game
                 GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
                     if let url = URL(string: coverImageUrl) {
                         DispatchQueue.main.async {
@@ -278,6 +291,12 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
         header.monthLabel.text = formatter.string(from: range.start)
         return header
+    }
+    @objc func test() {
+        if let game = currentlySelectedGame {
+            let gameScreen = GameScreen(game, platform: .tbd)
+            present(gameScreen, animated: true)
+        }
     }
 
     func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {

@@ -57,9 +57,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 func runDevelopmentExperiments() {
     print("running development experiments...")
 
-    GameService.testFetchCover(coverId: CoverId.diablo) { cover in
-        print("fetched cover: ", cover)
-    }
 }
 
 

@@ -66,23 +66,34 @@ final class GameScreen: UIViewController {
     }
     
     private func fetchContent(_ game: Proto_Game) {
-        // TODO: Do this in one async method call
-        if let coverUrl = GameService.getCachedCoverUrl(game.cover.id) {
+        print("tryna fetch content for game ", game.name)
+
+        GameService.getCoverImageURL(cover: game.cover) { coverUrl in
+            print("bam got url: ", coverUrl)
             DispatchQueue.main.async {
                 let url = URL(string: coverUrl)
                 self.imageView.kf.setImage(with: url)
             }
-        } else {
-            // TODO: Set image that was not
-            GameService.getCoverImageURL(cover: game.cover) { str in
-                guard let url = URL(string: str) else { return }
-
-                DispatchQueue.main.async {
-                    let resource = ImageResource(downloadURL: url)
-                    self.imageView.kf.setImage(with: resource)
-                }
-            }
         }
+//        GameService.getCachedCoverUrl(1)
+//
+//        // TODO: Do this in one async method call
+//        if let coverUrl = GameService.getCachedCoverUrl(game.cover.id) {
+//            DispatchQueue.main.async {
+//                let url = URL(string: coverUrl)
+//                self.imageView.kf.setImage(with: url)
+//            }
+//        } else {
+//            // TODO: Set image that was not
+//            GameService.getCoverImageURL(cover: game.cover) { str in
+//                guard let url = URL(string: str) else { return }
+//
+//                DispatchQueue.main.async {
+//                    let resource = ImageResource(downloadURL: url)
+//                    self.imageView.kf.setImage(with: resource)
+//                }
+//            }
+//        }
     }
     
     private func setFilled(_ fill: Bool) {
