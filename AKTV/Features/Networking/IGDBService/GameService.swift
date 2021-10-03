@@ -44,20 +44,24 @@ final class GameService {
 
     // MARK: - Methods
 
-    static func testFetchCover(id: UInt64? = 161120, completion: @escaping ((Proto_Cover) -> ())) {
+    static func testFetchCover(coverId: UInt64? = 161120, completion: @escaping ((Proto_Cover) -> ())) {
         guard let authToken = authToken else {
             print("Missing authToken")
             return
         }
 
         let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
-        let str = String(Int(id!))
+        let str = String(Int(coverId!))
         let apicalypse = APICalypse()
             .fields(fields: "*")
             .where(query: "id = " + str)
 
         wrapper.covers(apiCalypse: apicalypse) { covers in
-            completion(covers.first!)
+            guard let firstCover = covers.first else {
+                print("no covers fetched")
+                return
+            }
+            completion(firstCover)
         } errorResponse: { reqException in
             print("reqEx: ", reqException)
         }

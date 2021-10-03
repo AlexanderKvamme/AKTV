@@ -35,6 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .sink { _ in
             } receiveValue: { authToken in
                 gamesService = GameService(authToken)
+                runDevelopmentExperiments()
             }
             .store(in: &subscriptions)
 
@@ -52,3 +53,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
+
+func runDevelopmentExperiments() {
+    print("running development experiments...")
+
+    GameService.testFetchCover(coverId: CoverId.diablo) { cover in
+        print("bam fetched cover: ", cover)
+    }
+
+}
+
+
+
+struct GameId {
+    static let diablo: UInt64 = 161120
+}
+
+struct CoverId {
+    static let diablo: UInt64 = 161120
+}
