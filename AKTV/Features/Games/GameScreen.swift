@@ -41,7 +41,7 @@ final class GameScreen: UIViewController {
     
     private func setup() {
         view.backgroundColor = UIColor(dark)
-        imageView.backgroundColor = .orange
+        imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         header.text = "Header"

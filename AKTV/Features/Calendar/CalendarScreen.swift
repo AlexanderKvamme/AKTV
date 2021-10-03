@@ -48,14 +48,18 @@ final class CalendarScreen: UIViewController {
     var formatter = DateFormatter.withoutTime
     var upcomingShows = [Episode]() {
         didSet {
-            let datesAdded = upcomingShows.compactMap{ $0.getFormattedDate() }
-            cv.reloadDates(datesAdded)
+            DispatchQueue.main.async {
+                // TODO: Move these methods to a addEpisode and reload that date only
+                // Same for games
+                let datesAdded = self.upcomingShows.compactMap{ $0.getFormattedDate() }
+                self.cv.reloadDates(datesAdded)
+            }
         }
     }
     var upcomingGames = [Proto_Game]() {
         didSet {
-            let datesAdded = upcomingGames.compactMap{ $0.firstReleaseDate.date }
             DispatchQueue.main.async {
+                let datesAdded = self.upcomingGames.compactMap{ $0.firstReleaseDate.date }.sorted()
                 self.cv.reloadDates(datesAdded)
             }
         }
@@ -84,7 +88,7 @@ final class CalendarScreen: UIViewController {
     }
 
     private func addGestureToImageCard() {
-        let tr = UITapGestureRecognizer(target: self, action: #selector(test))
+        let tr = UITapGestureRecognizer(target: self, action: #selector(presentGameScreen))
         self.imageCard.addGestureRecognizer(tr)
     }
 
@@ -125,9 +129,9 @@ final class CalendarScreen: UIViewController {
 
         favGames.forEach { gameId in
             dao.game(withId: UInt64(gameId)) { game in
-                let dateFormatter = DateFormatter.withSimplifiedDayStyle
-                let str = dateFormatter.string(from: game.firstReleaseDate.date)
-                self.gameDict[str] = game
+                // TODO: No idea why but this works :P
+                let dayString = DateFormatter.withSimplifiedDayStyle.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
+                self.gameDict[dayString] = game
                 self.upcomingGames.append(game)
             }
         }
@@ -258,6 +262,10 @@ extension CalendarScreen: JTACMonthViewDelegate {
         if let (episode, overview) = episodeDict[key] {
             cell.configure(for: cellState, episode: episode, overview: overview)
         }
+
+        if let game = gameDict[key] {
+            cell.configure(for: cellState, game: game)
+        }
     }
 
     // Use dataSource to make cells
@@ -292,7 +300,8 @@ extension CalendarScreen: JTACMonthViewDelegate {
         header.monthLabel.text = formatter.string(from: range.start)
         return header
     }
-    @objc func test() {
+
+    @objc func presentGameScreen() {
         if let game = currentlySelectedGame {
             let gameScreen = GameScreen(game, platform: .tbd)
             present(gameScreen, animated: true)
