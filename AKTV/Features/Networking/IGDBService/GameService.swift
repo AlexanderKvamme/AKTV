@@ -96,6 +96,30 @@ final class GameService {
         }
     }
 
+    static func getCover(forGame game: Proto_Game, completion: @escaping ((Proto_Cover) -> ())) {
+        guard let authToken = authToken else {
+            print("Missing authToken")
+            return
+        }
+
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
+        let str = String(game.cover.id)
+        print("bam cover id: ", game.cover.id)
+        let apicalypse = APICalypse()
+            .fields(fields: "*")
+            .where(query: "id = " + str)
+
+        wrapper.covers(apiCalypse: apicalypse) { cover in
+            guard let cover = cover.first else {
+                print("Could not retrierve retrieve and cover with id: ", str)
+                return
+            }
+            completion(cover)
+        } errorResponse: { reqException in
+            print("reqEx: ", reqException)
+        }
+    }
+
     static func getCoverImageURL(cover: Proto_Cover, completion: @escaping ((String) -> ())) {
         guard cover.imageID != "" else {
             print("Error: cover must have imageID to get Url to it")
