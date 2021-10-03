@@ -133,8 +133,7 @@ class CalendarCell: JTACDayCell {
             background.backgroundColor = existingColors.detail
             dateLabel.textColor = existingColors.background
         } else {
-            let gameId = game.cover.id
-            GameService.fetchCoverImageUrl(coverId: gameId) { coverImageUrl in
+            GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
                 DispatchQueue.main.async {
                     UIImageView().kf.setImage(with: URL(string: coverImageUrl), completionHandler: { result in
                         do {

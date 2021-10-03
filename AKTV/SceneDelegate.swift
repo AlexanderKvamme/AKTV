@@ -58,15 +58,14 @@ func runDevelopmentExperiments() {
     print("running development experiments...")
 
     GameService.testFetchCover(coverId: CoverId.diablo) { cover in
-        print("bam fetched cover: ", cover)
+        print("fetched cover: ", cover)
     }
-
 }
 
 
 
 struct GameId {
-    static let diablo: UInt64 = 161120
+    static let diablo: UInt64 = 142803
 }
 
 struct CoverId {

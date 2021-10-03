@@ -32,7 +32,7 @@ final class GameService {
     private static let minimumRequiredFields = "name,cover,id,platforms"
     private static let MAX_GAMES_PER_REQUEST: Int32 = 50
 
-    private static var coverUrls: [String:String] = [:]
+    private static var coverUrls: [UInt64:String] = [:]
     
     // MARK: - Initializers
 
@@ -67,22 +67,31 @@ final class GameService {
         }
     }
 
-    static func fetchCoverImageUrl(coverId id: UInt64, completion: @escaping ((String) -> ())) {
+    static func fetchCoverImageUrl(cover: Proto_Cover, completion: @escaping ((String) -> ())) {
+        // Look through cache
+        let key = KeyGenerator.coverUrl(coverId: cover.id)
+        if let url = URLCache.setCoverUrl(forKey: key) {
+            completion(url)
+            return
+        }
+
         guard let authToken = authToken else {
             print("Missing authToken")
             return
         }
 
         let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
-        let str = String(id)
+        let str = String(cover.id)
         let apicalypse = APICalypse()
             .fields(fields: "*")
             .where(query: "id = " + str)
 
         wrapper.covers(apiCalypse: apicalypse) { cover in
-            guard let cover = cover.first else { return }
-            let imageId = cover.imageID
-            getCoverImageURL(coverId: imageId, completion: completion)
+            guard let cover = cover.first else {
+                print("Could not retrierve retrieve and cover with id: ", str)
+                return
+            }
+            getCoverImageURL(cover: cover, completion: completion)
         } errorResponse: { reqException in
             print("reqEx: ", reqException)
         }
@@ -91,18 +100,17 @@ final class GameService {
     typealias Completion = (([Proto_Game]) -> ())
 
     static func getCachedCoverUrl(_ coverId: UInt64) -> String? {
-        if let existing = coverUrls[String(coverId)] {
+        if let existing = coverUrls[coverId] {
             return existing
         } else {
             return nil
         }
     }
-    
+
     static func precache(_ items: [Proto_Game]) {
         for item in items {
-            let coverId = String(item.cover.id)
-            getCoverImageURL(coverId: coverId) { (coverUrl) in
-                Self.coverUrls[coverId] = coverUrl
+            getCoverImageURL(cover: item.cover) { (coverUrl) in
+                Self.coverUrls[item.cover.id] = coverUrl
                 let url = URL(string: coverUrl)!
                 let resource = ImageResource(downloadURL: url)
 
@@ -111,33 +119,11 @@ final class GameService {
         }
     }
 
-    static func getCoverImageURL(coverId: String, completion: @escaping ((String) -> ())) {
-        guard let authToken = authToken else {
-            print("Missing authToken")
-            return
-        }
-
-        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
-        let apicalypse = APICalypse()
-            .fields(fields: "*")
-            .where(query: "id = co3gbk;")
-
-        let imageURL = imageBuilder(imageID: coverId, size: ImageSize.COVER_BIG)
-        completion(imageURL)
-
-        //            completion("https://images.igdb.com/igdb/image/upload/t_thumb/co3gbk.jpg")
-//        wrapper.covers(apiCalypse: apicalypse) { (covers) -> (Void) in
-//            guard let imageId = covers.first?.imageID else {
-//                print("ERROR could not access cover url. Use default")
-//                return
-//            }
-//
-////            let imageURL = imageBuilder(imageID: imageId, size: ImageSize.COVER_BIG)
-////            print("bam imageUrl: ", imageURL)
-//            completion("https://images.igdb.com/igdb/image/upload/t_thumb/co3gbk.jpg")
-//        } errorResponse: { (requestException) -> (Void) in
-//            print("Error getting cover image: ", requestException)
-//        }
+    static func getCoverImageURL(cover: Proto_Cover, completion: @escaping ((String) -> ())) {
+        let coverURL = imageBuilder(imageID: String(cover.imageID), size: ImageSize.COVER_BIG)
+        let key = KeyGenerator.coverUrl(coverId: cover.id)
+        URLCache.setCoverUrl(forKey: key, to: coverURL)
+        completion(coverURL)
     }
 
 /**
@@ -253,4 +239,24 @@ final class GameService {
         }
         task.resume()
     }
+}
+
+
+class KeyGenerator {
+
+    static func coverUrl(coverId: UInt64) -> String {
+        "cover-url-for-cover-id-\(coverId)"
+    }
+}
+
+class URLCache {
+
+    static func setCoverUrl(forKey key: String) -> String? {
+        UserDefaults.standard.string(forKey: key)
+    }
+
+    static func setCoverUrl(forKey key: String, to url: String) {
+        UserDefaults.standard.set(url, forKey: key)
+    }
+
 }

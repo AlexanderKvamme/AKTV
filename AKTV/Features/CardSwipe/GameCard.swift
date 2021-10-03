@@ -128,12 +128,11 @@ class SwipeableGameCard: SwipeableView {
                 }
             } else {
                 // Download directly
-                GameService.getCoverImageURL(coverId: String(viewModel.cover.id)) { (str) -> () in
+                GameService.getCoverImageURL(cover: viewModel.cover) { (str) -> () in
                     let resource = ImageResource(downloadURL: URL(string: str)!)
                     DispatchQueue.main.async {
                         self.card.imageView.kf.setImage(with: resource)
                     }
-                    
                 }
             }
         }
