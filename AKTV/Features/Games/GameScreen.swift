@@ -68,11 +68,11 @@ final class GameScreen: UIViewController {
     
     private func fetchContent(_ game: Proto_Game) {
         // Display cover image
-        GameService.getCover(forGame: game) { cover in
+        GameService.getCoverImageURL(forGame: game) { coverUrl in
+            guard let url = coverUrl else { return }
+
             DispatchQueue.main.async {
-                if let url = URL(string: imageBuilder(imageID: cover.imageID, size: .COVER_BIG)) {
-                    self.imageView.kf.setImage(with: url)
-                }
+                self.imageView.kf.setImage(with: url)
             }
         }
 

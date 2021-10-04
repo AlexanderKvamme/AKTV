@@ -114,32 +114,13 @@ class SwipeableGameCard: SwipeableView {
     }
 
     private func configure(forViewModel viewModel: Proto_Game?) {
-        
         if let viewModel = viewModel {
             card.titleLabel.text = viewModel.name
         
-//            let coverUrl = GameService.getCachedCoverUrl(viewModel.cover.id)
-            let coverUrl = GameService.getCoverImageURL(cover: viewModel.cover) { coverUrl in
-                print("bam got coverURl: ", coverUrl)
-                let resource = ImageResource(downloadURL: URL(string: coverUrl)!)
+            GameService.getCoverImageURL(cover: viewModel.cover) { coverUrl in
+                let resource = ImageResource(downloadURL: coverUrl)
                 self.card.imageView.kf.setImage(with: resource)
             }
-            
-//            if let coverUrl = coverUrl {
-//                KingfisherManager.shared.cache.retrieveImage(forKey: coverUrl) { (res) in
-//                    DispatchQueue.main.async {
-//                        self.card.imageView.image = try! res.get().image
-//                    }
-//                }
-//            } else {
-//                // Download directly
-//                GameService.getCoverImageURL(cover: viewModel.cover) { (str) -> () in
-//                    let resource = ImageResource(downloadURL: URL(string: str)!)
-//                    DispatchQueue.main.async {
-//                        self.card.imageView.kf.setImage(with: resource)
-//                    }
-//                }
-//            }
         }
     }
 

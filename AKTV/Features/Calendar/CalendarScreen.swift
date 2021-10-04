@@ -233,10 +233,8 @@ extension CalendarScreen: JTACMonthViewDelegate {
             if let game = self.gameDict[key] {
                 self.currentlySelectedGame = game
                 GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
-                    if let url = URL(string: coverImageUrl) {
-                        DispatchQueue.main.async {
-                            self.imageCard.imageView.kf.setImage(with: url)
-                        }
+                    DispatchQueue.main.async {
+                        self.imageCard.imageView.kf.setImage(with: coverImageUrl)
                     }
                 }
             }

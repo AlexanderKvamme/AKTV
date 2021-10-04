@@ -135,7 +135,7 @@ class CalendarCell: JTACDayCell {
         } else {
             GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
                 DispatchQueue.main.async {
-                    UIImageView().kf.setImage(with: URL(string: coverImageUrl), completionHandler: { result in
+                    UIImageView().kf.setImage(with: coverImageUrl, completionHandler: { result in
                         do {
                             let unwrappedResult = try result.get()
                             unwrappedResult.image.getColors { (colors) in

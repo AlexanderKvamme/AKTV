@@ -44,10 +44,10 @@ final class GameService {
 
     // MARK: - Methods
 
-    static func fetchCoverImageUrl(cover: Proto_Cover, completion: @escaping ((String) -> ())) {
+    static func fetchCoverImageUrl(cover: Proto_Cover, completion: @escaping ((URL) -> ())) {
         // Look through cache
         let key = KeyGenerator.coverUrl(coverId: cover.id)
-        if let url = URLCache.setCoverUrl(forKey: key) {
+        if let url = URLCache.getUrl(forKey: key) {
             completion(url)
             return
         }
@@ -87,8 +87,9 @@ final class GameService {
     static func precache(_ items: [Proto_Game]) {
         for item in items {
             getCoverImageURL(cover: item.cover) { (coverUrl) in
-                Self.coverUrls[item.cover.id] = coverUrl
-                let url = URL(string: coverUrl)!
+
+                Self.coverUrls[item.cover.id] = coverUrl.absoluteString
+                let url = URL(string: coverUrl.absoluteString)!
                 let resource = ImageResource(downloadURL: url)
 
                 KingfisherManager.shared.retrieveImage(with: resource) { res in }
@@ -104,7 +105,6 @@ final class GameService {
 
         let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         let str = String(game.cover.id)
-        print("bam cover id: ", game.cover.id)
         let apicalypse = APICalypse()
             .fields(fields: "*")
             .where(query: "id = " + str)
@@ -120,7 +120,44 @@ final class GameService {
         }
     }
 
-    static func getCoverImageURL(cover: Proto_Cover, completion: @escaping ((String) -> ())) {
+    static func getCoverImageURL(forGame game: Proto_Game, completion: @escaping ((URL?) -> ())) {
+        let key = KeyGenerator.coverUrl(gameId: game.id)
+        if let url = URLCache.getUrl(forKey: key) {
+            completion(url)
+            return
+        }
+
+        let apicalypse = APICalypse()
+            .fields(fields: "*")
+            .limit(value: 1)
+            .where(query: "game = \(game.id)")
+
+        guard let authToken = authToken else {
+            print("Missing authToken")
+            return
+        }
+
+        let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
+        wrapper.covers(apiCalypse: apicalypse) { (cover) -> (Void) in
+            guard let cover = cover.first else { return }
+
+            let urlString = imageBuilder(imageID: cover.imageID, size: .COVER_BIG)
+            if let url = URL(string: urlString) {
+                // cache
+                let key = KeyGenerator.coverUrl(gameId: game.id)
+                URLCache.setUrl(forKey: key, to: urlString)
+
+                completion(url)
+                return
+            }
+
+            completion(nil)
+        } errorResponse: { (requestException) -> (Void) in
+            print(requestException)
+        }
+    }
+
+    static func getCoverImageURL(cover: Proto_Cover, completion: @escaping ((URL) -> ())) {
         guard cover.imageID != "" else {
             print("Error: cover must have imageID to get Url to it")
             return
@@ -128,8 +165,9 @@ final class GameService {
 
         let coverURL = imageBuilder(imageID: String(cover.imageID), size: ImageSize.COVER_BIG)
         let key = KeyGenerator.coverUrl(coverId: cover.id)
-        URLCache.setCoverUrl(forKey: key, to: coverURL)
-        completion(coverURL)
+        URLCache.setUrl(forKey: key, to: coverURL)
+        let url = URL(string: coverURL)!
+        completion(url)
     }
 
 /**
@@ -253,15 +291,24 @@ class KeyGenerator {
     static func coverUrl(coverId: UInt64) -> String {
         "cover-url-for-cover-id-\(coverId)"
     }
+
+    static func coverUrl(gameId: UInt64) -> String {
+        "cover-url-for-game-id-\(gameId)"
+    }
+
 }
 
 class URLCache {
 
-    static func setCoverUrl(forKey key: String) -> String? {
-        UserDefaults.standard.string(forKey: key)
+    static func getUrl(forKey key: String) -> URL? {
+        if let str = UserDefaults.standard.string(forKey: key) {
+            return URL(string: str)
+        }
+        
+        return nil
     }
 
-    static func setCoverUrl(forKey key: String, to url: String) {
+    static func setUrl(forKey key: String, to url: String) {
         UserDefaults.standard.set(url, forKey: key)
     }
 
