@@ -58,4 +58,9 @@ final class IconRowView: UIView {
         ratingIcon.update(with: overview)
         starButton.update(with: overview)
     }
+
+    func update(with movie: Movie) {
+//        ratingIcon.update(with: movie)
+//        starButton.update(with: movie)
+    }
 }

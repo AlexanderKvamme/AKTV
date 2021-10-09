@@ -11,8 +11,9 @@ import UIKit
 protocol Pickable { }
 
 enum MediaPickable: String, Pickable {
-    case movieAndTV = "A Movie or a TV show"
-    case game = "A game"
+    case tvShow = "TV show"
+    case movie = "Movie"
+    case game = "Game"
 }
 
 typealias PickerCompletionHandler = ((Pickable) -> ())

@@ -121,6 +121,7 @@
 		DDB48F9625D455D9007C0131 /* WellRoundedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */; };
 		DDB8E5C825DBD4FB0053F6FA /* Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB8E5C725DBD4FB0053F6FA /* Videos.swift */; };
 		DDC8047D25D56C8200B0418B /* ShowOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC8047C25D56C8200B0418B /* ShowOverview.swift */; };
+		DDCAB23A270E413000AB40B5 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAB239270E413000AB40B5 /* Movie.swift */; };
 		DDE00F7E26960BD40083B6DF /* RangeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE00F7D26960BD40083B6DF /* RangeStore.swift */; };
 		DDE388F92427DD7D0049D881 /* SeriesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388F82427DD7D0049D881 /* SeriesListTableViewController.swift */; };
 		DDE388FB2427DE9E0049D881 /* ShowsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE388FA2427DE9E0049D881 /* ShowsScreen.swift */; };
@@ -279,6 +280,7 @@
 		DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellRoundedTabBarController.swift; sourceTree = "<group>"; };
 		DDB8E5C725DBD4FB0053F6FA /* Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Videos.swift; sourceTree = "<group>"; };
 		DDC8047C25D56C8200B0418B /* ShowOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOverview.swift; sourceTree = "<group>"; };
+		DDCAB239270E413000AB40B5 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		DDE00F7D26960BD40083B6DF /* RangeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeStore.swift; sourceTree = "<group>"; };
 		DDE388F82427DD7D0049D881 /* SeriesListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListTableViewController.swift; sourceTree = "<group>"; };
 		DDE388FA2427DE9E0049D881 /* ShowsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsScreen.swift; sourceTree = "<group>"; };
@@ -749,6 +751,7 @@
 				DDE3890A242BF75A0049D881 /* ShowSearchResult.swift */,
 				DDB8E5C725DBD4FB0053F6FA /* Videos.swift */,
 				DD78E2FB25CAF1230084F101 /* DayModel.swift */,
+				DDCAB239270E413000AB40B5 /* Movie.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1063,6 +1066,7 @@
 				DD02D48126C1BD8D00A3472F /* SearchHeaderContainer.swift in Sources */,
 				DDB3C72F26C0855B00CB88D7 /* SearchTextField.swift in Sources */,
 				DD9BC9D1266B5553009B2DD8 /* GameService.swift in Sources */,
+				DDCAB23A270E413000AB40B5 /* Movie.swift in Sources */,
 				DD5A7E9324576A5800507BFE /* UpcomingScreen.swift in Sources */,
 				DDB48F7325D3F694007C0131 /* TabBarView.swift in Sources */,
 				DD2D805D25E6DCEE004DF85A /* EpisodeScreen.swift in Sources */,

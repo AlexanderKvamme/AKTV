@@ -26,15 +26,34 @@ import Foundation
 */
 
 struct Videos: Codable, Hashable {
-    var results: [VideosResults]?
+    var results: [VideoResult]?
+
+    enum CodingKeys: String, CodingKey {
+        case results = "results"
+    }
 }
 
-struct VideosResults: Codable, Hashable {
-    var site: String
-    var id: String
+struct VideoResult: Codable, Hashable {
+
+    enum Keys: String {
+        case trailer = "Trailer"
+    }
+
+    var site: String?
+    var id: String?
     var key: String?
-    var size: Int
-    var name: String
-    var type: String
-    var iso6391: String
+    var size: Int?
+    var name: String?
+    var type: String?
+    var iso6391: String?
+
+    enum CodingKeys: String, CodingKey {
+        case site = "site"
+        case id = "id"
+        case key = "key"
+        case size = "size"
+        case name = "name"
+        case type = "type"
+        case iso6391 = "iso6391"
+    }
 }

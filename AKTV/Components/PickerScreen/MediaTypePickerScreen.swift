@@ -14,7 +14,7 @@ final class MediaTypePickerScreen: PickerScreen {
     // MARK: - Initializers
 
     init() {
-        let mediaPickables: [MediaPickable] = [.movieAndTV, .game]
+        let mediaPickables: [MediaPickable] = [.tvShow, .game, .movie]
 
         super.init(mediaPickables, onCompletion: nil)
 
@@ -68,9 +68,14 @@ final class MediaTypePickerScreen: PickerScreen {
             let searchController = SearchScreen(dao: dao, searchTypes: .game)
             searchController.modalPresentationStyle = .fullScreen
             navigationController?.pushViewController(searchController, animated: true)
-        case MediaPickable.movieAndTV:
+        case MediaPickable.tvShow:
             let dao = APIDAO()
             let showSearchController = SearchScreen(dao: dao, searchTypes: .series)
+            showSearchController.modalPresentationStyle = .fullScreen
+            navigationController?.pushViewController(showSearchController, animated: true)
+        case MediaPickable.movie:
+            let dao = APIDAO()
+            let showSearchController = SearchScreen(dao: dao, searchTypes: .movie)
             showSearchController.modalPresentationStyle = .fullScreen
             navigationController?.pushViewController(showSearchController, animated: true)
         default:

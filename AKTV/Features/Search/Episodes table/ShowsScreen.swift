@@ -122,3 +122,67 @@ extension ShowOverviewScreen: SeriesReceiver {
 }
 
 
+
+
+
+
+
+
+
+final class MovieScreen: UIViewController {
+
+    // MARK: Properties
+
+    private let header = ShowHeaderView()
+    private let showOverviewViewController = UIViewController()
+    private let tableView = UITableView()
+    private let apiDao: APIDAO
+    private let backgroundView = ComplimentaryGradientView()
+
+    // MARK: Initializers
+
+    init(dao: APIDAO) {
+        self.apiDao = dao
+
+        super.init(nibName: nil, bundle: nil)
+
+        setup()
+        addSubviewsAndConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Private methods
+
+    private func setup() {
+        view.backgroundColor = UIColor(light)
+
+        tableView.backgroundColor = UIColor(light)
+        tableView.separatorStyle = .none
+
+        view.backgroundColor = .green
+    }
+
+    private func addSubviewsAndConstraints() {
+        header.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 500)
+        tableView.tableHeaderView = header
+
+        view.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+
+    // MARK: Internal methods
+
+    func update(with movie: Movie) {
+        header.update(withMovie: movie)
+    }
+}

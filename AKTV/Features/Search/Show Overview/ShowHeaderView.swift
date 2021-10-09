@@ -16,6 +16,7 @@ final class ShowHeaderView: UIView {
 
     var titleLabel = BottomAlignedLabel()
     var showOverview: ShowOverview?
+    var movie: Movie?
     let imageView = UIImageView()
     let gradientBackground = DiagonalComplimentaryView()
     let iconRow = IconRowView()
@@ -66,9 +67,18 @@ final class ShowHeaderView: UIView {
     }
 
     @objc private func displayTrailer() {
+        if showOverview != nil {
+            displayShowTrailer()
+        } else {
+            displayMovieTrailer()
+        }
+    }
+
+    private func displayShowTrailer() {
         guard let videos = showOverview?.videos,
               let firstResult = videos.results?.first,
               let key = firstResult.key else {
+                  print("Could not display trailer due to missing info")
             return
         }
 
@@ -84,6 +94,30 @@ final class ShowHeaderView: UIView {
 
         let videoPlayer = VideoPlayer(trailerUrl)
         findViewController()?.present(videoPlayer, animated: true, completion: nil)
+    }
+
+    private func displayMovieTrailer() {
+        guard let videoResults = movie?.videos?.results else {
+            print("no videos to display")
+            return
+        }
+
+        guard let vr = videoResults.first(where: { vr in
+            let type = vr.type ?? "NO TYPE"
+            return type == VideoResult.Keys.trailer.rawValue
+        }) else {
+            fatalError()
+        }
+
+        guard let key = vr.key else {
+            print("no trailer key")
+            return
+        }
+
+        if let trailerUrl = URL(string: "https://www.youtube.com/watch?v=" + key) {
+            let videoPlayer = VideoPlayer(trailerUrl)
+            findViewController()?.present(videoPlayer, animated: true, completion: nil)
+        }
     }
 
     private func isFavorite() -> Bool {
@@ -136,8 +170,31 @@ final class ShowHeaderView: UIView {
         }
     }
 
+    func update(withMovie movie: Movie) {
+        self.movie = movie
+
+        titleLabel.text = movie.name.uppercased()
+
+        if let imagePath = movie.backdropPath,
+           let url = URL(string: APIDAO.imdbImageRoot+imagePath) {
+
+            imageView.kf.setImage(with: url) { result in
+                switch result {
+                case .success(let value):
+                    self.gradientBackground.image = value.image
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            }
+        }
+        iconRow.update(with: movie)
+        // TODO: Implement this for movie
+//        showStatusView.update(with: showOverview)
+    }
+
     func update(withShow showOverview: ShowOverview) {
         self.showOverview = showOverview
+
         titleLabel.text = showOverview.name.uppercased()
 
         if let imagePath = showOverview.backdropPath,

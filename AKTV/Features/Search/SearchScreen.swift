@@ -158,6 +158,8 @@ extension SearchScreen: ModelPresenter {
             displayShow(res.id)
         case .game:
             displayGame(searchResult)
+        case .movie:
+            displayMovie(searchResult)
         default:
             fatalError("Implement me")
         }
@@ -185,6 +187,20 @@ extension SearchScreen: ModelPresenter {
                 let next = ShowOverviewScreen(dao: dao)
                 next.update(with: showOverview)
                 self.present(next, animated: true, completion: nil)
+            }
+        }
+    }
+
+    func displayMovie(_ movie: MediaSearchResult?) {
+        let dao = self.dao as! APIDAO
+
+        if let movie = movie as? Movie {
+            dao.movie(withId: movie.id) { (movie) in
+                DispatchQueue.main.async {
+                    let detailedMovieScreen = MovieScreen(dao: dao)
+                    detailedMovieScreen.update(with: movie)
+                    self.present(detailedMovieScreen, animated: true, completion: nil)
+                }
             }
         }
     }

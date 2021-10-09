@@ -43,9 +43,61 @@ final class APIDAO: NSObject, MediaSearcher {
             searchSeries(string, andThen: andThen)
         case .game:
             searchGames(string, andThen: andThen)
+        case .movie:
+            searchMovies(string, andThen: andThen)
         default:
             fatalError("Not yet implemented")
         }
+    }
+
+    func searchMovies( _ string: String, andThen: @escaping (([Movie]) -> ())) {
+        print("searching for", string)
+
+        guard let encodedString = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
+            fatalError()
+        }
+
+        let urlString = "https://api.themoviedb.org/3/search/movie?api_key=\(key)&query=\(encodedString)"
+        guard let url = URL(string: urlString) else {
+            print("Error: Could not make url")
+            return
+        }
+
+        let _ = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard error == nil else {
+                print("Error: ", error)
+                return
+            }
+
+            guard let content = data else {
+                print("no content")
+                return
+            }
+
+
+            let decoder = JSONDecoder()
+
+            do {
+
+                if let data = data {
+                    if let str = String(data: data, encoding: .utf8) {
+
+
+                        // OLD
+                        let decoded = try decoder.decode(MovieSearchResult.self, from: content)
+                        andThen(decoded.results)
+                    }
+                }
+            } catch let error {
+                // Got JSON
+                print("catch: ", error)
+                guard let _ = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]
+                    else {
+                        print("Not containing JSON")
+                        return
+                }
+            }
+        }.resume()
     }
 
     func searchSeries( _ string: String, andThen: @escaping (([Show]) -> ())) {
@@ -75,7 +127,6 @@ final class APIDAO: NSObject, MediaSearcher {
                 if let _ = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] {
                 }
 
-                let results = decoded.results.map({ $0.name })
                 andThen(decoded.results)
             } catch {
                 // Got JSON
@@ -136,7 +187,37 @@ final class APIDAO: NSObject, MediaSearcher {
         
         task.resume()
     }
-    
+
+    func movie(withId: UInt64, andThen: @escaping ((Movie) -> ()))  {
+        let showId = String(withId)
+        let url = URL(string: root + "movie/" + showId + "?" + keyParam + "&append_to_response=videos")
+
+        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+            guard error == nil else {
+                print("returning error")
+                return
+            }
+
+            guard let content = data else {
+                print("not returning data")
+                return
+            }
+
+            // Got JSON
+            guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
+                print("Not containing JSON")
+                return
+            }
+
+            // Mapping
+            let decoder = JSONDecoder()
+            let movie = try! decoder.decode(Movie.self, from: content)
+            andThen(movie)
+        }
+
+        task.resume()
+    }
+
     func episodes(showId: Int, seasonNumber: Int, andThen: @escaping ((Season) -> ())) {
         let showId = String(showId)
         let seasonNumber = String(seasonNumber)

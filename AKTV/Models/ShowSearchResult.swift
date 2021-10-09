@@ -12,12 +12,9 @@ struct TVShowSearchResult: Decodable {
     
     // Properties
     
-    var page: Int
-//    var totalPages: Int
     var results: [Show]
     
     enum CodingKeys: String, CodingKey {
-        case page = "page"
         case results = "results"
     }
 }
