@@ -128,6 +128,7 @@ final class StarLabeledIcon: LabeledIconButton {
     // MARK: - Properties
 
     private var showOverview: ShowOverview?
+    private var movie: Movie?
 
     // MARK: - Initializers
 
@@ -149,15 +150,32 @@ final class StarLabeledIcon: LabeledIconButton {
         icon.image = UIImage(systemName: newIcon, withConfiguration: iconConfiguration)
     }
 
+    private func getId() -> Int? {
+        if ((movie == nil && showOverview == nil) || (movie != nil && showOverview != nil)) {
+            print("Should only contain one data type")
+            return nil
+        }
+
+        if let id = showOverview?.id {
+            return id
+        }
+
+        if let m = movie {
+            return Int(m.id)
+        }
+
+        return nil
+    }
+
     private func isFavorite() -> Bool {
-        guard let id = showOverview?.id else { return false }
+        guard let id = getId() else { return false }
 
         let favShows = UserProfileManager().favouriteShows()
         return favShows.contains(id)
     }
 
     @objc func didTapHeart() {
-        guard let showId = showOverview?.id else {
+        guard let showId = getId() else {
             fatalError("Error: Could not find id to favorite")
         }
 
@@ -174,6 +192,12 @@ final class StarLabeledIcon: LabeledIconButton {
 
     func update(with overview: ShowOverview) {
         self.showOverview = overview
+
+        setFilled(isFavorite())
+    }
+
+    func update(with movie: Movie) {
+        self.movie = movie
 
         setFilled(isFavorite())
     }
