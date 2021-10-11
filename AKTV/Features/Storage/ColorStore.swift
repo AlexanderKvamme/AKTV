@@ -29,6 +29,15 @@ final class ColorStore {
         return "episode-key-\(path)"
     }
 
+    private static func movieKey(for movie: Movie) -> String {
+        guard let path = movie.posterPath else {
+            fatalError("Needed stillPath to get colors")
+        }
+        // TODO: Use url path for a more generic color storage
+        return "movie-key-\(path)"
+    }
+
+
     private static func gameArtKey(for game: Proto_Game) -> String {
         let path = game.cover.id
         // TODO: Use url path for a more generic color storage
@@ -45,6 +54,22 @@ final class ColorStore {
             let encoder = JSONEncoder()
             let encodedData = try encoder.encode(encodableColors)
             let episodeKey = showOverviewKey(for: overview)
+            UserDefaults.standard.set(encodedData, forKey: episodeKey)
+        } catch let error {
+            fatalError("could not store color: \(error.localizedDescription)")
+        }
+    }
+
+    static func save(_ colors: UIImageColors, forMovie movie: Movie) {
+        let encodableColors = UIImageColorsWrapper(background: colors.background,
+                                                   detail: colors.detail,
+                                                   primary: colors.primary,
+                                                   secondary: colors.secondary)
+
+        do {
+            let encoder = JSONEncoder()
+            let encodedData = try encoder.encode(encodableColors)
+            let episodeKey = movieKey(for: movie)
             UserDefaults.standard.set(encodedData, forKey: episodeKey)
         } catch let error {
             fatalError("could not store color: \(error.localizedDescription)")
@@ -82,6 +107,23 @@ final class ColorStore {
             fatalError("Failed retrieving colors from userdefaults")
         }
     }
+
+    static func get(colorsFrom movie: Movie) -> UIImageColors? {
+        let movieKey = movieKey(for: movie)
+        guard let data = UserDefaults.standard.data(forKey: movieKey) else { return nil }
+
+        do {
+            let decoder = JSONDecoder()
+            let decodedData = try decoder.decode(UIImageColorsWrapper.self, from: data)
+            return UIImageColors(background: decodedData.background.color,
+                                 primary: decodedData.primary.color,
+                                 secondary: decodedData.secondary.color,
+                                 detail: decodedData.detail.color)
+        } catch {
+            fatalError("Failed retrieving colors from userdefaults")
+        }
+    }
+
 
     static func get(colorsFrom game: Proto_Game) -> UIImageColors? {
         let gameArtKey = gameArtKey(for: game)

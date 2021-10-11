@@ -117,6 +117,18 @@ class CalendarCell: JTACDayCell {
         setIsTodayStyle(cellState: cellState)
     }
 
+    func configure(for cellState: CellState, movie: Movie) {
+        resetStyle(cellState)
+
+        // TODO: Multiple episodes on one day
+        if cellState.dateBelongsTo == .thisMonth {
+            print("configuring movie")
+            updateCellDesign(for: movie, cellState: cellState)
+        }
+
+        setIsTodayStyle(cellState: cellState)
+    }
+
     override func prepareForReuse() {
         dateLabel.textColor = UIColor(dark)
     }
@@ -147,6 +159,33 @@ class CalendarCell: JTACDayCell {
                         }
                     })
                 }
+            }
+        }
+    }
+
+    private func updateCellDesign(for movie: Movie, cellState: CellState) {
+        // Basic "date has episode" styles
+        dateLabel.textColor = UIColor(light)
+        dateLabel.alpha = 0.6
+
+        guard let stillPath = movie.posterPath else { return }
+
+        if let existingColors = ColorStore.get(colorsFrom: movie) {
+            background.backgroundColor = existingColors.detail
+            dateLabel.textColor = existingColors.background
+        } else {
+            DispatchQueue.main.async {
+                UIImageView().kf.setImage(with: URL(string: APIDAO.imdbImageRoot+stillPath), completionHandler: { result in
+                    do {
+                        let unwrappedResult = try result.get()
+                        unwrappedResult.image.getColors { (colors) in
+                            ColorStore.save(colors, forMovie: movie)
+                            self.updateCellDesign(for: movie, cellState: cellState)
+                        }
+                    } catch {
+                        print("Error: while retrieving image from stillPath")
+                    }
+                })
             }
         }
     }

@@ -36,6 +36,7 @@ final class CalendarScreen: UIViewController {
 
     // MARK: - Properties
 
+    let dateFormatter = DateFormatter.withSimplifiedDayStyle
     let chevronButton = UIImageView()
     let cv = JTACMonthView(frame: CGRect(x: style.calendarHorizontalOffset/2+style.cardHorizontals,
                                          y: screenHeight-style.calendarHeight-style.calendarBottomOffset,
@@ -44,14 +45,26 @@ final class CalendarScreen: UIViewController {
     var calendarCard = Card()
     var imageCard = ImageCard()
     var episodeDict = [String : (Episode, ShowOverview)]()
-    var gameDict = [String: Proto_Game]()
+    var gameDict = [String : Proto_Game]()
+    var movieDict = [String: Movie]()
     var formatter = DateFormatter.withoutTime
     var upcomingShows = [Episode]() {
         didSet {
             DispatchQueue.main.async {
                 // TODO: Move these methods to a addEpisode and reload that date only
-                // Same for games
                 let datesAdded = self.upcomingShows.compactMap{ $0.getFormattedDate() }
+                self.cv.reloadDates(datesAdded)
+            }
+        }
+    }
+    var upcomingMovies = [Movie]() {
+        didSet {
+            DispatchQueue.main.async {
+                // TODO: Move these methods to a addEpisode and reload that date only
+                let datesAdded = self.upcomingMovies.compactMap{ (test) -> Date? in
+                    guard let dateStr = test.releaseDate else { return nil }
+                    return self.dateFormatter.date(from: dateStr)?.addingTimeInterval(60*60*24)
+                }
                 self.cv.reloadDates(datesAdded)
             }
         }
@@ -105,9 +118,11 @@ final class CalendarScreen: UIViewController {
     private func fetchPremiereDates() {
         let dao = APIDAO()
         let favShows = UserProfileManager().favouriteShows()
+        let favMovies = UserProfileManager().favouriteMovies()
         let favGames = GameStore.getFavourites()
         print("favShowS: ", favShows)
         print("favGames: ", favGames)
+        print("favMovies: ", favMovies)
 
         favShows.forEach {
             dao.show(withId: $0) { overview in
@@ -123,6 +138,16 @@ final class CalendarScreen: UIViewController {
                             }
                         }
                     }
+                }
+            }
+        }
+
+        favMovies.forEach {
+            dao.movie(withId: UInt64($0)) { movie in
+                if let formattedDate = movie.releaseDate {
+                    let date = formattedDate
+                    self.movieDict[date] = movie
+                    self.upcomingMovies.append(movie)
                 }
             }
         }
@@ -239,6 +264,14 @@ extension CalendarScreen: JTACMonthViewDelegate {
                 }
             }
 
+            if let movie = self.movieDict[key] {
+                if let posterPath = movie.posterPath,
+                   let posterURL = URL(string:APIDAO.imdbImageRoot+posterPath) {
+                    self.imageCard.imageView.kf.setImage(with: posterURL)
+                    return
+                }
+            }
+
             self.imageCard.imageView.image = nil
         }
     }
@@ -264,6 +297,10 @@ extension CalendarScreen: JTACMonthViewDelegate {
         if let game = gameDict[key] {
             cell.configure(for: cellState, game: game)
         }
+
+        if let movie = movieDict[key] {
+            cell.configure(for: cellState, movie: movie)
+        }
     }
 
     // Use dataSource to make cells
@@ -281,6 +318,10 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
         if let game = gameDict[key] {
             cell.configure(for: cellState, game: game)
+        }
+
+        if let movie = movieDict[key] {
+            cell.configure(for: cellState, movie: movie)
         }
 
         return cell
