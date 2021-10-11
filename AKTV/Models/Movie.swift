@@ -51,6 +51,19 @@ struct Movie: Codable, MediaSearchResult {
 
 }
 
+// MARK: - TMDBPresentable
+
+extension Movie: TMDBPresentable {
+    func getId() -> Int {
+        return Int(id)
+    }
+
+    func getVoteAverage() -> Double {
+        return voteAverage ?? 0
+    }
+}
+
+
 
 struct MovieSearchResult: Decodable {
 

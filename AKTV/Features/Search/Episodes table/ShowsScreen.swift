@@ -33,7 +33,7 @@ final class ShowOverviewScreen: UIViewController {
     
     // MARK: Properties
     
-    private let header = ShowHeaderView()
+    private let header = MotionHeaderView()
     private let showOverviewViewController = UIViewController()
     private let showOverviewDataDelegate = ShowOverviewDataDelegate()
     private let tableView = UITableView()
@@ -133,7 +133,7 @@ final class MovieScreen: UIViewController {
 
     // MARK: Properties
 
-    private let header = ShowHeaderView()
+    private let header = MotionHeaderView()
     private let showOverviewViewController = UIViewController()
     private let tableView = UITableView()
     private let apiDao: APIDAO

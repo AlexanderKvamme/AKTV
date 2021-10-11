@@ -60,8 +60,7 @@ final class IconRowView: UIView {
     }
 
     func update(with movie: Movie) {
-        // TODO: Update these
-//        ratingIcon.update(with: movie)
+        ratingIcon.update(with: movie)
         starButton.update(with: movie)
     }
 }

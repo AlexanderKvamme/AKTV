@@ -11,6 +11,7 @@ import Foundation
 enum UserProfileKeys: String {
     case favouriteShows
     case favouriteGames
+    case favouriteMovies
 }
 
 final class UserProfileManager: NSObject {
@@ -43,6 +44,28 @@ final class UserProfileManager: NSObject {
             if let i = existingFavourites.firstIndex(of: id) {
                 existingFavourites.remove(at: i)
                 defaults.set(existingFavourites, forKey: UserProfileKeys.favouriteShows.rawValue)
+            }
+        }
+    }
+
+    // Favourite movies
+
+    func favouriteMovies() -> [Int] {
+        let existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteMovies.rawValue) as? [Int] ?? [Int]()
+        return existingFavourites
+    }
+
+    func setFavouriteMovie(id: Int, favourite: Bool) {
+        switch favourite {
+        case true:
+            var existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteMovies.rawValue) as? [Int] ?? [Int]()
+            existingFavourites.append(id)
+            defaults.set(existingFavourites, forKey: UserProfileKeys.favouriteMovies.rawValue)
+        case false:
+            var existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteMovies.rawValue) as? [Int] ?? [Int]()
+            if let i = existingFavourites.firstIndex(of: id) {
+                existingFavourites.remove(at: i)
+                defaults.set(existingFavourites, forKey: UserProfileKeys.favouriteMovies.rawValue)
             }
         }
     }

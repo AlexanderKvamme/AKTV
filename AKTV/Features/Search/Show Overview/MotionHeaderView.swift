@@ -10,7 +10,14 @@ import UIKit
 import ComplimentaryGradientView
 import AVKit
 
-final class ShowHeaderView: UIView {
+
+enum MotionType {
+    case movie
+    case tvShow
+}
+
+
+final class MotionHeaderView: UIView {
 
     // MARK: Properties
 
@@ -120,11 +127,27 @@ final class ShowHeaderView: UIView {
         }
     }
 
-    private func isFavorite() -> Bool {
-        guard let id = showOverview?.id else { return false}
+    var currentType: MotionType {
+        if showOverview != nil {
+            return .tvShow
+        } else if movie != nil {
+            return .movie
+        } else {
+            fatalError()
+        }
+    }
 
-        let favShows = UserProfileManager().favouriteShows()
-        return favShows.contains(id)
+    private func isFavorite() -> Bool {
+        switch currentType {
+        case .movie:
+            let favMovies = UserProfileManager().favouriteMovies()
+            let id = movie!.getId()
+            return favMovies.contains(id)
+        case .tvShow:
+            let favShows = UserProfileManager().favouriteShows()
+            let id = showOverview!.getId()
+            return favShows.contains(id)
+        }
     }
 
     private func addSubviewsAndConstraints() {

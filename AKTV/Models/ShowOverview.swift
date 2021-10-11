@@ -15,7 +15,7 @@ struct Genre: Codable, Identifiable, Hashable {
 
 struct ShowOverview: Codable, Hashable {
 //    var productionCompanies: ProductionCompany
-    var status: String
+    var status: String?
     var genres: [Genre]?
     var numberOfSeasons: Int
 //    var networks: [Network]
@@ -40,6 +40,18 @@ struct ShowOverview: Codable, Hashable {
     var overview: String // overview?
 //    var originalCountry: [Country]?
     var videos: Videos?
+}
+
+// MARK: - TMDBPresentable
+
+extension ShowOverview: TMDBPresentable {
+    func getId() -> Int {
+        return id
+    }
+
+    func getVoteAverage() -> Double {
+        return voteAverage
+    }
 }
 
 // MARK: - Mocks

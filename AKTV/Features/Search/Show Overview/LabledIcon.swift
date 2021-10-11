@@ -68,6 +68,10 @@ class LabeledIconButton: UIButton {
     }
 }
 
+protocol TMDBPresentable {
+    func getId() -> Int
+    func getVoteAverage() -> Double
+}
 
 final class RatingIcon: LabeledIconButton {
 
@@ -100,8 +104,8 @@ final class RatingIcon: LabeledIconButton {
         }
     }
 
-    func update(with overview: ShowOverview) {
-        endValue = overview.voteAverage
+    func update(with motionType: TMDBPresentable) {
+        endValue = motionType.getVoteAverage()
         displayLink.add(to: .main, forMode: .default)
     }
 
@@ -167,6 +171,16 @@ final class StarLabeledIcon: LabeledIconButton {
         return nil
     }
 
+    private var motionType: MotionType {
+        if movie != nil {
+            return .movie
+        } else if showOverview != nil {
+            return .tvShow
+        }
+
+        fatalError()
+    }
+
     private func isFavorite() -> Bool {
         guard let id = getId() else { return false }
 
@@ -175,18 +189,28 @@ final class StarLabeledIcon: LabeledIconButton {
     }
 
     @objc func didTapHeart() {
-        guard let showId = getId() else {
+        guard let id = getId() else {
             fatalError("Error: Could not find id to favorite")
         }
 
         let profileManager = UserProfileManager()
 
-        if isFavorite() {
-            setFilled(false)
-            profileManager.setFavouriteShow(id: showId, favourite: false)
-        } else {
-            setFilled(true)
-            profileManager.setFavouriteShow(id: showId, favourite: true)
+        if motionType == .tvShow {
+            if isFavorite() {
+                setFilled(false)
+                profileManager.setFavouriteShow(id: id, favourite: false)
+            } else {
+                setFilled(true)
+                profileManager.setFavouriteShow(id: id, favourite: true)
+            }
+        } else if motionType == .movie {
+            if isFavorite() {
+                setFilled(false)
+                profileManager.setFavouriteMovie(id: id, favourite: false)
+            } else {
+                setFilled(true)
+                profileManager.setFavouriteMovie(id: id, favourite: true)
+            }
         }
     }
 

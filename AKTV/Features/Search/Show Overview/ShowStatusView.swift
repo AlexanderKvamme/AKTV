@@ -62,6 +62,6 @@ final class ShowStatusView: UIView {
     }
 
     func update(with show: ShowOverview) {
-        body.text = show.status.uppercased()
+        body.text = show.status?.uppercased() ?? "No status"
     }
 }
