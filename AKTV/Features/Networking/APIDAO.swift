@@ -64,8 +64,9 @@ final class APIDAO: NSObject, MediaSearcher {
         }
 
         let _ = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            guard error == nil else {
-                print("Error: ", error)
+            if let error = error {
+                print("Search movies Error: ", error.localizedDescription)
+                print(error)
                 return
             }
 
@@ -81,7 +82,6 @@ final class APIDAO: NSObject, MediaSearcher {
 
                 if let data = data {
                     if let str = String(data: data, encoding: .utf8) {
-
 
                         // OLD
                         let decoded = try decoder.decode(MovieSearchResult.self, from: content)
@@ -112,7 +112,9 @@ final class APIDAO: NSObject, MediaSearcher {
         }
 
         let _ = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            guard error == nil else {
+            if let error = error {
+                print("Search series error: ", error.localizedDescription)
+                print(error)
                 return
             }
 
@@ -162,8 +164,9 @@ final class APIDAO: NSObject, MediaSearcher {
         let url = URL(string: root + "tv/" + showId + "?" + keyParam + "&append_to_response=videos")
         
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            guard error == nil else {
-                print("returning error")
+            if let error = error {
+                print("Show with ID error: ", error.localizedDescription)
+                print(error)
                 return
             }
             
@@ -193,8 +196,9 @@ final class APIDAO: NSObject, MediaSearcher {
         let url = URL(string: root + "movie/" + showId + "?" + keyParam + "&append_to_response=videos")
 
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            guard error == nil else {
-                print("returning error")
+            if let error = error {
+                print("Movie with ID error: ", error.localizedDescription)
+                print(error)
                 return
             }
 
@@ -223,8 +227,10 @@ final class APIDAO: NSObject, MediaSearcher {
         let seasonNumber = String(seasonNumber)
         let url = URL(string: root + "tv/" + showId + "/season/" + seasonNumber + "?" + keyParam)
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            guard error == nil else {
-                fatalError("error: \(String(describing: error)) ... \(String(describing: error?.localizedDescription))")
+            if let error = error {
+                print("Error: ", error.localizedDescription)
+                print(error)
+                return
             }
             
             guard let content = data else {

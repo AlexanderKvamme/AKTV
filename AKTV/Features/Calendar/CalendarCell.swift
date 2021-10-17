@@ -122,7 +122,6 @@ class CalendarCell: JTACDayCell {
 
         // TODO: Multiple episodes on one day
         if cellState.dateBelongsTo == .thisMonth {
-            print("configuring movie")
             updateCellDesign(for: movie, cellState: cellState)
         }
 
