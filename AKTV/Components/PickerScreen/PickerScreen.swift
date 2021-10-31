@@ -23,8 +23,8 @@ class PickerScreen: UIViewController {
 
     // MARK: - Properties
 
-    private let header = UILabel()
-    private let subHeader = UILabel()
+    let header = UILabel()
+    let subHeader = UILabel()
     private var pickables: [Pickable]
     private var stackView = UIStackView()
     private var buttons: [UIButton]

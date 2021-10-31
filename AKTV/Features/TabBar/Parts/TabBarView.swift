@@ -15,7 +15,7 @@ class TabBarView: UIView {
     lazy var button1 = makeButton(iconName: "calendar")
     lazy var button2 = makeButton(iconName: "icon-cards", isAsset: true)
     lazy var button3 = makeButton(iconName: "video")
-    lazy var button4 = makeButton(iconName: "gearshape")
+    lazy var button4 = makeButton(iconName: "list.star")
 
     // MARK: - Initializers
 
