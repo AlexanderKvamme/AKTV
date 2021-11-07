@@ -10,7 +10,9 @@ import UIKit
 
 protocol Pickable { }
 
-enum MediaPickable: String, Pickable {
+enum MediaPickable: String, CaseIterable, Identifiable, Pickable {
+    var id: RawValue { rawValue }
+
     case tvShow = "TV show"
     case movie = "Movie"
     case game = "Game"
