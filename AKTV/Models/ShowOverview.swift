@@ -13,7 +13,7 @@ struct Genre: Codable, Identifiable, Hashable {
     var name: String
 }
 
-struct ShowOverview: Codable, Hashable {
+struct ShowOverview: Codable, Hashable, Identifiable {
 //    var productionCompanies: ProductionCompany
     var status: String?
     var genres: [Genre]?

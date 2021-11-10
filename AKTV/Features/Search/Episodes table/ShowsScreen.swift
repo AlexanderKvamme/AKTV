@@ -10,6 +10,23 @@ import Foundation
 import UIKit
 import SnapKit
 import ComplimentaryGradientView
+import SwiftUI
+
+// NEW: UIKit wrapper
+
+struct ShowOverViewSUWrapper: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> ShowOverviewScreen {
+        let controller = ShowOverviewScreen(dao: APIDAO())
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: ShowOverviewScreen, context: Context) {
+        // ...
+    }
+}
+
+// OLD
 
 extension ShowOverviewScreen: SeasonPresenter {
     func displaySeason(showId: Int?, seasonNumber: Int?) {
