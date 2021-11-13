@@ -640,7 +640,7 @@
 				DD6DDEC625CD453E00A19F3A /* Resources */,
 				DD6DDEC025CC7A0A00A19F3A /* SwiftUI */,
 				DDE388FC242AB6350049D881 /* Models */,
-				DDC5DAA3272F3657005D2A44 /* Dummies */,
+				DDC5DAA3272F3657005D2A44 /* MocksAndDummies */,
 				DDA1A9022427B24B00F7907A /* Main.storyboard */,
 				DDA1A9082427B24D00F7907A /* Assets.xcassets */,
 				DDA1A90A2427B24D00F7907A /* LaunchScreen.storyboard */,
@@ -709,12 +709,12 @@
 			path = Favourites;
 			sourceTree = "<group>";
 		};
-		DDC5DAA3272F3657005D2A44 /* Dummies */ = {
+		DDC5DAA3272F3657005D2A44 /* MocksAndDummies */ = {
 			isa = PBXGroup;
 			children = (
 				DDC5DAA4272F366A005D2A44 /* DummyFactory.swift */,
 			);
-			path = Dummies;
+			path = MocksAndDummies;
 			sourceTree = "<group>";
 		};
 		DDC8048125D5757600B0418B /* Features */ = {

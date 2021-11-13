@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Show: Decodable {
+struct Show: Decodable, Identifiable {
     var backdropPath: String?
     var firstAirDate: String?
     var genreIds: [Int]?

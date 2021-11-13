@@ -12,10 +12,15 @@ struct FavouriteListView: View {
 
     var imageName: String = "default-placeholder-image"
     var selected: MediaPickable?
+    var shows = Show.mocks
 
     var body: some View {
-        Text("You have selected \(selected?.rawValue ?? "none")")
-            .background(Color.green)
+        VStack {
+            Text("FavouriteListView")
+            List(shows) { test in
+                Text(test.name)
+            }
+        }
     }
 }
 
