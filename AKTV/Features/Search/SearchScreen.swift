@@ -182,7 +182,7 @@ extension SearchScreen: ModelPresenter {
     func displayShow(_ id: UInt64?) {
         guard let id = id else { fatalError("Show had no id to present from") }
         let dao = self.dao as! APIDAO
-        dao.show(withId: Int(id)) { (showOverview) in
+        dao.showOverview(withId: Int(id)) { (showOverview) in
             DispatchQueue.main.async {
                 let next = ShowOverviewScreen(dao: dao)
                 next.update(with: showOverview)
