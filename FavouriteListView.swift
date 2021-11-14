@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FavouriteListView: View {
 
@@ -55,7 +56,6 @@ struct FavouriteListView: View {
         let favs = UserProfileManager().favouriteShows()
         favs.forEach { showId in
             APIDAO().show(withId: showId) { show in
-                print("bam after \(Date().timeIntervalSince1970 - start) ms appending \(show.name)")
                 DispatchQueue.main.async {
                     if !self.viewModel.shows.contains(where: { existing in
                         existing.id == show.id
@@ -75,7 +75,8 @@ struct FavouriteListRow: View {
     
     var body: some View {
         HStack {
-            Image("showDummy")
+            KFImage.url(show.getBackdropUrl())
+                .loadImmediately()
                 .resizable()
                 .scaledToFill()
                 .frame(width: 64, height: 64)
@@ -84,7 +85,6 @@ struct FavouriteListRow: View {
             Text(show.name)
                 .font(Font.gilroy(.bold, 20))
                 .foregroundColor(dark)
-
         }
         .listRowBackground(Color.clear)
     }
