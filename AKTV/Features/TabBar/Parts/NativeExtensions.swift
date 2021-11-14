@@ -21,3 +21,14 @@ extension UIDevice {
         return (UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0) > 0
     }
 }
+
+extension UINavigationController {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+
+        let standard = UINavigationBarAppearance()
+        standard.backgroundColor = UIColor(light)
+
+        navigationBar.standardAppearance = standard
+    }
+}
