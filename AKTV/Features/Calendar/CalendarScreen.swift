@@ -120,23 +120,23 @@ final class CalendarScreen: UIViewController {
         let favShows = UserProfileManager().favouriteShows()
         let favMovies = UserProfileManager().favouriteMovies()
         let favGames = GameStore.getFavourites()
-        print("favShowS: ", favShows)
-        print("favGames: ", favGames)
-        print("favMovies: ", favMovies)
 
         favShows.forEach {
-            dao.show(withId: $0) { overview in
+            dao.showOverview(withId: $0) { overview in
                 dao.episodes(showId: overview.id, seasonNumber: overview.numberOfSeasons) { season in
                     DispatchQueue.main.async {
+                        var episodes = [Episode]()
                         season.episodes.forEach { episode in
                             if let formattedDate = episode.getFormattedDate() {
                                 let str = DateFormatter.withSimplifiedDayStyle.string(from: formattedDate)
 
                                 // FIXME: Should allow for multiple episodes on one day
                                 self.episodeDict[str] = (episode, overview)
-                                self.upcomingShows.append(episode)
+                                episodes.append(episode)
                             }
                         }
+
+                        self.upcomingShows.append(contentsOf: episodes)
                     }
                 }
             }

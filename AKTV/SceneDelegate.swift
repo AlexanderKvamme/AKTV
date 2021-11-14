@@ -31,6 +31,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
+        // Custom 1 week caching
+        let cache = EntityURLCache()
+        URLCache.shared = cache
+
         gameAuthPublisher
             .sink { _ in
             } receiveValue: { authToken in

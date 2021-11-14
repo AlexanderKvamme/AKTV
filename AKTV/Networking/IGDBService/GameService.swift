@@ -47,7 +47,7 @@ final class GameService {
     static func fetchCoverImageUrl(cover: Proto_Cover, completion: @escaping ((URL) -> ())) {
         // Look through cache
         let key = KeyGenerator.coverUrl(coverId: cover.id)
-        if let url = URLCache.getUrl(forKey: key) {
+        if let url = AKURLCache.getUrl(forKey: key) {
             completion(url)
             return
         }
@@ -122,7 +122,7 @@ final class GameService {
 
     static func getCoverImageURL(forGame game: Proto_Game, completion: @escaping ((URL?) -> ())) {
         let key = KeyGenerator.coverUrl(gameId: game.id)
-        if let url = URLCache.getUrl(forKey: key) {
+        if let url = AKURLCache.getUrl(forKey: key) {
             completion(url)
             return
         }
@@ -145,7 +145,7 @@ final class GameService {
             if let url = URL(string: urlString) {
                 // cache
                 let key = KeyGenerator.coverUrl(gameId: game.id)
-                URLCache.setUrl(forKey: key, to: urlString)
+                AKURLCache.setUrl(forKey: key, to: urlString)
 
                 completion(url)
                 return
@@ -165,7 +165,7 @@ final class GameService {
 
         let coverURL = imageBuilder(imageID: String(cover.imageID), size: ImageSize.COVER_BIG)
         let key = KeyGenerator.coverUrl(coverId: cover.id)
-        URLCache.setUrl(forKey: key, to: coverURL)
+        AKURLCache.setUrl(forKey: key, to: coverURL)
         let url = URL(string: coverURL)!
         completion(url)
     }
@@ -298,7 +298,7 @@ class KeyGenerator {
 
 }
 
-class URLCache {
+class AKURLCache {
 
     static func getUrl(forKey key: String) -> URL? {
         if let str = UserDefaults.standard.string(forKey: key) {
