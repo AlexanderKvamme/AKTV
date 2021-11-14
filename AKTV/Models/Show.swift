@@ -39,3 +39,16 @@ struct Show: Decodable, Identifiable {
 }
 
 extension Show: MediaSearchResult {}
+
+extension Show {
+    func getBackdropUrl() -> URL {
+        guard
+            let backdropPath = backdropPath,
+            let url = URL(string: APIDAO.imdbImageRoot+backdropPath) else {
+                return URL(string: "https://via.placeholder.com/150")!
+            }
+
+        return url
+
+    }
+}

@@ -52,7 +52,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         // Fetch favourite shows and show next episode dates
         let favouriteShows = UserProfileManager().favouriteShows()
         favouriteShows.forEach{ id in
-            dao.show(withId: id) { (showOverview) in
+            dao.showOverview(withId: id) { (showOverview) in
                 DispatchQueue.main.sync {
                     self.upcomingScreen.update(withShow: showOverview)
                 }

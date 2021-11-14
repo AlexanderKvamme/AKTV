@@ -159,7 +159,7 @@ final class APIDAO: NSObject, MediaSearcher {
         }
     }
     
-    func show(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
+    func showOverview(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
         let showId = String(withId)
         let url = URL(string: root + "tv/" + showId + "?" + keyParam + "&append_to_response=videos")
         
@@ -188,6 +188,37 @@ final class APIDAO: NSObject, MediaSearcher {
             andThen(tvShowSeason)
         }
         
+        task.resume()
+    }
+
+    func show(withId: Int, andThen: @escaping ((Show) -> ()))  {
+        let showId = String(withId)
+        let url = URL(string: root + "tv/" + showId + "?" + keyParam + "&append_to_response=videos")
+
+        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+            if let error = error {
+                print("Show with ID error: ", error.localizedDescription)
+                print(error)
+                return
+            }
+
+            guard let content = data else {
+                print("not returning data")
+                return
+            }
+
+            // Got JSON
+            guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
+                print("Not containing JSON")
+                return
+            }
+
+            // Mapping
+            let decoder = JSONDecoder()
+            let show = try! decoder.decode(Show.self, from: content)
+            andThen(show)
+        }
+
         task.resume()
     }
 

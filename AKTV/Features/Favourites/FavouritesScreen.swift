@@ -33,7 +33,11 @@ struct SUFavouritesScreen: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
+            ZStack{
+                Rectangle()
+                    .foregroundColor(light)
+                    .ignoresSafeArea()
+
                 LazyVStack {
                     ForEach(pickables) { pickable in
                         Button(action: {
@@ -42,20 +46,19 @@ struct SUFavouritesScreen: View {
                         }) {
                             Text(pickable.rawValue)
                                 .foregroundColor(light)
-
                         }
                         .buttonStyle(AKButton())
                         .padding(6)
                         .shadow(color: .black.opacity(0.1), radius: 14, x: 0, y: 16)
                         .listRowSeparator(.hidden)
                     }
+                    .background(
+                        NavigationLink(destination: FavouriteListView(selected: selected), isActive: $isLinkActive) { EmptyView() }
+                            .buttonStyle(PlainButtonStyle())
+                    )
                 }
-                .background(
-                    NavigationLink(destination: FavouriteListView(selected: selected), isActive: $isLinkActive) { EmptyView() }
-                        .buttonStyle(PlainButtonStyle())
-                )
             }
-            .background(light)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
