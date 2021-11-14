@@ -31,7 +31,6 @@ struct FavouriteListView: View {
         }
 
         ZStack {
-            // Denne funker alene
             Rectangle()
                 .ignoresSafeArea()
                 .foregroundColor(light)
