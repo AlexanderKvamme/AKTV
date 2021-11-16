@@ -93,12 +93,12 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    func configure(for cellState: CellState, episode: Episode, overview: ShowOverview) {
+    func configure(for cellState: CellState, episode: Episode) {
         resetStyle(cellState)
 
         // TODO: Multiple episodes on one day
         if cellState.dateBelongsTo == .thisMonth {
-            updateCellDesign(for: episode, overview, cellState: cellState)
+            updateCellDesign(for: episode, cellState: cellState)
         }
         setIsTodayStyle(cellState: cellState)
     }

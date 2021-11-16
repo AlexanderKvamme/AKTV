@@ -44,7 +44,7 @@ final class CalendarScreen: UIViewController {
                                          height: style.calendarHeight))
     var calendarCard = Card()
     var imageCard = ImageCard()
-    var episodeDict = [String : (Episode, ShowOverview)]()
+    var episodeDict = [String : Episode]()
     var gameDict = [String : Proto_Game]()
     var movieDict = [String: Movie]()
     var formatter = DateFormatter.withoutTime
@@ -131,7 +131,8 @@ final class CalendarScreen: UIViewController {
                                 let str = DateFormatter.withSimplifiedDayStyle.string(from: formattedDate)
 
                                 // FIXME: Should allow for multiple episodes on one day
-                                self.episodeDict[str] = (episode, overview)
+                                
+                                self.episodeDict[str] = episode
                                 episodes.append(episode)
                             }
                         }
@@ -248,8 +249,8 @@ extension CalendarScreen: JTACMonthViewDelegate {
         DispatchQueue.main.async {
             let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
 
-            if let showOverview = self.episodeDict[key]?.1 {
-                if let posterPath = showOverview.posterPath, let posterURL = URL(string: APIDAO.imdbImageRoot+posterPath) {
+            if let episode = self.episodeDict[key] {
+                if let stillPath = episode.stillPath, let posterURL = URL(string: APIDAO.imdbImageRoot+stillPath) {
                     self.imageCard.imageView.kf.setImage(with: posterURL)
                     return
                 }
@@ -290,8 +291,8 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
         let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
 
-        if let (episode, overview) = episodeDict[key] {
-            cell.configure(for: cellState, episode: episode, overview: overview)
+        if let episode = episodeDict[key] {
+            cell.configure(for: cellState, episode: episode)
         }
 
         if let game = gameDict[key] {
@@ -312,8 +313,8 @@ extension CalendarScreen: JTACMonthViewDelegate {
         cell.resetStyle(cellState)
 
         let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
-        if let (episode, overview) = episodeDict[key] {
-            cell.configure(for: cellState, episode: episode, overview: overview)
+        if let episode = episodeDict[key] {
+            cell.configure(for: cellState, episode: episode)
         }
 
         if let game = gameDict[key] {
