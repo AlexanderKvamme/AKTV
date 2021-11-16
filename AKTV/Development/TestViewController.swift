@@ -27,6 +27,6 @@ final class TestViewController: UIViewController {
         }
 
         let url = URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/co3gbk.png")
-        card.imageView.kf.setImage(with: url)
+//        card.imageView.kf.setImage(with: url)
     }
 }

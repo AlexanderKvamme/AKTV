@@ -238,10 +238,11 @@ extension CalendarScreen: JTACMonthViewDataSource {
 
 extension CalendarScreen: JTACMonthViewDelegate {
 
-    // selected cell
+    // On selecting cell
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
 
         currentlySelectedGame = nil
+        imageCard.reset()
 
         guard let cell = cell as? CalendarCell else { fatalError() }
         cell.setSelected(true)
@@ -249,11 +250,12 @@ extension CalendarScreen: JTACMonthViewDelegate {
         DispatchQueue.main.async {
             let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
 
+            // Make sure there are actually multiple episodes in this dictionary
+            
             if let episode = self.episodeDict[key] {
                 if let artPath = episode.artPath,
                     let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
-                    self.imageCard.imageView.kf.setImage(with: posterURL)
-                    return
+                    self.imageCard.addImage(url: posterURL)
                 }
             }
 
@@ -261,7 +263,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
                 self.currentlySelectedGame = game
                 GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
                     DispatchQueue.main.async {
-                        self.imageCard.imageView.kf.setImage(with: coverImageUrl)
+                        self.imageCard.addImage(url: coverImageUrl)
                     }
                 }
             }
@@ -269,12 +271,11 @@ extension CalendarScreen: JTACMonthViewDelegate {
             if let movie = self.movieDict[key] {
                 if let posterPath = movie.posterPath,
                    let posterURL = URL(string:APIDAO.imdbImageRoot+posterPath) {
-                    self.imageCard.imageView.kf.setImage(with: posterURL)
-                    return
+                    self.imageCard.addImage(url: posterURL)
                 }
             }
 
-            self.imageCard.imageView.image = nil
+//            self.imageCard.imageView.image = nil
         }
     }
 
