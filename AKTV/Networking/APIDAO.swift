@@ -254,9 +254,8 @@ final class APIDAO: NSObject, MediaSearcher {
     }
 
     func episodes(showId: Int, seasonNumber: Int, andThen: @escaping ((Season) -> ())) {
-        let showId = String(showId)
         let seasonNumber = String(seasonNumber)
-        let url = URL(string: root + "tv/" + showId + "/season/" + seasonNumber + "?" + keyParam)
+        let url = URL(string: root + "tv/" + String(showId) + "/season/" + seasonNumber + "?" + keyParam)
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
             if let error = error {
                 print("Error: ", error.localizedDescription)
@@ -277,7 +276,17 @@ final class APIDAO: NSObject, MediaSearcher {
             // Mapping
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let tvShowSeason = try! decoder.decode(Season.self, from: content)
+            var tvShowSeason = try! decoder.decode(Season.self, from: content)
+
+            // Add showId to episodes
+            var updatedEpisodes = [Episode]()
+            for episode in tvShowSeason.episodes {
+                let test = Episode(name: episode.name, episodeNumber: episode.episodeNumber, airDate: episode.airDate, id: episode.id, overview: episode.overview, seasonNumber: episode.seasonNumber, stillPath: episode.stillPath, voteAverage: episode.voteAverage, showId: showId, artPath: tvShowSeason.posterPath)
+                updatedEpisodes.append(test)
+            }
+
+            tvShowSeason.episodes = updatedEpisodes
+
             andThen(tvShowSeason)
         }
         

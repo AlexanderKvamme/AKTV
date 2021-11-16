@@ -21,12 +21,9 @@ final class ColorStore {
         }
     }
 
-    private static func showOverviewKey(for overview: ShowOverview) -> String {
-        guard let path = overview.posterPath else {
-            fatalError("Needed stillPath to get colors")
-        }
-        // TODO: Use url path for a more generic color storage
-        return "episode-key-\(path)"
+    // Motion is movies and tv shows
+    private static func motionKey(for id: Int) -> String {
+        return "episode-key-\(id)"
     }
 
     private static func movieKey(for movie: Movie) -> String {
@@ -44,7 +41,7 @@ final class ColorStore {
         return "game-key-\(path)"
     }
 
-    static func save(_ colors: UIImageColors, forOverview overview: ShowOverview) {
+    static func save(_ colors: UIImageColors, id: Int) {
         let encodableColors = UIImageColorsWrapper(background: colors.background,
                                                    detail: colors.detail,
                                                    primary: colors.primary,
@@ -53,7 +50,7 @@ final class ColorStore {
         do {
             let encoder = JSONEncoder()
             let encodedData = try encoder.encode(encodableColors)
-            let episodeKey = showOverviewKey(for: overview)
+            let episodeKey = motionKey(for: id)
             UserDefaults.standard.set(encodedData, forKey: episodeKey)
         } catch let error {
             fatalError("could not store color: \(error.localizedDescription)")
@@ -92,8 +89,8 @@ final class ColorStore {
         }
     }
 
-    static func get(colorsFrom overview: ShowOverview) -> UIImageColors? {
-        let episodeKey = showOverviewKey(for: overview)
+    static func getMovieDBColors(from id: Int) -> UIImageColors? {
+        let episodeKey = motionKey(for: id)
         guard let data = UserDefaults.standard.data(forKey: episodeKey) else { return nil }
 
         do {

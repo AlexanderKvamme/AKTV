@@ -51,6 +51,10 @@ struct Episode: Codable, Hashable {
 //    var crew: [Crew]
 //    var guestStar: [Star]
 
+    // Customs
+    var showId: Int?
+    var artPath: String?
+
     static var mock: Episode {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase

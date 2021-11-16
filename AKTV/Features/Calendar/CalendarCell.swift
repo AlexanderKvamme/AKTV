@@ -189,29 +189,43 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    private func updateCellDesign(for episode: Episode, _ overview: ShowOverview, cellState: CellState) {
+    private func updateCellDesign(for episode: Episode, cellState: CellState) {
         // Basic "date has episode" styles
         dateLabel.textColor = UIColor(light)
         dateLabel.alpha = 0.6
 
-        guard let stillPath = overview.posterPath else { return }
+        guard let showId = episode.showId else {
+            print("Episode had no showId")
+            return
+        }
 
-        if let existingColors = ColorStore.get(colorsFrom: overview) {
-            background.backgroundColor = existingColors.detail
-            dateLabel.textColor = existingColors.background
-        } else {
-            DispatchQueue.main.async {
-                UIImageView().kf.setImage(with: URL(string: APIDAO.imdbImageRoot+stillPath), completionHandler: { result in
-                    do {
-                        let unwrappedResult = try result.get()
-                        unwrappedResult.image.getColors { (colors) in
-                            ColorStore.save(colors, forOverview: overview)
-                            self.updateCellDesign(for: episode, overview, cellState: cellState)
+        APIDAO().show(withId: showId) { show in
+            guard let posterPath = show.posterPath else { return }
+
+            // FIXME: Store colors again
+            // - Consider storing images based on showID instead of path
+            // - This way it would be easier to get colors for each episode
+            // - Without using the Episode's stillPath which is random
+
+            if let existingColors = ColorStore.getMovieDBColors(from: Int(show.id)) {
+                DispatchQueue.main.async {
+                    self.background.backgroundColor = existingColors.detail
+                    self.dateLabel.textColor = existingColors.background
+                }
+            } else {
+                DispatchQueue.main.async {
+                    UIImageView().kf.setImage(with: URL(string: APIDAO.imdbImageRoot+posterPath), completionHandler: { result in
+                        do {
+                            let unwrappedResult = try result.get()
+                            unwrappedResult.image.getColors { (colors) in
+                                ColorStore.save(colors, id: Int(show.id))
+                                self.updateCellDesign(for: episode, cellState: cellState)
+                            }
+                        } catch {
+                            print("Error: while retrieving image from stillPath")
                         }
-                    } catch {
-                        print("Error: while retrieving image from stillPath")
-                    }
-                })
+                    })
+                }
             }
         }
     }

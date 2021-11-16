@@ -250,7 +250,8 @@ extension CalendarScreen: JTACMonthViewDelegate {
             let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
 
             if let episode = self.episodeDict[key] {
-                if let stillPath = episode.stillPath, let posterURL = URL(string: APIDAO.imdbImageRoot+stillPath) {
+                if let artPath = episode.artPath,
+                    let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
                     self.imageCard.imageView.kf.setImage(with: posterURL)
                     return
                 }
