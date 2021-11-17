@@ -93,18 +93,14 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    func configure(for cellState: CellState, episode: Episode) {
+    func configure(for cellState: CellState, episodes: [Episode]) {
         resetStyle(cellState)
 
-        // TODO: Multiple episodes on one day
         if cellState.dateBelongsTo == .thisMonth {
-            updateCellDesign(for: episode, cellState: cellState)
+            updateCellDesign(for: episodes, cellState: cellState)
         }
         setIsTodayStyle(cellState: cellState)
     }
-
-    // Skal jeg overloade med en egen metode for games?
-    // Eller subclasse
 
     func configure(for cellState: CellState, game: Proto_Game) {
         resetStyle(cellState)
@@ -189,10 +185,27 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    private func updateCellDesign(for episode: Episode, cellState: CellState) {
+    private func styleCellForMultipleEpisodes() {
+        background.backgroundColor = .black
+        dateLabel.textColor = UIColor(light)
+        dateLabel.alpha = 1
+    }
+
+    private func updateCellDesign(for episodes: [Episode], cellState: CellState) {
+
+        if episodes.filterUniqueShows().count > 1 {
+            styleCellForMultipleEpisodes()
+            return
+        }
+
         // Basic "date has episode" styles
         dateLabel.textColor = UIColor(light)
         dateLabel.alpha = 0.6
+
+        guard let episode = episodes.first else {
+            print("Could not get first episode from array")
+            return
+        }
 
         guard let showId = episode.showId else {
             print("Episode had no showId")
@@ -219,7 +232,7 @@ class CalendarCell: JTACDayCell {
                             let unwrappedResult = try result.get()
                             unwrappedResult.image.getColors { (colors) in
                                 ColorStore.save(colors, id: Int(show.id))
-                                self.updateCellDesign(for: episode, cellState: cellState)
+                                self.updateCellDesign(for: episodes, cellState: cellState)
                             }
                         } catch {
                             print("Error: while retrieving image from stillPath")

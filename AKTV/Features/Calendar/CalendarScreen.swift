@@ -44,7 +44,7 @@ final class CalendarScreen: UIViewController {
                                          height: style.calendarHeight))
     var calendarCard = Card()
     var imageCard = ImageCard()
-    var episodeDict = [String : Episode]()
+    var episodeDict = [String : [Episode]]()
     var gameDict = [String : Proto_Game]()
     var movieDict = [String: Movie]()
     var formatter = DateFormatter.withoutTime
@@ -131,8 +131,14 @@ final class CalendarScreen: UIViewController {
                                 let str = DateFormatter.withSimplifiedDayStyle.string(from: formattedDate)
 
                                 // FIXME: Should allow for multiple episodes on one day
-                                
-                                self.episodeDict[str] = episode
+
+                                if let existing = self.episodeDict[str] {
+                                    var inclusive = existing
+                                    inclusive.append(episode)
+                                    self.episodeDict[str] = inclusive
+                                } else {
+                                    self.episodeDict[str] = [episode]
+                                }
                                 episodes.append(episode)
                             }
                         }
@@ -250,12 +256,11 @@ extension CalendarScreen: JTACMonthViewDelegate {
         DispatchQueue.main.async {
             let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
 
-            // Make sure there are actually multiple episodes in this dictionary
-            
-            if let episode = self.episodeDict[key] {
-                if let artPath = episode.artPath,
-                    let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
-                    self.imageCard.addImage(url: posterURL)
+            if let episodes = self.episodeDict[key] {
+                episodes.forEach { episode in
+                    if let artPath = episode.artPath, let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
+                        self.imageCard.addImage(url: posterURL)
+                    }
                 }
             }
 
@@ -274,8 +279,6 @@ extension CalendarScreen: JTACMonthViewDelegate {
                     self.imageCard.addImage(url: posterURL)
                 }
             }
-
-//            self.imageCard.imageView.image = nil
         }
     }
 
@@ -293,8 +296,8 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
         let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
 
-        if let episode = episodeDict[key] {
-            cell.configure(for: cellState, episode: episode)
+        if let episodes = episodeDict[key] {
+            cell.configure(for: cellState, episodes: episodes)
         }
 
         if let game = gameDict[key] {
@@ -315,8 +318,8 @@ extension CalendarScreen: JTACMonthViewDelegate {
         cell.resetStyle(cellState)
 
         let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
-        if let episode = episodeDict[key] {
-            cell.configure(for: cellState, episode: episode)
+        if let episodes = episodeDict[key] {
+            cell.configure(for: cellState, episodes: episodes)
         }
 
         if let game = gameDict[key] {
