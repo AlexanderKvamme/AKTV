@@ -95,6 +95,8 @@ class ImageCard: Card {
     }
 
     func addImage(url: URL) {
-        urls.append(url)
+        if !urls.contains(where: {$0 == url}) {
+            urls.append(url)
+        }
     }
 }

@@ -17,6 +17,21 @@ fileprivate struct style {
     static let cornerRadius: CGFloat = 8
 }
 
+extension Array where Element == Episode {
+
+    func filterUniqueShows() -> [Episode] {
+        var filtered = [Episode]()
+
+        for episode in self {
+            let showId = episode.showId
+            if filtered.first(where: { $0.showId == showId }) == nil {
+                filtered.append(episode)
+            }
+        }
+
+        return filtered
+    }
+}
 
 class CalendarCell: JTACDayCell {
 
