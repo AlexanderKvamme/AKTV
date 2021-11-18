@@ -79,8 +79,6 @@ final class CalendarScreen: UIViewController {
             }
         }
     }
-//    var gameDict = [String : Proto_Game]()
-//    var movieDict = [String: Movie]()
     var formatter = DateFormatter.withoutTime
 //    var upcomingShows = [Episode]() {
 //        didSet {
@@ -157,15 +155,13 @@ final class CalendarScreen: UIViewController {
         } else {
             self.entityDict[str] = [entity]
         }
-
-//        episodes.append(episode)
     }
 
     private func fetchPremiereDates() {
         let dao = APIDAO()
         let favShows = UserProfileManager().favouriteShows()
-        _ = UserProfileManager().favouriteMovies()
-        _ = GameStore.getFavourites()
+        let favMovies = UserProfileManager().favouriteMovies()
+        let favGames = GameStore.getFavourites()
 
         favShows.forEach {
             dao.showOverview(withId: $0) { overview in
@@ -175,38 +171,29 @@ final class CalendarScreen: UIViewController {
                         season.episodes.forEach { episode in
                             if let formattedDate = episode.getFormattedDate() {
                                 let str = DateFormatter.withoutTime.string(from: formattedDate)
-
-                                // FIXME: Should allow for multiple episodes on one day
-
                                 self.addEntityIfUnique(episode, toDateString: str)
-
                             }
                         }
-
-//                        self.upcomingShows.append(contentsOf: episodes)
                     }
                 }
             }
         }
 
-//        favMovies.forEach {
-//            dao.movie(withId: UInt64($0)) { movie in
-//                if let formattedDate = movie.releaseDate {
-//                    let date = formattedDate
-//                    self.movieDict[date] = movie
-//                    self.upcomingMovies.append(movie)
-//                }
-//            }
-//        }
-//
-//        favGames.forEach { gameId in
-//            dao.game(withId: UInt64(gameId)) { game in
-//                // TODO: No idea why but this works :P
-//                let dayString = DateFormatter.withoutTime.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
-//                self.gameDict[dayString] = game
-//                self.upcomingGames.append(game)
-//            }
-//        }
+        favMovies.forEach {
+            dao.movie(withId: UInt64($0)) { movie in
+                if let formattedDate = movie.releaseDate {
+                    self.addEntityIfUnique(movie, toDateString: formattedDate)
+                }
+            }
+        }
+
+        favGames.forEach { gameId in
+            dao.game(withId: UInt64(gameId)) { game in
+                // TODO: No idea why but this works :P
+                let dayString = DateFormatter.withoutTime.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
+                self.addEntityIfUnique(game, toDateString: dayString)
+            }
+        }
     }
 
     private func setup() {
@@ -296,31 +283,24 @@ extension CalendarScreen: JTACMonthViewDelegate {
         DispatchQueue.main.async {
             let key = DateFormatter.withoutTime.string(from: date)
 
-            // FIXIME: Get proper path from entity directly
-
-            if let episodes = self.entityDict[key] {
-                episodes.forEach { episode in
-                    if let artPath = episode.graphicsPath(), let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
-                        self.imageCard.addImage(url: posterURL)
+            if let entities = self.entityDict[key] {
+                entities.forEach { entity in
+                    if let game = entity as? Proto_Game {
+                        // FIXME: This was done to show only game
+                        // Extend to show list of games and episodes
+                        self.currentlySelectedGame = game
+                        GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
+                            DispatchQueue.main.async {
+                                self.imageCard.addImage(url: coverImageUrl)
+                            }
+                        }
+                    } else {
+                        if let artPath = entity.graphicsPath(), let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
+                            self.imageCard.addImage(url: posterURL)
+                        }
                     }
                 }
             }
-
-//            if let game = self.gameDict[key] {
-//                self.currentlySelectedGame = game
-//                GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
-//                    DispatchQueue.main.async {
-//                        self.imageCard.addImage(url: coverImageUrl)
-//                    }
-//                }
-//            }
-//
-//            if let movie = self.movieDict[key] {
-//                if let posterPath = movie.posterPath,
-//                   let posterURL = URL(string:APIDAO.imdbImageRoot+posterPath) {
-//                    self.imageCard.addImage(url: posterURL)
-//                }
-//            }
         }
     }
 
@@ -341,20 +321,10 @@ extension CalendarScreen: JTACMonthViewDelegate {
         if let entities = entityDict[key] {
             cell.configure(for: cellState, entities: entities)
         }
-
-//        if let game = gameDict[key] {
-//            cell.configure(for: cellState, game: game)
-//        }
-//
-//        if let movie = movieDict[key] {
-//            cell.configure(for: cellState, movie: movie)
-//        }
     }
 
     // Use dataSource to make cells
     func calendar(_ calendar: JTACMonthView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTACDayCell {
-
-        // FIXME: Find a way to display multiple episodes and games on one date
 
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
         cell.resetStyle(cellState)
@@ -363,14 +333,6 @@ extension CalendarScreen: JTACMonthViewDelegate {
         if let entities = entityDict[key] {
             cell.configure(for: cellState, entities: entities)
         }
-
-//        if let game = gameDict[key] {
-//            cell.configure(for: cellState, game: game)
-//        }
-//
-//        if let movie = movieDict[key] {
-//            cell.configure(for: cellState, movie: movie)
-//        }
 
         return cell
     }
