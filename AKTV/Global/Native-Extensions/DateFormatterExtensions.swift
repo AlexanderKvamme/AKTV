@@ -8,6 +8,15 @@
 
 import Foundation
 
+extension DateFormatter {
+    static var withoutTime: DateFormatter {
+        let df = DateFormatter()
+        df.dateFormat = "yyy-MM-dd"
+        df.timeZone = TimeZone.init(abbreviation: "UTC")
+        return df
+    }
+}
+
 
 final class AKDateFormatter: NSObject {
 

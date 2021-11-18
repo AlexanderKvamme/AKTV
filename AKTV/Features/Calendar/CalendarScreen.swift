@@ -12,15 +12,6 @@ import SnapKit
 import IGDB_SWIFT_API
 
 
-extension DateFormatter {
-    static var withoutTime: DateFormatter {
-        let df = DateFormatter()
-        df.dateFormat = "yyy-MM-dd"
-        return df
-    }
-}
-
-
 fileprivate struct style {
     static let calendarHeaderHeight: CGFloat        = 80
     static let calendarHorizontalOffset: CGFloat    = 32
@@ -36,7 +27,7 @@ final class CalendarScreen: UIViewController {
 
     // MARK: - Properties
 
-    let dateFormatter = DateFormatter.withSimplifiedDayStyle
+    let dateFormatter = DateFormatter.withoutTime
     let chevronButton = UIImageView()
     let cv = JTACMonthView(frame: CGRect(x: style.calendarHorizontalOffset/2+style.cardHorizontals,
                                          y: screenHeight-style.calendarHeight-style.calendarBottomOffset,
@@ -128,7 +119,7 @@ final class CalendarScreen: UIViewController {
                         var episodes = [Episode]()
                         season.episodes.forEach { episode in
                             if let formattedDate = episode.getFormattedDate() {
-                                let str = DateFormatter.withSimplifiedDayStyle.string(from: formattedDate)
+                                let str = DateFormatter.withoutTime.string(from: formattedDate)
 
                                 // FIXME: Should allow for multiple episodes on one day
 
@@ -162,7 +153,7 @@ final class CalendarScreen: UIViewController {
         favGames.forEach { gameId in
             dao.game(withId: UInt64(gameId)) { game in
                 // TODO: No idea why but this works :P
-                let dayString = DateFormatter.withSimplifiedDayStyle.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
+                let dayString = DateFormatter.withoutTime.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
                 self.gameDict[dayString] = game
                 self.upcomingGames.append(game)
             }
@@ -254,7 +245,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
         cell.setSelected(true)
 
         DispatchQueue.main.async {
-            let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
+            let key = DateFormatter.withoutTime.string(from: date)
 
             if let episodes = self.episodeDict[key] {
                 episodes.forEach { episode in
@@ -294,7 +285,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
         cell.resetStyle(cellState)
 
-        let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
+        let key = DateFormatter.withoutTime.string(from: date)
 
         if let episodes = episodeDict[key] {
             cell.configure(for: cellState, episodes: episodes)
@@ -317,7 +308,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CalendarCell", for: indexPath) as! CalendarCell
         cell.resetStyle(cellState)
 
-        let key = DateFormatter.withSimplifiedDayStyle.string(from: date)
+        let key = DateFormatter.withoutTime.string(from: date)
         if let episodes = episodeDict[key] {
             cell.configure(for: cellState, episodes: episodes)
         }
@@ -358,13 +349,3 @@ extension CalendarScreen: JTACMonthViewDelegate {
     }
 }
 
-
-
-extension DateFormatter {
-    static var withSimplifiedDayStyle: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
-        return dateFormatter
-    }()
-}

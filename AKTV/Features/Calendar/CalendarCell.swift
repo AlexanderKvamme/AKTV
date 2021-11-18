@@ -147,7 +147,6 @@ class CalendarCell: JTACDayCell {
         // Basic "date has episode" styles
         dateLabel.textColor = UIColor(light)
         dateLabel.alpha = 0.6
-        dateLabel.textColor = .green
 
         // FIXME: MOVE THIS AWAY. gonna try to get a cover object instead
 
