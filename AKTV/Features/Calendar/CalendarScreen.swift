@@ -84,23 +84,7 @@ final class CalendarScreen: UIViewController {
                                          height: style.calendarHeight))
     var calendarCard = Card()
     var imageCard = ImageCard()
-    var entityDict = [String : [Entity]]() {
-        didSet {
-            DispatchQueue.main.async {
-                // TODO: Move these methods to a addEpisode and reload that date only
-                var datesAdded = [Date]()
-                let formatter = DateFormatter.withoutTime
-                formatter.timeZone = TimeZone.init(abbreviation: "UTC")
-
-                self.entityDict.keys.forEach { key in
-                    if let formattedDate = formatter.date(from: key) {
-                        datesAdded.append(formattedDate)
-                    }
-                }
-                self.cv.reloadDates(datesAdded)
-            }
-        }
-    }
+    var entityDict = [String : [Entity]]()
     var formatter = DateFormatter.withoutTime
 
     fileprivate var currentlySelectedGame: Proto_Game?
@@ -148,6 +132,17 @@ final class CalendarScreen: UIViewController {
         } else {
             self.entityDict[str] = [entity]
         }
+
+        reloadCalendarDate(str)
+    }
+
+    private func reloadCalendarDate(_ str: String) {
+        let formatter = DateFormatter.withoutTime
+        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
+
+        if let formattedDate = formatter.date(from: str) {
+            cv.reloadDates([formattedDate])
+        }
     }
 
     private func fetchPremiereDates() {
@@ -160,7 +155,6 @@ final class CalendarScreen: UIViewController {
             dao.showOverview(withId: $0) { overview in
                 dao.episodes(showId: overview.id, seasonNumber: overview.numberOfSeasons) { season in
                     DispatchQueue.main.async {
-                        _ = [Episode]()
                         season.episodes.forEach { episode in
                             if let formattedDate = episode.getFormattedDate() {
                                 let str = DateFormatter.withoutTime.string(from: formattedDate)
@@ -175,16 +169,20 @@ final class CalendarScreen: UIViewController {
         favMovies.forEach {
             dao.movie(withId: UInt64($0)) { movie in
                 if let formattedDate = movie.releaseDate {
-                    self.addEntityIfUnique(movie, toDateString: formattedDate)
+                    DispatchQueue.main.async {
+                        self.addEntityIfUnique(movie, toDateString: formattedDate)
+                    }
                 }
             }
         }
 
         favGames.forEach { gameId in
             dao.game(withId: UInt64(gameId)) { game in
-                // TODO: No idea why but this works :P
-                let dayString = DateFormatter.withoutTime.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
-                self.addEntityIfUnique(game, toDateString: dayString)
+                DispatchQueue.main.async {
+                    // TODO: No idea why but this works :P
+                    let dayString = DateFormatter.withoutTime.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
+                    self.addEntityIfUnique(game, toDateString: dayString)
+                }
             }
         }
     }
@@ -278,7 +276,6 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
             if let entities = self.entityDict[key] {
                 entities.forEach { entity in
-
                     if let game = entity as? Proto_Game {
                         // FIXME: This was done to show only game
                         // Extend to show list of games and episodes
@@ -290,9 +287,6 @@ extension CalendarScreen: JTACMonthViewDelegate {
                         }
                     } else {
                         if let artPath = entity.graphicsPath(), let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
-                            if let entity = entity as? Show {
-                                print("bam show \(entity.name) was on date: \(date)")
-                            }
                             self.imageCard.addImage(url: posterURL)
                         }
                     }
