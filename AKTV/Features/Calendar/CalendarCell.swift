@@ -109,8 +109,6 @@ class CalendarCell: JTACDayCell {
     }
 
     func configure(for cellState: CellState, entities: [Entity]) {
-        resetStyle(cellState)
-
         if cellState.dateBelongsTo == .thisMonth {
             updateCellDesign(for: entities, cellState: cellState)
         }
@@ -122,19 +120,57 @@ class CalendarCell: JTACDayCell {
         dateLabel.textColor = UIColor(dark)
     }
 
-    private func updateCellDesign(for game: Proto_Game, cellState: CellState) {
-        if let existingColors = ColorStore.get(colorsFrom: game) {
-            background.backgroundColor = existingColors.detail
-            dateLabel.textColor = existingColors.background
+    private func styleCellForMultipleEpisodes() {
+        background.backgroundColor = .black
+        dateLabel.textColor = UIColor(light)
+        dateLabel.alpha = 1
+    }
+
+    private func updateCellDesign(for entities: [Entity], cellState: CellState) {
+        resetStyle(cellState)
+
+        if entities.count == 1 {
+            guard let firstEntity = entities.first else { fatalError() }
+
+            if let game = firstEntity as? Proto_Game {
+                applyStyle(for: game, cellState: cellState)
+            } else if let movie = firstEntity as? Movie {
+                applyStyle(for: movie, cellState: cellState)
+            } else if let show = firstEntity as? Episode {
+                // FIXME: Denne er feil
+
+                applyStyle(for: show, cellState: cellState)
+            } else {
+                assertionFailure("Should not occur")
+            }
+
+            return
         } else {
-            GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
+            styleCellForMultipleEpisodes()
+        }
+    }
+
+    // FIXME: These recursive calles could be slow even with cache
+    // Episode
+    private func applyStyle(for episode: Episode, cellState: CellState) {
+        guard let showId = episode.showId else { return }
+
+        if let existingColors = ColorStore.getMovieDBColors(from: episode.showId!) {
+            DispatchQueue.main.async {
+                self.background.backgroundColor = existingColors.detail
+                self.dateLabel.textColor = existingColors.background
+            }
+        } else {
+            APIDAO().show(withId: showId) { show in
+                guard let posterPath = show.posterPath else { return }
+
                 DispatchQueue.main.async {
-                    UIImageView().kf.setImage(with: coverImageUrl, completionHandler: { result in
+                    UIImageView().kf.setImage(with: URL(string: APIDAO.imdbImageRoot+posterPath), completionHandler: { result in
                         do {
                             let unwrappedResult = try result.get()
                             unwrappedResult.image.getColors { (colors) in
-                                ColorStore.save(colors, forGame: game)
-                                self.updateCellDesign(for: game, cellState: cellState)
+                                ColorStore.save(colors, id: Int(show.id))
+                                self.applyStyle(for: episode, cellState: cellState)
                             }
                         } catch {
                             print("Error: while retrieving image from stillPath")
@@ -145,12 +181,8 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    // FIXME: Bake into entity design update
-    private func updateCellDesign(for movie: Movie, cellState: CellState) {
-        // Basic "date has episode" styles
-        dateLabel.textColor = UIColor(light)
-        dateLabel.alpha = 0.6
-
+    // Movie
+    private func applyStyle(for movie: Movie, cellState: CellState) {
         guard let stillPath = movie.posterPath else { return }
 
         if let existingColors = ColorStore.get(colorsFrom: movie) {
@@ -163,7 +195,7 @@ class CalendarCell: JTACDayCell {
                         let unwrappedResult = try result.get()
                         unwrappedResult.image.getColors { (colors) in
                             ColorStore.save(colors, forMovie: movie)
-                            self.updateCellDesign(for: movie, cellState: cellState)
+                            self.applyStyle(for: movie, cellState: cellState)
                         }
                     } catch {
                         print("Error: while retrieving image from stillPath")
@@ -173,70 +205,28 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    private func styleCellForMultipleEpisodes() {
-        background.backgroundColor = .black
-        dateLabel.textColor = UIColor(light)
-        dateLabel.alpha = 1
-    }
-
-    private func updateCellDesign(for entities: [Entity], cellState: CellState) {
-//        let episodes = entities.compactMap({ $0 as? Episode })
-
-//        dateLabel.textColor = UIColor(light)
-//        dateLabel.alpha = 0.6
-
-        // Temp remove
-        styleCellForMultipleEpisodes()
-
-        // If only 1 entity, set colors
-        if entities.count == 1, let firstEntity = entities.first {
-                if let game = firstEntity as? Proto_Game {
-                    updateCellDesign(for: game, cellState: cellState)
-                } else if let movie = firstEntity as? Movie {
-                    updateCellDesign(for: movie, cellState: cellState)
-                } else if let show = firstEntity as? Episode {
-                    updateCellDesign(for: show, cellState: cellState)
-                } else {
-                    assertionFailure("Should not occur")
-                }
-
-                return
+    // Game
+    private func applyStyle(for game: Proto_Game, cellState: CellState) {
+        if let existingColors = ColorStore.get(colorsFrom: game) {
+            background.backgroundColor = existingColors.detail
+            dateLabel.textColor = existingColors.background
         } else {
-            styleCellForMultipleEpisodes()
-        }
-    }
-
-    // FIXME: These recursive calles could be slow even with cache
-    private func updateCellDesign(for episode: Episode, cellState: CellState) {
-            guard let showId = episode.showId else {
-                print("Episode had no showId")
-                return
-            }
-
-            APIDAO().show(withId: showId) { show in
-                guard let posterPath = show.posterPath else { return }
-
-                if let existingColors = ColorStore.getMovieDBColors(from: Int(show.id)) {
-                    DispatchQueue.main.async {
-                        self.background.backgroundColor = existingColors.detail
-                        self.dateLabel.textColor = existingColors.background
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        UIImageView().kf.setImage(with: URL(string: APIDAO.imdbImageRoot+posterPath), completionHandler: { result in
-                            do {
-                                let unwrappedResult = try result.get()
-                                unwrappedResult.image.getColors { (colors) in
-                                    ColorStore.save(colors, id: Int(show.id))
-//                                    self.updateCellDesign(for: episodes, cellState: cellState)
-                                }
-                            } catch {
-                                print("Error: while retrieving image from stillPath")
+            GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
+                DispatchQueue.main.async {
+                    UIImageView().kf.setImage(with: coverImageUrl, completionHandler: { result in
+                        do {
+                            let unwrappedResult = try result.get()
+                            unwrappedResult.image.getColors { (colors) in
+                                ColorStore.save(colors, forGame: game)
+                                self.applyStyle(for: game, cellState: cellState)
                             }
-                        })
-                    }
+                        } catch {
+                            print("Error: while retrieving image from stillPath")
+                        }
+                    })
                 }
             }
+        }
     }
 }
 
