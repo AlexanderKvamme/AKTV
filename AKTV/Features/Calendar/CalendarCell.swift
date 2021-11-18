@@ -96,7 +96,7 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    func setIsTodayStyle(cellState: CellState) {
+    func applyIsTodayStyle(cellState: CellState) {
         let formatter = DateFormatter.withoutTime
         let isToday = formatter.string(from: Date()) == formatter.string(from: cellState.date)
         let isThisMonth = cellState.dateBelongsTo == .thisMonth
@@ -115,21 +115,14 @@ class CalendarCell: JTACDayCell {
             updateCellDesign(for: entities, cellState: cellState)
         }
 
-        setIsTodayStyle(cellState: cellState)
+        applyIsTodayStyle(cellState: cellState)
     }
 
     override func prepareForReuse() {
         dateLabel.textColor = UIColor(dark)
     }
 
-    // FIXME: Bake into entity design update
     private func updateCellDesign(for game: Proto_Game, cellState: CellState) {
-        // Basic "date has episode" styles
-        dateLabel.textColor = UIColor(light)
-        dateLabel.alpha = 0.6
-
-        // FIXME: MOVE THIS AWAY. gonna try to get a cover object instead
-
         if let existingColors = ColorStore.get(colorsFrom: game) {
             background.backgroundColor = existingColors.detail
             dateLabel.textColor = existingColors.background
@@ -187,38 +180,41 @@ class CalendarCell: JTACDayCell {
     }
 
     private func updateCellDesign(for entities: [Entity], cellState: CellState) {
-        let episodes = entities.compactMap({ $0 as? Episode })
-        let hasEpisodes = episodes.count > 0
-        print("updating cell for episodes: ", episodes.map({$0.name}))
+//        let episodes = entities.compactMap({ $0 as? Episode })
 
-        // TODO: Should also handle if its one show and one game
-        if episodes.filterUniqueShows().count > 1 {
-            styleCellForMultipleEpisodes()
-            return
-        }
+//        dateLabel.textColor = UIColor(light)
+//        dateLabel.alpha = 0.6
 
-        dateLabel.textColor = UIColor(light)
-        dateLabel.alpha = 0.6
+        // Temp remove
+        styleCellForMultipleEpisodes()
 
-        // If only one episode. Style it as an episode
-        if entities.count == 1 && hasEpisodes {
-            guard let firstEpisode = episodes.first else {
-                print("Could not get first episode from array")
+        // If only 1 entity, set colors
+        if entities.count == 1, let firstEntity = entities.first {
+                if let game = firstEntity as? Proto_Game {
+                    updateCellDesign(for: game, cellState: cellState)
+                } else if let movie = firstEntity as? Movie {
+                    updateCellDesign(for: movie, cellState: cellState)
+                } else if let show = firstEntity as? Episode {
+                    updateCellDesign(for: show, cellState: cellState)
+                } else {
+                    assertionFailure("Should not occur")
+                }
+
                 return
-            }
+        } else {
+            styleCellForMultipleEpisodes()
+        }
+    }
 
-            guard let showId = firstEpisode.showId else {
+    // FIXME: These recursive calles could be slow even with cache
+    private func updateCellDesign(for episode: Episode, cellState: CellState) {
+            guard let showId = episode.showId else {
                 print("Episode had no showId")
                 return
             }
 
             APIDAO().show(withId: showId) { show in
                 guard let posterPath = show.posterPath else { return }
-
-                // FIXME: Store colors again
-                // - Consider storing images based on showID instead of path
-                // - This way it would be easier to get colors for each episode
-                // - Without using the Episode's stillPath which is random
 
                 if let existingColors = ColorStore.getMovieDBColors(from: Int(show.id)) {
                     DispatchQueue.main.async {
@@ -232,7 +228,7 @@ class CalendarCell: JTACDayCell {
                                 let unwrappedResult = try result.get()
                                 unwrappedResult.image.getColors { (colors) in
                                     ColorStore.save(colors, id: Int(show.id))
-                                    self.updateCellDesign(for: episodes, cellState: cellState)
+//                                    self.updateCellDesign(for: episodes, cellState: cellState)
                                 }
                             } catch {
                                 print("Error: while retrieving image from stillPath")
@@ -241,7 +237,6 @@ class CalendarCell: JTACDayCell {
                     }
                 }
             }
-        }
     }
 }
 

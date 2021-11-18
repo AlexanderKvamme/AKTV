@@ -18,7 +18,26 @@ protocol Entity {
     // - Should
 }
 
+enum EntityType {
+    case movie
+    case game
+    case tvShow
+}
+
 extension Entity {
+    var type: EntityType {
+        switch self {
+        case _ as Episode:
+            return .tvShow
+        case _ as Movie:
+            return .movie
+        case _ as Proto_Game:
+            return .game
+        default:
+            fatalError()
+        }
+    }
+
     func graphicsPath() -> String? {
 
         switch self {
@@ -70,8 +89,11 @@ final class CalendarScreen: UIViewController {
             DispatchQueue.main.async {
                 // TODO: Move these methods to a addEpisode and reload that date only
                 var datesAdded = [Date]()
+                let formatter = DateFormatter.withoutTime
+                formatter.timeZone = TimeZone.init(abbreviation: "UTC")
+
                 self.entityDict.keys.forEach { key in
-                    if let formattedDate = self.formatter.date(from: key) {
+                    if let formattedDate = formatter.date(from: key) {
                         datesAdded.append(formattedDate)
                     }
                 }
@@ -80,36 +102,6 @@ final class CalendarScreen: UIViewController {
         }
     }
     var formatter = DateFormatter.withoutTime
-//    var upcomingShows = [Episode]() {
-//        didSet {
-//            // Debounce?
-//            DispatchQueue.main.async {
-//                // TODO: Move these methods to a addEpisode and reload that date only
-//                let datesAdded = self.upcomingShows.compactMap{ $0.getFormattedDate() }
-//                self.cv.reloadDates(datesAdded)
-//            }
-//        }
-//    }
-//    var upcomingMovies = [Movie]() {
-//        didSet {
-//            DispatchQueue.main.async {
-//                // TODO: Move these methods to a addEpisode and reload that date only
-//                let datesAdded = self.upcomingMovies.compactMap{ (test) -> Date? in
-//                    guard let dateStr = test.releaseDate else { return nil }
-//                    return self.dateFormatter.date(from: dateStr)?.addingTimeInterval(60*60*24)
-//                }
-//                self.cv.reloadDates(datesAdded)
-//            }
-//        }
-//    }
-//    var upcomingGames = [Proto_Game]() {
-//        didSet {
-//            DispatchQueue.main.async {
-//                let datesAdded = self.upcomingGames.compactMap{ $0.firstReleaseDate.date }.sorted()
-//                self.cv.reloadDates(datesAdded)
-//            }
-//        }
-//    }
 
     fileprivate var currentlySelectedGame: Proto_Game?
 
@@ -128,6 +120,7 @@ final class CalendarScreen: UIViewController {
 
         addGestureToImageCard()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -285,6 +278,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
             if let entities = self.entityDict[key] {
                 entities.forEach { entity in
+
                     if let game = entity as? Proto_Game {
                         // FIXME: This was done to show only game
                         // Extend to show list of games and episodes
@@ -296,6 +290,9 @@ extension CalendarScreen: JTACMonthViewDelegate {
                         }
                     } else {
                         if let artPath = entity.graphicsPath(), let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
+                            if let entity = entity as? Show {
+                                print("bam show \(entity.name) was on date: \(date)")
+                            }
                             self.imageCard.addImage(url: posterURL)
                         }
                     }
