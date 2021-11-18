@@ -108,32 +108,11 @@ class CalendarCell: JTACDayCell {
         }
     }
 
-    func configure(for cellState: CellState, episodes: [Episode]) {
+    func configure(for cellState: CellState, entities: [Entity]) {
         resetStyle(cellState)
 
         if cellState.dateBelongsTo == .thisMonth {
-            updateCellDesign(for: episodes, cellState: cellState)
-        }
-        setIsTodayStyle(cellState: cellState)
-    }
-
-    func configure(for cellState: CellState, game: Proto_Game) {
-        resetStyle(cellState)
-
-        // TODO: Multiple episodes on one day
-        if cellState.dateBelongsTo == .thisMonth {
-            updateCellDesign(for: game, cellState: cellState)
-        }
-
-        setIsTodayStyle(cellState: cellState)
-    }
-
-    func configure(for cellState: CellState, movie: Movie) {
-        resetStyle(cellState)
-
-        // TODO: Multiple episodes on one day
-        if cellState.dateBelongsTo == .thisMonth {
-            updateCellDesign(for: movie, cellState: cellState)
+            updateCellDesign(for: entities, cellState: cellState)
         }
 
         setIsTodayStyle(cellState: cellState)
@@ -143,6 +122,7 @@ class CalendarCell: JTACDayCell {
         dateLabel.textColor = UIColor(dark)
     }
 
+    // FIXME: Bake into entity design update
     private func updateCellDesign(for game: Proto_Game, cellState: CellState) {
         // Basic "date has episode" styles
         dateLabel.textColor = UIColor(light)
@@ -172,6 +152,7 @@ class CalendarCell: JTACDayCell {
         }
     }
 
+    // FIXME: Bake into entity design update
     private func updateCellDesign(for movie: Movie, cellState: CellState) {
         // Basic "date has episode" styles
         dateLabel.textColor = UIColor(light)
@@ -205,53 +186,59 @@ class CalendarCell: JTACDayCell {
         dateLabel.alpha = 1
     }
 
-    private func updateCellDesign(for episodes: [Episode], cellState: CellState) {
+    private func updateCellDesign(for entities: [Entity], cellState: CellState) {
+        let episodes = entities.compactMap({ $0 as? Episode })
+        let hasEpisodes = episodes.count > 0
+        print("updating cell for episodes: ", episodes.map({$0.name}))
 
+        // TODO: Should also handle if its one show and one game
         if episodes.filterUniqueShows().count > 1 {
             styleCellForMultipleEpisodes()
             return
         }
 
-        // Basic "date has episode" styles
         dateLabel.textColor = UIColor(light)
         dateLabel.alpha = 0.6
 
-        guard let episode = episodes.first else {
-            print("Could not get first episode from array")
-            return
-        }
+        // If only one episode. Style it as an episode
+        if entities.count == 1 && hasEpisodes {
+            guard let firstEpisode = episodes.first else {
+                print("Could not get first episode from array")
+                return
+            }
 
-        guard let showId = episode.showId else {
-            print("Episode had no showId")
-            return
-        }
+            guard let showId = firstEpisode.showId else {
+                print("Episode had no showId")
+                return
+            }
 
-        APIDAO().show(withId: showId) { show in
-            guard let posterPath = show.posterPath else { return }
+            APIDAO().show(withId: showId) { show in
+                guard let posterPath = show.posterPath else { return }
 
-            // FIXME: Store colors again
-            // - Consider storing images based on showID instead of path
-            // - This way it would be easier to get colors for each episode
-            // - Without using the Episode's stillPath which is random
+                // FIXME: Store colors again
+                // - Consider storing images based on showID instead of path
+                // - This way it would be easier to get colors for each episode
+                // - Without using the Episode's stillPath which is random
 
-            if let existingColors = ColorStore.getMovieDBColors(from: Int(show.id)) {
-                DispatchQueue.main.async {
-                    self.background.backgroundColor = existingColors.detail
-                    self.dateLabel.textColor = existingColors.background
-                }
-            } else {
-                DispatchQueue.main.async {
-                    UIImageView().kf.setImage(with: URL(string: APIDAO.imdbImageRoot+posterPath), completionHandler: { result in
-                        do {
-                            let unwrappedResult = try result.get()
-                            unwrappedResult.image.getColors { (colors) in
-                                ColorStore.save(colors, id: Int(show.id))
-                                self.updateCellDesign(for: episodes, cellState: cellState)
+                if let existingColors = ColorStore.getMovieDBColors(from: Int(show.id)) {
+                    DispatchQueue.main.async {
+                        self.background.backgroundColor = existingColors.detail
+                        self.dateLabel.textColor = existingColors.background
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        UIImageView().kf.setImage(with: URL(string: APIDAO.imdbImageRoot+posterPath), completionHandler: { result in
+                            do {
+                                let unwrappedResult = try result.get()
+                                unwrappedResult.image.getColors { (colors) in
+                                    ColorStore.save(colors, id: Int(show.id))
+                                    self.updateCellDesign(for: episodes, cellState: cellState)
+                                }
+                            } catch {
+                                print("Error: while retrieving image from stillPath")
                             }
-                        } catch {
-                            print("Error: while retrieving image from stillPath")
-                        }
-                    })
+                        })
+                    }
                 }
             }
         }

@@ -11,6 +11,36 @@ import JTAppleCalendar
 import SnapKit
 import IGDB_SWIFT_API
 
+protocol Entity {
+    // Should be
+    // - Movies, games and tv shows
+    // - Should have Image
+    // - Should
+}
+
+extension Entity {
+    func graphicsPath() -> String? {
+
+        switch self {
+        case let episode as Episode:
+            return episode.artPath
+
+        case let movie as Movie:
+            return movie.posterPath
+        case let game as Proto_Game:
+            print("game cover url: ", game.cover.url)
+            return game.cover.url
+        default:
+            assertionFailure("New type, who dis?")
+            return "Not handled"
+        }
+
+    }
+}
+
+extension Proto_Game: Entity { }
+extension Episode: Entity { }
+extension Movie: Entity { }
 
 fileprivate struct style {
     static let calendarHeaderHeight: CGFloat        = 80
@@ -35,39 +65,53 @@ final class CalendarScreen: UIViewController {
                                          height: style.calendarHeight))
     var calendarCard = Card()
     var imageCard = ImageCard()
-    var episodeDict = [String : [Episode]]()
-    var gameDict = [String : Proto_Game]()
-    var movieDict = [String: Movie]()
-    var formatter = DateFormatter.withoutTime
-    var upcomingShows = [Episode]() {
+    var entityDict = [String : [Entity]]() {
         didSet {
             DispatchQueue.main.async {
                 // TODO: Move these methods to a addEpisode and reload that date only
-                let datesAdded = self.upcomingShows.compactMap{ $0.getFormattedDate() }
-                self.cv.reloadDates(datesAdded)
-            }
-        }
-    }
-    var upcomingMovies = [Movie]() {
-        didSet {
-            DispatchQueue.main.async {
-                // TODO: Move these methods to a addEpisode and reload that date only
-                let datesAdded = self.upcomingMovies.compactMap{ (test) -> Date? in
-                    guard let dateStr = test.releaseDate else { return nil }
-                    return self.dateFormatter.date(from: dateStr)?.addingTimeInterval(60*60*24)
+                var datesAdded = [Date]()
+                self.entityDict.keys.forEach { key in
+                    if let formattedDate = formatter.date(from: key) {
+                        datesAdded.append(formattedDate)
+                    }
                 }
                 self.cv.reloadDates(datesAdded)
             }
         }
     }
-    var upcomingGames = [Proto_Game]() {
-        didSet {
-            DispatchQueue.main.async {
-                let datesAdded = self.upcomingGames.compactMap{ $0.firstReleaseDate.date }.sorted()
-                self.cv.reloadDates(datesAdded)
-            }
-        }
-    }
+//    var gameDict = [String : Proto_Game]()
+//    var movieDict = [String: Movie]()
+    var formatter = DateFormatter.withoutTime
+//    var upcomingShows = [Episode]() {
+//        didSet {
+//            // Debounce?
+//            DispatchQueue.main.async {
+//                // TODO: Move these methods to a addEpisode and reload that date only
+//                let datesAdded = self.upcomingShows.compactMap{ $0.getFormattedDate() }
+//                self.cv.reloadDates(datesAdded)
+//            }
+//        }
+//    }
+//    var upcomingMovies = [Movie]() {
+//        didSet {
+//            DispatchQueue.main.async {
+//                // TODO: Move these methods to a addEpisode and reload that date only
+//                let datesAdded = self.upcomingMovies.compactMap{ (test) -> Date? in
+//                    guard let dateStr = test.releaseDate else { return nil }
+//                    return self.dateFormatter.date(from: dateStr)?.addingTimeInterval(60*60*24)
+//                }
+//                self.cv.reloadDates(datesAdded)
+//            }
+//        }
+//    }
+//    var upcomingGames = [Proto_Game]() {
+//        didSet {
+//            DispatchQueue.main.async {
+//                let datesAdded = self.upcomingGames.compactMap{ $0.firstReleaseDate.date }.sorted()
+//                self.cv.reloadDates(datesAdded)
+//            }
+//        }
+//    }
 
     fileprivate var currentlySelectedGame: Proto_Game?
 
@@ -86,7 +130,6 @@ final class CalendarScreen: UIViewController {
 
         addGestureToImageCard()
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -106,58 +149,64 @@ final class CalendarScreen: UIViewController {
 
     // MARK: - Methods
 
+    private func addEntityIfUnique(_ entity: Entity, toDateString str: String) {
+        if let existing = self.entityDict[str] {
+            var inclusive = existing
+            inclusive.append(entity)
+            self.entityDict[str] = inclusive
+        } else {
+            self.entityDict[str] = [entity]
+        }
+
+//        episodes.append(episode)
+    }
+
     private func fetchPremiereDates() {
         let dao = APIDAO()
         let favShows = UserProfileManager().favouriteShows()
-        let favMovies = UserProfileManager().favouriteMovies()
-        let favGames = GameStore.getFavourites()
+        _ = UserProfileManager().favouriteMovies()
+        _ = GameStore.getFavourites()
 
         favShows.forEach {
             dao.showOverview(withId: $0) { overview in
                 dao.episodes(showId: overview.id, seasonNumber: overview.numberOfSeasons) { season in
                     DispatchQueue.main.async {
-                        var episodes = [Episode]()
+                        _ = [Episode]()
                         season.episodes.forEach { episode in
                             if let formattedDate = episode.getFormattedDate() {
                                 let str = DateFormatter.withoutTime.string(from: formattedDate)
 
                                 // FIXME: Should allow for multiple episodes on one day
 
-                                if let existing = self.episodeDict[str] {
-                                    var inclusive = existing
-                                    inclusive.append(episode)
-                                    self.episodeDict[str] = inclusive
-                                } else {
-                                    self.episodeDict[str] = [episode]
-                                }
-                                episodes.append(episode)
+                                self.addEntityIfUnique(episode, toDateString: str)
+
                             }
                         }
 
-                        self.upcomingShows.append(contentsOf: episodes)
+//                        self.upcomingShows.append(contentsOf: episodes)
                     }
                 }
             }
         }
 
-        favMovies.forEach {
-            dao.movie(withId: UInt64($0)) { movie in
-                if let formattedDate = movie.releaseDate {
-                    let date = formattedDate
-                    self.movieDict[date] = movie
-                    self.upcomingMovies.append(movie)
-                }
-            }
-        }
-
-        favGames.forEach { gameId in
-            dao.game(withId: UInt64(gameId)) { game in
-                // TODO: No idea why but this works :P
-                let dayString = DateFormatter.withoutTime.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
-                self.gameDict[dayString] = game
-                self.upcomingGames.append(game)
-            }
-        }
+//        favMovies.forEach {
+//            dao.movie(withId: UInt64($0)) { movie in
+//                if let formattedDate = movie.releaseDate {
+//                    let date = formattedDate
+//                    self.movieDict[date] = movie
+//                    self.upcomingMovies.append(movie)
+//                }
+//            }
+//        }
+//
+//        favGames.forEach { gameId in
+//            dao.game(withId: UInt64(gameId)) { game in
+//                // TODO: No idea why but this works :P
+//                let dayString = DateFormatter.withoutTime.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
+//                self.gameDict[dayString] = game
+//                self.upcomingGames.append(game)
+//            }
+//        }
     }
 
     private func setup() {
@@ -247,29 +296,31 @@ extension CalendarScreen: JTACMonthViewDelegate {
         DispatchQueue.main.async {
             let key = DateFormatter.withoutTime.string(from: date)
 
-            if let episodes = self.episodeDict[key] {
+            // FIXIME: Get proper path from entity directly
+
+            if let episodes = self.entityDict[key] {
                 episodes.forEach { episode in
-                    if let artPath = episode.artPath, let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
+                    if let artPath = episode.graphicsPath(), let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
                         self.imageCard.addImage(url: posterURL)
                     }
                 }
             }
 
-            if let game = self.gameDict[key] {
-                self.currentlySelectedGame = game
-                GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
-                    DispatchQueue.main.async {
-                        self.imageCard.addImage(url: coverImageUrl)
-                    }
-                }
-            }
-
-            if let movie = self.movieDict[key] {
-                if let posterPath = movie.posterPath,
-                   let posterURL = URL(string:APIDAO.imdbImageRoot+posterPath) {
-                    self.imageCard.addImage(url: posterURL)
-                }
-            }
+//            if let game = self.gameDict[key] {
+//                self.currentlySelectedGame = game
+//                GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
+//                    DispatchQueue.main.async {
+//                        self.imageCard.addImage(url: coverImageUrl)
+//                    }
+//                }
+//            }
+//
+//            if let movie = self.movieDict[key] {
+//                if let posterPath = movie.posterPath,
+//                   let posterURL = URL(string:APIDAO.imdbImageRoot+posterPath) {
+//                    self.imageCard.addImage(url: posterURL)
+//                }
+//            }
         }
     }
 
@@ -287,17 +338,17 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
         let key = DateFormatter.withoutTime.string(from: date)
 
-        if let episodes = episodeDict[key] {
-            cell.configure(for: cellState, episodes: episodes)
+        if let entities = entityDict[key] {
+            cell.configure(for: cellState, entities: entities)
         }
 
-        if let game = gameDict[key] {
-            cell.configure(for: cellState, game: game)
-        }
-
-        if let movie = movieDict[key] {
-            cell.configure(for: cellState, movie: movie)
-        }
+//        if let game = gameDict[key] {
+//            cell.configure(for: cellState, game: game)
+//        }
+//
+//        if let movie = movieDict[key] {
+//            cell.configure(for: cellState, movie: movie)
+//        }
     }
 
     // Use dataSource to make cells
@@ -309,17 +360,17 @@ extension CalendarScreen: JTACMonthViewDelegate {
         cell.resetStyle(cellState)
 
         let key = DateFormatter.withoutTime.string(from: date)
-        if let episodes = episodeDict[key] {
-            cell.configure(for: cellState, episodes: episodes)
+        if let entities = entityDict[key] {
+            cell.configure(for: cellState, entities: entities)
         }
 
-        if let game = gameDict[key] {
-            cell.configure(for: cellState, game: game)
-        }
-
-        if let movie = movieDict[key] {
-            cell.configure(for: cellState, movie: movie)
-        }
+//        if let game = gameDict[key] {
+//            cell.configure(for: cellState, game: game)
+//        }
+//
+//        if let movie = movieDict[key] {
+//            cell.configure(for: cellState, movie: movie)
+//        }
 
         return cell
     }
