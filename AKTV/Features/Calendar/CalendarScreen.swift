@@ -71,7 +71,7 @@ final class CalendarScreen: UIViewController {
                 // TODO: Move these methods to a addEpisode and reload that date only
                 var datesAdded = [Date]()
                 self.entityDict.keys.forEach { key in
-                    if let formattedDate = formatter.date(from: key) {
+                    if let formattedDate = self.formatter.date(from: key) {
                         datesAdded.append(formattedDate)
                     }
                 }
