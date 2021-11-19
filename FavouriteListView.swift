@@ -41,6 +41,14 @@ struct FavouriteListView: View {
                         isActive = true
                     }
                     .listRowSeparator(.hidden)
+
+                // Add spacing in bottom
+                if item == viewModel.shows.last {
+                    Rectangle()
+                    .frame(height: 100)
+                    .foregroundColor(light)
+                    .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                }
             }
             .listStyle(PlainListStyle())
             .ignoresSafeArea()
