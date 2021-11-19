@@ -14,7 +14,6 @@ struct FavouriteListView: View {
     var selected: MediaPickable?
     @State var isActive = false
     @ObservedObject var viewModel = ViewModel()
-    var start = Date().timeIntervalSince1970
 
     class ViewModel: ObservableObject {
         @Published var shows = [Show]()
@@ -47,12 +46,12 @@ struct FavouriteListView: View {
             .ignoresSafeArea()
             .onAppear(perform: {
                 viewModel.selectedShow = nil
-                testGettingFavourites()
+                getFavourites()
             })
         }
     }
     
-    func testGettingFavourites() {
+    func getFavourites() {
         let favs = UserProfileManager().favouriteShows()
         favs.forEach { showId in
             APIDAO().show(withId: showId) { show in
@@ -87,13 +86,5 @@ struct FavouriteListRow: View {
                 .foregroundColor(dark)
         }
         .listRowBackground(Color.clear)
-    }
-}
-
-func measureTime() {
-    let start = Date().timeIntervalSinceNow
-    APIDAO().showOverview(withId: 1233) { show in
-        let diff = Date().timeIntervalSinceNow - start
-        print("Took \(diff) to get: ", show.name)
     }
 }
