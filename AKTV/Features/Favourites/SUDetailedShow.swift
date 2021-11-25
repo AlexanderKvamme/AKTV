@@ -20,9 +20,11 @@ struct SUDetailedEntity: View {
                 .ignoresSafeArea()
             VStack(spacing: 24) {
                 KFImage(entity.getMainGraphicsURL())
+                    .resizable()
                     .fade(duration: 0.25)
-                    .frame(width: screenWidth-32, height: 300, alignment: .top)
                     .scaledToFit()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: screenWidth-32, height: 300, alignment: .top)
                     .cornerRadius(14)
                     .clipped()
                     .shadow(radius: 5)
