@@ -51,11 +51,21 @@ struct SUFavouritesScreen: View {
                         .padding(6)
                         .shadow(color: .black.opacity(0.1), radius: 14, x: 0, y: 16)
                         .listRowSeparator(.hidden)
-                    }
-                    .background(
-                        NavigationLink(destination: FavouriteListView(selected: selected), isActive: $isLinkActive) { EmptyView() }
+                        
+                        if selected == .tvShow {
+                            NavigationLink(destination: FavouriteListView<Show>(), isActive: $isLinkActive) { EmptyView() }
                             .buttonStyle(PlainButtonStyle())
-                    )
+                        } else if selected == .game {
+                            NavigationLink(destination: FavouriteListView<Proto_Game>(), isActive: $isLinkActive) { EmptyView()
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        } else if selected == .movie {
+                            NavigationLink(destination: FavouriteListView<Movie>(), isActive: $isLinkActive) { EmptyView()
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+
+                    }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
