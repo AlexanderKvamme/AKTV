@@ -13,20 +13,19 @@ import IGDB_SWIFT_API
 
 struct FavouriteListView<T: Entity>: View where T: Equatable & Hashable & Identifiable {
 
-    var selected: MediaPickable?
     @State var isActive = false
     @ObservedObject var viewModel = ViewModel()
 
     class ViewModel: ObservableObject {
         @Published var entities = [T]()
-        @Published var selectedShow: T?
+        @Published var selectedEntity: T?
     }
 
     var body: some View {
 
-        if viewModel.selectedShow != nil {
+        if viewModel.selectedEntity != nil {
             NavigationLink("", isActive: $isActive) {
-                SUDetailedEntity(entity: viewModel.selectedShow!)
+                SUDetailedEntity(entity: viewModel.selectedEntity!)
             }
             .frame(width: 0, height: 0)
             .hidden()
@@ -39,16 +38,24 @@ struct FavouriteListView<T: Entity>: View where T: Equatable & Hashable & Identi
             List(viewModel.entities) { entity in
                 FavouriteListRow(entity: entity)
                     .onTapGesture {
-                        viewModel.selectedShow = entity
+                        viewModel.selectedEntity = entity
                         isActive = true
                     }
                     .listRowSeparator(.hidden)
+                        
+                // Add spacing in bottom
+                if entity == viewModel.entities.last {
+                    Rectangle()
+                        .frame(height: 100)
+                        .foregroundColor(light)
+                        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                }
             }
         }
         .listStyle(PlainListStyle())
         .ignoresSafeArea()
         .onAppear(perform: {
-            viewModel.selectedShow = nil
+            viewModel.selectedEntity = nil
             getFavourites()
         })
         .background(Color.blue)
