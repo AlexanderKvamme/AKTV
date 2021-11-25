@@ -9,19 +9,14 @@
 import UIKit
 import JTAppleCalendar
 import SnapKit
+import SwiftUI
 import IGDB_SWIFT_API
 
 protocol Entity {
-    
     var id: UInt64 { get }
     var name: String { get }
     func getMainGraphicsURL() -> URL?
-    // Should be
-    // - Movies, games and tv shows
-    // - Should have Image
-    // - Should
 }
-
 
 enum EntityType {
     case movie
@@ -126,7 +121,7 @@ final class CalendarScreen: UIViewController {
     var entityDict = [String : [Entity]]()
     var formatter = DateFormatter.withoutTime
 
-    fileprivate var currentlySelectedGame: Proto_Game?
+    fileprivate var currentlySelectedEntities = [Entity]()
 
     weak var tabBar: CustomTabBarDelegate?
 
@@ -149,7 +144,7 @@ final class CalendarScreen: UIViewController {
     }
 
     private func addGestureToImageCard() {
-        let tr = UITapGestureRecognizer(target: self, action: #selector(presentGameScreen))
+        let tr = UITapGestureRecognizer(target: self, action: #selector(presentDetailedScreen))
         self.imageCard.addGestureRecognizer(tr)
     }
 
@@ -304,7 +299,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
     // On selecting cell
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
 
-        currentlySelectedGame = nil
+        currentlySelectedEntities = []
         imageCard.reset()
 
         guard let cell = cell as? CalendarCell else { fatalError() }
@@ -315,19 +310,10 @@ extension CalendarScreen: JTACMonthViewDelegate {
 
             if let entities = self.entityDict[key] {
                 entities.forEach { entity in
-                    if let game = entity as? Proto_Game {
-                        // FIXME: This was done to show only game
-                        // Extend to show list of games and episodes
-                        self.currentlySelectedGame = game
-                        GameService.fetchCoverImageUrl(cover: game.cover) { coverImageUrl in
-                            DispatchQueue.main.async {
-                                self.imageCard.addImage(url: coverImageUrl)
-                            }
-                        }
-                    } else {
-                        if let artPath = entity.graphicsPath(), let posterURL = URL(string: APIDAO.imdbImageRoot+artPath) {
-                            self.imageCard.addImage(url: posterURL)
-                        }
+                    self.currentlySelectedEntities.append(entity)
+                    
+                    if let url = entity.getMainGraphicsURL() {
+                        self.imageCard.addImage(url: url)
                     }
                 }
             }
@@ -380,11 +366,16 @@ extension CalendarScreen: JTACMonthViewDelegate {
         return header
     }
 
-    @objc func presentGameScreen() {
-        if let game = currentlySelectedGame {
-            let gameScreen = GameScreen(game, platform: .tbd)
-            present(gameScreen, animated: true)
-        }
+    @objc func presentDetailedScreen(_ sender: UIGestureRecognizer) {
+        let location = sender.location(in: imageCard)
+        let segments = CGFloat(currentlySelectedEntities.count)
+        let cardWidth = CGFloat(imageCard.frame.width)
+        let normalized = location.x/cardWidth
+        let tappedSegment = Int(normalized*segments)
+        let tappedEntity = currentlySelectedEntities[tappedSegment]
+        let entityScreen = SUDetailedEntity(entity: tappedEntity)
+        let vc = UIHostingController(rootView: entityScreen)
+        present(vc, animated: true)
     }
 
     func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {
