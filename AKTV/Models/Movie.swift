@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Movie: Codable, Hashable, MediaSearchResult {
+struct Movie: Codable, Hashable, Identifiable, MediaSearchResult {
 
     // MARK: - Properties
 

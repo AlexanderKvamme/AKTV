@@ -71,6 +71,7 @@ final class UserProfileManager: NSObject {
     }
 
     // FIXME: GET REAL GAMES
+    // FIXME: Tror disse hører hjemme i GameStore om de i det hele tatt skal brukes
 
     func favouriteGames() -> [Int] {
         let existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteGames.rawValue) as? [Int] ?? [Int]()
@@ -78,16 +79,17 @@ final class UserProfileManager: NSObject {
     }
 
     func setFavouriteGame(id: Int, favourite: Bool) {
+        let key = UserProfileKeys.favouriteGames.rawValue
         switch favourite {
         case true:
-            var existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteGames.rawValue) as? [Int] ?? [Int]()
+            var existingFavourites = defaults.object(forKey: key) as? [Int] ?? [Int]()
             existingFavourites.append(id)
-            defaults.set(existingFavourites, forKey: UserProfileKeys.favouriteGames.rawValue)
+            defaults.set(existingFavourites, forKey: key)
         case false:
-            var existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteGames.rawValue) as? [Int] ?? [Int]()
+            var existingFavourites = defaults.object(forKey: key) as? [Int] ?? [Int]()
             if let i = existingFavourites.firstIndex(of: id) {
                 existingFavourites.remove(at: i)
-                defaults.set(existingFavourites, forKey: UserProfileKeys.favouriteGames.rawValue)
+                defaults.set(existingFavourites, forKey: key)
             }
         }
     }

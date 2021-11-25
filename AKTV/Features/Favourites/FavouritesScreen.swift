@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftUI
-
+import IGDB_SWIFT_API
 
 // TODO: Make 400x64
 

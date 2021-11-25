@@ -12,11 +12,16 @@ import SnapKit
 import IGDB_SWIFT_API
 
 protocol Entity {
+    
+    var id: UInt64 { get }
+    var name: String { get }
+    func getMainGraphicsURL() -> URL?
     // Should be
     // - Movies, games and tv shows
     // - Should have Image
     // - Should
 }
+
 
 enum EntityType {
     case movie
@@ -57,9 +62,43 @@ extension Entity {
     }
 }
 
-extension Proto_Game: Entity { }
-extension Episode: Entity { }
-extension Movie: Entity { }
+extension Proto_Game: Identifiable {    }
+
+// Get Path
+extension Proto_Game: Entity {
+    func getMainGraphicsURL() -> URL? {
+        let urlString = cover.url.dropFirst().dropFirst()
+        let replacedSize = urlString.replacingOccurrences(of: "t_thumb", with: "t_cover_big")
+        return URL(string: "https:" + replacedSize)
+    }
+}
+
+extension Episode: Entity {
+    func getMainGraphicsURL() -> URL? {
+        let root = "https://image.tmdb.org/t/p/original/"
+        guard let path = artPath else { return nil }
+        
+        return URL(string: root + path)
+    }
+}
+
+extension Show: Entity {
+    func getMainGraphicsURL() -> URL? {
+        let root = "https://image.tmdb.org/t/p/original/"
+        guard let path = posterPath else { return nil }
+        
+        return URL(string: root + path)
+    }
+}
+
+extension Movie: Entity {
+    func getMainGraphicsURL() -> URL? {
+        let root = "https://image.tmdb.org/t/p/original/"
+        guard let path = posterPath else { return nil }
+        
+        return URL(string: root + path)
+    }
+}
 
 fileprivate struct style {
     static let calendarHeaderHeight: CGFloat        = 80

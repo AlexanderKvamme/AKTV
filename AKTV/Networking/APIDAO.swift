@@ -32,8 +32,6 @@ final class APIDAO: NSObject, MediaSearcher {
     private let keyParam = "api_key=a1549fe4c5cb82a960b858411d70112c"
     static let imdbImageRoot = "https://image.tmdb.org/t/p/original/"
 
-    static let igdbImageRoot = "https://api.igdb.com/v4/covers/"
-
     typealias JSONCompletion = (([String: Any]?) -> Void)
 
     // TODO: Dont default
@@ -302,7 +300,7 @@ final class APIDAO: NSObject, MediaSearcher {
         let wrapper = IGDBWrapper(clientID: GameService.clientID, accessToken: authToken.accessToken)
         let apicalypse = APICalypse()
             .where(query: "id = \(withId);")
-            .fields(fields: "*")
+            .fields(fields: "*,cover.*")
         wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
             if let game = games.first {
                 andThen(game)

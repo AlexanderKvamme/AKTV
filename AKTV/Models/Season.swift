@@ -36,11 +36,11 @@ extension Episode {
     }
 }
 
-struct Episode: Codable, Hashable {
+struct Episode: Codable, Hashable, Identifiable {
     var name: String
     var episodeNumber: Int
     var airDate: String
-    var id: Int
+    var id: UInt64
     var overview: String
 //    var productionCode: String
     var seasonNumber: Int
