@@ -92,6 +92,8 @@ class ImageCard: Card {
             stackView.addArrangedSubview(imageView)
             stackView.distribution = .fillEqually
         }
+        
+        placeholderText.isHidden = !imageViews.isEmpty
     }
 
     func addImage(url: URL) {
