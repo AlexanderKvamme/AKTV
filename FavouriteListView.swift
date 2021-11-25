@@ -24,29 +24,29 @@ struct FavouriteListView<T: Entity>: View where T: Equatable & Hashable & Identi
 
     var body: some View {
 
-//        if viewModel.selectedShow != nil {
-//            NavigationLink("", isActive: $isActive) {
-//                SUDetailedShow(show: viewModel.selectedShow!)
-//            }
-//            .frame(width: 0, height: 0)
-//            .hidden()
-//        }
+        if viewModel.selectedShow != nil {
+            NavigationLink("", isActive: $isActive) {
+                SUDetailedEntity(entity: viewModel.selectedShow!)
+            }
+            .frame(width: 0, height: 0)
+            .hidden()
+        }
 
         ZStack {
-//            Rectangle()
-//                .ignoresSafeArea()
-//                .foregroundColor(light)
+            Rectangle()
+                .ignoresSafeArea()
+                .foregroundColor(light)
             List(viewModel.entities) { entity in
                 FavouriteListRow(entity: entity)
                     .onTapGesture {
-                        print("tapped ", entity.name)
                         viewModel.selectedShow = entity
                         isActive = true
                     }
                     .listRowSeparator(.hidden)
-                    .frame(width: 300, height: 200, alignment: .center)
             }
         }
+        .listStyle(PlainListStyle())
+        .ignoresSafeArea()
         .onAppear(perform: {
             viewModel.selectedShow = nil
             getFavourites()
@@ -54,89 +54,39 @@ struct FavouriteListView<T: Entity>: View where T: Equatable & Hashable & Identi
         .background(Color.blue)
     }
 
-        
-//        return ZStack {
-//            Rectangle()
-//                .ignoresSafeArea()
-//                .foregroundColor(light)
-//
-//        }
-//        .ignoresSafeArea()
-//        .onAppear(perform: {
-//            viewModel.selectedShow = nil
-//            getFavourites()
-//        })
-                            // Add spacing in bottom
-//                if item == viewModel.shows.last {
-//                    Rectangle()
-//                    .frame(height: 100)
-//                    .foregroundColor(light)
-//                    .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-//                }
-
-
-//            List(viewModel.$entities, id: \.id) { item in
-//                FavouriteListRow(entity: item)
-//                    .onTapGesture {
-//                        viewModel.selectedShow = item
-//                        isActive = true
-//                    }
-//                    .listRowSeparator(.hidden)
-//
-//            }
-//            .listStyle(PlainListStyle())
-//            .ignoresSafeArea()
-//            .onAppear(perform: {
-//                viewModel.selectedShow = nil
-//                getFavourites()
-//            })
-//        }
-//    }
-
     func getFavourites() {
-        
         // TODO: Make this an extension on Show/Proto_game/Movie?
         if T.self == Show.self {
             let favs = UserProfileManager().favouriteShows()
             favs.forEach { showId in
                 APIDAO().show(withId: showId) { show in
-                    DispatchQueue.main.async {
-                        let entity = show as! T
-                        self.viewModel.entities.append(entity)
-                    }
-                        
-//                        if !self.viewModel.entities.contains(where: { existing in
-//                            // existing.id // hashable
-//                            print("iffing")
-//                            let entity = show as Entity
-//                            return entity.id == show.id
-//                        }) {
-//                            print("\(show.name) was not contained")
-//                            let entity = show as! T
-//                            self.viewModel.entities.append(entity)
-//                        }
-//                    }
+                    addEntity(show)
                 }
             }
         } else if T.self == Movie.self {
             let favs = UserProfileManager().favouriteMovies()
             favs.forEach { movieId in
                 APIDAO().movie(withId: UInt64(movieId)) { movie in
-                    DispatchQueue.main.async {
-                        let entity = movie as! T
-                        self.viewModel.entities.append(entity)
-                    }
+                    addEntity(movie)
                 }
             }
         } else if T.self == Proto_Game.self {
             let favs = GameStore.getFavourites()
             favs.forEach { gameId in
                 APIDAO().game(withId: UInt64(gameId)) { game in
-                    DispatchQueue.main.async {
-                        let entity = game as! T
-                        self.viewModel.entities.append(entity)
-                    }
+                    addEntity(game)
                 }
+            }
+        }
+    }
+    
+    func addEntity( _ e : Entity) {
+        DispatchQueue.main.async {
+            let entity = e as! T
+            if !self.viewModel.entities.contains(where: { existingEntity in
+                existingEntity.id == entity.id
+            }) {
+                self.viewModel.entities.append(entity)
             }
         }
     }

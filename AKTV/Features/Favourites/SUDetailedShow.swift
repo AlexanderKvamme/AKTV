@@ -9,9 +9,9 @@
 import SwiftUI
 import Kingfisher
 
-struct SUDetailedShow: View {
+struct SUDetailedEntity: View {
 
-    @State var show: Show
+    @State var entity: Entity
 
     var body: some View {
         ZStack {
@@ -19,7 +19,7 @@ struct SUDetailedShow: View {
                 .foregroundColor(light)
                 .ignoresSafeArea()
         VStack(spacing: 24) {
-            KFImage(show.getBackdropUrl())
+            KFImage(entity.getMainGraphicsURL())
                 .fade(duration: 0.25)
                 .frame(width: screenWidth-32, height: 300, alignment: .top)
                 .scaledToFit()
@@ -27,7 +27,7 @@ struct SUDetailedShow: View {
                 .clipped()
                 .shadow(radius: 5)
 
-            Text(show.name)
+            Text(entity.name)
                 .font(Font.gilroy(GilroyWeights.bold, 32))
                 .foregroundColor(dark)
 
