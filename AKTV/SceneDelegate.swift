@@ -14,7 +14,7 @@ import Combine
 let clientID = "6w71e2zsvf5ak18snvrtweybwjl877"
 var subscriptions = Set<AnyCancellable>()
 var gamesService: GameService!
-let tabBarController = WellRoundedTabBarController(initalIndex: 4)
+let tabBarController = WellRoundedTabBarController(initalIndex: 3)
 
 // MARK: - Temporary spot for global publishers
 

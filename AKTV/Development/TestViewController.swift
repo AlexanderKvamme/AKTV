@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 
 final class TestViewController: UIViewController {
 
@@ -21,12 +22,13 @@ final class TestViewController: UIViewController {
     // MARK: - Methods
 
     override func viewDidAppear(_ animated: Bool) {
-        view.addSubview(card)
-        card.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(40)
+        
+        APIDAO().movie(withId: 1538) { collateral in
+            DispatchQueue.main.async {
+                let entityScreen = SUDetailedEntity(entity: collateral)
+                let vc = UIHostingController(rootView: entityScreen)
+                self.present(vc, animated: true)
+            }
         }
-
-        let url = URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/co3gbk.png")
-//        card.imageView.kf.setImage(with: url)
     }
 }

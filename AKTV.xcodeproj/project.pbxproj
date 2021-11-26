@@ -122,6 +122,7 @@
 		DDB48F9625D455D9007C0131 /* WellRoundedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */; };
 		DDB8E5C825DBD4FB0053F6FA /* Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB8E5C725DBD4FB0053F6FA /* Videos.swift */; };
 		DDC08C3927411C5D00E91395 /* SUDetailedShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC08C3827411C5D00E91395 /* SUDetailedShow.swift */; };
+		DDC20F1A275035730071F573 /* StreamAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC20F19275035730071F573 /* StreamAvailability.swift */; };
 		DDC5DAA0272EAB6A005D2A44 /* FavouritesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC5DA9F272EAB6A005D2A44 /* FavouritesScreen.swift */; };
 		DDC5DAA5272F366A005D2A44 /* DummyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC5DAA4272F366A005D2A44 /* DummyFactory.swift */; };
 		DDC8047D25D56C8200B0418B /* ShowOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC8047C25D56C8200B0418B /* ShowOverview.swift */; };
@@ -288,6 +289,7 @@
 		DDB48F9525D455D9007C0131 /* WellRoundedTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellRoundedTabBarController.swift; sourceTree = "<group>"; };
 		DDB8E5C725DBD4FB0053F6FA /* Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Videos.swift; sourceTree = "<group>"; };
 		DDC08C3827411C5D00E91395 /* SUDetailedShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUDetailedShow.swift; sourceTree = "<group>"; };
+		DDC20F19275035730071F573 /* StreamAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StreamAvailability.swift; path = AKTV/Networking/StreamAvailability/StreamAvailability.swift; sourceTree = "<group>"; };
 		DDC5DA9F272EAB6A005D2A44 /* FavouritesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesScreen.swift; sourceTree = "<group>"; };
 		DDC5DAA4272F366A005D2A44 /* DummyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyFactory.swift; sourceTree = "<group>"; };
 		DDC8047C25D56C8200B0418B /* ShowOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOverview.swift; sourceTree = "<group>"; };
@@ -617,6 +619,7 @@
 		DDA1A8F02427B24B00F7907A = {
 			isa = PBXGroup;
 			children = (
+				DDC20F19275035730071F573 /* StreamAvailability.swift */,
 				DD3F95C72738685C00E02463 /* FavouriteListView.swift */,
 				DDA1A8FB2427B24B00F7907A /* AKTV */,
 				DDA1A9152427B24D00F7907A /* AKTVTests */,
@@ -1169,6 +1172,7 @@
 				DDE3890B242BF75A0049D881 /* ShowSearchResult.swift in Sources */,
 				DDEC7AE7271CE0E400EC782B /* EntityURLCache.swift in Sources */,
 				DD9BCA07266BC9CF009B2DD8 /* SwipeableViewDelegate.swift in Sources */,
+				DDC20F1A275035730071F573 /* StreamAvailability.swift in Sources */,
 				DD7E660C25D538F7006553D1 /* URLExtensions.swift in Sources */,
 				DDC8047D25D56C8200B0418B /* ShowOverview.swift in Sources */,
 				DDB48F7925D3F694007C0131 /* GlobalProperties.swift in Sources */,
