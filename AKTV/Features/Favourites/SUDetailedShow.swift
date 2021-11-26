@@ -33,6 +33,12 @@ struct SUDetailedEntity: View {
                     .font(Font.gilroy(GilroyWeights.bold, 32))
                     .foregroundColor(dark)
                 
+                // Streaming services list
+                let vm = StreamingAvailibilitiesView.ViewModel()
+                StreamingAvailibilitiesView(entity: entity, viewModel: vm)
+                
+                Spacer()
+                
                 Text("Add some more stuff here")
                     .font(Font.gilroy(.regular, 16))
                     .foregroundColor(dark)
