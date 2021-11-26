@@ -50,12 +50,18 @@ class CalendarCell: JTACDayCell {
     }
 
     private func setup() {
-        dateLabel.text = "9"
         dateLabel.textColor = UIColor(dark)
         dateLabel.font = UIFont.gilroy(.medium, 18)
         dateLabel.textAlignment = .center
         dateLabel.isUserInteractionEnabled = false
+        
+        // Backgrounds
+        backgroundColor = .clear
+        background.backgroundColor = .clear
+        background.layer.cornerRadius = style.cornerRadius
+        background.removeExternalBorders()
 
+        // Corners
         background.layer.cornerCurve = .continuous
         background.layer.cornerRadius = style.cornerRadius
     }
