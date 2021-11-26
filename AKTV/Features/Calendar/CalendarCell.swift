@@ -143,8 +143,6 @@ class CalendarCell: JTACDayCell {
             } else if let movie = firstEntity as? Movie {
                 applyStyle(for: movie, cellState: cellState)
             } else if let show = firstEntity as? Episode {
-                // FIXME: Denne er feil
-
                 applyStyle(for: show, cellState: cellState)
             } else {
                 assertionFailure("Should not occur")

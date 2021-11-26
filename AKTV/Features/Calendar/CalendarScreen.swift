@@ -160,8 +160,12 @@ final class CalendarScreen: UIViewController {
     private func addEntityIfUnique(_ entity: Entity, toDateString str: String) {
         if let existing = self.entityDict[str] {
             var inclusive = existing
-            inclusive.append(entity)
-            self.entityDict[str] = inclusive
+            if !inclusive.contains(where: { existing in
+                return existing.id == entity.id
+            }) {
+                inclusive.append(entity)
+                self.entityDict[str] = inclusive
+            }   
         } else {
             self.entityDict[str] = [entity]
         }
