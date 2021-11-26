@@ -47,7 +47,6 @@ extension Entity {
         case let movie as Movie:
             return movie.posterPath
         case let game as Proto_Game:
-            print("game cover url: ", game.cover.url)
             return game.cover.url
         default:
             assertionFailure("New type, who dis?")
