@@ -30,7 +30,7 @@ struct SUDetailedEntity: View {
                     .shadow(radius: 5)
                 
                 Text(entity.name)
-                    .font(Font.gilroy(GilroyWeights.bold, 32))
+                    .font(Font.gilroy(GilroyWeights.extraBold, 32))
                     .foregroundColor(dark)
                 
                 // Streaming services list
