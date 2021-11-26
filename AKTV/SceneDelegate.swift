@@ -39,7 +39,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .sink { _ in
             } receiveValue: { authToken in
                 gamesService = GameService(authToken)
-                runDevelopmentExperiments()
             }
             .store(in: &subscriptions)
 
@@ -56,14 +55,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 }
-
-
-func runDevelopmentExperiments() {
-    print("running development experiments...")
-
-}
-
-
 
 struct GameId {
     static let diablo: UInt64 = 142803
