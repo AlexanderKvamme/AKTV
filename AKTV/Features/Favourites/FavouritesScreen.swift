@@ -30,7 +30,13 @@ struct SUFavouritesScreen: View {
     @State var pickables = MediaPickable.allCases
     @State var selected: MediaPickable?
     @State var isLinkActive = false
+    
+    weak var customTabBarDelegate: CustomTabBarDelegate?
 
+    init(customTabBarDelegate: CustomTabBarDelegate) {
+        self.customTabBarDelegate = customTabBarDelegate
+    }
+    
     var body: some View {
         NavigationView {
             ZStack{
@@ -43,6 +49,7 @@ struct SUFavouritesScreen: View {
                         Button(action: {
                             selected = pickable
                             isLinkActive = true
+                            customTabBarDelegate?.hideIt()
                         }) {
                             Text(pickable.rawValue)
                                 .foregroundColor(light)
@@ -53,7 +60,8 @@ struct SUFavouritesScreen: View {
                         .listRowSeparator(.hidden)
                         
                         if selected == .tvShow {
-                            NavigationLink(destination: FavouriteListView<Show>(), isActive: $isLinkActive) { EmptyView() }
+                            NavigationLink(destination: FavouriteListView<Show>(), isActive: $isLinkActive) { EmptyView()
+                            }
                             .buttonStyle(PlainButtonStyle())
                         } else if selected == .game {
                             NavigationLink(destination: FavouriteListView<Proto_Game>(), isActive: $isLinkActive) { EmptyView()
@@ -67,6 +75,9 @@ struct SUFavouritesScreen: View {
 
                     }
                 }
+            }
+            .onAppear {
+                customTabBarDelegate?.showIt()
             }
             .navigationBarTitleDisplayMode(.inline)
         }

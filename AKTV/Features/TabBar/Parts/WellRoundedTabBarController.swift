@@ -16,7 +16,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
     let myTabBar = TabBarView(frame: CGRect(x: 0, y: screenHeight - TabBarSettings.barHeight, width: screenWidth, height: screenHeight))
     let discoveryScreen = DiscoveryScreen()
-    let favouritesScreen = SUFavouritesScreen()
+    var favouritesScreen: SUFavouritesScreen!
     let upcomingScreen = UpcomingScreen()
     var calendarScreen: CalendarScreen!
     var screens: [UIViewController]!
@@ -29,6 +29,8 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         super.init(nibName: nil, bundle: nil)
 
         calendarScreen = CalendarScreen(tabBar: self)
+        
+        favouritesScreen = SUFavouritesScreen(customTabBarDelegate: self)
 
         tabBar.isHidden = true
         discoveryScreen.customTabBarDelegate = self
@@ -72,7 +74,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         }
 
         let searchTabScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen())
-        let favouritesScreen = UIHostingController(rootView: SUFavouritesScreen())
+        let favouritesScreen = UIHostingController(rootView: SUFavouritesScreen(customTabBarDelegate: self))
 
         screens = [calendarScreen, discoveryScreen, searchTabScreen, TestViewController(), favouritesScreen]
         setViewControllers(screens, animated: true)
@@ -107,7 +109,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 }
 
 
-protocol CustomTabBarDelegate: class {
+protocol CustomTabBarDelegate: AnyObject {
     func hideIt()
     func showIt()
 }
