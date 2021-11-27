@@ -17,13 +17,16 @@ class DetailedEntityScreen: UIViewController {
     private var backButton = RoundIconButton(icon: "close-48")
     private var starButton = RoundIconButton(icon: "icons8-heart-50-filled")
     private var titleCard: DetailedEntityTitleCard
+    private var scrollContainer = UIScrollView()
+    private var scrollContent = UIView()
+    private var desciptionView: DetailedEntityDescriptionView!
     
     // MARK: - Initializers
     
     init(entity: Entity) {
         self.titleCard = DetailedEntityTitleCard(entity)
+        self.desciptionView = DetailedEntityDescriptionView(entity)
         let backdropPath = entity.getMainGraphicsURL() ?? URL(string: "")
-        
         imageView.kf.setImage(with: backdropPath)
         
         super.init(nibName: nil, bundle: nil)
@@ -45,33 +48,74 @@ class DetailedEntityScreen: UIViewController {
         imageView.contentMode = .scaleAspectFill
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        DispatchQueue.main.async {
+            var contentRect = CGRect.zero
+            
+            for view in self.scrollContainer.subviews {
+                contentRect = contentRect.union(view.frame)
+            }
+            
+            self.scrollContainer.contentSize = contentRect.size
+        }
+    }
+    
     private func addSubviewsAndConstraints() {
-        view.addSubview(imageView)
+        view.addSubview(scrollContainer)
+        
+        scrollContainer.isScrollEnabled = true
+        
+        // Content
+        scrollContainer.addSubview(scrollContent)
+        scrollContent.addSubview(desciptionView)
+        scrollContent.snp.makeConstraints { make in
+            make.width.equalTo(screenWidth)
+            make.top.equalToSuperview()
+            make.bottom.equalTo(desciptionView.snp.bottom)
+        }
+        
+        scrollContainer.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(screenWidth)
+            make.height.equalTo(screenHeight)
+        }
+        
+        scrollContent.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-                .inset(16)
+            make.top.left.right.equalToSuperview().inset(16)
             make.height.equalTo(screenHeight*0.6)
         }
         
-        view.addSubview(titleCard)
-        titleCard.snp.makeConstraints { make in
-            make.centerY.equalTo(imageView.snp.bottom).offset(-16)
-            make.left.right.equalTo(imageView).inset(8)
-        }
-
-        view.addSubview(backButton)
+        scrollContent.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(48)
             make.left.equalToSuperview().offset(24)
             make.size.equalTo(RoundIconButton.size)
         }
         
-        view.addSubview(starButton)
+        scrollContent.addSubview(starButton)
         starButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(48)
             make.right.equalToSuperview().offset(-24)
             make.size.equalTo(RoundIconButton.size)
         }
+
+        scrollContent.addSubview(titleCard)
+        titleCard.snp.makeConstraints { make in
+            make.centerY.equalTo(imageView.snp.bottom).offset(-16)
+            make.left.right.equalTo(imageView).inset(8)
+        }
+        
+        desciptionView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(8)
+            make.top.equalTo(titleCard.snp.bottom).offset(24)
+            make.bottom.equalToSuperview()
+        }
+        
+        scrollContent.setNeedsLayout()
+        scrollContent.layoutIfNeeded()
     }
     
     // MARK: - Life Cycle
@@ -81,7 +125,6 @@ class DetailedEntityScreen: UIViewController {
     }
     
 }
-
 
 final class RoundIconButton: UIButton {
     
@@ -120,8 +163,6 @@ final class DetailedEntityTitleCard: UIView {
     private var ratingLabel = UILabel.make(.subtitle)
     private var starIcon = UIImageView(image: UIImage(named: "star")!.withRenderingMode(.alwaysTemplate))
     private var statusLabel = UILabel.make(.subtitle)
-    private var descriptionTitleLabel = UILabel()
-    private var descriptionTextView = UITextView()
     
     // MARK: - Initializers
     
@@ -158,16 +199,6 @@ final class DetailedEntityTitleCard: UIView {
         statusLabel.textAlignment = .right
         statusLabel.font = UIFont.round(.bold, 16)
         statusLabel.alpha = 0.3
-        
-        descriptionTitleLabel.text = "Description"
-        descriptionTitleLabel.textColor = UIColor(dark)
-        descriptionTitleLabel.font = UIFont.gilroy(.extraBold, 16)
-        
-        descriptionTextView.text = entity.description
-        descriptionTextView.textColor = UIColor(dark)
-        descriptionTextView.font = UIFont.gilroy(.regular, 14)
-        descriptionTextView.alpha = 0.8
-        descriptionTextView.backgroundColor = .clear
     }
     
     private func addSubviewsAndConstraints() {
@@ -204,22 +235,6 @@ final class DetailedEntityTitleCard: UIView {
             make.top.bottom.equalTo(ratingLabel)
             make.right.equalToSuperview().offset(-16)
         }
-        
-        addSubview(descriptionTitleLabel)
-        descriptionTitleLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(16)
-            make.top.equalTo(card.snp.bottom).offset(32)
-        }
-        
-        addSubview(descriptionTextView)
-        descriptionTextView.snp.makeConstraints { make in
-            let hOffSet: CGFloat = 4
-            make.right.equalTo(descriptionTitleLabel).offset(hOffSet)
-            make.left.equalTo(descriptionTitleLabel).offset(-hOffSet)
-            make.top.equalTo(descriptionTitleLabel.snp.bottom).offset(4)
-        }
-        
-        descriptionTextView.isScrollEnabled = false
 
         let vOffset: CGFloat = 16
         card.snp.makeConstraints { make in
@@ -228,6 +243,67 @@ final class DetailedEntityTitleCard: UIView {
             make.left.right.equalToSuperview()
         }
         
+    }
+
+}
+
+
+final class DetailedEntityDescriptionView: UIView {
+    
+    // MARK: - Properties
+    
+    private var entity: Entity
+    private var descriptionTitleLabel = UILabel()
+    private var descriptionTextView = UITextView()
+    
+    // MARK: - Initializers
+    
+    init(_ entity: Entity) {
+        self.entity = entity
+        
+        super.init(frame: .zero)
+        
+        setup()
+        addSubviewsAndConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Life cycle
+    
+    // MARK: - Methods
+    
+    private func setup() {
+        descriptionTitleLabel.text = "Description"
+        descriptionTitleLabel.textColor = UIColor(dark)
+        descriptionTitleLabel.font = UIFont.gilroy(.extraBold, 16)
+        
+        descriptionTextView.text = entity.description + entity.description + entity.description
+        descriptionTextView.textColor = UIColor(dark)
+        descriptionTextView.font = UIFont.gilroy(.regular, 14)
+        descriptionTextView.alpha = 0.8
+        descriptionTextView.backgroundColor = .clear
+        descriptionTextView.isEditable = false
+        descriptionTextView.isScrollEnabled = false
+    }
+    
+    private func addSubviewsAndConstraints() {
+        addSubview(descriptionTitleLabel)
+        descriptionTitleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview().inset(16)
+        }
+        
+        addSubview(descriptionTextView)
+        descriptionTextView.snp.makeConstraints { make in
+            let hOffSet: CGFloat = 4
+            make.right.equalTo(descriptionTitleLabel).offset(hOffSet)
+            make.left.equalTo(descriptionTitleLabel).offset(-hOffSet)
+            make.top.equalTo(descriptionTitleLabel.snp.bottom).offset(4)
+            make.bottom.equalToSuperview()
+        }
     }
 
 }
