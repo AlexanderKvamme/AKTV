@@ -20,8 +20,9 @@ struct Show: Decodable, Hashable, Identifiable {
     var overview: String?
     var popularity: Double?
     var posterPath: String?
-    var voteAverage: Int?
+    var voteAverage: Double?
     var voteCount: Int?
+    var status: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -35,6 +36,8 @@ struct Show: Decodable, Hashable, Identifiable {
         case overview = "overview"
         case popularity
         case posterPath = "poster_path"
+        case voteAverage = "vote_average"
+        case status
     }
 }
 

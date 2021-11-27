@@ -42,6 +42,7 @@ struct Episode: Codable, Hashable, Identifiable {
     var airDate: String
     var id: UInt64
     var overview: String
+    var status: String?
 //    var productionCode: String
     var seasonNumber: Int
 //    var showId: Int // Trokke denne finnes

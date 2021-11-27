@@ -27,6 +27,7 @@ struct Movie: Codable, Hashable, Identifiable, MediaSearchResult {
     var voteAverage: Double?
     var voteCount: Int?
     var videos: Videos?
+    var status: String?
 
     enum CodingKeys: String, CodingKey {
         case name = "title"
@@ -43,12 +44,8 @@ struct Movie: Codable, Hashable, Identifiable, MediaSearchResult {
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
         case videos = "videos"
+        case status = "status"
     }
-
-    // MARK: - Initializers
-
-    // MARK: - Methods
-
 }
 
 // MARK: - TMDBPresentable

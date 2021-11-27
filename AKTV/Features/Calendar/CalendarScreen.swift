@@ -12,9 +12,18 @@ import SnapKit
 import SwiftUI
 import IGDB_SWIFT_API
 
+enum ReleaseStatus: String {
+    case released = "Released"
+    case unreleased = "Unreleased"
+    case canceled = "Canceled"
+    case NA = "N/A"
+}
+
 protocol Entity {
     var id: UInt64 { get }
     var name: String { get }
+    var rating: Double { get }
+    var releaseStatus: ReleaseStatus { get }
     func getMainGraphicsURL() -> URL?
 }
 
@@ -56,10 +65,34 @@ extension Entity {
     }
 }
 
+// MARK: - Entity ratings
+
 extension Proto_Game: Identifiable {    }
 
 // Get Path
 extension Proto_Game: Entity {
+    
+    var releaseStatus: ReleaseStatus {
+        switch status {
+        case .released:
+            return .released
+        case .alpha:
+            return .unreleased
+        case .beta:
+            return .unreleased
+        case .earlyAccess:
+            return .unreleased
+        case .offline:
+            return .NA
+        case .cancelled:
+            return .canceled
+        case .rumored:
+            return .NA
+        case .UNRECOGNIZED:
+            return .NA
+        }
+    }
+    
     func getMainGraphicsURL() -> URL? {
         let urlString = cover.url.dropFirst().dropFirst()
         let replacedSize = urlString.replacingOccurrences(of: "t_thumb", with: "t_cover_big")
@@ -68,6 +101,26 @@ extension Proto_Game: Entity {
 }
 
 extension Episode: Entity {
+    
+    var releaseStatus: ReleaseStatus {
+        guard let status = status else { return .NA }
+        
+        switch status {
+        case "In Production":
+            return .unreleased
+        case "Post Production":
+            return .unreleased
+        case "Canceled":
+            return .canceled
+        default:
+            return .NA
+        }
+    }
+    
+    var rating: Double {
+        return Double(voteAverage)
+    }
+    
     func getMainGraphicsURL() -> URL? {
         let root = "https://image.tmdb.org/t/p/original/"
         guard let path = artPath else { return nil }
@@ -77,6 +130,26 @@ extension Episode: Entity {
 }
 
 extension Show: Entity {
+    
+    var releaseStatus: ReleaseStatus {
+        guard let status = status else { return .NA }
+        
+        switch status {
+        case "In Production":
+            return .unreleased
+        case "Post Production":
+            return .unreleased
+        case "Canceled":
+            return .canceled
+        default:
+            return .NA
+        }
+    }
+    
+    var rating: Double {
+        voteAverage ?? 0.0
+    }
+
     func getMainGraphicsURL() -> URL? {
         let root = "https://image.tmdb.org/t/p/original/"
         guard let path = posterPath else { return nil }
@@ -86,6 +159,27 @@ extension Show: Entity {
 }
 
 extension Movie: Entity {
+    
+    var releaseStatus: ReleaseStatus {
+        guard let status = status else { return .NA }
+        
+        switch status {
+        case "In Production":
+            return .unreleased
+        case "Post Production":
+            return .unreleased
+        case "Canceled":
+            return .canceled
+        default:
+            return .NA
+        }
+    }
+    
+
+    var rating: Double {
+        return voteAverage ?? 0
+    }
+
     func getMainGraphicsURL() -> URL? {
         let root = "https://image.tmdb.org/t/p/original/"
         guard let path = posterPath else { return nil }
