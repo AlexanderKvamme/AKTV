@@ -55,8 +55,8 @@ class DetailedEntityScreen: UIViewController {
         
         view.addSubview(titleCard)
         titleCard.snp.makeConstraints { make in
-            make.centerY.equalTo(imageView.snp.bottom)
-            make.left.right.equalTo(imageView).inset(24)
+            make.centerY.equalTo(imageView.snp.bottom).offset(-16)
+            make.left.right.equalTo(imageView).inset(8)
         }
 
         view.addSubview(backButton)
@@ -120,6 +120,8 @@ final class DetailedEntityTitleCard: UIView {
     private var ratingLabel = UILabel.make(.subtitle)
     private var starIcon = UIImageView(image: UIImage(named: "star")!.withRenderingMode(.alwaysTemplate))
     private var statusLabel = UILabel.make(.subtitle)
+    private var descriptionTitleLabel = UILabel()
+    private var descriptionTextView = UITextView()
     
     // MARK: - Initializers
     
@@ -145,8 +147,9 @@ final class DetailedEntityTitleCard: UIView {
         
         ratingLabel.text = String(entity.rating)
         ratingLabel.textColor = UIColor(dark)
-        ratingLabel.font = UIFont.round(.bold, 20)
-        ratingLabel.alpha = 0.3
+        ratingLabel.font = UIFont.gilroy(.bold, 12)
+        ratingLabel.font = UIFont.gilroy(.extraBold, 13)
+        ratingLabel.alpha = 1
         
         starIcon.tintColor = UIColor(hex: "EF6335")
         
@@ -155,6 +158,16 @@ final class DetailedEntityTitleCard: UIView {
         statusLabel.textAlignment = .right
         statusLabel.font = UIFont.round(.bold, 16)
         statusLabel.alpha = 0.3
+        
+        descriptionTitleLabel.text = "Description"
+        descriptionTitleLabel.textColor = UIColor(dark)
+        descriptionTitleLabel.font = UIFont.gilroy(.extraBold, 16)
+        
+        descriptionTextView.text = entity.description
+        descriptionTextView.textColor = UIColor(dark)
+        descriptionTextView.font = UIFont.gilroy(.regular, 14)
+        descriptionTextView.alpha = 0.8
+        descriptionTextView.backgroundColor = .clear
     }
     
     private func addSubviewsAndConstraints() {
@@ -180,8 +193,8 @@ final class DetailedEntityTitleCard: UIView {
         
         addSubview(starIcon)
         starIcon.snp.makeConstraints { make in
-            make.size.equalTo(16)
-            make.centerY.equalTo(ratingLabel)
+            make.size.equalTo(12)
+            make.centerY.equalTo(ratingLabel).offset(-2)
             make.left.equalTo(ratingLabel.snp.right).offset(8)
         }
         
@@ -191,12 +204,30 @@ final class DetailedEntityTitleCard: UIView {
             make.top.bottom.equalTo(ratingLabel)
             make.right.equalToSuperview().offset(-16)
         }
+        
+        addSubview(descriptionTitleLabel)
+        descriptionTitleLabel.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(16)
+            make.top.equalTo(card.snp.bottom).offset(32)
+        }
+        
+        addSubview(descriptionTextView)
+        descriptionTextView.snp.makeConstraints { make in
+            let hOffSet: CGFloat = 4
+            make.right.equalTo(descriptionTitleLabel).offset(hOffSet)
+            make.left.equalTo(descriptionTitleLabel).offset(-hOffSet)
+            make.top.equalTo(descriptionTitleLabel.snp.bottom).offset(4)
+        }
+        
+        descriptionTextView.isScrollEnabled = false
 
+        let vOffset: CGFloat = 16
         card.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel).offset(-8)
-            make.bottom.equalTo(ratingLabel).offset(8)
+            make.top.equalTo(nameLabel).offset(-vOffset)
+            make.bottom.equalTo(ratingLabel).offset(vOffset)
             make.left.right.equalToSuperview()
         }
+        
     }
 
 }
