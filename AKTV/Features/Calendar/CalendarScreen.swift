@@ -23,6 +23,7 @@ protocol Entity {
     var id: UInt64 { get }
     var name: String { get }
     var rating: Double { get }
+    var description: String { get }
     var releaseStatus: ReleaseStatus { get }
     func getMainGraphicsURL() -> URL?
 }
@@ -72,6 +73,10 @@ extension Proto_Game: Identifiable {    }
 // Get Path
 extension Proto_Game: Entity {
     
+    var description: String {
+        return self.summary
+    }
+    
     var releaseStatus: ReleaseStatus {
         switch status {
         case .released:
@@ -102,6 +107,10 @@ extension Proto_Game: Entity {
 
 extension Episode: Entity {
     
+    var description: String {
+        return self.overview
+    }
+    
     var releaseStatus: ReleaseStatus {
         guard let status = status else { return .NA }
         
@@ -131,6 +140,10 @@ extension Episode: Entity {
 
 extension Show: Entity {
     
+    var description: String {
+        return self.overview ?? "No overview"
+    }
+
     var releaseStatus: ReleaseStatus {
         guard let status = status else { return .NA }
         
@@ -159,6 +172,10 @@ extension Show: Entity {
 }
 
 extension Movie: Entity {
+        
+    var description: String {
+        return self.overview ?? "No overview"
+    }
     
     var releaseStatus: ReleaseStatus {
         guard let status = status else { return .NA }
