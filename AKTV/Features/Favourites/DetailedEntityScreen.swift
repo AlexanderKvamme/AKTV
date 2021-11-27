@@ -41,7 +41,12 @@ class DetailedEntityScreen: UIViewController {
     
     // MARK: - Methods
     
+    @objc func dismiss() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     private func setup() {
+        backButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
         imageView.layer.cornerCurve = .continuous
         imageView.layer.cornerRadius = .iOSCornerRadius
         imageView.clipsToBounds = true
