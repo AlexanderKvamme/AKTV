@@ -20,6 +20,7 @@ class DetailedEntityScreen: UIViewController {
     private var scrollContainer = UIScrollView()
     private var scrollContent = UIView()
     private var desciptionView: DetailedEntityDescriptionView!
+    private var dismissbutton = ButtonCTA()
     
     // MARK: - Initializers
     
@@ -41,12 +42,13 @@ class DetailedEntityScreen: UIViewController {
     
     // MARK: - Methods
     
-    @objc func dismiss() {
+    @objc func popScreen() {
         dismiss(animated: true, completion: nil)
     }
     
     private func setup() {
-        backButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(popScreen), for: .touchUpInside)
+        dismissbutton.addTarget(self, action: #selector(popScreen), for: .touchUpInside)
         imageView.layer.cornerCurve = .continuous
         imageView.layer.cornerRadius = .iOSCornerRadius
         imageView.clipsToBounds = true
@@ -75,10 +77,11 @@ class DetailedEntityScreen: UIViewController {
         // Content
         scrollContainer.addSubview(scrollContent)
         scrollContent.addSubview(desciptionView)
+        scrollContent.addSubview(dismissbutton)
         scrollContent.snp.makeConstraints { make in
             make.width.equalTo(screenWidth)
             make.top.equalToSuperview()
-            make.bottom.equalTo(desciptionView.snp.bottom)
+            make.bottom.equalTo(dismissbutton.snp.bottom)
         }
         
         scrollContainer.snp.makeConstraints { make in
@@ -95,28 +98,33 @@ class DetailedEntityScreen: UIViewController {
         
         scrollContent.addSubview(backButton)
         backButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(48)
-            make.left.equalToSuperview().offset(24)
+            make.top.equalToSuperview().offset(40)
+            make.left.equalToSuperview().offset(32)
             make.size.equalTo(RoundIconButton.size)
         }
         
         scrollContent.addSubview(starButton)
         starButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(48)
-            make.right.equalToSuperview().offset(-24)
+            make.top.equalToSuperview().offset(40)
+            make.right.equalToSuperview().offset(-32)
             make.size.equalTo(RoundIconButton.size)
         }
 
         scrollContent.addSubview(titleCard)
         titleCard.snp.makeConstraints { make in
             make.centerY.equalTo(imageView.snp.bottom).offset(-16)
-            make.left.right.equalTo(imageView).inset(8)
+            make.left.right.equalTo(imageView).inset(12)
         }
         
         desciptionView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(8)
             make.top.equalTo(titleCard.snp.bottom).offset(24)
-            make.bottom.equalToSuperview()
+        }
+        
+        dismissbutton.snp.makeConstraints { make in
+            make.top.equalTo(desciptionView.snp.bottom).offset(24)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(ButtonCTA.size)
         }
         
         scrollContent.setNeedsLayout()
@@ -135,7 +143,7 @@ final class RoundIconButton: UIButton {
     
     // MARK: - Properties
     
-    static var size: CGFloat = 40
+    static var size: CGFloat = 34
     
     // MARK: - Initializers
     
@@ -145,7 +153,7 @@ final class RoundIconButton: UIButton {
         backgroundColor = UIColor(light)
         setImage(UIImage(named: icon), for: .normal)
         
-        let inset: CGFloat = 12
+        let inset: CGFloat = 10
         imageEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
         
         layer.cornerRadius = Self.size/2
@@ -285,10 +293,10 @@ final class DetailedEntityDescriptionView: UIView {
         descriptionTitleLabel.textColor = UIColor(dark)
         descriptionTitleLabel.font = UIFont.gilroy(.extraBold, 16)
         
-        descriptionTextView.text = entity.description + entity.description + entity.description
+        descriptionTextView.text = entity.description
         descriptionTextView.textColor = UIColor(dark)
-        descriptionTextView.font = UIFont.gilroy(.regular, 14)
-        descriptionTextView.alpha = 0.8
+        descriptionTextView.font = UIFont.gilroy(.regular, 16)
+        descriptionTextView.alpha = 0.5
         descriptionTextView.backgroundColor = .clear
         descriptionTextView.isEditable = false
         descriptionTextView.isScrollEnabled = false
@@ -307,6 +315,80 @@ final class DetailedEntityDescriptionView: UIView {
             make.right.equalTo(descriptionTitleLabel).offset(hOffSet)
             make.left.equalTo(descriptionTitleLabel).offset(-hOffSet)
             make.top.equalTo(descriptionTitleLabel.snp.bottom).offset(4)
+            make.bottom.equalToSuperview()
+        }
+    }
+
+}
+
+
+final class ButtonCTA: UIButton {
+    
+    // MARK: - Properties
+    
+    static var size = CGSize(width: 140, height: 48)
+
+    private var label = UILabel()
+    private let generator = UIImpactFeedbackGenerator(style: .medium)
+    
+    // MARK: - Initializers
+    
+    init() {
+        super.init(frame: CGRect(origin: .zero, size: Self.size))
+        
+        setup()
+        addSubviewsAndConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Life cycle
+    
+    // MARK: - Methods
+    
+    private func setup() {
+        backgroundColor = UIColor(dark)
+        layer.cornerRadius = Self.size.height/2
+        label.text = "DISMISS"
+        label.font = UIFont.gilroy(.bold, 16)
+        label.textColor = UIColor(light)
+        label.textAlignment = .center
+        
+        addGesture()
+        generator.prepare()
+    }
+    
+    private func addGesture() {
+        let lpr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        lpr.minimumPressDuration = 0
+        addGestureRecognizer(lpr)
+    }
+    
+    private var tapTicker = 0.0
+    
+    @objc func handleLongPress(_ sender: UIGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            tapTicker -= 0.05
+            generator.impactOccurred()
+        case .ended, .cancelled, .failed:
+            tapTicker = 0
+            sendActions(for: .touchUpInside)
+        default:
+            break
+        }
+        
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
+            self.transform = CGAffineTransform(scaleX: 1 + self.tapTicker, y: 1 + self.tapTicker)
+        })
+    }
+    
+    private func addSubviewsAndConstraints() {
+        addSubview(label)
+        label.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
