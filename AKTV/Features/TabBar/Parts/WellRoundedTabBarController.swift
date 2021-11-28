@@ -14,6 +14,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
     // MARK: - Properties
 
+    let disabledTabs = [1,3]
     let myTabBar = TabBarView(frame: CGRect(x: 0, y: screenHeight - TabBarSettings.barHeight, width: screenWidth, height: screenHeight))
     let discoveryScreen = DiscoveryScreen()
     var favouritesScreen: SUFavouritesScreen!
@@ -94,6 +95,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
     /// Uses button's tag to decide which index the button had
     @objc func setTab(sender: UIButton) {
+        guard !disabledTabs.contains(sender.tag) else { return }
         selectedIndex = sender.tag
     }
 
