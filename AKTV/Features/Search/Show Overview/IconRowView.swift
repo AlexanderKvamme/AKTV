@@ -81,7 +81,8 @@ final class EntityIconRow: UIView {
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(16)
         }
     }
 

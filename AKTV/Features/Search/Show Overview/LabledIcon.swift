@@ -31,7 +31,7 @@ class UnlabeledIconButton: UIButton {
     // MARK: - Methods
 
     private func setup(iconName: String) {
-        let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 10, weight: .semibold)
+        let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 10, weight: .regular)
         icon.image = UIImage(systemName: iconName, withConfiguration: iconConfiguration)
         icon.contentMode = .scaleAspectFit
         icon.tintColor = UIColor(dark)
