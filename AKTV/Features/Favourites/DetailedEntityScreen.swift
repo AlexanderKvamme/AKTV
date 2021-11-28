@@ -17,6 +17,7 @@ class DetailedEntityScreen: UIViewController {
     private var backButton = RoundIconButton(type: .x)
     private var starButton = RoundIconButton(type: .heart)
     private var titleCard: DetailedEntityTitleCard
+    private var iconRow: EntityIconRow
     private var scrollContainer = UIScrollView()
     private var scrollContent = UIView()
     private var desciptionView: DetailedEntityDescriptionView!
@@ -25,6 +26,7 @@ class DetailedEntityScreen: UIViewController {
     // MARK: - Initializers
     
     init(entity: Entity) {
+        self.iconRow = EntityIconRow(entity)
         self.titleCard = DetailedEntityTitleCard(entity)
         self.desciptionView = DetailedEntityDescriptionView(entity)
         let backdropPath = entity.getMainGraphicsURL() ?? URL(string: "")
@@ -76,9 +78,12 @@ class DetailedEntityScreen: UIViewController {
         scrollContainer.isScrollEnabled = true
         
         // Content
+        // ScrollContent is a plain UIView designed to be
+        // the scrollView's only contentView
         scrollContainer.addSubview(scrollContent)
         scrollContent.addSubview(desciptionView)
         scrollContent.addSubview(dismissbutton)
+        scrollContent.addSubview(iconRow)
         scrollContent.snp.makeConstraints { make in
             make.width.equalTo(screenWidth)
             make.top.equalToSuperview()
@@ -117,9 +122,15 @@ class DetailedEntityScreen: UIViewController {
             make.left.right.equalTo(imageView).inset(12)
         }
         
+        iconRow.snp.makeConstraints { make in
+            make.top.equalTo(titleCard.snp.bottom).offset(16)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(60)
+        }
+        
         desciptionView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(8)
-            make.top.equalTo(titleCard.snp.bottom).offset(24)
+            make.top.equalTo(iconRow.snp.bottom).offset(24)
         }
         
         dismissbutton.snp.makeConstraints { make in

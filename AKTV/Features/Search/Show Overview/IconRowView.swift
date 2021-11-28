@@ -8,6 +8,96 @@
 
 import UIKit
 
+final class LineSeparator: UIView {
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: screenWidth-24, height: 3))
+        
+        backgroundColor = UIColor(dark)
+        layer.cornerRadius = frame.height/2
+        alpha = 0.05
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+final class EntityIconRow: UIView {
+    
+    // MARK: - Properties
+
+    let stackView = UIStackView()
+    let trailersButton = UnlabeledIconButton(icon: "film")
+    let starButton = StarLabeledIcon()
+    var ratingIcon = UnlabeledRatingIcon(targetNumber: 0)
+    var topSeperator = LineSeparator()
+    var botSeperator = LineSeparator()
+
+    // MARK: - Initializers
+
+    init(_ entity: Entity) {
+        super.init(frame: .zero)
+
+        setup()
+        addSubviewsAndConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Methods
+
+    private func setup() {
+        stackView.frame = frame
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.spacing = 8
+
+        stackView.addArrangedSubview(UIView())
+        stackView.addArrangedSubview(trailersButton)
+        stackView.addArrangedSubview(starButton)
+        stackView.addArrangedSubview(ratingIcon)
+        stackView.addArrangedSubview(UIView())
+    }
+
+    private func addSubviewsAndConstraints() {
+        addSubview(topSeperator)
+        addSubview(botSeperator)
+        topSeperator.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.height.equalTo(1)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(24)
+        }
+        
+        botSeperator.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.height.equalTo(1)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(24)
+        }
+        
+        addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+
+    // MARK: - Public methods
+
+    func update(with overview: ShowOverview) {
+        ratingIcon.update(with: overview)
+        starButton.update(with: overview)
+    }
+
+    func update(with movie: Movie) {
+        ratingIcon.update(with: movie)
+        starButton.update(with: movie)
+    }
+}
+
 final class IconRowView: UIView {
 
     // MARK: - Properties
