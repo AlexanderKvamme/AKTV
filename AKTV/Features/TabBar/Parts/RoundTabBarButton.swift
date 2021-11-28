@@ -12,11 +12,12 @@ class RoundTabBarButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 22, weight: .black, scale: .large)
-        let symbolImage = UIImage(systemName: "plus", withConfiguration: imageConfig)!
         let addButton = UIButton(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
-        addButton.setImage(symbolImage, for: .normal)
+        addButton.setImage(UIImage(named: "icon-search")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        let insets: CGFloat = 18
+        addButton.imageEdgeInsets = UIEdgeInsets(top: insets, left: insets, bottom: insets, right: insets)
         addButton.tintColor = TabBarSettings.plusButtonColor
+        addButton.tintColor = UIColor(light)
         addSubview(addButton)
         addButton.isUserInteractionEnabled = false
 
