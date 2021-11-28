@@ -14,8 +14,8 @@ class DetailedEntityScreen: UIViewController {
     // MARK: - Properties
     
     private var imageView = UIImageView()
-    private var backButton = RoundIconButton(icon: "close-48")
-    private var starButton = RoundIconButton(icon: "icons8-heart-50-filled")
+    private var backButton = RoundIconButton(type: .x)
+    private var starButton = RoundIconButton(type: .heart)
     private var titleCard: DetailedEntityTitleCard
     private var scrollContainer = UIScrollView()
     private var scrollContent = UIView()
@@ -142,26 +142,46 @@ class DetailedEntityScreen: UIViewController {
 
 final class RoundIconButton: UIButton {
     
+    // MARK: - Subclass
+    
+    enum IconType {
+        case x, heart
+    }
+    
     // MARK: - Properties
     
     static var size: CGFloat = 34
     
     // MARK: - Initializers
     
-    init(icon: String) {
+    init(type: IconType) {
         super.init(frame: CGRect(x: 0, y: 0, width: Self.size, height: Self.size))
         
+        applyButtonStyle(type)
         backgroundColor = UIColor(light)
-        setImage(UIImage(named: icon), for: .normal)
-        
-        let inset: CGFloat = 10
-        imageEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-        
         layer.cornerRadius = Self.size/2
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Methods
+    
+    private func applyButtonStyle(_ type: IconType) {
+        switch type {
+        case .x:
+            let imageConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .black, scale: .large)
+            let symbolImage = UIImage(systemName: "plus", withConfiguration: imageConfig)!
+            tintColor = UIColor(dark)
+            transform = CGAffineTransform(rotationAngle: .pi/4)
+            setImage(symbolImage, for: .normal)
+        case .heart:
+            let inset: CGFloat = 10
+            imageEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+            setImage(UIImage(named: "icons8-heart-50-filled"), for: .normal)
+        }
+
     }
     
 }
