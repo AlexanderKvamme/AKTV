@@ -53,6 +53,7 @@ class DetailedEntityScreen: UIViewController {
         imageView.layer.cornerRadius = .iOSCornerRadius
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
+        titleCard.makeLongInteractable()
     }
     
     override func viewDidLayoutSubviews() {
@@ -258,6 +259,37 @@ final class DetailedEntityTitleCard: UIView {
         
     }
 
+}
+
+
+extension UIView {
+    
+    private func addGesture() {
+        let lpr = UILongPressGestureRecognizer(target: self, action: #selector(tackleLongPress))
+        lpr.minimumPressDuration = 0
+        addGestureRecognizer(lpr)
+    }
+    
+    @objc func tackleLongPress(_ sender: UIGestureRecognizer) {
+        var tapTicker = 0.0
+        switch sender.state {
+        case .began:
+            tapTicker -= 0.05
+        case .ended, .cancelled, .failed:
+            tapTicker = 0
+        default:
+            break
+        }
+        
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
+            self.transform = CGAffineTransform(scaleX: 1 + tapTicker, y: 1 + tapTicker)
+        })
+    }
+
+    func makeLongInteractable() {
+        addGesture()
+    }
+    
 }
 
 
