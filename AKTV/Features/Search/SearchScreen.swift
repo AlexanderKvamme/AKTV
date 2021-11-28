@@ -153,7 +153,7 @@ extension SearchScreen: ModelPresenter {
 
     func display(_ searchResult: MediaSearchResult) {
         switch searchTypes {
-        case .series:
+        case .show:
             let res = searchResult as! Show
             displayShow(res.id)
         case .game:

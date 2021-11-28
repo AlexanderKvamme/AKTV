@@ -35,7 +35,7 @@ final class SearchHeaderContainer: UIViewController {
         switch mediaType {
         case .movie:
             subHeader.text = "Search for any movie in the world!"
-        case .series:
+        case .show:
             subHeader.text = "Search for any TV show in the world!"
         case .game:
             subHeader.text = "Search for any game in the world!"
@@ -43,7 +43,7 @@ final class SearchHeaderContainer: UIViewController {
 
         header.font = UIFont.gilroy(.heavy, 38)
         header.textAlignment = .left
-        header.text = "What are you looking for?"
+        header.text = "Search for a \(mediaType)"
         header.textColor = UIColor(dark)
         header.numberOfLines = 0
 

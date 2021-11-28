@@ -70,7 +70,7 @@ final class MediaTypePickerScreen: PickerScreen {
             navigationController?.pushViewController(searchController, animated: true)
         case MediaPickable.tvShow:
             let dao = APIDAO()
-            let showSearchController = SearchScreen(dao: dao, searchTypes: .series)
+            let showSearchController = SearchScreen(dao: dao, searchTypes: .show)
             showSearchController.modalPresentationStyle = .fullScreen
             navigationController?.pushViewController(showSearchController, animated: true)
         case MediaPickable.movie:

@@ -12,7 +12,7 @@ import IGDB_SWIFT_API
 // MARK: - Protocols
 
 enum MediaType {
-    case movie, series, game
+    case movie, show, game
 }
 
 protocol MediaSearchResult {
@@ -35,9 +35,9 @@ final class APIDAO: NSObject, MediaSearcher {
     typealias JSONCompletion = (([String: Any]?) -> Void)
 
     // TODO: Dont default
-    func search(_ type: MediaType? = MediaType.series, _ string: String, andThen: @escaping (([MediaSearchResult]) -> ())) {
+    func search(_ type: MediaType? = MediaType.show, _ string: String, andThen: @escaping (([MediaSearchResult]) -> ())) {
         switch type {
-        case .series:
+        case .show:
             searchSeries(string, andThen: andThen)
         case .game:
             searchGames(string, andThen: andThen)
