@@ -25,7 +25,7 @@ extension UIDevice {
     }
 }
 
-extension UINavigationController {
+extension UINavigationController: UIGestureRecognizerDelegate {
     override open func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,5 +33,14 @@ extension UINavigationController {
         standard.backgroundColor = UIColor(light)
 
         navigationBar.standardAppearance = standard
+        interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    @objc func goBack(sender: Any?) {
+        self.popViewController(animated: true)
+    }
+    
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return viewControllers.count > 1
     }
 }

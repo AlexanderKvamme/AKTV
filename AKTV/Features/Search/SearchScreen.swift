@@ -11,14 +11,6 @@ import IGDB_SWIFT_API
 
 // MARK: - Protocols
 
-/// A film, series, or a game
-//protocol MediaType {
-//    var name: String { get set }
-//    var subtitle: String { get set }
-//}
-
-
-
 
 struct Media: Decodable {
     var name: String
@@ -160,8 +152,6 @@ extension SearchScreen: ModelPresenter {
             displayGame(searchResult)
         case .movie:
             displayMovie(searchResult)
-        default:
-            fatalError("Implement me")
         }
     }
 
