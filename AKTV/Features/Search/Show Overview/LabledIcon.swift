@@ -31,7 +31,7 @@ class UnlabeledIconButton: UIButton {
     // MARK: - Methods
 
     private func setup(iconName: String) {
-        let iconConfiguration = UIImage.SymbolConfiguration(scale: .small)
+        let iconConfiguration = UIImage.SymbolConfiguration(weight: .semibold)
         icon.image = UIImage(systemName: iconName, withConfiguration: iconConfiguration)
         icon.contentMode = .scaleAspectFit
         icon.tintColor = UIColor(dark)
@@ -241,7 +241,7 @@ final class StarLabeledIcon: UnlabeledIconButton {
     // MARK: - Initializers
 
     init() {
-        super.init(icon: "star")
+        super.init(icon: "heart")
 
         addTarget(self, action: #selector(didTapHeart), for: .touchUpInside)
     }
@@ -254,7 +254,7 @@ final class StarLabeledIcon: UnlabeledIconButton {
 
     func setFilled(_ fill: Bool) {
         let iconConfiguration = UIImage.SymbolConfiguration(scale: .medium)
-        let newIcon = fill ? "star.fill" : "star"
+        let newIcon = fill ? "heart.fill" : "heart"
         icon.image = UIImage(systemName: newIcon, withConfiguration: iconConfiguration)
     }
 
