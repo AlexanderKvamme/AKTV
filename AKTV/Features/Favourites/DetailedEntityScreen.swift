@@ -177,7 +177,7 @@ final class RoundIconButton: UIButton {
             transform = CGAffineTransform(rotationAngle: .pi/4)
             setImage(symbolImage, for: .normal)
         case .heart:
-            let inset: CGFloat = 10
+            let inset: CGFloat = 8
             imageEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
             setImage(UIImage(named: "icons8-heart-50-filled"), for: .normal)
         }
