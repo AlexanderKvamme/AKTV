@@ -153,8 +153,8 @@ final class UnlabeledRatingIcon: UnlabeledIconButton {
         }
     }
     
-    func update(with motionType: TMDBPresentable) {
-        endValue = motionType.getVoteAverage()
+    func update(with entity: Entity) {
+        endValue = entity.rating
         displayLink.add(to: .main, forMode: .default)
     }
     

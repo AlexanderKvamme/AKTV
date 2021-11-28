@@ -36,6 +36,7 @@ class DetailedEntityScreen: UIViewController {
         
         setup()
         addSubviewsAndConstraints()
+        iconRow.update(with: entity)
     }
     
     required init?(coder: NSCoder) {
@@ -125,7 +126,7 @@ class DetailedEntityScreen: UIViewController {
         iconRow.snp.makeConstraints { make in
             make.top.equalTo(titleCard.snp.bottom).offset(16)
             make.left.right.equalToSuperview()
-            make.height.equalTo(60)
+            make.height.equalTo(48)
         }
         
         desciptionView.snp.makeConstraints { make in

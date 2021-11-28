@@ -87,9 +87,10 @@ final class EntityIconRow: UIView {
 
     // MARK: - Public methods
 
-    func update(with overview: ShowOverview) {
-        ratingIcon.update(with: overview)
-        starButton.update(with: overview)
+    func update(with entity: Entity) {
+        ratingIcon.update(with: entity)
+        // FIXME: Implement this
+//        starButton.update(with: overview)
     }
 
     func update(with movie: Movie) {
