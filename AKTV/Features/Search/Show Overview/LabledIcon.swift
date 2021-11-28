@@ -31,7 +31,7 @@ class UnlabeledIconButton: UIButton {
     // MARK: - Methods
 
     private func setup(iconName: String) {
-        let iconConfiguration = UIImage.SymbolConfiguration(weight: .semibold)
+        let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 10, weight: .semibold)
         icon.image = UIImage(systemName: iconName, withConfiguration: iconConfiguration)
         icon.contentMode = .scaleAspectFit
         icon.tintColor = UIColor(dark)
@@ -41,8 +41,7 @@ class UnlabeledIconButton: UIButton {
         [icon].forEach({ addSubview($0) })
 
         icon.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
+            make.center.equalToSuperview()
             make.size.equalTo(28)
         }
     }
@@ -176,7 +175,6 @@ final class UnlabeledRatingIcon: UnlabeledIconButton {
 }
 
 
-
 final class RatingIcon: LabeledIconButton {
 
     // MARK: - Properties
@@ -231,7 +229,7 @@ final class RatingIcon: LabeledIconButton {
 }
 
 
-final class StarLabeledIcon: UnlabeledIconButton {
+final class ShareButton: UnlabeledIconButton {
 
     // MARK: - Properties
 
@@ -241,7 +239,7 @@ final class StarLabeledIcon: UnlabeledIconButton {
     // MARK: - Initializers
 
     init() {
-        super.init(icon: "heart")
+        super.init(icon: "square.and.arrow.up")
 
         addTarget(self, action: #selector(didTapHeart), for: .touchUpInside)
     }
@@ -253,7 +251,8 @@ final class StarLabeledIcon: UnlabeledIconButton {
     // MARK: - Methods
 
     func setFilled(_ fill: Bool) {
-        let iconConfiguration = UIImage.SymbolConfiguration(scale: .medium)
+        return
+        let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 10, weight: .bold)
         let newIcon = fill ? "heart.fill" : "heart"
         icon.image = UIImage(systemName: newIcon, withConfiguration: iconConfiguration)
     }

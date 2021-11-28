@@ -27,8 +27,8 @@ final class EntityIconRow: UIView {
     // MARK: - Properties
 
     let stackView = UIStackView()
-    let trailersButton = UnlabeledIconButton(icon: "film")
-    let starButton = StarLabeledIcon()
+    let trailersButton = UnlabeledIconButton(icon: "play.square")
+    let shareButton = ShareButton()
     var ratingIcon = UnlabeledRatingIcon(targetNumber: 0)
     var topSeperator = LineSeparator()
     var botSeperator = LineSeparator()
@@ -57,7 +57,7 @@ final class EntityIconRow: UIView {
 
         stackView.addArrangedSubview(UIView())
         stackView.addArrangedSubview(trailersButton)
-        stackView.addArrangedSubview(starButton)
+        stackView.addArrangedSubview(shareButton)
         stackView.addArrangedSubview(ratingIcon)
         stackView.addArrangedSubview(UIView())
     }
@@ -95,7 +95,7 @@ final class EntityIconRow: UIView {
 
     func update(with movie: Movie) {
         ratingIcon.update(with: movie)
-        starButton.update(with: movie)
+        shareButton.update(with: movie)
     }
 }
 
@@ -106,7 +106,7 @@ final class IconRowView: UIView {
     let stackView = UIStackView()
     let descriptionButton = LabeledIconButton(text: "INFO", icon: "text.justifyleft")
     let trailersButton = LabeledIconButton(text: "Trailers", icon: "film")
-    let starButton = StarLabeledIcon()
+    let starButton = ShareButton()
     var ratingIcon = RatingIcon(text: "RATING", targetNumber: 0)
 
     // MARK: - Initializers
