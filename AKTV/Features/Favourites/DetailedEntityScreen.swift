@@ -286,6 +286,7 @@ extension UIView {
     
     private func addGesture() {
         let lpr = UILongPressGestureRecognizer(target: self, action: #selector(tackleLongPress))
+        lpr.cancelsTouchesInView = false
         lpr.minimumPressDuration = 0
         addGestureRecognizer(lpr)
     }

@@ -14,14 +14,14 @@ class RoundTabBarButton: UIButton {
 
         let addButton = UIButton(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         addButton.setImage(UIImage(named: "icon-search")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        let insets: CGFloat = 18
+        let insets: CGFloat = 19
         addButton.imageEdgeInsets = UIEdgeInsets(top: insets, left: insets, bottom: insets, right: insets)
         addButton.tintColor = TabBarSettings.plusButtonColor
         addButton.tintColor = UIColor(light)
         addSubview(addButton)
         addButton.isUserInteractionEnabled = false
-
         backgroundColor = .clear
+        makeLongInteractable()
     }
 
     required init?(coder: NSCoder) {
