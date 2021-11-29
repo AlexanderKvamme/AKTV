@@ -51,17 +51,16 @@ class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate
     // MARK: Methods
 
     private func setup() {
+        hidesBottomBarWhenPushed = true
+        
         view.backgroundColor = UIColor(hex: "#F7F7F7")
-
         headerContainer.searchField.searchField.delegate = self
-
-        episodesSearchResultViewController.tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
+        episodesSearchResultViewController.tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 32, right: 0)
         episodesSearchResultViewController.tableView.dataSource = self
         episodesSearchResultViewController.tableView.delegate = self
         episodesSearchResultViewController.tableView.estimatedRowHeight = MediaSearchResultCell.estimatedHeight
         episodesSearchResultViewController.tableView.backgroundColor = .clear
         episodesSearchResultViewController.tableView.separatorStyle = .none
-
         detailedShowPresenter = self
     }
 

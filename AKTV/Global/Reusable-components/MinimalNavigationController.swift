@@ -26,6 +26,11 @@ class MinimalNavigationController: UINavigationController, UINavigationControlle
         navigationBar.standardAppearance = appearence
         navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
         
+        // Show/hide tabBar (bottom) according to VC setting
+        if let tb = tabBarController as? WellRoundedTabBarController {
+            viewController.hidesBottomBarWhenPushed ? tb.hideIt() : tb.showIt()
+        }
+        
         let shouldShowBack = !viewController.navigationItem.hidesBackButton
         guard shouldShowBack else { return }
         
