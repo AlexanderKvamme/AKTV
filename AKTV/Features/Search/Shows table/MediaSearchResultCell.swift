@@ -64,7 +64,6 @@ final class MediaSearchResultCell: UITableViewCell {
         iconImageView.image = img
         iconImageView.contentMode = .scaleAspectFit
         iconImageView.backgroundColor = UIColor(dark).withAlphaComponent(0.05)
-        iconImageView.backgroundColor = UIColor(hex: "#FFBC54")?.withAlphaComponent(0.5)
         iconImageView.layer.cornerRadius = 16
 
         card.layer.shadowOpacity = 0.0
