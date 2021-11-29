@@ -34,6 +34,9 @@ class DetailedEntityScreen: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        hidesBottomBarWhenPushed = true
+        
         setup()
         addSubviewsAndConstraints()
         iconRow.update(with: entity)
@@ -43,10 +46,15 @@ class DetailedEntityScreen: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     // MARK: - Methods
     
     @objc func popScreen() {
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     private func setup() {

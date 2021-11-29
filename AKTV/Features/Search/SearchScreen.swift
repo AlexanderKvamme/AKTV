@@ -47,6 +47,13 @@ class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 
     // MARK: Methods
 
@@ -164,7 +171,7 @@ extension SearchScreen: ModelPresenter {
             DispatchQueue.main.async {
                 let detailedScreen = DetailedEntityScreen(entity: game)
                 detailedScreen.modalPresentationStyle = .fullScreen
-                self.present(detailedScreen, animated: true)
+                self.navigationController?.pushViewController(detailedScreen, animated: true)
             }
         }
     }
@@ -176,7 +183,7 @@ extension SearchScreen: ModelPresenter {
             DispatchQueue.main.async {
                 let detailedScreen = DetailedEntityScreen(entity: show)
                 detailedScreen.modalPresentationStyle = .fullScreen
-                self.present(detailedScreen, animated: true)
+                self.navigationController?.pushViewController(detailedScreen, animated: true)
             }
         }
     }
@@ -189,7 +196,7 @@ extension SearchScreen: ModelPresenter {
                 DispatchQueue.main.async {
                     let detailedScreen = DetailedEntityScreen(entity: movie)
                     detailedScreen.modalPresentationStyle = .fullScreen
-                    self.present(detailedScreen, animated: true)
+                    self.navigationController?.pushViewController(detailedScreen, animated: true)
                 }
             }
         }
