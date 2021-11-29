@@ -16,7 +16,7 @@ class MinimalNavigationController: UINavigationController, UINavigationControlle
     }
 
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        let backImage = UIImage(named: "close-24")!.withRenderingMode(.alwaysTemplate)
+        let backImage = UIImage(named: "chevron-left-slim-17")!.withRenderingMode(.alwaysTemplate)
         let appearence = UINavigationBarAppearance()
         appearence.configureWithOpaqueBackground()
         appearence.backgroundColor = .clear
@@ -31,11 +31,8 @@ class MinimalNavigationController: UINavigationController, UINavigationControlle
             style: UIBarButtonItem.Style.done,
             target: self,
             action: #selector(popToPrevious))
-        item.tintColor = UIColor(dark)
-        item.imageInsets = UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 0)
-        item.customView?.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-        item.width = 10
-        item.customView?.backgroundColor = .green
+        item.tintColor = UIColor(dark).withAlphaComponent(0.2)
+        item.imageInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
         viewController.navigationItem.leftBarButtonItem = item
     }
     
