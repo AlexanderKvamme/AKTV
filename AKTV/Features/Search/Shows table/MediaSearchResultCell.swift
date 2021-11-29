@@ -19,12 +19,14 @@ final class MediaSearchResultCell: UITableViewCell {
     var header = UILabel()
     var subheader = UILabel()
     var card = Card(radius: 24)
+    var media: MediaSearchResult
 
     // MARK: Initializers
     
     static let identifier = "EpisodeCell"
     
     init(for media: MediaSearchResult) {
+        self.media = media
         super.init(style: .default, reuseIdentifier: MediaSearchResultCell.identifier)
 
         setup()
@@ -47,7 +49,7 @@ final class MediaSearchResultCell: UITableViewCell {
         header.adjustsFontSizeToFitWidth = true
         header.numberOfLines = 2
 
-        subheader.text = "Televison, 2021"
+        subheader.text = media.subtitle
         subheader.textColor = UIColor(dark)
         subheader.font = UIFont.gilroy(.regular, 14)
         subheader.alpha = 0.4

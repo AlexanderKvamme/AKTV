@@ -8,6 +8,15 @@
 
 import Foundation
 
+extension Movie {
+    var subtitle: String {
+        if let firstDash = releaseDate?.firstIndex(of: "-") {
+            return String(releaseDate!.prefix(upTo: firstDash))
+        }
+        return ""
+    }
+}
+
 struct Movie: Codable, Hashable, Identifiable, MediaSearchResult {
 
     // MARK: - Properties

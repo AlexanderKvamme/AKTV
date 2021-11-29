@@ -41,7 +41,14 @@ struct Show: Decodable, Hashable, Identifiable {
     }
 }
 
-extension Show: MediaSearchResult {}
+extension Show: MediaSearchResult {
+    var subtitle: String {
+        if let firstDash = firstAirDate?.firstIndex(of: "-") {
+            return String(firstAirDate!.prefix(upTo: firstDash))
+        }
+        return ""
+    }
+}
 
 extension Show {
     func getBackdropUrl() -> URL {

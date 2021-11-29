@@ -18,9 +18,14 @@ enum MediaType {
 protocol MediaSearchResult {
     var name: String { get }
     var id: UInt64 { get }
+    var subtitle: String { get }
 }
 
-extension Proto_Game: MediaSearchResult {}
+extension Proto_Game: MediaSearchResult {
+    var subtitle: String {
+        return "No date available"
+    }
+}
 
 // MARK: - APIDAO
 
