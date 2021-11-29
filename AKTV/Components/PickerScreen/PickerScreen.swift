@@ -60,6 +60,8 @@ class PickerScreen: UIViewController {
     // MARK: - Methods
 
     func setup() {
+        navigationItem.hidesBackButton = true
+        
         view.backgroundColor = UIColor(light)
 
         stackView.contentMode = .bottom

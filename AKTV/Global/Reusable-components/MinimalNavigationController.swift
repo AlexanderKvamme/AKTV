@@ -26,6 +26,9 @@ class MinimalNavigationController: UINavigationController, UINavigationControlle
         navigationBar.standardAppearance = appearence
         navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
         
+        let shouldShowBack = !viewController.navigationItem.hidesBackButton
+        guard shouldShowBack else { return }
+        
         let item = UIBarButtonItem(
             image: backImage,
             style: UIBarButtonItem.Style.done,
