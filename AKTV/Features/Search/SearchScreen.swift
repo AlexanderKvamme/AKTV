@@ -162,8 +162,9 @@ extension SearchScreen: ModelPresenter {
         let dao = self.dao as! APIDAO
         dao.game(withId: searchResult.id) { (game) in
             DispatchQueue.main.async {
-                let vc = GameScreen(game, platform: .tbd)
-                self.present(vc, animated: true)
+                let detailedScreen = DetailedEntityScreen(entity: game)
+                detailedScreen.modalPresentationStyle = .fullScreen
+                self.present(detailedScreen, animated: true)
             }
         }
     }
@@ -171,11 +172,11 @@ extension SearchScreen: ModelPresenter {
     func displayShow(_ id: UInt64?) {
         guard let id = id else { fatalError("Show had no id to present from") }
         let dao = self.dao as! APIDAO
-        dao.showOverview(withId: Int(id)) { (showOverview) in
+        dao.show(withId: Int(id)) { show in
             DispatchQueue.main.async {
-                let next = ShowOverviewScreen(dao: dao)
-                next.update(with: showOverview)
-                self.present(next, animated: true, completion: nil)
+                let detailedScreen = DetailedEntityScreen(entity: show)
+                detailedScreen.modalPresentationStyle = .fullScreen
+                self.present(detailedScreen, animated: true)
             }
         }
     }
@@ -186,9 +187,9 @@ extension SearchScreen: ModelPresenter {
         if let movie = movie as? Movie {
             dao.movie(withId: movie.id) { (movie) in
                 DispatchQueue.main.async {
-                    let detailedMovieScreen = MovieScreen(dao: dao)
-                    detailedMovieScreen.update(with: movie)
-                    self.present(detailedMovieScreen, animated: true, completion: nil)
+                    let detailedScreen = DetailedEntityScreen(entity: movie)
+                    detailedScreen.modalPresentationStyle = .fullScreen
+                    self.present(detailedScreen, animated: true)
                 }
             }
         }
