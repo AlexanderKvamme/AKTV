@@ -19,7 +19,6 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     let discoveryScreen = DiscoveryScreen()
     var favouritesScreen: SUFavouritesScreen!
     let upcomingScreen = UpcomingScreen()
-    var calendarScreen: CalendarScreen!
     var screens: [UIViewController]!
     var initialIndex: Int
     
@@ -29,8 +28,6 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         self.initialIndex = initalIndex
         super.init(nibName: nil, bundle: nil)
 
-        calendarScreen = CalendarScreen(tabBar: self)
-        
         favouritesScreen = SUFavouritesScreen(customTabBarDelegate: self)
 
         tabBar.isHidden = true
@@ -75,8 +72,8 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         }
 
         let searchTabScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen())
+        let calendarScreen = MinimalNavigationController(rootViewController: CalendarScreen(tabBar: self))
         let favouritesScreen = UIHostingController(rootView: SUFavouritesScreen(customTabBarDelegate: self))
-
         screens = [calendarScreen, discoveryScreen, searchTabScreen, TestViewController(), favouritesScreen]
         setViewControllers(screens, animated: true)
 
