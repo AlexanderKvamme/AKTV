@@ -24,8 +24,11 @@ struct FavouriteListView<T: Entity>: View where T: Equatable & Hashable & Identi
     var body: some View {
 
         if viewModel.selectedEntity != nil {
+            
             NavigationLink("", isActive: $isActive) {
-                SUDetailedEntity(entity: viewModel.selectedEntity!)
+                let ent = viewModel.selectedEntity!
+                DetailedEntityScreenWrapper(ent)
+                    .ignoresSafeArea()
             }
             .frame(width: 0, height: 0)
             .hidden()

@@ -467,3 +467,24 @@ final class ButtonCTA: UIButton {
     }
 
 }
+
+
+
+import SwiftUI
+struct DetailedEntityScreenWrapper: UIViewControllerRepresentable {
+    
+    var entity: Entity
+    
+    init(_ entity: Entity) {
+        self.entity = entity
+    }
+    
+    func makeUIViewController(context: Context) -> DetailedEntityScreen {
+        let picker = DetailedEntityScreen(entity: entity)
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: DetailedEntityScreen, context: Context) {
+        //
+    }
+}
