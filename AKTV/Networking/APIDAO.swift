@@ -33,10 +33,12 @@ final class APIDAO: NSObject, MediaSearcher {
     
     // MARK: Properties
     
-    private let root = "https://api.themoviedb.org/3/"
-    private let keyParam = "api_key=a1549fe4c5cb82a960b858411d70112c"
+    private static let root = "https://api.themoviedb.org/3/"
+    private static let keyParam = "api_key=a1549fe4c5cb82a960b858411d70112c"
     static let imdbImageRoot = "https://image.tmdb.org/t/p/original/"
-
+    static let igdbImageRoot = "https://api.igdb.com/v4/covers/"
+    static let semaphore = DispatchSemaphore(value: 4)
+    static let dispatchQueue = DispatchQueue.global(qos: .background)
     typealias JSONCompletion = (([String: Any]?) -> Void)
 
     // TODO: Dont default
@@ -162,43 +164,51 @@ final class APIDAO: NSObject, MediaSearcher {
     }
     
     func showOverview(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
-        let showId = String(withId)
-        let url = URL(string: root + "tv/" + showId + "?" + keyParam + "&append_to_response=videos")
-        
-        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            if let error = error {
-                print("Show with ID error: ", error.localizedDescription)
-                print(error)
-                return
-            }
-            
-            guard let content = data else {
-                print("not returning data")
-                return
+
+        Self.dispatchQueue.async {
+            Self.semaphore.wait()
+
+            let showId = String(withId)
+            let url = URL(string: Self.root + "tv/" + showId + "?" + Self.keyParam + "&append_to_response=videos")
+            print("bam tryna get show with id: ", withId)
+
+            let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+                if let error = error {
+                    print("Show with ID error: ", error.localizedDescription)
+                    print(error)
+                    return
+                }
+
+                guard let content = data else {
+                    print("not returning data")
+                    return
+                }
+
+                // Got JSON
+                guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
+                    print("Not containing JSON")
+                    return
+                }
+
+                // Mapping
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                if let tvShowSeason = try? decoder.decode(ShowOverview.self, from: content) {
+                    andThen(tvShowSeason)
+                } else {
+                    print("Error could not decode Showoverview")
+                }
+
+                Self.semaphore.signal()
             }
 
-            // Got JSON
-            guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
-                print("Not containing JSON")
-                return
-            }
-
-            // Mapping
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            if let tvShowSeason = try? decoder.decode(ShowOverview.self, from: content) {
-                andThen(tvShowSeason)
-            } else {
-                print("Error could not decode Showoverview")
-            }
+            task.resume()
         }
-        
-        task.resume()
     }
 
     func show(withId: Int, andThen: @escaping ((Show) -> ()))  {
         let showId = String(withId)
-        let url = URL(string: root + "tv/" + showId + "?" + keyParam + "&append_to_response=videos")
+        let url = URL(string: Self.root + "tv/" + showId + "?" + Self.keyParam + "&append_to_response=videos")
 
         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
             if let error = error {
@@ -232,73 +242,86 @@ final class APIDAO: NSObject, MediaSearcher {
 
     func movie(withId: UInt64, andThen: @escaping ((Movie) -> ()))  {
         let showId = String(withId)
-        let url = URL(string: root + "movie/" + showId + "?" + keyParam + "&append_to_response=videos")
+        let url = URL(string: Self.root + "movie/" + showId + "?" + Self.keyParam + "&append_to_response=videos")
 
-        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            if let error = error {
-                print("Movie with ID error: ", error.localizedDescription)
-                print(error)
-                return
+        Self.dispatchQueue.async {
+            Self.semaphore.wait()
+
+            let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+                Self.semaphore.signal()
+
+                if let error = error {
+                    print("Movie with ID error: ", error.localizedDescription)
+                    print(error)
+                    return
+                }
+
+                guard let content = data else {
+                    print("not returning data")
+                    return
+                }
+
+                // Got JSON
+                guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
+                    print("Not containing JSON")
+                    return
+                }
+
+                // Mapping
+                let decoder = JSONDecoder()
+                let movie = try! decoder.decode(Movie.self, from: content)
+                andThen(movie)
             }
 
-            guard let content = data else {
-                print("not returning data")
-                return
-            }
-
-            // Got JSON
-            guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
-                print("Not containing JSON")
-                return
-            }
-
-            // Mapping
-            let decoder = JSONDecoder()
-            let movie = try! decoder.decode(Movie.self, from: content)
-            andThen(movie)
+            task.resume()
         }
-
-        task.resume()
     }
 
     func episodes(showId: Int, seasonNumber: Int, andThen: @escaping ((Season) -> ())) {
         let seasonNumber = String(seasonNumber)
-        let url = URL(string: root + "tv/" + String(showId) + "/season/" + seasonNumber + "?" + keyParam)
-        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            if let error = error {
-                print("Error: ", error.localizedDescription)
-                print(error)
-                return
-            }
-            
-            guard let content = data else {
-                fatalError("no content")
-            }
-            
-            // Got JSON
-            guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
-                print("Not containing JSON")
-                return
-            }
-            
-            // Mapping
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            var tvShowSeason = try! decoder.decode(Season.self, from: content)
+        let url = URL(string: Self.root + "tv/" + String(showId) + "/season/" + seasonNumber + "?" + Self.keyParam)
 
-            // Add showId to episodes
-            var updatedEpisodes = [Episode]()
-            for episode in tvShowSeason.episodes {
-                let test = Episode(name: episode.name, episodeNumber: episode.episodeNumber, airDate: episode.airDate, id: episode.id, overview: episode.overview, seasonNumber: episode.seasonNumber, stillPath: episode.stillPath, voteAverage: episode.voteAverage, showId: showId, artPath: tvShowSeason.posterPath)
-                updatedEpisodes.append(test)
+        Self.dispatchQueue.async {
+            Self.semaphore.wait()
+
+            let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+                Self.semaphore.signal()
+
+                if let error = error {
+                    print("Error: ", error.localizedDescription)
+                    print(error)
+                    return
+                }
+
+                guard let content = data else {
+                    fatalError("no content")
+                }
+
+                // Got JSON
+                guard ((try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any]) != nil else {
+                    print("Not containing JSON")
+                    return
+                }
+
+                // Mapping
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                var tvShowSeason = try! decoder.decode(Season.self, from: content)
+
+                // Add showId to episodes
+                var updatedEpisodes = [Episode]()
+                for episode in tvShowSeason.episodes {
+                    let test = Episode(name: episode.name, episodeNumber: episode.episodeNumber, airDate: episode.airDate, id: episode.id, overview: episode.overview, seasonNumber: episode.seasonNumber, stillPath: episode.stillPath, voteAverage: episode.voteAverage, showId: showId, artPath: tvShowSeason.posterPath)
+                    updatedEpisodes.append(test)
+                }
+
+                tvShowSeason.episodes = updatedEpisodes
+
+                andThen(tvShowSeason)
             }
 
-            tvShowSeason.episodes = updatedEpisodes
-
-            andThen(tvShowSeason)
+            task.resume()
         }
-        
-        task.resume()
     }
 
     func game(withId: UInt64, andThen: @escaping ((Proto_Game) -> ()))  {
