@@ -210,9 +210,7 @@ fileprivate struct style {
     static let calendarHorizontalOffset: CGFloat    = 32
     static let calendarHeight: CGFloat              = 190 + calendarHeaderHeight
     static let calendarBottomOffset: CGFloat        = 100
-
     static let cardHorizontals: CGFloat             = 24
-
     static let cornerRadius: CGFloat                = 5
 }
 

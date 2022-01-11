@@ -170,7 +170,6 @@ final class APIDAO: NSObject, MediaSearcher {
 
             let showId = String(withId)
             let url = URL(string: Self.root + "tv/" + showId + "?" + Self.keyParam + "&append_to_response=videos")
-            print("bam tryna get show with id: ", withId)
 
             let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
                 if let error = error {
