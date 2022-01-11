@@ -82,9 +82,8 @@ final class APIDAO: NSObject, MediaSearcher {
             let decoder = JSONDecoder()
 
             do {
-
                 if let data = data {
-                    if let str = String(data: data, encoding: .utf8) {
+                    if let _ = String(data: data, encoding: .utf8) {
 
                         // OLD
                         let decoded = try decoder.decode(MovieSearchResult.self, from: content)
@@ -187,8 +186,11 @@ final class APIDAO: NSObject, MediaSearcher {
             // Mapping
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let tvShowSeason = try! decoder.decode(ShowOverview.self, from: content)
-            andThen(tvShowSeason)
+            if let tvShowSeason = try? decoder.decode(ShowOverview.self, from: content) {
+                andThen(tvShowSeason)
+            } else {
+                print("Error could not decode Showoverview")
+            }
         }
         
         task.resume()
@@ -218,8 +220,11 @@ final class APIDAO: NSObject, MediaSearcher {
 
             // Mapping
             let decoder = JSONDecoder()
-            let show = try! decoder.decode(Show.self, from: content)
-            andThen(show)
+            if let show = try? decoder.decode(Show.self, from: content) {
+                andThen(show)
+            } else {
+                print("Error could not decode Show")
+            }
         }
 
         task.resume()
