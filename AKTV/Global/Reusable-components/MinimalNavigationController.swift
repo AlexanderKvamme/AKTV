@@ -57,6 +57,13 @@ class MinimalNavigationController: UINavigationController, UINavigationControlle
     }
 
     @objc private func popToPrevious() {
+        if let navCon = navigationController {
+            navCon.popViewController(animated: true)
+            navCon.dismiss(animated: false)
+        } else {
+            print(" no navigationController to pop")
+        }
+        dismiss(animated: true)
         popViewController(animated: true)
     }
 }

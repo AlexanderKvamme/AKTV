@@ -33,6 +33,18 @@ final class UserProfileManager: NSObject {
         return existingFavourites
     }
     
+    func setFavourite(_ entity: Entity, favourite: Bool) {
+        print("bam setting favourite: ", entity)
+        switch entity.type {
+        case .game:
+            setFavouriteGame(id: Int(entity.id), favourite: favourite)
+        case .tvShow:
+            setFavouriteShow(id: Int(entity.id), favourite: favourite)
+        case .movie:
+            setFavouriteMovie(id: Int(entity.id), favourite: favourite)
+        }
+    }
+    
     func setFavouriteShow(id: Int, favourite: Bool) {
         switch favourite {
         case true:

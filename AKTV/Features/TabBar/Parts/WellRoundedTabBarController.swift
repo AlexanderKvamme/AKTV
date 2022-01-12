@@ -1,14 +1,6 @@
-//
-//  WellRoundedTabBarController.swift
-//  AKTV
-//
-//  Created by Alexander Kvamme on 10/02/2021.
-//  Copyright © 2021 Alexander Kvamme. All rights reserved.
-//
-
 import UIKit
 import SwiftUI
-
+import IGDB_SWIFT_API
 
 class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegate, CustomTabBarDelegate {
 
@@ -24,11 +16,11 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     
     // MARK: - Initializers
 
-    init(initalIndex: Int = 0) {
+    init(initalIndex: Int = 4) {
         self.initialIndex = initalIndex
         super.init(nibName: nil, bundle: nil)
 
-        favouritesScreen = SUFavouritesScreen(customTabBarDelegate: self)
+//        favouritesScreen = SUFavouritesScreen(customTabBarDelegate: self)
 
         tabBar.isHidden = true
         discoveryScreen.customTabBarDelegate = self
@@ -73,7 +65,23 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
         let searchTabScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen())
         let calendarScreen = MinimalNavigationController(rootViewController: CalendarScreen(tabBar: self))
-        let favouritesScreen = UIHostingController(rootView: SUFavouritesScreen(customTabBarDelegate: self))
+        let favouritesScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen(onCompletion: {  mediaPickable in
+            
+            switch mediaPickable {
+            case MediaPickable.tvShow:
+                let next = UIKitFavouriteScreen<Show>()
+                self.present(next, animated: true, completion: nil)
+            case MediaPickable.movie:
+                let next = UIKitFavouriteScreen<Movie>()
+                self.present(next, animated: true, completion: nil)
+            case MediaPickable.game:
+                let next = UIKitFavouriteScreen<Proto_Game>()
+                self.present(next, animated: true, completion: nil)
+            default:
+                assertionFailure("Must pick a type")
+            }
+        }))
+        
         screens = [calendarScreen, discoveryScreen, searchTabScreen, TestViewController(), favouritesScreen]
         setViewControllers(screens, animated: true)
 

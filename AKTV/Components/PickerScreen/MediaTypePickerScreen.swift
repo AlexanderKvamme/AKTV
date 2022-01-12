@@ -13,14 +13,16 @@ final class MediaTypePickerScreen: PickerScreen {
 
     // MARK: - Initializers
 
-    init() {
+    init(onCompletion: PickerCompletionHandler? = nil) {
         let mediaPickables: [MediaPickable] = [.tvShow, .game, .movie]
 
-        super.init(mediaPickables, onCompletion: nil)
+        super.init(mediaPickables, onCompletion: onCompletion)
 
         setup()
 
-        completion = handleMediaTypePicked(_:)
+        if onCompletion == nil {
+            completion = handleMediaTypePicked(_:)
+        }
     }
 
     func addCustomNavBarBackButton() {

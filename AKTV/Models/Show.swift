@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import IGDB_SWIFT_API
 
 struct Show: Decodable, Hashable, Identifiable {
     var backdropPath: String?

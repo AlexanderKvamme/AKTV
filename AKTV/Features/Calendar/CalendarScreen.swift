@@ -39,11 +39,14 @@ extension Entity {
         switch self {
         case _ as Episode:
             return .tvShow
+        case _ as Show:
+            return .tvShow
         case _ as Movie:
             return .movie
         case _ as Proto_Game:
             return .game
         default:
+            print(self)
             fatalError()
         }
     }

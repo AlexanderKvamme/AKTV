@@ -251,7 +251,6 @@ final class ShareButton: UnlabeledIconButton {
     // MARK: - Methods
 
     func setFilled(_ fill: Bool) {
-        return
         let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 10, weight: .bold)
         let newIcon = fill ? "heart.fill" : "heart"
         icon.image = UIImage(systemName: newIcon, withConfiguration: iconConfiguration)
