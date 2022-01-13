@@ -494,7 +494,7 @@ extension CalendarScreen: JTACMonthViewDelegate {
         let tappedEntity = currentlySelectedEntities[tappedSegment]
         let detailedScreen = DetailedEntityScreen(entity: tappedEntity)
         detailedScreen.modalPresentationStyle = .fullScreen
-        present(detailedScreen, animated: true)
+        navigationController?.pushViewController(detailedScreen, animated: true)
     }
 
     func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {

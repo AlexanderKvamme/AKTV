@@ -13,6 +13,7 @@ class DetailedEntityScreen: UIViewController {
     
     // MARK: - Properties
     
+    private var entity: Entity
     private var imageView = UIImageView()
     private var backButton = RoundIconButton(type: .x)
     private var starButton = RoundIconButton(type: .heart)
@@ -26,6 +27,7 @@ class DetailedEntityScreen: UIViewController {
     // MARK: - Initializers
     
     init(entity: Entity) {
+        self.entity = entity
         self.iconRow = EntityIconRow(entity)
         self.titleCard = DetailedEntityTitleCard(entity)
         self.desciptionView = DetailedEntityDescriptionView(entity)
@@ -60,6 +62,7 @@ class DetailedEntityScreen: UIViewController {
     private func setup() {
         backButton.addTarget(self, action: #selector(popScreen), for: .touchUpInside)
         dismissbutton.addTarget(self, action: #selector(popScreen), for: .touchUpInside)
+        starButton.addTarget(self, action: #selector(setFavourite), for: .touchUpInside)
         imageView.layer.cornerCurve = .continuous
         imageView.layer.cornerRadius = .iOSCornerRadius
         imageView.clipsToBounds = true
@@ -156,6 +159,14 @@ class DetailedEntityScreen: UIViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = .white
+    }
+    
+    // MARK: - Methods
+    
+    @objc func setFavourite() {
+        // TODO: Toggle it
+        print("set")
+        UserProfileManager().setFavourite(entity, favourite: true)
     }
     
 }
