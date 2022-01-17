@@ -227,7 +227,7 @@ final class DetailedEntityTitleCard: UIView {
     private var entity: Entity
     private var nameLabel = UILabel.make(.subtitle)
     private var ratingLabel = UILabel.make(.subtitle)
-    private var starIcon = UIImageView(image: UIImage(named: "star")!.withRenderingMode(.alwaysTemplate))
+    private var starIcon = UIImageView(image: UIImage(named: "Star")!.withRenderingMode(.alwaysTemplate))
     private var statusLabel = UILabel.make(.subtitle)
     
     // MARK: - Initializers
