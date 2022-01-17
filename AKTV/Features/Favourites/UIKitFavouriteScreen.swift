@@ -1,10 +1,11 @@
 import Foundation
 import UIKit
+import IGDB_SWIFT_API
 
 
 fileprivate let diffableCellReuseID = "product-cell"
 
-final class UIKitFavouriteScreen<T: Entity>: UIViewController where T: Hashable {
+final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewDelegate where T: Hashable {
     
     // MARK: - Properties
     
@@ -19,6 +20,7 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController where T: Hashable 
     
     private lazy var collectionView = makeCollectionView()
     private lazy var dataSource = makeDataSource()
+    private var items = [T]()
     
     // MARK: - Initializers
 
@@ -38,18 +40,62 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController where T: Hashable 
         
         collectionView.register(TestCell.self, forCellWithReuseIdentifier: diffableCellReuseID)
         collectionView.dataSource = dataSource
+        collectionView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let test = Show.mocks as? [T] {
-            print("casted: ", test.count)
-            productListDidLoad(test)
+        getFavourites()
+    }
+    
+    private func addEntity(_ entity: Entity) {
+        if let item = entity as? T {
+            if !self.items.contains(where: {$0 == item}) {
+                self.items.append(item)
+            }
+        }
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, T>()
+        snapshot.appendSections(Section.allCases)
+        snapshot.appendItems(items, toSection: .favourites)
+        
+        dataSource.apply(snapshot)
+    }
+    
+    private func getFavourites() {
+        // TODO: Make this an extension on Show/Proto_game/Movie?
+        if T.self == Show.self {
+            let favs = UserProfileManager().favouriteShows()
+            favs.forEach { showId in
+                APIDAO().show(withId: showId) { show in
+                    self.addEntity(show)
+                }
+            }
+        } else if T.self == Movie.self {
+            let favs = UserProfileManager().favouriteMovies()
+            favs.forEach { movieId in
+                APIDAO().movie(withId: UInt64(movieId)) { movie in
+                    self.addEntity(movie)
+                }
+            }
+        } else if T.self == Proto_Game.self {
+            let favs = GameStore.getFavourites()
+            favs.forEach { gameId in
+                APIDAO().game(withId: UInt64(gameId)) { game in
+                    self.addEntity(game)
+                }
+            }
         }
     }
     
     // MARK: - Methods
+        
+    private func setup() {
+        view.backgroundColor = UIColor(light)
+        collectionView.backgroundColor = UIColor(light)
+//        collectionView.allowsSelection = false
+    }
     
     func makeCollectionView() -> UICollectionView {
         return UICollectionView(
@@ -58,13 +104,11 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController where T: Hashable 
         )
     }
     
-    private func setup() {}
-    
     private func addSubviewsAndConstraints() {
         view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(24)
+            make.edges.equalToSuperview().inset(16)
         }
     }
     
@@ -87,10 +131,16 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController where T: Hashable 
     
     func makeCellRegistration() -> CellRegistration {
         CellRegistration { cell, indexPath, product in
-            var config = cell.defaultContentConfiguration()
-            config.text = product.name
-            cell.contentConfiguration = config
-            cell.frame = TestCell.size
+            cell.update(product)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if  let cell = collectionView.cellForItem(at: indexPath) as? TestCell,
+            let entity = cell.entity {
+            let detailedScreen = DetailedEntityScreen(entity: entity)
+            detailedScreen.modalPresentationStyle = .fullScreen
+            present(detailedScreen, animated: true)
         }
     }
 }
@@ -122,12 +172,14 @@ private extension UIKitFavouriteScreen {
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(50)
+                heightDimension: .absolute(TestCell.size.height)
             ),
             subitems: [item]
         )
         
-        return NSCollectionLayoutSection(group: group)
+        let sectionLayout = NSCollectionLayoutSection(group: group)
+        sectionLayout.interGroupSpacing = 8
+        return sectionLayout
     }
 }
 

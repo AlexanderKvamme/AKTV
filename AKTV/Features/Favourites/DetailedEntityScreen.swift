@@ -57,6 +57,7 @@ class DetailedEntityScreen: UIViewController {
     
     @objc func popScreen() {
         navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     private func setup() {

@@ -269,6 +269,13 @@ final class CalendarScreen: UIViewController {
         super.viewDidAppear(animated)
         
         fetchPremiereDates()
+        
+//        if let dummyEntity = Show.mocks.first {
+//            let detailedScreen = DetailedEntityScreen(entity: dummyEntity)
+//            detailedScreen.modalPresentationStyle = .fullScreen
+//            present(detailedScreen, animated: true)
+//        }
+        
     }
 
     // MARK: - Methods

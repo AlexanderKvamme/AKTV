@@ -24,6 +24,14 @@ struct AKButton: ButtonStyle {
 }
 
 
+class MyHostingController<Content>: UIHostingController<Content> where Content: View {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        // Denne funker for min custom
+        //        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+}
+
 // SwiftUI Favourites Screen
 struct SUFavouritesScreen: View {
 
