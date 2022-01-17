@@ -14,9 +14,7 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
         case all
     }
     
-    typealias Product = T
-    typealias ProductList = [Product]
-    typealias Cell = TestCell
+    typealias items = [T]
     
     private lazy var collectionView = makeCollectionView()
     private lazy var dataSource = makeDataSource()
@@ -38,7 +36,7 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
         setup()
         addSubviewsAndConstraints()
         
-        collectionView.register(TestCell.self, forCellWithReuseIdentifier: diffableCellReuseID)
+        collectionView.register(FavouriteCell.self, forCellWithReuseIdentifier: diffableCellReuseID)
         collectionView.dataSource = dataSource
         collectionView.delegate = self
     }
@@ -58,7 +56,7 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, T>()
         snapshot.appendSections(Section.allCases)
-        snapshot.appendItems(items, toSection: .favourites)
+        snapshot.appendItems(self.items, toSection: .favourites)
         
         dataSource.apply(snapshot)
     }
@@ -119,7 +117,7 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
         )
     }
     
-    func productListDidLoad(_ list: ProductList) {
+    func productListDidLoad(_ list: items) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, T>()
         snapshot.appendSections(Section.allCases)
         snapshot.appendItems(list, toSection: .favourites)
@@ -127,7 +125,7 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
         dataSource.apply(snapshot)
     }
     
-    typealias CellRegistration = UICollectionView.CellRegistration<Cell, Product>
+    typealias CellRegistration = UICollectionView.CellRegistration<FavouriteCell, T>
     
     func makeCellRegistration() -> CellRegistration {
         CellRegistration { cell, indexPath, product in
@@ -136,7 +134,7 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if  let cell = collectionView.cellForItem(at: indexPath) as? TestCell,
+        if  let cell = collectionView.cellForItem(at: indexPath) as? FavouriteCell,
             let entity = cell.entity {
             let detailedScreen = DetailedEntityScreen(entity: entity)
             detailedScreen.modalPresentationStyle = .fullScreen
@@ -172,7 +170,7 @@ private extension UIKitFavouriteScreen {
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(TestCell.size.height)
+                heightDimension: .absolute(FavouriteCell.size.height)
             ),
             subitems: [item]
         )

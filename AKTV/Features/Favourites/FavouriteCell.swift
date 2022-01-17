@@ -2,7 +2,7 @@ import UIKit
 import Kingfisher
 
 
-final class TestCell: UICollectionViewListCell {
+final class FavouriteCell: UICollectionViewListCell {
     
     // MARK: - Properties
     
