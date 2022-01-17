@@ -92,7 +92,7 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
     private func setup() {
         view.backgroundColor = UIColor(light)
         collectionView.backgroundColor = UIColor(light)
-//        collectionView.allowsSelection = false
+        collectionView.contentInsetAdjustmentBehavior = .never
     }
     
     func makeCollectionView() -> UICollectionView {
@@ -106,7 +106,8 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
         view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(16)
+            make.top.left.right.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview()
         }
     }
     
