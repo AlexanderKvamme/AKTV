@@ -99,6 +99,20 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     @objc func setTab(sender: UIButton) {
         guard !disabledTabs.contains(sender.tag) else { return }
         selectedIndex = sender.tag
+        tapAnimation(for: sender.tag)
+    }
+    
+    private func tapAnimation(for buttonTag: Int) {
+        let buttons = [myTabBar.button1, myTabBar.button2, myTabBar.plusButton, myTabBar.button3, myTabBar.button4]
+        let scale: Double = 1.2
+        let duration: Double = 0.2
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut) {
+            buttons[buttonTag].transform = CGAffineTransform(scaleX: scale, y: scale)
+        } completion: { bool in
+            UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut) {
+                buttons[buttonTag].transform = .identity
+            }
+        }
     }
 
     func hideIt() {

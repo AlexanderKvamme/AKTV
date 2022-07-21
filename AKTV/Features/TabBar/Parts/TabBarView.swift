@@ -50,7 +50,6 @@ class TabBarView: UIView {
         button2.alpha = 0.2
         button2.alpha = 0.2
         button3.alpha = 0.2
-        button4.alpha = 0.3
     }
 
     // MARK: - Helper methods
