@@ -9,7 +9,6 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     let disabledTabs = [1,3]
     let myTabBar = TabBarView(frame: CGRect(x: 0, y: screenHeight - TabBarSettings.barHeight, width: screenWidth, height: screenHeight))
     let discoveryScreen = DiscoveryScreen()
-    var favouritesScreen: SUFavouritesScreen!
     let upcomingScreen = UpcomingScreen()
     var screens: [UIViewController]!
     var initialIndex: Int
@@ -19,8 +18,6 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
     init(initalIndex: Int = 4) {
         self.initialIndex = initalIndex
         super.init(nibName: nil, bundle: nil)
-
-//        favouritesScreen = SUFavouritesScreen(customTabBarDelegate: self)
 
         tabBar.isHidden = true
         discoveryScreen.customTabBarDelegate = self
@@ -63,9 +60,9 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
             }
         }
 
-        let searchTabScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen())
+        let searchTabScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen(header: "What are you looking for?", subheader: "Pick a media type"))
         let calendarScreen = MinimalNavigationController(rootViewController: CalendarScreen(tabBar: self))
-        let favouritesScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen(onCompletion: {  mediaPickable in
+        let favouritesScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen(header: "Favourite lists", subheader: "Pick a media type", onCompletion: {  mediaPickable in
             
             switch mediaPickable {
             case MediaPickable.tvShow:

@@ -25,7 +25,7 @@ extension UILabel {
         case header
     }
 
-    static func make(_ style: LabelStyle, _ content: String? = "") -> UILabel {
+    static func make(_ style: LabelStyle, _ content: String? = "", color: UIColor = .purple) -> UILabel {
         var label: UILabel
         switch style {
         case .subtitle:
@@ -34,6 +34,7 @@ extension UILabel {
             label = makeHeader()
         }
         label.text = content
+        label.textColor = color
         return label
     }
 
@@ -51,7 +52,10 @@ extension UILabel {
 
     private static func makeSubtitle() -> UILabel {
         let label = makeLabel()
-        label.font = UIFont.gilroy(.heavy, 32)
+        label.font = UIFont.gilroy(.regular, 20)
+        label.textAlignment = .left
+        label.alpha = 0.4
+        label.numberOfLines = 0
         return label
     }
 }

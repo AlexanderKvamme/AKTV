@@ -18,6 +18,8 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
     
     private lazy var collectionView = makeCollectionView()
     private lazy var dataSource = makeDataSource()
+    private let header = UILabel.make(.header, color: UIColor(dark))
+    private let subHeader = UILabel.make(.subtitle, color: UIColor(dark))
     private var items = [T]()
     
     // MARK: - Initializers
@@ -90,6 +92,11 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
     // MARK: - Methods
         
     private func setup() {
+        header.text = "Your favourites"
+        header.textColor = UIColor(dark)
+        subHeader.text = "Pick one to see more"
+        subHeader.textColor = UIColor(dark)
+        subHeader.sizeToFit()
         view.backgroundColor = UIColor(light)
         collectionView.backgroundColor = UIColor(light)
         collectionView.contentInsetAdjustmentBehavior = .never
@@ -104,9 +111,21 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
     
     private func addSubviewsAndConstraints() {
         view.addSubview(collectionView)
+        view.addSubview(header)
+        view.addSubview(subHeader)
+        
+        header.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview().inset(32)
+        }
+        
+        subHeader.snp.makeConstraints { make in
+            make.top.equalTo(header.snp.bottom).offset(8)
+            make.left.right.equalTo(header)
+        }
         
         collectionView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview().inset(16)
+            make.top.equalTo(subHeader.snp.bottom).offset(24)
+            make.left.right.equalToSuperview().inset(16)
             make.bottom.equalToSuperview()
         }
     }

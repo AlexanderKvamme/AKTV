@@ -13,10 +13,10 @@ final class MediaTypePickerScreen: PickerScreen {
 
     // MARK: - Initializers
 
-    init(onCompletion: PickerCompletionHandler? = nil) {
+    init(header: String, subheader: String, onCompletion: PickerCompletionHandler? = nil) {
         let mediaPickables: [MediaPickable] = [.tvShow, .game, .movie]
 
-        super.init(mediaPickables, onCompletion: onCompletion)
+        super.init(header: header, subheader: subheader, mediaPickables, onCompletion: onCompletion)
 
         setup()
 
@@ -64,19 +64,17 @@ final class MediaTypePickerScreen: PickerScreen {
             fatalError("Must pick a media type")
         }
 
+        let dao = APIDAO()
         switch picked {
         case MediaPickable.game:
-            let dao = APIDAO() // TODO: Maybe game dao?
             let searchController = SearchScreen(dao: dao, searchTypes: .game)
             searchController.modalPresentationStyle = .fullScreen
             navigationController?.pushViewController(searchController, animated: true)
         case MediaPickable.tvShow:
-            let dao = APIDAO()
             let showSearchController = SearchScreen(dao: dao, searchTypes: .show)
             showSearchController.modalPresentationStyle = .fullScreen
             navigationController?.pushViewController(showSearchController, animated: true)
         case MediaPickable.movie:
-            let dao = APIDAO()
             let showSearchController = SearchScreen(dao: dao, searchTypes: .movie)
             showSearchController.modalPresentationStyle = .fullScreen
             navigationController?.pushViewController(showSearchController, animated: true)

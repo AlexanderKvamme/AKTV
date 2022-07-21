@@ -26,7 +26,7 @@ class PickerScreen: UIViewController {
     // MARK: - Properties
 
     let header = UILabel()
-    let subHeader = UILabel()
+    let subHeader = UILabel.make(.subtitle, color: UIColor(dark))
     private var pickables: [Pickable]
     private var stackView = UIStackView()
     private var buttons: [UIButton]
@@ -35,7 +35,9 @@ class PickerScreen: UIViewController {
 
     // MARK: - Initializers
 
-    init(_ pickables: [Pickable], onCompletion: PickerCompletionHandler?) {
+    init(header: String, subheader: String, _ pickables: [Pickable], onCompletion: PickerCompletionHandler?) {
+        self.header.text = header
+        self.subHeader.text = subheader
         self.completion = onCompletion
         self.pickables = pickables
         self.buttons = pickables.map({ (pickable) -> UIButton in
@@ -70,17 +72,11 @@ class PickerScreen: UIViewController {
         stackView.distribution = .equalSpacing
         stackView.spacing = 16
         stackView.clipsToBounds = true
-
         header.font = UIFont.gilroy(.heavy, 38)
         header.textAlignment = .left
-        header.text = "What are you looking for?"
         header.textColor = UIColor(dark)
         header.numberOfLines = 0
-
-        subHeader.font = UIFont.gilroy(.regular, 20)
         subHeader.textAlignment = .left
-        subHeader.alpha = 0.4
-        subHeader.text = "Search for any TV show in the world!"
         subHeader.textColor = UIColor(dark)
         subHeader.numberOfLines = 0
     }
