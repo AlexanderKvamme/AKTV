@@ -31,6 +31,7 @@ struct Season: Codable {
 
 extension Episode {
     func getFormattedDate() -> Date? {
+        guard let airDate = airDate else { return nil }
         let formatter = DateFormatter.withoutTime
         return formatter.date(from: airDate)
     }
@@ -39,7 +40,7 @@ extension Episode {
 struct Episode: Codable, Hashable, Identifiable {
     var name: String
     var episodeNumber: Int
-    var airDate: String
+    var airDate: String?
     var id: UInt64
     var overview: String
     var status: String?

@@ -192,10 +192,12 @@ final class APIDAO: NSObject, MediaSearcher {
                 // Mapping
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let errorMessage = String(data: content, encoding: .utf8)
+                
                 if let tvShowSeason = try? decoder.decode(ShowOverview.self, from: content) {
                     andThen(tvShowSeason)
                 } else {
-                    print("Error could not decode Showoverview")
+                    print("Error could not decode Showoverview \(withId): ", errorMessage ?? "")
                 }
 
                 Self.semaphore.signal()
@@ -302,23 +304,24 @@ final class APIDAO: NSObject, MediaSearcher {
                     return
                 }
 
-                // Mapping
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                var tvShowSeason = try! decoder.decode(Season.self, from: content)
-
-                // Add showId to episodes
-                var updatedEpisodes = [Episode]()
-                for episode in tvShowSeason.episodes {
-                    let test = Episode(name: episode.name, episodeNumber: episode.episodeNumber, airDate: episode.airDate, id: episode.id, overview: episode.overview, seasonNumber: episode.seasonNumber, stillPath: episode.stillPath, voteAverage: episode.voteAverage, showId: showId, artPath: tvShowSeason.posterPath)
-                    updatedEpisodes.append(test)
+                do {
+                    // Mapping
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    var tvShowSeason = try decoder.decode(Season.self, from: content)
+                    
+                    // Add showId to episodes
+                    var updatedEpisodes = [Episode]()
+                    for episode in tvShowSeason.episodes {
+                        let test = Episode(name: episode.name, episodeNumber: episode.episodeNumber, airDate: episode.airDate, id: episode.id, overview: episode.overview, seasonNumber: episode.seasonNumber, stillPath: episode.stillPath, voteAverage: episode.voteAverage, showId: showId, artPath: tvShowSeason.posterPath)
+                        updatedEpisodes.append(test)
+                    }
+                    tvShowSeason.episodes = updatedEpisodes
+                    andThen(tvShowSeason)
+                } catch {
+                    print(error)
                 }
-
-                tvShowSeason.episodes = updatedEpisodes
-
-                andThen(tvShowSeason)
             }
-
             task.resume()
         }
     }

@@ -16,7 +16,7 @@ class DetailedEntityScreen: UIViewController {
     private var entity: Entity
     private var imageView = UIImageView()
     private var backButton = RoundIconButton(type: .x)
-    private var starButton = RoundIconButton(type: .heart)
+    private var starButton: RoundIconButton
     private var titleCard: DetailedEntityTitleCard
     private var iconRow: EntityIconRow
     private var scrollContainer = UIScrollView()
@@ -31,6 +31,8 @@ class DetailedEntityScreen: UIViewController {
         self.iconRow = EntityIconRow(entity)
         self.titleCard = DetailedEntityTitleCard(entity)
         self.desciptionView = DetailedEntityDescriptionView(entity)
+        let isFavourite = UserProfileManager().isFavourite(entity)
+        self.starButton = RoundIconButton(type: .heart(active: isFavourite))
         let backdropPath = entity.getMainGraphicsURL() ?? URL(string: "")
         imageView.kf.setImage(with: backdropPath)
         
@@ -63,7 +65,7 @@ class DetailedEntityScreen: UIViewController {
     private func setup() {
         backButton.addTarget(self, action: #selector(popScreen), for: .touchUpInside)
         dismissbutton.addTarget(self, action: #selector(popScreen), for: .touchUpInside)
-        starButton.addTarget(self, action: #selector(setFavourite), for: .touchUpInside)
+        starButton.addTarget(self, action: #selector(toggleFavourite), for: .touchUpInside)
         imageView.layer.cornerCurve = .continuous
         imageView.layer.cornerRadius = .iOSCornerRadius
         imageView.clipsToBounds = true
@@ -164,10 +166,11 @@ class DetailedEntityScreen: UIViewController {
     
     // MARK: - Methods
     
-    @objc func setFavourite() {
-        // TODO: Toggle it
-        print("set")
-        UserProfileManager().setFavourite(entity, favourite: true)
+    @objc func toggleFavourite() {
+        let upm = UserProfileManager()
+        let isFav = upm.isFavourite(entity)
+        upm.setFavourite(entity, favourite: !isFav)
+        starButton.applyButtonStyle(.heart(active: !isFav))
     }
     
 }
@@ -177,7 +180,8 @@ final class RoundIconButton: UIButton {
     // MARK: - Subclass
     
     enum IconType {
-        case x, heart
+        case x
+        case heart(active: Bool)
     }
     
     // MARK: - Properties
@@ -200,7 +204,7 @@ final class RoundIconButton: UIButton {
     
     // MARK: - Methods
     
-    private func applyButtonStyle(_ type: IconType) {
+    func applyButtonStyle(_ type: IconType) {
         switch type {
         case .x:
             let imageConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .black, scale: .large)
@@ -208,10 +212,11 @@ final class RoundIconButton: UIButton {
             tintColor = UIColor(dark)
             transform = CGAffineTransform(rotationAngle: .pi/4)
             setImage(symbolImage, for: .normal)
-        case .heart:
+        case .heart(let isActive):
             let inset: CGFloat = 8
+            let icon = isActive ? "icons8-heart-50-filled" : "icons8-heart-50-outlined"
             imageEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-            setImage(UIImage(named: "icons8-heart-50-filled"), for: .normal)
+            setImage(UIImage(named: icon), for: .normal)
         }
 
     }

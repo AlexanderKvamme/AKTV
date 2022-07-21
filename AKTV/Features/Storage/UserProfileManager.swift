@@ -34,7 +34,6 @@ final class UserProfileManager: NSObject {
     }
     
     func setFavourite(_ entity: Entity, favourite: Bool) {
-        print("bam setting favourite: ", entity)
         switch entity.type {
         case .game:
             setFavouriteGame(id: Int(entity.id), favourite: favourite)
@@ -45,10 +44,25 @@ final class UserProfileManager: NSObject {
         }
     }
     
+    func isFavourite(_ entity: Entity) -> Bool {
+        var res = false
+        switch entity.type {
+        case .tvShow:
+            res = favouriteShows().contains(Int(entity.id))
+        default:
+            fatalError("Implement me")
+        }
+        return res
+    }
+    
     func setFavouriteShow(id: Int, favourite: Bool) {
         switch favourite {
         case true:
             var existingFavourites = defaults.object(forKey: UserProfileKeys.favouriteShows.rawValue) as? [Int] ?? [Int]()
+            existingFavourites = Array(Set(existingFavourites))
+            guard !existingFavourites.contains(id) else {
+                return
+            }
             existingFavourites.append(id)
             defaults.set(existingFavourites, forKey: UserProfileKeys.favouriteShows.rawValue)
         case false:
