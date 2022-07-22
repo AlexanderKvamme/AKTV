@@ -33,9 +33,9 @@ final class FavouriteCell: UICollectionViewListCell {
         backgroundView?.backgroundColor = .clear
         selectedBackgroundView = UIView.clear()
         
-        label.font = UIFont.gilroy(.semibold, 16)
-        label.textColor = UIColor(light)
-        rootView.backgroundColor = .black
+        label.font = UIFont.gilroy(.bold, 16)
+        label.textColor = UIColor(dark)
+        rootView.backgroundColor = .white
         rootView.layer.cornerRadius = 16
     }
     
@@ -45,6 +45,8 @@ final class FavouriteCell: UICollectionViewListCell {
         imageView.kf.setImage(with: product.getMainGraphicsURL())
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+
     }
     
     func addSubviewsAndConstraints() {
@@ -57,9 +59,9 @@ final class FavouriteCell: UICollectionViewListCell {
         }
         
         imageView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(8)
+            make.left.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.height.width.equalTo(48)
+            make.height.width.equalTo(64)
         }
         
         label.snp.makeConstraints { make in

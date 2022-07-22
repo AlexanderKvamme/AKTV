@@ -256,6 +256,7 @@ final class DetailedEntityTitleCard: UIView {
         nameLabel.text = entity.name
         nameLabel.textColor = UIColor(dark)
         nameLabel.font = UIFont.round(.bold, 24)
+        nameLabel.alpha = 1
         
         ratingLabel.text = String(entity.rating)
         ratingLabel.textColor = UIColor(dark)

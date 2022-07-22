@@ -64,19 +64,19 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         let calendarScreen = MinimalNavigationController(rootViewController: CalendarScreen(tabBar: self))
         let favouritesScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen(header: "Favourite lists", subheader: "Pick a media type", onCompletion: {  mediaPickable in
             
+            var next: UIViewController!
             switch mediaPickable {
             case MediaPickable.tvShow:
-                let next = UIKitFavouriteScreen<Show>()
-                self.present(next, animated: true, completion: nil)
+                next = UIKitFavouriteScreen<Show>()
             case MediaPickable.movie:
-                let next = UIKitFavouriteScreen<Movie>()
-                self.present(next, animated: true, completion: nil)
+                next = UIKitFavouriteScreen<Movie>()
             case MediaPickable.game:
-                let next = UIKitFavouriteScreen<Proto_Game>()
-                self.present(next, animated: true, completion: nil)
+                next = UIKitFavouriteScreen<Proto_Game>()
             default:
                 assertionFailure("Must pick a type")
             }
+            next.sheetPresentationController?.preferredCornerRadius = 40
+            self.present(next, animated: true, completion: nil)
         }))
         
         screens = [calendarScreen, discoveryScreen, searchTabScreen, TestViewController(), favouritesScreen]

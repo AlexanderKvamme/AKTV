@@ -49,6 +49,8 @@ final class UserProfileManager: NSObject {
         switch entity.type {
         case .tvShow:
             res = favouriteShows().contains(Int(entity.id))
+        case .game:
+            res = favouriteGames().contains(Int(entity.id))
         default:
             fatalError("Implement me")
         }

@@ -92,7 +92,7 @@ final class UIKitFavouriteScreen<T: Entity>: UIViewController, UICollectionViewD
     // MARK: - Methods
         
     private func setup() {
-        header.text = "Your favourites"
+        header.text = "Favourites"
         header.textColor = UIColor(dark)
         subHeader.text = "Pick one to see more"
         subHeader.textColor = UIColor(dark)

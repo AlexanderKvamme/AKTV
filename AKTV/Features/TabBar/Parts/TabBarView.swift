@@ -47,8 +47,8 @@ class TabBarView: UIView {
         backgroundColor = .clear
 
         // Fade un-impemented tabs
-        button2.alpha = 0.2
-        button2.alpha = 0.2
+        button2.alpha = 0.1
+        button2.alpha = 0.1
         button3.alpha = 0.2
     }
 
