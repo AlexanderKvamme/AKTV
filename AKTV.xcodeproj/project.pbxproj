@@ -28,6 +28,7 @@
 		DD2B110D25D58E3A000CFF84 /* SeasonDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2B110C25D58E3A000CFF84 /* SeasonDataDelegate.swift */; };
 		DD2D804425E54D3B004DF85A /* UpcomingToDetailedAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2D804325E54D3B004DF85A /* UpcomingToDetailedAnimationController.swift */; };
 		DD2D805D25E6DCEE004DF85A /* EpisodeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2D805C25E6DCED004DF85A /* EpisodeScreen.swift */; };
+		DD2DEDF928906C3900A007DE /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2DEDF828906C3900A007DE /* PushNotificationManager.swift */; };
 		DD2F7383267F5F2A00512512 /* CalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2F7382267F5F2A00512512 /* CalendarScreen.swift */; };
 		DD2F7385267F65F400512512 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2F7384267F65F400512512 /* CalendarCell.swift */; };
 		DD315B67245D7D570046AB38 /* DateFormatterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD315B66245D7D570046AB38 /* DateFormatterExtensions.swift */; };
@@ -195,6 +196,8 @@
 		DD2B110C25D58E3A000CFF84 /* SeasonDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonDataDelegate.swift; sourceTree = "<group>"; };
 		DD2D804325E54D3B004DF85A /* UpcomingToDetailedAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingToDetailedAnimationController.swift; sourceTree = "<group>"; };
 		DD2D805C25E6DCED004DF85A /* EpisodeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeScreen.swift; sourceTree = "<group>"; };
+		DD2DEDF628905A5F00A007DE /* AKTV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AKTV.entitlements; sourceTree = "<group>"; };
+		DD2DEDF828906C3900A007DE /* PushNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
 		DD2F7382267F5F2A00512512 /* CalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScreen.swift; sourceTree = "<group>"; };
 		DD2F7384267F65F400512512 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		DD315B66245D7D570046AB38 /* DateFormatterExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtensions.swift; sourceTree = "<group>"; };
@@ -439,6 +442,14 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		DD2DEDF728906C2A00A007DE /* PushNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				DD2DEDF828906C3900A007DE /* PushNotificationManager.swift */,
+			);
+			path = PushNotifications;
+			sourceTree = "<group>";
+		};
 		DD2F7381267F5F1900512512 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -663,6 +674,7 @@
 		DDA1A8FB2427B24B00F7907A /* AKTV */ = {
 			isa = PBXGroup;
 			children = (
+				DD2DEDF628905A5F00A007DE /* AKTV.entitlements */,
 				DDC8048825D575D600B0418B /* Global */,
 				DDA1A92F2427B26400F7907A /* Networking */,
 				DD5B14312674BE7A00E8C68D /* Stores */,
@@ -759,6 +771,7 @@
 		DDC8048125D5757600B0418B /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				DD2DEDF728906C2A00A007DE /* PushNotifications */,
 				DD820A412890584A000799C7 /* StreamingAvailibility */,
 				DDC5DA9E272EAB54005D2A44 /* Favourites */,
 				DD5D9C5E26B1AD9800605616 /* Games */,
@@ -1169,6 +1182,7 @@
 				DD3ABA1726875FD600D1F57D /* ColorStore.swift in Sources */,
 				DD9BCA11266BC9CF009B2DD8 /* SwipeDirection.swift in Sources */,
 				DD9BCA0E266BC9CF009B2DD8 /* CardViewDelegate.swift in Sources */,
+				DD2DEDF928906C3900A007DE /* PushNotificationManager.swift in Sources */,
 				DDC20F1E2751A6FE0071F573 /* DetailedEntityScreen.swift in Sources */,
 				DD3952BF25D86F3800C918F3 /* Alpha.swift in Sources */,
 				DD9BCA0D266BC9CF009B2DD8 /* UIView+Constraints.swift in Sources */,
@@ -1391,6 +1405,7 @@
 			baseConfigurationReference = 475CD2925064809A89BE253D /* Pods-AKTV.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AKTV/AKTV.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52VSB9N5CT;
@@ -1413,6 +1428,7 @@
 			baseConfigurationReference = 33625C78D6775ABF6E822AC9 /* Pods-AKTV.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AKTV/AKTV.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52VSB9N5CT;
