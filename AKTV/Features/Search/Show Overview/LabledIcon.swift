@@ -148,6 +148,7 @@ final class UnlabeledRatingIcon: UnlabeledIconButton {
         addSubview(ratingLabel)
         ratingLabel.snp.makeConstraints { (make) in
             make.left.right.top.equalToSuperview()
+            make.width.equalTo(48)
             make.bottom.equalToSuperview()
         }
     }
