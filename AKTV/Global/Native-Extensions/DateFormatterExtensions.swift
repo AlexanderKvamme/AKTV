@@ -16,6 +16,12 @@ extension DateFormatter {
     }
 }
 
+extension Date {
+    func toString() -> String {
+        return DateFormatter.withoutTime.string(from: self)
+    }
+}
+
 
 final class AKDateFormatter: NSObject {
 

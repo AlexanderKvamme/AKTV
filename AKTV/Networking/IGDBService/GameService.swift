@@ -37,8 +37,8 @@ final class GameService {
     // MARK: - Initializers
 
     init(_ authToken: TwitchAuthResponse) {
-        print("IGDB accessToken: ", authToken.accessToken)
-        print("IGDB clientId: ", Self.clientID)
+        print("🕹️ IGDB accessToken: ", authToken.accessToken)
+        print("🕹️ IGDB clientId: ", Self.clientID)
         Self.authToken = authToken
     }
 

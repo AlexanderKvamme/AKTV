@@ -25,13 +25,22 @@ protocol Entity {
     var rating: Double { get }
     var description: String { get }
     var releaseStatus: ReleaseStatus { get }
+    var subType: EntitySubType { get }
+    var premiereDate: Date { get }
     func getMainGraphicsURL() -> URL?
 }
 
-enum EntityType {
+enum EntityType: String {
+    case movie = "movie"
+    case game = "game"
+    case tvShow = "episode"
+}
+
+enum EntitySubType {
     case movie
     case game
-    case tvShow
+    case episode
+    case other
 }
 
 extension Entity {
@@ -101,6 +110,14 @@ extension Proto_Game: Entity {
         }
     }
     
+    var premiereDate: Date {
+        return self.firstReleaseDate.date
+    }
+    
+    var subType: EntitySubType {
+        return .game
+    }
+    
     func getMainGraphicsURL() -> URL? {
         let urlString = cover.url.dropFirst().dropFirst()
         let replacedSize = urlString.replacingOccurrences(of: "t_thumb", with: "t_cover_big")
@@ -112,6 +129,14 @@ extension Episode: Entity {
     
     var description: String {
         return self.overview
+    }
+    
+    var premiereDate: Date {
+        DateFormatter.withoutTime.date(from: airDate ?? "2001-01-01")!
+    }
+    
+    var subType: EntitySubType {
+        return .episode
     }
     
     var releaseStatus: ReleaseStatus {
@@ -146,6 +171,14 @@ extension Show: Entity {
     var description: String {
         return self.overview ?? "No overview"
     }
+    
+    var subType: EntitySubType {
+        return .other
+    }
+    
+    var premiereDate: Date {
+        DateFormatter.withoutTime.date(from: self.firstAirDate ?? "2001-01-01")!
+    }
 
     var releaseStatus: ReleaseStatus {
         guard let status = status else { return .NA }
@@ -178,6 +211,14 @@ extension Movie: Entity {
         
     var description: String {
         return self.overview ?? "No overview"
+    }
+    
+    var subType: EntitySubType {
+        return .movie
+    }
+    
+    var premiereDate: Date {
+        DateFormatter.withoutTime.date(from: releaseDate ?? "2001-01-01")!
     }
     
     var releaseStatus: ReleaseStatus {
@@ -312,6 +353,7 @@ final class CalendarScreen: UIViewController {
                             if let formattedDate = episode.getFormattedDate() {
                                 let str = DateFormatter.withoutTime.string(from: formattedDate)
                                 self.addEntityIfUnique(episode, toDateString: str)
+                                PushNotificationManager.scheduleNotification(for: episode)
                             }
                         }
                     }
@@ -324,6 +366,7 @@ final class CalendarScreen: UIViewController {
                 if let formattedDate = movie.releaseDate {
                     DispatchQueue.main.async {
                         self.addEntityIfUnique(movie, toDateString: formattedDate)
+                        PushNotificationManager.scheduleNotification(for: movie)
                     }
                 }
             }
@@ -335,6 +378,7 @@ final class CalendarScreen: UIViewController {
                     // TODO: No idea why but this works :P
                     let dayString = DateFormatter.withoutTime.string(from: game.firstReleaseDate.date.addingTimeInterval(-60*60*24))
                     self.addEntityIfUnique(game, toDateString: dayString)
+                    PushNotificationManager.scheduleNotification(for: game)
                 }
             }
         }

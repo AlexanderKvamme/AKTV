@@ -47,10 +47,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UIApplicationDelegate {
             .store(in: &subscriptions)
         
         registerForRemoteNotification { bool in
-            print("registered for notifications: ", bool)
+            print("✉️ registered for notifications: ", bool)
         }
-        testScheduleLocalNotification()
-        testPrintNotificationList()
+        
+        // Remove after som field testing
+        // testScheduleLocalNotification()
+//        testPrintNotificationList()
         
         // Initialize app
         setRootController()
@@ -65,24 +67,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UIApplicationDelegate {
     private func testPrintNotificationList() {
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.getPendingNotificationRequests(){[unowned self] requests in
+            print("✉️ awaiting notification count: ", requests.count)
             for request in requests {
-                guard let trigger = request.trigger as? UNCalendarNotificationTrigger else {return}
+                guard let trigger = request.trigger as? UNCalendarNotificationTrigger else { return }
                 print("✉️ Notification triggers: ", trigger)
             }
         }
     }
     
     func registerForRemoteNotification(completion: @escaping (Bool) -> Void){
-        if #available(iOS 10.0, *) { //Control for ios 10+ for requesting permission
+        if #available(iOS 10.0, *) {
             let center  = UNUserNotificationCenter.current()
             center.requestAuthorization(options: [.sound, .alert, .badge]) { (granted, error) in
                 if error == nil{
                     DispatchQueue.main.async {
                         UIApplication.shared.registerForRemoteNotifications()
                     }
-                    completion(true) //User granted notification permission
+                    completion(true)
                 }else{
-                    completion(false) //User denied giving notification permission
+                    completion(false)
                 }
             }
         }
@@ -138,7 +141,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-      print("Failed to register: \(error)")
+        print("✉️ Failed to register: \(error.localizedDescription)")
     }
     
     // Remote notifications will be handled here
