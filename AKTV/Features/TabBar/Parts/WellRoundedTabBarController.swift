@@ -62,7 +62,7 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
         let searchTabScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen(header: "What are you looking for?", subheader: "Pick a media type"))
         let calendarScreen = MinimalNavigationController(rootViewController: CalendarScreen(tabBar: self))
-        let favouritesScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen(header: "Favourite lists", subheader: "Pick a media type", onCompletion: {  mediaPickable in
+        let favouritesScreen = MinimalNavigationController(rootViewController: MediaTypePickerScreen(header: "Favourites", subheader: "Pick a media type", onCompletion: {  mediaPickable in
             
             var next: UIViewController!
             switch mediaPickable {

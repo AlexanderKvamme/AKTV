@@ -52,7 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UIApplicationDelegate {
         
         // Remove after som field testing
         // testScheduleLocalNotification()
-//        testPrintNotificationList()
+        // testPrintNotificationList()
         
         // Initialize app
         setRootController()

@@ -42,8 +42,8 @@ final class SearchShowTextField: UIView {
         searchField.adjustsFontSizeToFitWidth = true
         searchField.layer.cornerCurve = .continuous
         searchField.layer.cornerRadius = 16
-
         searchField.backgroundColor = UIColor(dark)
+        searchField.keyboardAppearance = .light
     }
 
     private func addSubviewsAndConstraints() {
