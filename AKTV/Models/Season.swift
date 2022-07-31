@@ -56,6 +56,7 @@ struct Episode: Codable, Hashable, Identifiable {
     // Customs
     var showId: Int?
     var artPath: String?
+    var showName: String?
 
     static var mock: Episode {
         let decoder = JSONDecoder()

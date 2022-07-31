@@ -163,12 +163,12 @@ final class APIDAO: NSObject, MediaSearcher {
         }
     }
     
-    func showOverview(withId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
+    func showOverview(withId showId: Int, andThen: @escaping ((ShowOverview) -> ()))  {
 
         Self.dispatchQueue.async {
             Self.semaphore.wait()
 
-            let showId = String(withId)
+            let showId = String(showId)
             let url = URL(string: Self.root + "tv/" + showId + "?" + Self.keyParam + "&append_to_response=videos")
 
             let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
@@ -194,10 +194,11 @@ final class APIDAO: NSObject, MediaSearcher {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let errorMessage = String(data: content, encoding: .utf8)
                 
-                if let tvShowSeason = try? decoder.decode(ShowOverview.self, from: content) {
-                    andThen(tvShowSeason)
+                if let tvShowOverview = try? decoder.decode(ShowOverview.self, from: content) {
+                    TitleStore.store(name: tvShowOverview.name, for: Int(showId)!)
+                    andThen(tvShowOverview)
                 } else {
-                    print("Error could not decode Showoverview \(withId): ", errorMessage ?? "")
+                    print("Error could not decode Showoverview \(showId): ", errorMessage ?? "")
                 }
 
                 Self.semaphore.signal()
@@ -309,11 +310,12 @@ final class APIDAO: NSObject, MediaSearcher {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     var tvShowSeason = try decoder.decode(Season.self, from: content)
+                    let showName = TitleStore.retrieveName(ofShow: showId)
                     
                     // Add showId to episodes
                     var updatedEpisodes = [Episode]()
                     for episode in tvShowSeason.episodes {
-                        let test = Episode(name: episode.name, episodeNumber: episode.episodeNumber, airDate: episode.airDate, id: episode.id, overview: episode.overview, seasonNumber: episode.seasonNumber, stillPath: episode.stillPath, voteAverage: episode.voteAverage, showId: showId, artPath: tvShowSeason.posterPath)
+                        let test = Episode(name: episode.name, episodeNumber: episode.episodeNumber, airDate: episode.airDate, id: episode.id, overview: episode.overview, seasonNumber: episode.seasonNumber, stillPath: episode.stillPath, voteAverage: episode.voteAverage, showId: showId, artPath: tvShowSeason.posterPath, showName: showName)
                         updatedEpisodes.append(test)
                     }
                     tvShowSeason.episodes = updatedEpisodes

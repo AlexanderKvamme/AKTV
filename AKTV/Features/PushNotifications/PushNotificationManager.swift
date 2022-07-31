@@ -63,12 +63,18 @@ final class PushNotificationManager {
     private static func scheduleLocalNotification(for entity: Entity) {
         print("Making an actual notification")
         let content = UNMutableNotificationContent()
-        content.title = "New \(entity.type.rawValue) premiering today!"
-        content.body = entity.name // TODO: Possibly get the tv show name if its an episode
         content.sound = .default
+        content.title = "New \(entity.type.rawValue) today"
+        content.body = entity.name
+        
+        // Get name if it is a tv show
+        if let episode = entity as? Episode {
+            content.body = episode.showName ?? entity.name
+        }
         
         // Get date of premiere
-        let dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: entity.premiereDate)
+        var dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: entity.premiereDate)
+        dateComponents.hour = 9
         
         // Schedule the request with the system.
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
@@ -81,11 +87,6 @@ final class PushNotificationManager {
                print("✉️ Notification successfully added to list")
            }
         }
-    }
-    
-    static func cleanupNotificationsInUserDefaults() {
-        
-        
     }
     
     // MARK: Registration methods

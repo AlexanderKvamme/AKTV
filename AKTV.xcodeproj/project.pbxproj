@@ -89,6 +89,7 @@
 		DD820A47289058DD000799C7 /* StreamingAvailibilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD820A46289058DD000799C7 /* StreamingAvailibilitiesView.swift */; };
 		DD820A48289058DD000799C7 /* StreamingAvailibilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD820A46289058DD000799C7 /* StreamingAvailibilitiesView.swift */; };
 		DD820A49289058DD000799C7 /* StreamingAvailibilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD820A46289058DD000799C7 /* StreamingAvailibilitiesView.swift */; };
+		DD820A4B2896CDAC000799C7 /* TitleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD820A4A2896CDAC000799C7 /* TitleStore.swift */; };
 		DD9A33832702268C0024C5C3 /* DecoderExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9A33822702268C0024C5C3 /* DecoderExtensions.swift */; };
 		DD9A3385270249000024C5C3 /* IntervalCombiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9A3384270249000024C5C3 /* IntervalCombiner.swift */; };
 		DD9BC9D1266B5553009B2DD8 /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9BC9D0266B5553009B2DD8 /* GameService.swift */; };
@@ -256,6 +257,7 @@
 		DD7E660B25D538F7006553D1 /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		DD820A4228905862000799C7 /* FavouriteListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouriteListView.swift; sourceTree = SOURCE_ROOT; };
 		DD820A46289058DD000799C7 /* StreamingAvailibilitiesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingAvailibilitiesView.swift; sourceTree = "<group>"; };
+		DD820A4A2896CDAC000799C7 /* TitleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleStore.swift; sourceTree = "<group>"; };
 		DD9A33822702268C0024C5C3 /* DecoderExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderExtensions.swift; sourceTree = "<group>"; };
 		DD9A3384270249000024C5C3 /* IntervalCombiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalCombiner.swift; sourceTree = "<group>"; };
 		DD9BC9D0266B5553009B2DD8 /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				DD5BDF6E268268AD00A4C2B0 /* AuthStore */,
 				DD000AA22455BECE00CB095D /* UserProfileManager.swift */,
 				DD3ABA1626875FD600D1F57D /* ColorStore.swift */,
+				DD820A4A2896CDAC000799C7 /* TitleStore.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1197,6 +1200,7 @@
 				DDE38900242BF0730049D881 /* MediaSearchResultCell.swift in Sources */,
 				DDB48F7825D3F694007C0131 /* UIColorExtensions.swift in Sources */,
 				DD3952CD25DA813400C918F3 /* EpisodeDisplayer.swift in Sources */,
+				DD820A4B2896CDAC000799C7 /* TitleStore.swift in Sources */,
 				DD9BCA05266BC9CF009B2DD8 /* StaticShadowHeaderView.swift in Sources */,
 				DDA1A9072427B24B00F7907A /* AKTV.xcdatamodeld in Sources */,
 				DDC5DAA0272EAB6A005D2A44 /* FavouritesScreen.swift in Sources */,
