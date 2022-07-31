@@ -15,7 +15,7 @@ final class PushNotificationManager {
     
     // MARK: - Properties
     
-    private static let arrayKey = "notifications-sent"
+    private static let notificationsSentArrayKey = "notifications-sent"
     
     // MARK: API methods
     
@@ -33,7 +33,7 @@ final class PushNotificationManager {
         
         // Create and Write Array of Strings
         let userDefaults = UserDefaults.standard
-        var existingNotificationKeys = userDefaults.object(forKey: arrayKey) as? [String] ?? []
+        var existingNotificationKeys = userDefaults.object(forKey: notificationsSentArrayKey) as? [String] ?? []
         
         // Append new key to UserDefaults if it doesnt already exists
         let notificationLogKey = keyFromEntity(entity)
@@ -43,21 +43,33 @@ final class PushNotificationManager {
             existingNotificationKeys.append(notificationLogKey)
         }
         
-        userDefaults.set(existingNotificationKeys, forKey: arrayKey)
+        userDefaults.set(existingNotificationKeys, forKey: notificationsSentArrayKey)
+    }
+    
+    static func testPrintNotificationList() {
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.getPendingNotificationRequests(){ requests in
+            print("✉️ awaiting notification count: ", requests.count)
+            for request in requests {
+                guard let trigger = request.trigger as? UNCalendarNotificationTrigger else { return }
+                print("✉️ Notification triggers: ", trigger)
+            }
+        }
     }
     
     private static func removeEntityFromUserdefaultNotificationRegistry(_ entity: Entity) {
         let userDefaults = UserDefaults.standard
-        var existingNotificationKeys = userDefaults.object(forKey: arrayKey) as? [String] ?? []
+        var existingNotificationKeys = userDefaults.object(forKey: notificationsSentArrayKey) as? [String] ?? []
         let keyToRemove = keyFromEntity(entity)
         if let index = existingNotificationKeys.firstIndex(of: keyToRemove) {
             existingNotificationKeys.remove(at: index)
-            userDefaults.set(existingNotificationKeys, forKey: arrayKey)
+            userDefaults.set(existingNotificationKeys, forKey: notificationsSentArrayKey)
         }
     }
     
     private static func keyFromEntity(_ entity: Entity) -> String {
-        return "\(entity.name)-\(entity.id)-\(entity.premiereDate.toString())".replacingOccurrences(of: " ", with: "-")
+        return "queued-push-notification-\(entity.name)-\(entity.id)-\(entity.premiereDate.toString())"
+            .replacingOccurrences(of: " ", with: "-")
     }
     
     private static func scheduleLocalNotification(for entity: Entity) {
@@ -87,6 +99,20 @@ final class PushNotificationManager {
                print("✉️ Notification successfully added to list")
            }
         }
+    }
+    
+    static func clearAllNotifications() {
+        // Clear from user defaults
+        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+            if key.hasPrefix(notificationsSentArrayKey){
+                UserDefaults.standard.removeObject(forKey: key)
+            }
+        }
+        
+        // Clear from notification center
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.removeAllDeliveredNotifications()
+        notificationCenter.removeAllPendingNotificationRequests()
     }
     
     // MARK: Registration methods

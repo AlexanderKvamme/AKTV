@@ -52,26 +52,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UIApplicationDelegate {
         
         // Remove after som field testing
         // testScheduleLocalNotification()
-        // testPrintNotificationList()
-        
+//        PushNotificationManager.testPrintNotificationList()
+//        PushNotificationManager.clearAllNotifications()
+//        testPrintUserDefaults()
         // Initialize app
         setRootController()
     }
     
-    private func clearNotifications() {
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.removeAllDeliveredNotifications()
-        notificationCenter.removeAllPendingNotificationRequests()
-    }
-    
-    private func testPrintNotificationList() {
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.getPendingNotificationRequests(){[unowned self] requests in
-            print("✉️ awaiting notification count: ", requests.count)
-            for request in requests {
-                guard let trigger = request.trigger as? UNCalendarNotificationTrigger else { return }
-                print("✉️ Notification triggers: ", trigger)
-            }
+    private func testPrintUserDefaults() {
+        for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
+            print("\(key) = \(value) \n")
         }
     }
     
