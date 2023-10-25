@@ -101,7 +101,7 @@ class PickerScreen: UIViewController {
 
         stackView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().inset(48)
-            make.bottom.equalToSuperview().offset(-160)
+            make.bottom.equalToSuperview().offset(-TabBarSettings.height - 24)
         }
 
         // TODO: Make buttons decide size themselves
