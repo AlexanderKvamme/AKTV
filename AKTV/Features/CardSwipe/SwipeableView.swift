@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import pop
 
 class SwipeableView: UIView {
 
@@ -143,12 +142,14 @@ class SwipeableView: UIView {
 
     private func endedPanAnimation() {
         if let swipeDirection = dragDirection, dragPercentage >= SwipeableView.swipePercentageMargin {
+            /*
             let translationAnimation = POPBasicAnimation(propertyNamed: kPOPLayerTranslationXY)
             translationAnimation?.duration = SwipeableView.finalizeSwipeActionAnimationDuration
             translationAnimation?.fromValue = NSValue(cgPoint: POPLayerGetTranslationXY(layer))
             translationAnimation?.toValue = NSValue(cgPoint: animationPointForDirection(swipeDirection))
             layer.pop_add(translationAnimation, forKey: "swipeTranslationAnimation")
             self.delegate?.didEndSwipe(onView: self, swipeDirection)
+             */
         } else {
             resetCardViewPosition()
         }
@@ -165,6 +166,7 @@ class SwipeableView: UIView {
         removeAnimations()
 
         // Reset Translation
+        /*
         let resetPositionAnimation = POPSpringAnimation(propertyNamed: kPOPLayerTranslationXY)
         resetPositionAnimation?.fromValue = NSValue(cgPoint:POPLayerGetTranslationXY(layer))
         resetPositionAnimation?.toValue = NSValue(cgPoint: CGPoint.zero)
@@ -181,11 +183,14 @@ class SwipeableView: UIView {
         resetRotationAnimation?.toValue = CGFloat(0.0)
         resetRotationAnimation?.duration = SwipeableView.cardViewResetAnimationDuration
         layer.pop_add(resetRotationAnimation, forKey: "resetRotationAnimation")
+         */
     }
 
     private func removeAnimations() {
+        /*
         pop_removeAllAnimations()
         layer.pop_removeAllAnimations()
+         */
     }
 
     // MARK: - Tap Gesture Recognizer

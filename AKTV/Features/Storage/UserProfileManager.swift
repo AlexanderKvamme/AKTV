@@ -51,8 +51,8 @@ final class UserProfileManager: NSObject {
             res = favouriteShows().contains(Int(entity.id))
         case .game:
             res = favouriteGames().contains(Int(entity.id))
-        default:
-            fatalError("Implement me")
+        case .movie:
+            res = favouriteMovies().contains(Int(entity.id))
         }
         return res
     }

@@ -107,6 +107,8 @@ extension Proto_Game: Entity {
             return .NA
         case .UNRECOGNIZED:
             return .NA
+        case .delisted:
+            fatalError()
         }
     }
     
