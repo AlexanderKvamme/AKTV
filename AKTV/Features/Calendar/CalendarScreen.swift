@@ -267,7 +267,7 @@ final class CalendarScreen: UIViewController {
     let dateFormatter = DateFormatter.withoutTime
     let chevronButton = UIImageView()
     let cv = JTACMonthView(frame: CGRect(x: style.calendarHorizontalOffset/2+style.cardHorizontals,
-                                         y: screenHeight-style.calendarHeight-style.calendarBottomOffset,
+                                         y: screenHeight-style.calendarHeight-TabBarSettings.height-8,
                                          width: screenWidth-style.calendarHorizontalOffset-2*style.cardHorizontals,
                                          height: style.calendarHeight))
     var calendarCard = Card()
@@ -420,7 +420,7 @@ final class CalendarScreen: UIViewController {
             make.left.right.equalToSuperview().inset(24)
             make.bottom.equalTo(calendarCard.snp.top).offset(-16)
         }
-
+        
         calendarCard.snp.makeConstraints { make in
             make.top.equalTo(cv).offset(-24)
             make.left.right.equalTo(imageCard)
