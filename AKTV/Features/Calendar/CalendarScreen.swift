@@ -157,7 +157,7 @@ extension Episode: Entity {
     }
     
     var rating: Double {
-        return Double(voteAverage)
+        return voteAverage.rounded(toDecimals: 1)
     }
     
     func getMainGraphicsURL() -> URL? {
@@ -198,7 +198,7 @@ extension Show: Entity {
     }
     
     var rating: Double {
-        voteAverage ?? 0.0
+        return voteAverage?.rounded(toDecimals: 1) ?? 0.0
     }
 
     func getMainGraphicsURL() -> URL? {
@@ -240,7 +240,7 @@ extension Movie: Entity {
     
 
     var rating: Double {
-        return voteAverage ?? 0
+        return voteAverage?.rounded(toDecimals: 1) ?? 0.0
     }
 
     func getMainGraphicsURL() -> URL? {

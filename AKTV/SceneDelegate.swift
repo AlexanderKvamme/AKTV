@@ -147,3 +147,13 @@ struct GameId {
 struct CoverId {
     static let diablo: UInt64 = 161120
 }
+
+extension Double {
+    func rounded(toDecimals decimals: Int) -> Double {
+        let multiplier = pow(Decimal(10), decimals)
+        let multiplierDouble = Double(multiplier as NSNumber)
+        let int = Int(self*multiplierDouble)
+        let res = Double(int)/multiplierDouble
+        return Double(res)
+    }
+}
