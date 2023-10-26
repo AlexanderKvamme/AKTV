@@ -339,7 +339,8 @@ final class APIDAO: NSObject, MediaSearcher {
             .where(query: "id = \(withId);")
             .fields(fields: "*,cover.*")
         wrapper.games(apiCalypse: apicalypse) { (games) -> (Void) in
-            if let game = games.first {
+            if var game = games.first {
+                game.rating = (game.rating/10).rounded(toDecimals: 1)
                 andThen(game)
             } else {
                 print("Error: Too many games to handle")
