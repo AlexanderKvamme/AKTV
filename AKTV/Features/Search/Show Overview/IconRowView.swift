@@ -63,22 +63,6 @@ final class EntityIconRow: UIView {
     }
 
     private func addSubviewsAndConstraints() {
-        addSubview(topSeperator)
-        addSubview(botSeperator)
-        topSeperator.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.height.equalTo(1)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().inset(24)
-        }
-        
-        botSeperator.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.height.equalTo(1)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().inset(24)
-        }
-        
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
