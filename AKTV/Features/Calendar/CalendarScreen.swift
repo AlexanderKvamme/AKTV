@@ -441,7 +441,7 @@ final class CalendarScreen: UIViewController {
 
     @objc func exitScreen() {
         navigationController?.popToRootViewController(animated: true)
-        tabBar?.showIt()
+        tabBar?.showIt(animated: true)
     }
 
 }

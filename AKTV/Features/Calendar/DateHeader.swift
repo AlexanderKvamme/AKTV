@@ -37,7 +37,7 @@ class DateHeader: JTACMonthReusableView {
         monthLabel.sizeToFit()
         monthLabel.clipsToBounds = false
 
-        yearLabel.text = "2021"
+        yearLabel.text = Date().toString().components(separatedBy: "-").first ?? "NA"
         yearLabel.textColor = UIColor(dark)
         yearLabel.font = UIFont.round(.light, fontsize)
         yearLabel.alpha = 0.4
