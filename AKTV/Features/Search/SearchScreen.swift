@@ -19,15 +19,13 @@ struct Media: Decodable {
 
 
 // 1. Make SearchScreen take generic MediaSearchResult.
-// 2.
 
 class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     // MARK: - Properties
 
     let headerContainer: SearchHeaderContainer
-    private let episodesSearchResultViewController = UITableViewController()
-    private let episodesSearchResultDataDelegate = self
+    private let resultListViewController = UITableViewController()
     var detailedShowPresenter: ModelPresenter?
     var searchResults = [MediaSearchResult]()
     var dao: MediaSearcher
@@ -62,12 +60,12 @@ class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate
         
         view.backgroundColor = UIColor(hex: "#F7F7F7")
         headerContainer.searchField.searchField.delegate = self
-        episodesSearchResultViewController.tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 32, right: 0)
-        episodesSearchResultViewController.tableView.dataSource = self
-        episodesSearchResultViewController.tableView.delegate = self
-        episodesSearchResultViewController.tableView.estimatedRowHeight = MediaSearchResultCell.estimatedHeight
-        episodesSearchResultViewController.tableView.backgroundColor = .clear
-        episodesSearchResultViewController.tableView.separatorStyle = .none
+        resultListViewController.tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 32, right: 0)
+        resultListViewController.tableView.dataSource = self
+        resultListViewController.tableView.delegate = self
+        resultListViewController.tableView.estimatedRowHeight = MediaSearchResultCell.estimatedHeight
+        resultListViewController.tableView.backgroundColor = .clear
+        resultListViewController.tableView.separatorStyle = .none
         detailedShowPresenter = self
     }
 
@@ -75,10 +73,10 @@ class SearchScreen: UIViewController, UITableViewDataSource, UITableViewDelegate
         view.addSubview(headerContainer.view)
 
         headerContainer.view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 280)
-        view.addSubview(episodesSearchResultViewController.view)
-        addChild(episodesSearchResultViewController)
+        view.addSubview(resultListViewController.view)
+        addChild(resultListViewController)
 
-        episodesSearchResultViewController.view.snp.makeConstraints { (make) in
+        resultListViewController.view.snp.makeConstraints { (make) in
             make.top.equalTo(headerContainer.view.snp.bottom).offset(32)
             make.left.right.bottom.equalToSuperview()
         }
