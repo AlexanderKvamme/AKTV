@@ -112,11 +112,11 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
     override func viewDidLoad() {
         cardContainer.dataSource = self
 
-        customTabBarDelegate?.hideIt()
+        customTabBarDelegate?.hideIt(animated: false)
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        customTabBarDelegate?.hideIt()
+        customTabBarDelegate?.hideIt(animated: false)
     }
 
     // MARK: - Initializers
@@ -143,7 +143,7 @@ final class DiscoveryScreen: UIViewController, CardViewDataSource {
     }
 
     @objc func exitScreen() {
-        customTabBarDelegate?.showIt()
+        customTabBarDelegate?.showIt(animated: false)
         navigationController?.popToRootViewController(animated: true)
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)

@@ -115,14 +115,22 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
         }
     }
 
-    func hideIt() {
-        UIView.animate(withDuration: 0.25) {
+    func hideIt(animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.25) {
+                self.myTabBar.transform = self.view.transform.translatedBy(x: 0, y: 300)
+            }
+        } else {
             self.myTabBar.transform = self.view.transform.translatedBy(x: 0, y: 300)
         }
     }
 
-    func showIt(){
-        UIView.animate(withDuration: 0.25) {
+    func showIt(animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.25) {
+                self.myTabBar.transform = self.view.transform.translatedBy(x: 0, y: 0)
+            }
+        } else {
             self.myTabBar.transform = self.view.transform.translatedBy(x: 0, y: 0)
         }
     }
@@ -130,8 +138,8 @@ class WellRoundedTabBarController: UITabBarController, UITabBarControllerDelegat
 
 
 protocol CustomTabBarDelegate: AnyObject {
-    func hideIt()
-    func showIt()
+    func hideIt(animated: Bool)
+    func showIt(animated: Bool)
 }
 
 

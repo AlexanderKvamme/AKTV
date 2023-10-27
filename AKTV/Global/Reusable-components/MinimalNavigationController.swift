@@ -28,7 +28,7 @@ class MinimalNavigationController: UINavigationController, UINavigationControlle
         
         // Show/hide tabBar (bottom) according to VC setting
         if let tb = tabBarController as? WellRoundedTabBarController {
-            viewController.hidesBottomBarWhenPushed ? tb.hideIt() : tb.showIt()
+            viewController.hidesBottomBarWhenPushed ? tb.hideIt(animated: true) : tb.showIt(animated: true)
         }
         
         let shouldShowBack = !viewController.navigationItem.hidesBackButton

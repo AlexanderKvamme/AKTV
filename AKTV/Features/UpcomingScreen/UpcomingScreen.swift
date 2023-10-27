@@ -90,7 +90,7 @@ final class UpcomingScreen: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        customTabBarDelegate?.showIt()
+        customTabBarDelegate?.showIt(animated: true)
     }
     
     private func setup() {
