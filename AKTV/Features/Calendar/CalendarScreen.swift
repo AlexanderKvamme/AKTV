@@ -16,6 +16,8 @@ enum ReleaseStatus: String {
     case released = "Released"
     case unreleased = "Unreleased"
     case canceled = "Canceled"
+    case returningSeries = "Returning Series"
+    case ended = "Ended"
     case NA = "N/A"
 }
 
@@ -183,16 +185,21 @@ extension Show: Entity {
     }
 
     var releaseStatus: ReleaseStatus {
-        guard let status = status else { return .NA }
-        
+        guard let status = status else { 
+            return .NA }
         switch status {
         case "In Production":
             return .unreleased
+        case "Returning Series":
+            return .returningSeries
         case "Post Production":
             return .unreleased
         case "Canceled":
             return .canceled
+        case "Ended":
+            return .ended
         default:
+            fatalError("Unhandled show case: \(status)")
             return .NA
         }
     }
