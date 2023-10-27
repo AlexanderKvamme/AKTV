@@ -27,8 +27,8 @@ final class EntityIconRow: UIView {
     // MARK: - Properties
 
     let stackView = UIStackView()
-    let trailersButton = UnlabeledIconButton(icon: "play.square")
-    let shareButton = ShareButton()
+    let trailerButton = UnlabeledIconButton(imageName: "trailer-icon")
+    let shareButton = UnlabeledIconButton(imageName: "share-icon")
     var ratingIcon = UnlabeledRatingIcon(targetNumber: 0)
     var topSeperator = LineSeparator()
     var botSeperator = LineSeparator()
@@ -56,7 +56,7 @@ final class EntityIconRow: UIView {
         stackView.spacing = 8
 
         stackView.addArrangedSubview(UIView())
-        stackView.addArrangedSubview(trailersButton)
+        stackView.addArrangedSubview(trailerButton)
         stackView.addArrangedSubview(shareButton)
         stackView.addArrangedSubview(ratingIcon)
         stackView.addArrangedSubview(UIView())
@@ -80,7 +80,8 @@ final class EntityIconRow: UIView {
 
     func update(with movie: Movie) {
         ratingIcon.update(with: movie)
-        shareButton.update(with: movie)
+        // FIXME: Gotta be able to share somehow
+        //shareButton.update(with: movie)
     }
 }
 

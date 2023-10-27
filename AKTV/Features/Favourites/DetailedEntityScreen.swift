@@ -70,7 +70,8 @@ class DetailedEntityScreen: UIViewController {
         imageView.layer.cornerRadius = .iOSCornerRadius
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        titleCard.makeLongInteractable()
+        titleCard.isMultipleTouchEnabled = true
+        // titleCard.makeLongInteractable()
     }
     
     override func viewDidLayoutSubviews() {
@@ -382,7 +383,7 @@ final class DetailedEntityDescriptionView: UIView {
     private func setup() {
         descriptionTitleLabel.text = "Description"
         descriptionTitleLabel.textColor = UIColor(dark)
-        descriptionTitleLabel.font = UIFont.gilroy(.extraBold, 16)
+        descriptionTitleLabel.font = UIFont.gilroy(.extraBold, 24)
         
         descriptionTextView.text = entity.description
         descriptionTextView.textColor = UIColor(dark)

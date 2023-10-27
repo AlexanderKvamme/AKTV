@@ -23,6 +23,14 @@ class UnlabeledIconButton: UIButton {
         setup(iconName: icon)
         addSubviewsAndConstraints()
     }
+    
+    convenience init(imageName: String) {
+        self.init(icon: "REPLACE ME")
+        
+        icon.image = UIImage(named: imageName)
+        icon.contentMode = .scaleAspectFit
+        icon.tintColor = UIColor(dark)
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -242,7 +250,7 @@ final class ShareButton: UnlabeledIconButton {
     init() {
         super.init(icon: "square.and.arrow.up")
 
-        addTarget(self, action: #selector(didTapHeart), for: .touchUpInside)
+        // addTarget(self, action: #selector(didTapHeart), for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {

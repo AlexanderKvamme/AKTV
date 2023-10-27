@@ -38,7 +38,6 @@ final class SearchShowTextField: UIView {
         searchField.font = UIFont.gilroy(.bold, 24)
         searchField.textColor = UIColor(light)
         searchField.isUserInteractionEnabled = true
-        searchField.becomeFirstResponder()
         searchField.adjustsFontSizeToFitWidth = true
         searchField.layer.cornerCurve = .continuous
         searchField.layer.cornerRadius = 16
